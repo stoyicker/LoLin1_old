@@ -8,10 +8,12 @@
 	<ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/section_image"/>
+		android:id="@+id/navigation_drawer_section_image"/>
 
 	<TextView
 		android:layout_width="fill_parent"
 		android:layout_height="wrap_content"
-		android:id="@+id/section_title"/>
+		android:id="@+id/navigation_drawer_section_title"
+		android:textSize="20sp"
+		android:padding="10dp"/>
 </LinearLayout>
