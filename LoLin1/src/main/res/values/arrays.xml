@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="navigation_drawer_items">
+		<item>@string/title_section1</item>
+		<item>@string/title_section2</item>
+		<item>@string/title_section3</item>
+		<item>@string/title_section4</item>
+		<item>@string/title_section5</item>
+		<item>@string/title_section6</item>
+		<item>@string/title_section7</item>
+	</string-array>
+</resources>
