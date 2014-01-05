@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is part of LoLin1.
+<p/>
+LoLin1 is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+<p/>
+LoLin1 is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+GNU General Public License for more details.
+<p/>
+You should have received a copy of the GNU General Public License
+along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
+<p/>
+Created by JorgeAntonio on 02/01/14.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+	<string name="app_name">LoLin1</string>
+	<string name="title_section1">Home</string>
+	<string name="title_section2">Jungle Timers</string>
+	<string name="title_section3">Masteries</string>
+	<string name="title_section4">Runes</string>
+	<string name="title_section5">Champions</string>
+	<string name="title_section6">Surrender@20</string>
+	<string name="title_section7">Chat</string>
+	<string name="navigation_drawer_open">Open navigation drawer</string>
+	<string name="navigation_drawer_close">Close navigation drawer</string>
+	<string name="action_settings">Settings</string>
+	<string name="feed_item_title_proportion" tools:ignore="UnusedResources">0.7</string>
+	<string name="error_no_internet" tools:ignore="UnusedResources">Couldn\'t find an Internet connection</string>
+	<string name="db_name" tools:ignore="UnusedResources">LoLin1_DB</string>
+</resources>

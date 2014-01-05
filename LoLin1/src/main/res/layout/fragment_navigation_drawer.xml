@@ -17,14 +17,12 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by JorgeAntonio on 02/01/14.
 -->
-<resources>
-	<string-array name="navigation_drawer_items">
-		<item>@string/title_section1</item>
-		<item>@string/title_section2</item>
-		<item>@string/title_section3</item>
-		<item>@string/title_section4</item>
-		<item>@string/title_section5</item>
-		<item>@string/title_section6</item>
-		<item>@string/title_section7</item>
-	</string-array>
-</resources>
+<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+          xmlns:tools="http://schemas.android.com/tools"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:choiceMode="singleChoice"
+          android:divider="@android:color/darker_gray"
+          android:dividerHeight="1dp"
+          android:background="@android:color/white"
+          tools:context="org.jorge.lolin1.fragments.NavigationDrawerFragment"/>

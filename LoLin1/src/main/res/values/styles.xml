@@ -18,13 +18,10 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 02/01/14.
 -->
 <resources>
-	<string-array name="navigation_drawer_items">
-		<item>@string/title_section1</item>
-		<item>@string/title_section2</item>
-		<item>@string/title_section3</item>
-		<item>@string/title_section4</item>
-		<item>@string/title_section5</item>
-		<item>@string/title_section6</item>
-		<item>@string/title_section7</item>
-	</string-array>
+
+	<!-- Base application theme. -->
+	<style name="AppTheme" parent="android:Theme.Holo.Light">
+		<!-- Customize your theme here. -->
+	</style>
+
 </resources>

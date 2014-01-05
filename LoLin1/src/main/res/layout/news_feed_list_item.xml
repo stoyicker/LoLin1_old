@@ -25,12 +25,23 @@ Created by JorgeAntonio on 02/01/14.
 	<ImageView
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/navigation_drawer_section_image"/>
+		android:id="@+id/feed_item_image"/>
 
-	<TextView
-		android:layout_width="fill_parent"
-		android:layout_height="wrap_content"
-		android:id="@+id/navigation_drawer_section_title"
-		android:textSize="@dimen/navigation_drawer_text_size"
-		android:layout_gravity="center_vertical"/>
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/news_feed_item_title"
+			android:layout_gravity="center_vertical"/>
+
+		<TextView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/news_feed_item_desc"
+			android:layout_gravity="center_vertical"/>
+	</LinearLayout>
 </LinearLayout>

@@ -15,16 +15,14 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
-Created by JorgeAntonio on 02/01/14.
 -->
-<resources>
-	<string-array name="navigation_drawer_items">
-		<item>@string/title_section1</item>
-		<item>@string/title_section2</item>
-		<item>@string/title_section3</item>
-		<item>@string/title_section4</item>
-		<item>@string/title_section5</item>
-		<item>@string/title_section6</item>
-		<item>@string/title_section7</item>
-	</string-array>
-</resources>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="org.jorge.lolin1.NewsActivity">
+	<item
+		android:id="@+id/action_settings"
+		android:title="@string/action_settings"
+		android:orderInCategory="100"
+		android:icon="@drawable/settings_actionbar"
+		android:showAsAction="ifRoom"/>
+</menu>
