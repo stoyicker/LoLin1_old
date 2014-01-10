@@ -1,4 +1,4 @@
-package org.jorge.lolin1.customs;
+package org.jorge.lolin1.custom;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.utils.ReflectedRes;
+import org.jorge.lolin1.utils.Utils;
 
 /**
  * This file is part of LoLin1.
@@ -29,12 +29,12 @@ import org.jorge.lolin1.utils.ReflectedRes;
  * <p/>
  * Created by JorgeAntonio on 03/01/14.
  */
-public class FeedFragmentArrayAdapter extends BaseAdapter {
+public class NavigationDrawerArrayAdapter extends BaseAdapter {
 
-    private final int mResource = R.layout.news_feed_list_item;
+    private final int mResource = R.layout.navigation_drawer_list_item;
     private Context mContext;
 
-    public FeedFragmentArrayAdapter(Context context) {
+    public NavigationDrawerArrayAdapter(Context context) {
         this.mContext = context;
     }
 
@@ -46,7 +46,7 @@ public class FeedFragmentArrayAdapter extends BaseAdapter {
     @Override
     public Object getItem(int i) {
         int temp = i + 1;
-        return ReflectedRes.string(mContext, "title_section" + temp, "");
+        return Utils.getString(mContext, "title_section" + temp, "");
     }
 
     @Override
@@ -59,19 +59,14 @@ public class FeedFragmentArrayAdapter extends BaseAdapter {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(mResource, parent, false);
 
+
         int temp = position + 1;
 
-        ImageView image = (ImageView) convertView.findViewById(R.id.feed_item_image);
-        TextView title = (TextView) convertView.findViewById(R.id.news_feed_item_title);
-        TextView desc = (TextView) convertView.findViewById(R.id.news_feed_item_desc);
+        TextView textView = (TextView) convertView.findViewById(R.id.navigation_drawer_section_title);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.navigation_drawer_section_image);
 
-        int title_proportion = Integer.parseInt(ReflectedRes.string(mContext, "feed_item_title_proportion", "-1"));
-
-        image.setImageResource(ReflectedRes.drawableAsId("icon_section" + temp, -1)); //TODO These three values must be retrieved from the database.
-        title.setTextSize(image.getHeight() * title_proportion);
-        desc.setTextSize(image.getHeight() * (1 - title_proportion));
-        title.setText(ReflectedRes.string(mContext, "title_section" + +temp, ""));
-        desc.setText(ReflectedRes.string(mContext, "title_section" + +temp, ""));
+        textView.setText(Utils.getString(mContext, "title_section" + +temp, ""));
+        imageView.setImageResource(Utils.getDrawableAsId("icon_section" + temp, -1));
 
         return convertView;
     }

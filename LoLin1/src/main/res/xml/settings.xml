@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ This file is part of LoLin1.
+ <p/>
+ LoLin1 is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+ <p/>
+ LoLin1 is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ GNU General Public License for more details.
+ <p/>
+ You should have received a copy of the GNU General Public License
+ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
+ <p/>
+ Created by JorgeAntonio on 06/01/14.
+ -->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="@string/pref_cat_general">
+		<SwitchPreference
+			android:title="@string/pref_title_data"
+			android:key="@string/pref_title_data"
+			android:summaryOn="@string/pref_summary_data_on"
+			android:summaryOff="@string/pref_summary_data_off"
+			android:defaultValue="true"
+			/>
+		<ListPreference
+			android:title="@string/pref_title_server"
+			android:key="@string/pref_title_server"
+			android:entries="@array/servers"
+			android:entryValues="@array/servers"
+			android:defaultValue="@string/server_euw"
+			/>
+		<ListPreference
+			android:title="@string/pref_title_lang"
+			android:key="@string/pref_title_lang"
+			android:entries="@array/lang_euw"
+			android:entryValues="@array/lang_euw"
+			android:defaultValue="@string/lang_en"
+			/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_jun">
+		<CheckBoxPreference
+			android:title="@string/pref_title_timers_reset"
+			android:key="@string/pref_title_timers_reset"
+			android:summaryOn="@string/pref_summary_timers_reset_on"
+			android:summaryOff="@string/pref_summary_timers_reset_off"
+			android:defaultValue="true"
+			/>
+		<CheckBoxPreference
+			android:title="@string/pref_title_display"
+			android:key="@string/pref_title_display"
+			android:summaryOn="@string/pref_summary_display_on"
+			android:summaryOff="@string/pref_summary_display_off"
+			android:defaultValue="false"
+			/>
+		<ListPreference
+			android:title="@string/pref_title_lang"
+			android:key="@string/pref_title_lang"
+			android:entries="@array/lang_euw"
+			android:entryValues="@array/lang_euw"
+			android:defaultValue="@string/lang_en"
+			/>
+		<org.jorge.lolin1.custom.TimePickerPreference
+			android:title="@string/pref_title_baron_respawn"
+			android:key="@string/pref_title_baron_respawn"
+			android:defaultValue="@string/pref_default_baron_respawn"
+			/>
+		<org.jorge.lolin1.custom.TimePickerPreference
+			android:title="@string/pref_title_dragon_respawn"
+			android:key="@string/pref_title_dragon_respawn"
+			android:defaultValue="@string/pref_default_dragon_respawn"
+			/>
+		<org.jorge.lolin1.custom.TimePickerPreference
+			android:title="@string/pref_title_buff_respawn"
+			android:key="@string/pref_title_buff_respawn"
+			android:defaultValue="@string/pref_default_buff_respawn"
+			/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_chat">
+		<EditTextPreference
+			android:title="@string/pref_title_username"
+			android:key="@string/pref_title_username"
+			android:defaultValue="@string/pref_default_username"/>
+		<EditTextPreference
+			android:title="@string/pref_title_pass"
+			android:key="@string/pref_title_pass"
+			android:defaultValue="@string/pref_default_pass"
+			android:password="true"
+			/>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_share">
+		<Preference android:title="@string/pref_title_facebook">
+			<intent android:action="org.jorge.lolin1.activities.SHARETOFBACTIVITY"
+				/>
+		</Preference>
+		<Preference android:title="@string/pref_title_twitter">
+			<intent android:action="org.jorge.lolin1.activities.SHARETOTWITTERACTIVITY"
+				/>
+		</Preference>
+	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_about">
+		<Preference android:title="@string/pref_title_rate">
+			<intent android:action="org.jorge.lolin1.activities.RATEACTIVITY"
+				/>
+		</Preference>
+		<CheckBoxPreference
+			android:title="@string/pref_title_ads"
+			android:key="@string/pref_title_ads"
+			android:summaryOn="@string/pref_summary_ads_on"
+			android:summaryOff="@string/pref_summary_ads_off"
+			android:defaultValue="false"
+			/>
+		<Preference android:title="@string/pref_title_developer">
+			<intent android:action="http://www.linkedin.com/in/jorgediazbenitosoriano"
+				/>
+		</Preference>
+		<Preference android:title="@string/pref_title_policy">
+			<intent android:action="org.jorge.lolin1.activities.POLICYACTIVITY"
+				/>
+		</Preference>
+	</PreferenceCategory>
+</PreferenceScreen>

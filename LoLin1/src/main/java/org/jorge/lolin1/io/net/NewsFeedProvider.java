@@ -1,15 +1,20 @@
 package org.jorge.lolin1.io.net;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import org.jorge.lolin1.utils.Utils;
 import org.jorge.lolin1.utils.feeds.FeedHandler;
+import org.jorge.lolin1.utils.feeds.NewsFeedHandler;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.StringTokenizer;
 
@@ -39,46 +44,45 @@ import mf.javax.xml.stream.events.XMLEvent;
  */
 public class NewsFeedProvider {
 
-    private URL source;
     private Context context;
     private String separator;
     private FeedHandler handler;
+    private static final String AVAILABILITY_CHECKER = "stylesheet", LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX = ".xml";
+    private static final Integer AVAILABILITY_DELAY_MILLIS = new Integer(1000);
 
     /**
-     * Constructor with default separator "||||" and immediate parsing request
+     * Constructor with default separator "||||"
      *
-     * @param source {@link java.net.URL} The data source for the feed
+     * @param context {@link Context} The application context
      */
-    public NewsFeedProvider(Context context, URL source, FeedHandler handler) {
-        this(context, source, "||||", Boolean.TRUE, handler);
-    }
-
-    public NewsFeedProvider(Context context, URL source, String separator, FeedHandler handler) {
-        this(context, source, separator, Boolean.TRUE, handler);
-    }
-
-    public NewsFeedProvider(Context context, URL source, String separator, Boolean immPars, FeedHandler handler) {
-        this.source = source;
-        this.separator = separator;
+    public NewsFeedProvider(Context context) {
         this.context = context;
-        this.handler = handler;
-        if (immPars) {
-            updateFeed();
-        }
+        this.separator = "||||";
+        this.handler = new NewsFeedHandler(context);
     }
 
-    public void updateFeed() {
-        new AsyncTask<Void, Void, Void>() {
+    public void requestFeedRefresh() {
+        new AsyncTask<Void, Void, Boolean>() {
             @Override
-            protected Void doInBackground(Void... voids) {
+            protected Boolean doInBackground(Void... voids) {
+                Boolean ret = Boolean.FALSE;
                 try {
-                    handler.onFeedUpdated(retrieveFeed(), separator);
-                } catch (IOException e1) {
+                    if (Utils.isInternetReachable(context)) {
+                        ret = handler.onFeedUpdated(retrieveFeed(), separator);
+                    }
+                    else {
+                        handler.onNoInternetConnection();
+                    }
+                }
+                catch (IOException e1) {
                     handler.onNoInternetConnection();
-                } catch (XMLStreamException e2) {
+                }
+                catch (XMLStreamException e2) {
                     Log.e("ERROR", "Exception", e2);
                 }
-                return null;
+                finally {
+                    return ret;
+                }
             }
         }.execute();
     }
@@ -94,16 +98,35 @@ public class NewsFeedProvider {
         return result;
     }
 
+    /**
+     * Returns the last page of news.
+     *
+     * @return {@link java.util.ArrayList} The last page of news. The most recent article is returned last
+     * @throws IOException
+     * @throws XMLStreamException
+     */
     private ArrayList<String> retrieveFeed() throws IOException, XMLStreamException {
         final ArrayList<FeedEntry> items = new ArrayList<>();
         final XMLInputFactory inputFactory = XMLInputFactory.newFactory();
         InputStream in;
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String server = preferences.getString(Utils.getString(context, "pref_title_server", "pref_title_server"), "euw"), lang = preferences.getString(Utils.getString(context, "pref_title_lang", "pref_title_lang"), "en");
+        String srcString = (LOLNEWS_PREFIX + "_" + server + "_" + lang + LOLNEWS_SUFFIX).toLowerCase();
+        URL source = new URL(srcString);
         in = source.openStream();
+        if (!Utils.convertStreamToString(in).contains(AVAILABILITY_CHECKER)) {
+            try {
+                Thread.sleep(AVAILABILITY_DELAY_MILLIS);
+            }
+            catch (InterruptedException e) {
+                Log.e("ERROR", "Exception", e);
+            }
+            return retrieveFeed();
+        }
         final XMLEventReader eventReader = inputFactory
                 .createXMLEventReader(in);
         XMLEvent event;
         boolean descIsUseful = Boolean.FALSE;
-        String currPubDate = "";
         while (eventReader.hasNext()) {
             event = eventReader.nextEvent();
             if (event.isStartElement()) {
@@ -114,17 +137,18 @@ public class NewsFeedProvider {
                         || local.matches("lastBuildDate")
                         || local.matches("generator") || local.matches("ttl")) {
                     continue;
-                } else if (local.matches("description")) {
+                }
+                else if (local.matches("description")) {
                     if (!descIsUseful) {
                         descIsUseful = Boolean.TRUE;
                         continue;
                     }
                     final FeedEntry currFeed = new FeedEntry(
                             getCharacterData(event, eventReader));
-                    currFeed.setPubDate(currPubDate);
                     items.add(currFeed);
-                } else if (local.matches("pubDate")) {
-                    currPubDate = getCharacterData(event, eventReader);
+                }
+                else if (local.matches("pubDate")) {
+                    getCharacterData(event, eventReader); //FUTURE This field tells when the article was published.
                 }
             }
         }
@@ -133,7 +157,7 @@ public class NewsFeedProvider {
         for (Iterator<FeedEntry> it = items.iterator(); it.hasNext(); ) {
             ret.add(it.next().toString(separator));
         }
-
+        Collections.reverse(ret);
         return ret;
     }
 

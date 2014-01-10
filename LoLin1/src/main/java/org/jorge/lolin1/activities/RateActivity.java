@@ -1,6 +1,6 @@
-package org.jorge.lolin1.utils.feeds;
+package org.jorge.lolin1.activities;
 
-import java.util.ArrayList;
+import android.app.Activity;
 
 /**
  * This file is part of LoLin1.
@@ -18,11 +18,7 @@ import java.util.ArrayList;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 04/01/14.
+ * Created by JorgeAntonio on 07/01/14.
  */
-public interface FeedHandler {
-
-    public void onNoInternetConnection();
-
-    public Boolean onFeedUpdated(ArrayList<String> items, String separator);
+public class RateActivity extends Activity {
 }

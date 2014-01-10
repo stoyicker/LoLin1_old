@@ -28,7 +28,7 @@ Created by JorgeAntonio on 02/01/14.
 		android:id="@+id/navigation_drawer_section_image"/>
 
 	<TextView
-		android:layout_width="fill_parent"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:id="@+id/navigation_drawer_section_title"
 		android:textSize="@dimen/navigation_drawer_text_size"

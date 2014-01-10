@@ -1,11 +1,14 @@
 package org.jorge.lolin1.utils.feeds;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.widget.Toast;
 
-import org.jorge.lolin1.utils.ReflectedRes;
+import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
+import org.jorge.lolin1.utils.Utils;
 
 import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * This file is part of LoLin1.
@@ -35,11 +38,29 @@ public class NewsFeedHandler implements FeedHandler {
 
     @Override
     public void onNoInternetConnection() {
-        Toast.makeText(context, ReflectedRes.string(context, "error_no_internet", ""), Toast.LENGTH_LONG);
+        Toast.makeText(context, Utils.getString(context, "error_no_internet", ""), Toast.LENGTH_LONG);
     }
 
     @Override
-    public void onFeedUpdated(ArrayList<String> items, String separator) {
-
+    public Boolean onFeedUpdated(ArrayList<String> items, String separator) {
+        ContentValues row;
+        String url, img_url, title, desc;
+        boolean areThereNewNews = Boolean.FALSE;
+        for (String x : items) {
+            StringTokenizer currentItem = new StringTokenizer(x, separator);
+            img_url = currentItem.nextToken();
+            url = currentItem.nextToken();
+            title = currentItem.nextToken();
+            desc = currentItem.nextToken();
+            row = new ContentValues();
+            row.put(NewsToSQLiteBridge.KEY_TITLE, title);
+            row.put(NewsToSQLiteBridge.KEY_DESC, desc);
+            row.put(NewsToSQLiteBridge.KEY_IMG_URL, img_url);
+            row.put(NewsToSQLiteBridge.KEY_URL, url);
+            if (NewsToSQLiteBridge.getSingleton().insertNews(row) != -1) {
+                areThereNewNews = Boolean.TRUE;
+            }
+        }
+        return areThereNewNews;
     }
 }

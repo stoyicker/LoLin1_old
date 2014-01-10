@@ -1,16 +1,17 @@
-package org.jorge.lolin1;
+package org.jorge.lolin1.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Menu;
 import android.view.MenuItem;
 
-import org.jorge.lolin1.fragments.FeedFragment;
-import org.jorge.lolin1.fragments.NavigationDrawerFragment;
-import org.jorge.lolin1.io.db.SQLiteBridge;
-import org.jorge.lolin1.utils.ReflectedRes;
+import org.jorge.lolin1.R;
+import org.jorge.lolin1.ui.NavigationDrawerFragment;
+import org.jorge.lolin1.ui.NewsFragment;
+import org.jorge.lolin1.utils.Utils;
 
 /**
  * This file is part of LoLin1.
@@ -44,12 +45,7 @@ public class NewsActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.entryactivity);
-        SQLiteBridge.setup(getApplicationContext());
-
-        if (Boolean.TRUE/*TODO Get the firstRun pref to make the real check*/) {
-            performFirstRunOps();
-        }
+        setContentView(R.layout.news_activity);
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -63,17 +59,23 @@ public class NewsActivity extends Activity
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, FeedFragment.newInstance(position + 1))
-                .commit();
+        switch (position) {
+            case 0:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.news_container, new NewsFragment(this))
+                        .commit();
+                break;
+        }
+
     }
 
     public void onSectionAttached(int number) {
-        mTitle = ReflectedRes.string(this, "title_section" + number, "");
-        if (mTitle.toString().isEmpty())
+        int shiftedPos = number + 1;
+        mTitle = Utils.getString(this, "title_section" + shiftedPos, "");
+        if (mTitle.toString().isEmpty()) {
             mTitle = getString(R.string.title_section1);
+        }
     }
 
     public void restoreActionBar() {
@@ -83,32 +85,26 @@ public class NewsActivity extends Activity
         actionBar.setTitle(mTitle);
     }
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        if (!mNavigationDrawerFragment.isDrawerOpen()) {
-//            // Only show items in the action bar relevant to this screen
-//            // if the drawer is not showing. Otherwise, let the drawer
-//            // decide what to show in the action bar.
-//            getMenuInflater().inflate(R.menu.entry, menu);
-//            restoreActionBar();
-//            return true;
-//        }
-//        return super.onCreateOptionsMenu(menu); TODO If the app works without this, delete entry.xml and public boolean onOptionsItemSelected(MenuItem item)
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        if (!mNavigationDrawerFragment.isDrawerOpen()) {
+            getMenuInflater().inflate(R.menu.entry, menu);
+            restoreActionBar();
+            return true;
+        }
+        return super.onCreateOptionsMenu(menu);
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, as long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
+        //TODO Add refresh action
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //TODO Show prefs activity
+                break;
+            default: //Up button
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void performFirstRunOps() {
-        //TODO Set firstRun as false in prefs.
+        return true;
     }
 }

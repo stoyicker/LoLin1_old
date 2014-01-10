@@ -1,4 +1,4 @@
-package org.jorge.lolin1.fragments;
+package org.jorge.lolin1.ui;
 
 import android.app.ActionBar;
 import android.app.Activity;
@@ -20,7 +20,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.customs.NavigationDrawerArrayAdapter;
+import org.jorge.lolin1.custom.NavigationDrawerArrayAdapter;
 
 /**
  * This file is part of LoLin1.
@@ -70,7 +70,6 @@ public class NavigationDrawerFragment extends Fragment {
     private View mFragmentContainerView;
 
     private int mCurrentSelectedPosition = 0;
-    private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
 
     public NavigationDrawerFragment() {
@@ -87,7 +86,6 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (savedInstanceState != null) {
             mCurrentSelectedPosition = savedInstanceState.getInt(STATE_SELECTED_POSITION);
-            mFromSavedInstanceState = true;
         }
 
         // Select either the default item (0) or the last selected item.
@@ -179,12 +177,6 @@ public class NavigationDrawerFragment extends Fragment {
             }
         };
 
-        // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
-        // per the navigation drawer design guidelines.
-        if (!mUserLearnedDrawer && !mFromSavedInstanceState) {
-            mDrawerLayout.openDrawer(mFragmentContainerView);
-        }
-
         // Defer code dependent on restoration of previous instance state.
         mDrawerLayout.post(new Runnable() {
             @Override
@@ -214,7 +206,8 @@ public class NavigationDrawerFragment extends Fragment {
         super.onAttach(activity);
         try {
             mCallbacks = (NavigationDrawerCallbacks) activity;
-        } catch (ClassCastException e) {
+        }
+        catch (ClassCastException e) {
             throw new ClassCastException("Activity must implement NavigationDrawerCallbacks.");
         }
     }

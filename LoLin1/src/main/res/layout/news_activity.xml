@@ -23,12 +23,12 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 	android:id="@+id/drawer_layout"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
-	tools:context="org.jorge.lolin1.NewsActivity">
+	tools:context="org.jorge.lolin1.activities.NewsActivity">
 
 	<!-- As the main content view, the view below consumes the entire
 		 space available using match_parent in both dimensions. -->
 	<FrameLayout
-		android:id="@+id/container"
+		android:id="@+id/news_container"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"/>
 
@@ -43,7 +43,7 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 		android:id="@+id/navigation_drawer"
 		android:layout_width="@dimen/navigation_drawer_width"
 		android:layout_height="match_parent"
-		android:layout_gravity="start"
-		android:name="org.jorge.lolin1.fragments.NavigationDrawerFragment"/>
+		android:layout_gravity="left"
+		android:name="org.jorge.lolin1.ui.NavigationDrawerFragment"/>
 
 </android.support.v4.widget.DrawerLayout>

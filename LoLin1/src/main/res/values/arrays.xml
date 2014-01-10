@@ -27,4 +27,93 @@ Created by JorgeAntonio on 02/01/14.
 		<item>@string/title_section6</item>
 		<item>@string/title_section7</item>
 	</string-array>
+	<string-array name="news_feed_urls">
+		<item>@string/news_euw_en</item>
+		<item>@string/news_euw_de</item>
+		<item>@string/news_euw_es</item>
+		<item>@string/news_euw_fr</item>
+		<item>@string/news_euw_it</item>
+		<item>@string/news_eune_en</item>
+		<item>@string/news_eune_el</item>
+		<item>@string/news_eune_pl</item>
+		<item>@string/news_eune_ro</item>
+		<item>@string/news_br_pt</item>
+		<item>@string/news_na_en</item>
+		<item>@string/news_tr_tr</item>
+	</string-array>
+	<string-array name="lang_euw">
+		<item>@string/lang_en</item>
+		<item>@string/lang_de</item>
+		<item>@string/lang_es</item>
+		<item>@string/lang_fr</item>
+		<item>@string/lang_it</item>
+	</string-array>
+	<string-array name="lang_eune">
+		<item>@string/lang_en</item>
+		<item>@string/lang_el</item>
+		<item>@string/lang_pl</item>
+		<item>@string/lang_ro</item>
+	</string-array>
+	<string-array name="lang_na">
+		<item>@string/lang_en</item>
+	</string-array>
+	<string-array name="lang_tr">
+		<item>@string/lang_tr</item>
+	</string-array>
+	<string-array name="lang_br">
+		<item>@string/lang_pt</item>
+	</string-array>
+	<string-array name="lang_euw_simplified">
+		<item>@string/lang_en_simplified</item>
+		<item>@string/lang_de_simplified</item>
+		<item>@string/lang_es_simplified</item>
+		<item>@string/lang_fr_simplified</item>
+		<item>@string/lang_it_simplified</item>
+	</string-array>
+	<string-array name="lang_eune_simplified">
+		<item>@string/lang_en_simplified</item>
+		<item>@string/lang_el_simplified</item>
+		<item>@string/lang_pl_simplified</item>
+		<item>@string/lang_ro_simplified</item>
+	</string-array>
+	<string-array name="lang_na_simplified">
+		<item>@string/lang_en_simplified</item>
+	</string-array>
+	<string-array name="lang_tr_simplified">
+		<item>@string/lang_tr_simplified</item>
+	</string-array>
+	<string-array name="lang_br_simplified">
+		<item>@string/lang_pt_simplified</item>
+	</string-array>
+	<string-array name="servers">
+		<item>@string/server_na</item>
+		<item>@string/server_br</item>
+		<item>@string/server_tr</item>
+		<item>@string/server_euw</item>
+		<item>@string/server_eune</item>
+	</string-array>
+	<string-array name="langs">
+		<item>@string/lang_pt</item>
+		<item>@string/lang_en</item>
+		<item>@string/lang_tr</item>
+		<item>@string/lang_el</item>
+		<item>@string/lang_pl</item>
+		<item>@string/lang_fr</item>
+		<item>@string/lang_es</item>
+		<item>@string/lang_de</item>
+		<item>@string/lang_ro</item>
+		<item>@string/lang_it</item>
+	</string-array>
+	<string-array name="langs_simplified">
+		<item>@string/lang_pt_simplified</item>
+		<item>@string/lang_en_simplified</item>
+		<item>@string/lang_tr_simplified</item>
+		<item>@string/lang_el_simplified</item>
+		<item>@string/lang_pl_simplified</item>
+		<item>@string/lang_fr_simplified</item>
+		<item>@string/lang_es_simplified</item>
+		<item>@string/lang_de_simplified</item>
+		<item>@string/lang_ro_simplified</item>
+		<item>@string/lang_it_simplified</item>
+	</string-array>
 </resources>

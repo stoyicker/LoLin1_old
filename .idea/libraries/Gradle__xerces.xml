@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: xerces">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/LoLin1/libs/xerces.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
