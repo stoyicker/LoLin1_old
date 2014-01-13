@@ -37,8 +37,10 @@ public class SettingsFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings);
 
-        final ListPreference servPreference = (ListPreference) findPreference(Utils.getString(getActivity().getApplicationContext(), "pref_title_server", "error"));
-        servPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+        final ListPreference serverPreference = (ListPreference) findPreference(
+                Utils.getString(getActivity().getApplicationContext(), "pref_title_server",
+                        "error"));
+        serverPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 final ListPreference langPreference = (ListPreference) findPreference(Utils.getString(getActivity().getApplicationContext(), "pref_title_lang", "error"));

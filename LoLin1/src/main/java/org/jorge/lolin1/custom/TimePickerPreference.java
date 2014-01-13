@@ -3,8 +3,11 @@ package org.jorge.lolin1.custom;
 import android.content.Context;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
+
+import org.jorge.lolin1.utils.Utils;
 
 /**
  * This file is part of LoLin1.
@@ -24,21 +27,35 @@ import android.widget.TimePicker;
  * <p/>
  * Created by JorgeAntonio on 07/01/14.
  */
-public class TimePickerPreference extends DialogPreference implements TimePicker.OnTimeChangedListener {
+public class TimePickerPreference extends DialogPreference
+        implements TimePicker.OnTimeChangedListener {
 
-    private String defaultTime;
     private static final String SANITY_EXPRESSION = "[0-5]*[0-9]:[0-5]*[0-9]";
     private static final Integer ERROR_CODE = -1;
+    private static Integer TYPE_COUNTER = 0;
+    private String defaultTime;
 
     public TimePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
         setPersistent(Boolean.TRUE);
-    }
-
-    public TimePickerPreference(Context context, AttributeSet attrs,
-                                int defStyle) {
-        super(context, attrs, defStyle);
-        setPersistent(Boolean.TRUE);
+        String instanceType;
+        switch (TYPE_COUNTER % 3) {
+            case 0:
+                instanceType = "baron";
+                break;
+            case 1:
+                instanceType = "dragon";
+                break;
+            case 2:
+                instanceType = "buff";
+                break;
+            default:
+                Log.e("TYPE COUNTER", "" + TYPE_COUNTER);
+                instanceType = "ERROR";
+        }
+        defaultTime =
+                Utils.getString(getContext(), "pref_default_" + instanceType + "_respawn", "ERROR");
+        TYPE_COUNTER++;
     }
 
     @Override
@@ -48,6 +65,8 @@ public class TimePickerPreference extends DialogPreference implements TimePicker
 
         int mm = getMinutes();
         int ss = getSeconds();
+
+        timePicker.setIs24HourView(Boolean.TRUE);
 
         if (mm != ERROR_CODE && ss != ERROR_CODE) {
             timePicker.setCurrentHour(mm);

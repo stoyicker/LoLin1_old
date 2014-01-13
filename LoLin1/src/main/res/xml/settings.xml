@@ -20,75 +20,66 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="@string/pref_cat_general">
 		<SwitchPreference
-			android:title="@string/pref_title_data"
-			android:key="@string/pref_title_data"
-			android:summaryOn="@string/pref_summary_data_on"
-			android:summaryOff="@string/pref_summary_data_off"
 			android:defaultValue="true"
+			android:key="@string/pref_title_data"
+			android:summaryOff="@string/pref_summary_data_off"
+			android:summaryOn="@string/pref_summary_data_on"
+			android:title="@string/pref_title_data"
 			/>
 		<ListPreference
-			android:title="@string/pref_title_server"
-			android:key="@string/pref_title_server"
+			android:defaultValue="@string/server_euw"
 			android:entries="@array/servers"
 			android:entryValues="@array/servers"
-			android:defaultValue="@string/server_euw"
+			android:key="@string/pref_title_server"
+			android:title="@string/pref_title_server"
 			/>
 		<ListPreference
-			android:title="@string/pref_title_lang"
-			android:key="@string/pref_title_lang"
+			android:defaultValue="@string/lang_en"
 			android:entries="@array/lang_euw"
 			android:entryValues="@array/lang_euw"
-			android:defaultValue="@string/lang_en"
+			android:key="@string/pref_title_lang"
+			android:title="@string/pref_title_lang"
 			/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_jun">
 		<CheckBoxPreference
-			android:title="@string/pref_title_timers_reset"
-			android:key="@string/pref_title_timers_reset"
-			android:summaryOn="@string/pref_summary_timers_reset_on"
-			android:summaryOff="@string/pref_summary_timers_reset_off"
 			android:defaultValue="true"
+			android:key="@string/pref_title_timers_reset"
+			android:summary="@string/pref_summary_timers_reset"
+			android:title="@string/pref_title_timers_reset"
 			/>
 		<CheckBoxPreference
-			android:title="@string/pref_title_display"
-			android:key="@string/pref_title_display"
-			android:summaryOn="@string/pref_summary_display_on"
-			android:summaryOff="@string/pref_summary_display_off"
 			android:defaultValue="false"
-			/>
-		<ListPreference
-			android:title="@string/pref_title_lang"
-			android:key="@string/pref_title_lang"
-			android:entries="@array/lang_euw"
-			android:entryValues="@array/lang_euw"
-			android:defaultValue="@string/lang_en"
+			android:key="@string/pref_title_display"
+			android:summary="@string/pref_summary_display"
+			android:title="@string/pref_title_display"
 			/>
 		<org.jorge.lolin1.custom.TimePickerPreference
-			android:title="@string/pref_title_baron_respawn"
-			android:key="@string/pref_title_baron_respawn"
 			android:defaultValue="@string/pref_default_baron_respawn"
+			android:key="@string/pref_title_baron_respawn"
+			android:title="@string/pref_title_baron_respawn"
 			/>
 		<org.jorge.lolin1.custom.TimePickerPreference
-			android:title="@string/pref_title_dragon_respawn"
-			android:key="@string/pref_title_dragon_respawn"
 			android:defaultValue="@string/pref_default_dragon_respawn"
+			android:key="@string/pref_title_dragon_respawn"
+			android:title="@string/pref_title_dragon_respawn"
 			/>
 		<org.jorge.lolin1.custom.TimePickerPreference
-			android:title="@string/pref_title_buff_respawn"
-			android:key="@string/pref_title_buff_respawn"
 			android:defaultValue="@string/pref_default_buff_respawn"
+			android:key="@string/pref_title_buff_respawn"
+			android:title="@string/pref_title_buff_respawn"
 			/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_chat">
 		<EditTextPreference
-			android:title="@string/pref_title_username"
+			android:defaultValue="@string/pref_default_username"
 			android:key="@string/pref_title_username"
-			android:defaultValue="@string/pref_default_username"/>
+			android:title="@string/pref_title_username"/>
 		<EditTextPreference
-			android:title="@string/pref_title_pass"
-			android:key="@string/pref_title_pass"
 			android:defaultValue="@string/pref_default_pass"
+			android:key="@string/pref_title_pass"
 			android:password="true"
+			android:title="@string/pref_title_pass"
 			/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_share">
@@ -107,11 +98,10 @@
 				/>
 		</Preference>
 		<CheckBoxPreference
-			android:title="@string/pref_title_ads"
-			android:key="@string/pref_title_ads"
-			android:summaryOn="@string/pref_summary_ads_on"
-			android:summaryOff="@string/pref_summary_ads_off"
 			android:defaultValue="false"
+			android:key="@string/pref_title_ads"
+			android:summary="@string/pref_summary_ads"
+			android:title="@string/pref_title_ads"
 			/>
 		<Preference android:title="@string/pref_title_developer">
 			<intent android:action="http://www.linkedin.com/in/jorgediazbenitosoriano"

@@ -3,6 +3,7 @@ package org.jorge.lolin1.activities;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -10,7 +11,7 @@ import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.NavigationDrawerFragment;
-import org.jorge.lolin1.ui.NewsFragment;
+import org.jorge.lolin1.ui.NewsListFragment;
 import org.jorge.lolin1.utils.Utils;
 
 /**
@@ -63,7 +64,7 @@ public class NewsActivity extends Activity
         switch (position) {
             case 0:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.news_container, new NewsFragment(this))
+                        .replace(R.id.news_container, new NewsListFragment(this))
                         .commit();
                 break;
         }
@@ -100,7 +101,7 @@ public class NewsActivity extends Activity
         //TODO Add refresh action
         switch (item.getItemId()) {
             case R.id.action_settings:
-                //TODO Show prefs activity
+                startActivity(new Intent(this, SettingsActivity.class));
                 break;
             default: //Up button
                 return super.onOptionsItemSelected(item);

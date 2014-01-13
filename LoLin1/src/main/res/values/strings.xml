@@ -30,7 +30,9 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="navigation_drawer_close">Close navigation drawer</string>
 	<string name="action_settings">Settings</string>
 	<string name="feed_item_title_proportion" tools:ignore="UnusedResources">0.7</string>
-	<string name="error_no_internet" tools:ignore="UnusedResources">Couldn\'t find an Internet connection</string>
+	<string name="error_no_internet" tools:ignore="UnusedResources">Couldn\'t find an Internet
+		connection
+	</string>
 	<string name="db_name" tools:ignore="UnusedResources">LoLin1_DB</string>
 	<string name="lang_pt_simplified">Portuguese</string>
 	<string name="lang_en_simplified">English</string>
@@ -66,8 +68,10 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="news_tr_tr">http://feed43.com/lolnews_tr_tr.xml</string>
 	<string name="pref_cat_general">GENERAL</string>
 	<string name="pref_title_data">Allow data usage</string>
-	<string name="pref_summary_data_on">Allow the app to work with the data connection (only when Wi-Fi is not connected)</string>
-	<string name="pref_summary_data_off">Forbid the app from working with the data connection</string>
+	<string name="pref_summary_data_on">Allow data usage (only when Wi-Fi is not connected)
+	</string>
+	<string name="pref_summary_data_off">Forbid the app from working with the data connection
+	</string>
 	<string name="pref_title_server">League of Legends server</string>
 	<string name="server_na">NA</string>
 	<string name="server_euw">EUW</string>
@@ -77,11 +81,12 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_title_lang">Language</string>
 	<string name="pref_cat_jun">JUNGLE TIMERS</string>
 	<string name="pref_title_timers_reset">Confirm timers reset</string>
-	<string name="pref_summary_timers_reset_on">Show a confirmation dialog when manually resetting the jungle timers</string>
-	<string name="pref_summary_timers_reset_off">Straightforwardly reset the jungle timers</string>
+	<string name="pref_summary_timers_reset">Request for confirmation when manually resetting
+		the jungle timers
+	</string>
 	<string name="pref_title_display">Keep display on</string>
-	<string name="pref_summary_display_on">Keep the display on while viewing the timers (increases battery consumption)</string>
-	<string name="pref_summary_display_off">Always allow the display to dim</string>
+	<string name="pref_summary_display">While viewing the timers
+	</string>
 	<string name="pref_title_baron_respawn">Baron respawn time</string>
 	<string name="pref_title_dragon_respawn">Dragon respawn time</string>
 	<string name="pref_title_buff_respawn">Buff respawn time</string>
@@ -91,7 +96,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_cat_chat">CHAT</string>
 	<string name="pref_title_username">Username</string>
 	<string name="pref_default_username"></string>
-	<string name="pref_title_pass">Username</string>
+	<string name="pref_title_pass">Password</string>
 	<string name="pref_default_pass"></string>
 	<string name="pref_cat_share">SHARE</string>
 	<string name="pref_title_facebook">Post to Facebook</string>
@@ -102,7 +107,14 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_title_policy">Legal terms</string>
 	<string name="pref_first_run">firstRun</string>
 	<string name="pref_title_ads">Help to support the app</string>
-	<string name="pref_summary_ads_on">Show an ad when the application is run</string>
-	<string name="pref_summary_ads_off">Hide ads</string>
-
+	<string name="pref_summary_ads">Show ads</string>
+	<string name="title_activity_init">Initializing...</string>
+	<string name="title_activity_news">News</string>
+	<string name="title_activity_facebook">Share to Facebook</string>
+	<string name="title_activity_policy">Privacy policy</string>
+	<string name="title_activity_twitter">Share to Twitter</string>
+	<string name="title_activity_ads">Thanks for your support!</string>
+	<string name="title_activity_settings">Settings</string>
+	<string name="title_activity_server_and_lang">Initial configuration</string>
+	<string name="title_activity_rate">Rate LoLin1</string>
 </resources>

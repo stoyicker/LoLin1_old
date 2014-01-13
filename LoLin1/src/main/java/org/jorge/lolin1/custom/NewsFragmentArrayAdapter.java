@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -49,12 +48,13 @@ public class NewsFragmentArrayAdapter extends ArrayAdapter {
         super(context, mResource);
     }
 
-    private static final Bitmap getStoredBitmap(Context context, byte[] blob, String callbackURL) {
+    private static Bitmap getStoredBitmap(Context context, byte[] blob, String callbackURL) {
         Bitmap ret = null;
         if (blob == null || blob.length == 0) {
             if (Utils.isInternetReachable(context)) {
                 try {
-                    ret = BitmapFactory.decodeStream(new URL(callbackURL).openConnection().getInputStream());
+                    ret = BitmapFactory
+                            .decodeStream(new URL(callbackURL).openConnection().getInputStream());
                     NewsToSQLiteBridge.getSingleton().updateNewsBlob(blob, callbackURL);
                 }
                 catch (IOException e) {
@@ -73,7 +73,8 @@ public class NewsFragmentArrayAdapter extends ArrayAdapter {
         if (shownNews.containsKey(tableName)) {
             ArrayList<HashMap<String, String>> currTable = shownNews.get(tableName);
             int howManyIHave = currTable.size();
-            ArrayList<HashMap<String, String>> newNews = NewsToSQLiteBridge.getSingleton().getNewNews(howManyIHave);
+            ArrayList<HashMap<String, String>> newNews =
+                    NewsToSQLiteBridge.getSingleton().getNewNews(howManyIHave);
             for (HashMap<String, String> x : newNews) {
                 currTable.add(x);
                 notifyDataSetChanged();
@@ -110,25 +111,31 @@ public class NewsFragmentArrayAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(mResource, parent, false);
-
         ImageView image = (ImageView) convertView.findViewById(R.id.feed_item_image);
         TextView title = (TextView) convertView.findViewById(R.id.news_feed_item_title);
         TextView desc = (TextView) convertView.findViewById(R.id.news_feed_item_desc);
 
-        int title_proportion = Integer.parseInt(Utils.getString(getContext(), "feed_item_title_proportion", "-1"));
+        int title_proportion =
+                Integer.parseInt(Utils.getString(getContext(), "feed_item_title_proportion", "-1"));
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        ArrayList<HashMap<String, String>> currentFeed = shownNews.get(prefs.getString(Utils.getString(getContext(), "pref_title_server", "pref_title_server"), "pref_title_server")
-                + "_" + prefs.getString(Utils.getString(getContext(), "pref_title_lang", "pref_title_lang"), "pref_title_lang"));
+        ArrayList<HashMap<String, String>> currentFeed = shownNews.get(prefs
+                .getString(Utils.getString(getContext(), "pref_title_server", "pref_title_server"),
+                        "pref_title_server")
+                + "_" +
+                prefs.getString(Utils.getString(getContext(), "pref_title_lang", "pref_title_lang"),
+                        "pref_title_lang"));
         HashMap<String, String> thisArticle = currentFeed.get(position);
 
-        Bitmap bmp = getStoredBitmap(getContext(), NewsToSQLiteBridge.getSingleton().getNewsBlob(thisArticle.get(NewsToSQLiteBridge.KEY_IMG_URL)), thisArticle.get(NewsToSQLiteBridge.KEY_IMG_URL));
+        Bitmap bmp = getStoredBitmap(getContext(), NewsToSQLiteBridge.getSingleton()
+                .getNewsBlob(thisArticle.get(NewsToSQLiteBridge.KEY_IMG_URL)),
+                thisArticle.get(NewsToSQLiteBridge.KEY_IMG_URL));
         image.setImageBitmap(bmp);
         title.setTextSize(image.getHeight() * title_proportion);
         desc.setTextSize(image.getHeight() * (1 - title_proportion));
-        title.setText(Utils.getString(getContext(), thisArticle.get(NewsToSQLiteBridge.KEY_TITLE), ""));
-        desc.setText(Utils.getString(getContext(), thisArticle.get(NewsToSQLiteBridge.KEY_DESC), ""));
+        title.setText(
+                Utils.getString(getContext(), thisArticle.get(NewsToSQLiteBridge.KEY_TITLE), ""));
+        desc.setText(
+                Utils.getString(getContext(), thisArticle.get(NewsToSQLiteBridge.KEY_DESC), ""));
 
         return convertView;
     }
