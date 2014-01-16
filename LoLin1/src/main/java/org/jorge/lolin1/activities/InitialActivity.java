@@ -38,18 +38,26 @@ public class InitialActivity extends Activity {
         super.onCreate(savedInstanceState);
         NewsToSQLiteBridge.setup(getApplicationContext());
         PreferenceManager.setDefaultValues(this, R.xml.settings, Boolean.FALSE);
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (preferences.getBoolean(Utils.getString(getApplicationContext(), "pref_first_run", "pref_first_run"), Boolean.FALSE)) {//FIXME Change this to Boolean.TRUE to see the first-time stuff happen
-            final Intent firstTimeSetupIntent = new Intent("org.jorge.lolin1.activities.SERVERANDLANGCHOOSERACTIVITY");
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (preferences.getBoolean(
+                Utils.getString(getApplicationContext(), "pref_first_run", "pref_first_run"),
+                Boolean.FALSE)) {//FIXME Change this to Boolean.TRUE to see the first-time stuff happen
+            final Intent firstTimeSetupIntent =
+                    new Intent("org.jorge.lolin1.activities.SERVERANDLANGCHOOSERACTIVITY");
             startActivity(firstTimeSetupIntent);
             SharedPreferences.Editor firstRunEditor = preferences.edit();
-            firstRunEditor.putBoolean(Utils.getString(getApplicationContext(), "pref_first_run", "pref_first_run"), Boolean.FALSE);
-            firstRunEditor.commit();
+            firstRunEditor.putBoolean(
+                    Utils.getString(getApplicationContext(), "pref_first_run", "pref_first_run"),
+                    Boolean.FALSE);
+            firstRunEditor.apply();
         }
-        if (preferences.getBoolean(Utils.getString(getApplicationContext(), "pref_title_ads", "pref_title_ads"), Boolean.FALSE)) {
+        if (preferences.getBoolean(
+                Utils.getString(getApplicationContext(), "pref_title_ads", "pref_title_ads"),
+                Boolean.FALSE)) {
             startActivity(new Intent(this, AdsActivity.class));
         }
-        final Intent newsIntent = new Intent(this, NewsActivity.class);
+        final Intent newsIntent = new Intent(this, MainActivity.class);
         startActivity(newsIntent);
         finish();
     }

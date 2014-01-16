@@ -18,35 +18,13 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 02/01/14.
 -->
 <resources>
-
 	<!-- Base application theme. -->
 	<style name="AppTheme" parent="android:Theme.Holo.Light">
 		<!-- FUTURE Customize your theme here. -->
+		<item name="android:actionBarStyle">@style/ActionBarStyle</item>
+		<!--<item name="android:windowActionBarOverlay">true</item>-->
 	</style>
-
-	<style name="Theme.Holo.CustomPtrHeader" parent="android:Theme.Holo">
-		<item name="ptrHeaderStyle">@style/Widget.Custom.PtrHeader</item>
+	<style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
+		<item name="android:background">#CCFFBB33</item>
 	</style>
-
-	<style name="Widget.Custom.PtrHeader" parent="android:Widget">
-		<item name="ptrHeaderBackground">@android:color/black</item>
-
-		<!-- This is commented out as you should not set this unless you know what you're doing -->
-		<!--<item name="ptrHeaderHeight"></item>-->
-
-		<item name="ptrHeaderTitleTextAppearance">@style/TextAppearance.Custom.PtrHeader.Title
-		</item>
-		<item name="ptrProgressBarStyle">inside</item>
-		<item name="ptrProgressBarColor">@android:color/black</item>
-
-		<item name="ptrPullText">Keep going...</item>
-		<item name="ptrRefreshingText">Pulling down the internet</item>
-		<item name="ptrReleaseText">Let go if you want me to refresh!</item>
-	</style>
-
-	<style name="TextAppearance.Custom.PtrHeader.Title"
-	       parent="android:TextAppearance.Large.Inverse">
-		<item name="android:textSize">20dp</item>
-	</style>
-
 </resources>

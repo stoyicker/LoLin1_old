@@ -14,8 +14,11 @@ repositories {
 }
 
 android {
+    packagingOptions {
+        exclude 'AndroidManifest.xml'
+    }
     compileSdkVersion 19
-    buildToolsVersion "19.0.1"
+    buildToolsVersion '19.0.1'
 
     defaultConfig {
         minSdkVersion 14
@@ -38,7 +41,8 @@ android {
 
 //noinspection GroovyAssignabilityCheck
 dependencies {
-    compile 'com.android.support:support-v4:18.0.0'
-    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
+    //    compile 'com.github.manuelpeinado.refreshactionitem-native:RefreshActionItem:+'
+    //    compile 'com.twotoasters.jazzylistview:library:+'
+    compile 'com.android.support:support-v4:+'
     compile files('libs/xerces.jar')
 }

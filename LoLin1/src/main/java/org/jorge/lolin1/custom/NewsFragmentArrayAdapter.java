@@ -42,7 +42,8 @@ import java.util.HashMap;
 public class NewsFragmentArrayAdapter extends ArrayAdapter {
 
     private static final int mResource = R.layout.fragment_news_feed;
-    private final HashMap<String, ArrayList<HashMap<String, String>>> shownNews = new HashMap<>();
+    private static final HashMap<String, ArrayList<HashMap<String, String>>> shownNews =
+            new HashMap<>();
 
     public NewsFragmentArrayAdapter(Context context) {
         super(context, mResource);
@@ -70,7 +71,10 @@ public class NewsFragmentArrayAdapter extends ArrayAdapter {
 
     public void updateShownNews() {
         String tableName = Utils.getTableName(getContext());
+        Log.d("NX4", "Table name fetched: " + tableName);
+        //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
+            Log.d("NX4", "updateShownNews is on the if.");
             ArrayList<HashMap<String, String>> currTable = shownNews.get(tableName);
             int howManyIHave = currTable.size();
             ArrayList<HashMap<String, String>> newNews =
@@ -81,9 +85,12 @@ public class NewsFragmentArrayAdapter extends ArrayAdapter {
             }
         }
         else {
+            Log.d("NX4", "updateShownNews is on the else.");
             ArrayList<HashMap<String, String>> news =
                     NewsToSQLiteBridge.getSingleton().getNews();
+            Log.d("NX4", "news size is " + news.size());
             shownNews.put(tableName, news);
+            Log.d("NX4", "Table name put: " + tableName);
             notifyDataSetChanged();
         }
     }

@@ -80,7 +80,7 @@ public class TimePickerPreference extends DialogPreference
     public void onTimeChanged(TimePicker view, int minutes, int seconds) {
 
         String result = minutes + ":" + seconds;
-        callChangeListener(result); //MAYBE If this doesn't work, put it below persistString
+        callChangeListener(result);
         persistString(result);
     }
 

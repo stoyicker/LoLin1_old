@@ -116,4 +116,8 @@ Created by JorgeAntonio on 02/01/14.
 		<item>@string/lang_ro_simplified</item>
 		<item>@string/lang_it_simplified</item>
 	</string-array>
+	<string-array name="main_fragments_tags">
+		<!--<item>@string/tag_fragment_container</item>-->
+		<item>@string/tag_fragment_news</item>
+	</string-array>
 </resources>

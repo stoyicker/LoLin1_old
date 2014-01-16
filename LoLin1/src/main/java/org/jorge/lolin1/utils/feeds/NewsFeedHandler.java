@@ -1,5 +1,6 @@
 package org.jorge.lolin1.utils.feeds;
 
+import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
 import android.widget.Toast;
@@ -38,7 +39,14 @@ public class NewsFeedHandler implements FeedHandler {
 
     @Override
     public void onNoInternetConnection() {
-        Toast.makeText(context, Utils.getString(context, "error_no_internet", ""), Toast.LENGTH_LONG);
+        final String msg = Utils.getString(context, "error_no_internet", "ERROR");
+        ((Activity) context).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(context, msg,
+                        Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override

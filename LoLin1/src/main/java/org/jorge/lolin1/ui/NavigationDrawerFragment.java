@@ -111,7 +111,8 @@ public class NavigationDrawerFragment extends Fragment {
                 selectItem(position);
             }
         });
-        mDrawerListView.setAdapter(new NavigationDrawerArrayAdapter(getActionBar().getThemedContext()));
+        mDrawerListView
+                .setAdapter(new NavigationDrawerArrayAdapter(getActionBar().getThemedContext()));
         //mDrawerListView.setItemChecked(mCurrentSelectedPosition, true);
         return mDrawerListView;
     }
@@ -236,7 +237,7 @@ public class NavigationDrawerFragment extends Fragment {
         // If the drawer is open, show the actionbar app actions in the action bar. See also
         // showGlobalContextActionBar, which controls the top-left area of the action bar.
         if (mDrawerLayout != null && isDrawerOpen()) {
-            inflater.inflate(R.menu.actionbar, menu);
+            inflater.inflate(R.menu.standard, menu);
             showGlobalContextActionBar();
         }
         super.onCreateOptionsMenu(menu, inflater);

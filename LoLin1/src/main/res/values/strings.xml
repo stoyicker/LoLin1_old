@@ -18,6 +18,7 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 02/01/14.
 -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+
 	<string name="app_name">LoLin1</string>
 	<string name="title_section1">Home</string>
 	<string name="title_section2">Jungle Timers</string>
@@ -29,6 +30,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="navigation_drawer_open">Open navigation drawer</string>
 	<string name="navigation_drawer_close">Close navigation drawer</string>
 	<string name="action_settings">Settings</string>
+	<string name="action_refresh">Refresh</string>
 	<string name="feed_item_title_proportion" tools:ignore="UnusedResources">0.7</string>
 	<string name="error_no_internet" tools:ignore="UnusedResources">Couldn\'t find an Internet
 		connection
@@ -68,8 +70,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="news_tr_tr">http://feed43.com/lolnews_tr_tr.xml</string>
 	<string name="pref_cat_general">GENERAL</string>
 	<string name="pref_title_data">Allow data usage</string>
-	<string name="pref_summary_data_on">Allow data usage (only when Wi-Fi is not connected)
-	</string>
+	<string name="pref_summary_data_on">Allow data usage (only when Wi-Fi is not connected)</string>
 	<string name="pref_summary_data_off">Forbid the app from working with the data connection
 	</string>
 	<string name="pref_title_server">League of Legends server</string>
@@ -85,8 +86,7 @@ Created by JorgeAntonio on 02/01/14.
 		the jungle timers
 	</string>
 	<string name="pref_title_display">Keep display on</string>
-	<string name="pref_summary_display">While viewing the timers
-	</string>
+	<string name="pref_summary_display">While viewing the timers</string>
 	<string name="pref_title_baron_respawn">Baron respawn time</string>
 	<string name="pref_title_dragon_respawn">Dragon respawn time</string>
 	<string name="pref_title_buff_respawn">Buff respawn time</string>
@@ -102,6 +102,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_title_facebook">Post to Facebook</string>
 	<string name="pref_title_twitter">Share on Twitter</string>
 	<string name="pref_cat_about">ABOUT</string>
+	<string name="news_empty">No news to show</string>
 	<string name="pref_title_rate">Rate the app</string>
 	<string name="pref_title_developer">About the developer</string>
 	<string name="pref_title_policy">Legal terms</string>
@@ -117,4 +118,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="title_activity_settings">Settings</string>
 	<string name="title_activity_server_and_lang">Initial configuration</string>
 	<string name="title_activity_rate">Rate LoLin1</string>
+	<!--<string name="tag_fragment_container">Container</string>-->
+	<string name="tag_fragment_news">News</string>
+	<string name="news_header">League of Legends News</string>
 </resources>

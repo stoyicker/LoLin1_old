@@ -8,25 +8,21 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.activities.NewsActivity;
+import org.jorge.lolin1.activities.MainActivity;
 import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
+import org.jorge.lolin1.io.net.NewsFeedProvider;
 import org.jorge.lolin1.utils.Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
-import uk.co.senab.actionbarpulltorefresh.library.HeaderTransformer;
-import uk.co.senab.actionbarpulltorefresh.library.Options;
-import uk.co.senab.actionbarpulltorefresh.library.PullToRefreshLayout;
-import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 
 /**
  * This file is part of LoLin1.
@@ -49,61 +45,56 @@ import uk.co.senab.actionbarpulltorefresh.library.listeners.OnRefreshListener;
 public class NewsListFragment extends ListFragment {
 
     private NewsFragmentArrayAdapter listAdapter;
-    private PullToRefreshLayout mPullToRefreshLayout;
+    private NewsFeedProvider newsFeedProvider;
+    private Boolean UPDATE_RUNNING = Boolean.FALSE;
 
     public NewsListFragment(Context context) {
         super();
         listAdapter = new NewsFragmentArrayAdapter(context);
         setListAdapter(listAdapter);
+        newsFeedProvider = new NewsFeedProvider(context);
     }
 
-    private void setUpPullToRefresh(View view) {
+    public NewsFeedProvider getNewsFeedProvider() {
+        return newsFeedProvider;
+    }
 
-        Options.Builder optionsBuilder = Options.create();
+    /**
+     * Initialize the contents of the Activity's standard options menu.  You
+     * should place your menu items in to <var>menu</var>.  For this method
+     * to be called, you must have first called {@link #setHasOptionsMenu}.  See
+     * {@link android.app.Activity#onCreateOptionsMenu(android.view.Menu) Activity.onCreateOptionsMenu}
+     * for more information.
+     *
+     * @param menu     The options menu in which you place your items.
+     * @param inflater
+     * @see #setHasOptionsMenu
+     * @see #onPrepareOptionsMenu
+     * @see #onOptionsItemSelected
+     */
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.news_default, menu);
+    }
 
-        optionsBuilder.
-                scrollDistance(.75f).headerLayout(R.layout.customised_header)
-                .headerTransformer(new CustomisedHeaderTransformer());
-//                .refreshOnUp(Boolean.TRUE)
-//                .minimize(R.integer.ptr_minimize_delay_millis);
-
-        Options options = optionsBuilder.build();
-
-        // This is the View which is created by ListFragment
-        ViewGroup viewGroup = (ViewGroup) view;
-
-        // We need to create a PullToRefreshLayout manually
-        mPullToRefreshLayout = new PullToRefreshLayout(viewGroup.getContext());
-        mPullToRefreshLayout.setEnabled(Boolean.TRUE);
-
-        // We can now setup the PullToRefreshLayout
-        ActionBarPullToRefresh.SetupWizard setupWizard = ActionBarPullToRefresh.from(getActivity());
-
-        // We need to insert the PullToRefreshLayout into the Fragment's ViewGroup
-        setupWizard = setupWizard.insertLayoutInto(viewGroup);
-
-        // We need to mark the ListView and its Empty View as pullable
-        // This is because they are not direct children of the ViewGroup
-        setupWizard =
-                setupWizard.theseChildrenArePullable(getListView(), getListView().getEmptyView());
-
-        // We can now complete the setup as desired
-        setupWizard = setupWizard.listener(new OnRefreshListener() {
-            @Override
-            public void onRefreshStarted(View view) {
-//                try {
-//                    Thread.sleep(10000);
-//                }
-//                catch (InterruptedException e) {
-//                    e.printStackTrace();
-//                }
-                Log.i("REFRESHED", "!!!!!!!");
-            }
-        });
-
-        setupWizard = setupWizard.options(options);
-
-        setupWizard.setup(mPullToRefreshLayout);
+    /**
+     * Called to do initial creation of a fragment.  This is called after
+     * {@link #onAttach(android.app.Activity)} and before
+     * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
+     * <p/>
+     * <p>Note that this can be called while the fragment's activity is
+     * still in the process of being created.  As such, you can not rely
+     * on things like the activity's content view hierarchy being initialized
+     * at this point.  If you want to do work once the activity itself is
+     * created, see {@link #onActivityCreated(android.os.Bundle)}.
+     *
+     * @param savedInstanceState If the fragment is being re-created from
+     *                           a previous saved state, this is the state.
+     */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(Boolean.TRUE);
     }
 
     @Override
@@ -119,12 +110,33 @@ public class NewsListFragment extends ListFragment {
         return inflater.inflate(R.layout.fragment_news_feed, container, false);
     }
 
+//    /**
+//     * Prepare the Screen's standard options menu to be displayed.  This is
+//     * called right before the menu is shown, every time it is shown.  You can
+//     * use this method to efficiently enable/disable items or otherwise
+//     * dynamically modify the contents.  See
+//     * {@link android.app.Activity#onPrepareOptionsMenu(android.view.Menu) Activity.onPrepareOptionsMenu}
+//     * for more information.
+//     *
+//     * @param menu The options menu as last shown or first initialized by
+//     *             onCreateOptionsMenu().
+//     * @see #setHasOptionsMenu
+//     * @see #onCreateOptionsMenu
+//     */
+//    @Override
+//    public void onPrepareOptionsMenu(Menu menu) {
+//
+//    }
+
     @Override
     public void onAttach(Activity activity) {
+        Log.d("NX4", "onAttach has been called.");
         super.onAttach(activity);
 
+        Log.d("NX4", "onAttach is about to call updateShownNews.");
         listAdapter.updateShownNews();
-        ((NewsActivity) activity).onSectionAttached(
+        Log.d("NX4", "updateShownNews has finished.");
+        ((MainActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(
                                 Utils.getStringArray(
@@ -136,73 +148,11 @@ public class NewsListFragment extends ListFragment {
         );
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        setUpPullToRefresh(view);
+    public Boolean getUPDATE_RUNNING() {
+        return UPDATE_RUNNING;
     }
 
-    static class CustomisedHeaderTransformer extends HeaderTransformer {
-
-        private View mHeaderView;
-        private TextView mMainTextView;
-        private TextView mProgressTextView;
-
-        @Override
-        public void onViewCreated(Activity activity, View headerView) {
-            mHeaderView = headerView;
-            mMainTextView = (TextView) headerView.findViewById(R.id.ptr_text);
-            mProgressTextView = (TextView) headerView.findViewById(R.id.ptr_text_secondary);
-        }
-
-        @Override
-        public void onReset() {
-            mMainTextView.setVisibility(View.VISIBLE);
-            mMainTextView.setText(R.string.pull_to_refresh_pull_label);
-
-            mProgressTextView.setVisibility(View.GONE);
-            mProgressTextView.setText("");
-        }
-
-        @Override
-        public void onPulled(float percentagePulled) {
-            mProgressTextView.setVisibility(View.VISIBLE);
-            mProgressTextView.setText(Math.round(100f * percentagePulled) + "%");
-        }
-
-        @Override
-        public void onRefreshStarted() {
-            mMainTextView.setText(R.string.pull_to_refresh_refreshing_label);
-            mProgressTextView.setVisibility(View.GONE);
-        }
-
-        @Override
-        public void onReleaseToRefresh() {
-            mMainTextView.setText(R.string.pull_to_refresh_release_label);
-        }
-
-        @Override
-        public void onRefreshMinimized() {
-            // In this header transformer, we will ignore this call
-        }
-
-        @Override
-        public boolean showHeaderView() {
-            final boolean changeVis = mHeaderView.getVisibility() != View.VISIBLE;
-            if (changeVis) {
-                mHeaderView.setVisibility(View.VISIBLE);
-            }
-            return changeVis;
-        }
-
-        @Override
-        public boolean hideHeaderView() {
-            final boolean changeVis = mHeaderView.getVisibility() == View.VISIBLE;
-            if (changeVis) {
-                mHeaderView.setVisibility(View.GONE);
-            }
-            return changeVis;
-        }
+    public final void setUPDATE_RUNNING(Boolean updateRunning) {
+        this.UPDATE_RUNNING = updateRunning;
     }
 }

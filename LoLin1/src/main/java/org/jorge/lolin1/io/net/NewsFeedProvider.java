@@ -2,7 +2,6 @@ package org.jorge.lolin1.io.net;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
@@ -44,11 +43,12 @@ import mf.javax.xml.stream.events.XMLEvent;
  */
 public class NewsFeedProvider {
 
+    private static final String AVAILABILITY_CHECKER = "stylesheet", LOLNEWS_PREFIX =
+            "http://feed43.com/lolnews", LOLNEWS_SUFFIX = ".xml";
+    private static final Integer AVAILABILITY_DELAY_MILLIS = new Integer(1000);
     private Context context;
     private String separator;
     private FeedHandler handler;
-    private static final String AVAILABILITY_CHECKER = "stylesheet", LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX = ".xml";
-    private static final Integer AVAILABILITY_DELAY_MILLIS = new Integer(1000);
 
     /**
      * Constructor with default separator "||||"
@@ -61,34 +61,9 @@ public class NewsFeedProvider {
         this.handler = new NewsFeedHandler(context);
     }
 
-    public void requestFeedRefresh() {
-        new AsyncTask<Void, Void, Boolean>() {
-            @Override
-            protected Boolean doInBackground(Void... voids) {
-                Boolean ret = Boolean.FALSE;
-                try {
-                    if (Utils.isInternetReachable(context)) {
-                        ret = handler.onFeedUpdated(retrieveFeed(), separator);
-                    }
-                    else {
-                        handler.onNoInternetConnection();
-                    }
-                }
-                catch (IOException e1) {
-                    handler.onNoInternetConnection();
-                }
-                catch (XMLStreamException e2) {
-                    Log.e("ERROR", "Exception", e2);
-                }
-                finally {
-                    return ret;
-                }
-            }
-        }.execute();
-    }
-
     private static final String getCharacterData(XMLEvent event,
-                                                 final XMLEventReader eventReader) throws XMLStreamException {
+                                                 final XMLEventReader eventReader)
+            throws XMLStreamException {
         String result = "";
         event = eventReader.nextEvent();
         if (event instanceof Characters) {
@@ -96,6 +71,27 @@ public class NewsFeedProvider {
         }
 
         return result;
+    }
+
+    public Boolean requestFeedRefresh() {
+        Boolean ret = Boolean.FALSE;
+        try {
+            if (Utils.isInternetReachable(context)) {
+                ret = handler.onFeedUpdated(retrieveFeed(), separator);
+            }
+            else {
+                handler.onNoInternetConnection();
+            }
+        }
+        catch (IOException e1) {
+            handler.onNoInternetConnection();
+        }
+        catch (XMLStreamException e2) {
+            Log.e("ERROR", "Exception", e2);
+        }
+        finally {
+            return ret;
+        }
     }
 
     /**
@@ -110,8 +106,12 @@ public class NewsFeedProvider {
         final XMLInputFactory inputFactory = XMLInputFactory.newFactory();
         InputStream in;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String server = preferences.getString(Utils.getString(context, "pref_title_server", "pref_title_server"), "euw"), lang = preferences.getString(Utils.getString(context, "pref_title_lang", "pref_title_lang"), "en");
-        String srcString = (LOLNEWS_PREFIX + "_" + server + "_" + lang + LOLNEWS_SUFFIX).toLowerCase();
+        String server = preferences
+                .getString(Utils.getString(context, "pref_title_server", "pref_title_server"),
+                        "euw"), lang = preferences
+                .getString(Utils.getString(context, "pref_title_lang", "pref_title_lang"), "en");
+        String srcString =
+                (LOLNEWS_PREFIX + "_" + server + "_" + lang + LOLNEWS_SUFFIX).toLowerCase();
         URL source = new URL(srcString);
         in = source.openStream();
         if (!Utils.convertStreamToString(in).contains(AVAILABILITY_CHECKER)) {
@@ -148,7 +148,8 @@ public class NewsFeedProvider {
                     items.add(currFeed);
                 }
                 else if (local.matches("pubDate")) {
-                    getCharacterData(event, eventReader); //FUTURE This field tells when the article was published.
+                    getCharacterData(event,
+                            eventReader); //FUTURE This field tells when the article was published.
                 }
             }
         }
