@@ -18,30 +18,41 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 02/01/14.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
+              android:layout_height="match_parent"
+              android:background="@color/theme_dark_orange"
+              android:hapticFeedbackEnabled="true"
+              android:orientation="horizontal"
+              android:paddingBottom="@dimen/feed_item_padding"
+              android:paddingTop="@dimen/feed_item_padding">
 
 	<ImageView
+		android:id="@+id/feed_item_image"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
-		android:id="@+id/feed_item_image"/>
+		android:layout_gravity="center"
+		android:paddingLeft="@dimen/feed_img_left_padding"
+		android:paddingRight="@dimen/feed_img_right_padding"/>
 
 	<LinearLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
+		android:layout_height="wrap_content"
 		android:orientation="vertical">
 
 		<TextView
+			android:id="@+id/news_feed_item_title"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
-			android:id="@+id/news_feed_item_title"
-			android:layout_gravity="center_vertical"/>
+			android:layout_gravity="center_vertical"
+			android:textSize="@dimen/news_feed_title_size"
+			android:textStyle="bold"
+			/>
 
 		<TextView
+			android:id="@+id/news_feed_item_desc"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
-			android:id="@+id/news_feed_item_desc"
-			android:layout_gravity="center_vertical"/>
+			android:layout_gravity="center_vertical"
+			android:textSize="@dimen/news_feed_desc_size"/>
 	</LinearLayout>
 </LinearLayout>

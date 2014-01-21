@@ -24,5 +24,5 @@ Created by JorgeAntonio on 02/01/14.
           android:background="@android:color/white"
           android:choiceMode="singleChoice"
           android:divider="@android:color/darker_gray"
-          android:dividerHeight="1dp"
+          android:dividerHeight="@dimen/navigation_drawer_divider"
           tools:context="org.jorge.lolin1.ui.NavigationDrawerFragment"/>

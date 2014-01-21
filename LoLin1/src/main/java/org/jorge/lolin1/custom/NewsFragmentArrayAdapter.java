@@ -1,23 +1,23 @@
 package org.jorge.lolin1.custom;
 
+import android.app.Activity;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
+import android.os.AsyncTask;
+import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.feeds.news.FeedEntry;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -39,74 +39,57 @@ import java.util.HashMap;
  * <p/>
  * Created by JorgeAntonio on 03/01/14.
  */
-public class NewsFragmentArrayAdapter extends ArrayAdapter {
+public class NewsFragmentArrayAdapter extends BaseAdapter {
 
-    private static final int mResource = R.layout.fragment_news_feed;
-    private static final HashMap<String, ArrayList<HashMap<String, String>>> shownNews =
+    private static final int list_item_layout = R.layout.list_item_news_feed;
+    private static final HashMap<String, ArrayList<FeedEntry>> shownNews =
             new HashMap<>();
+    private static Context mContext;
 
     public NewsFragmentArrayAdapter(Context context) {
-        super(context, mResource);
-    }
-
-    private static Bitmap getStoredBitmap(Context context, byte[] blob, String callbackURL) {
-        Bitmap ret = null;
-        if (blob == null || blob.length == 0) {
-            if (Utils.isInternetReachable(context)) {
-                try {
-                    ret = BitmapFactory
-                            .decodeStream(new URL(callbackURL).openConnection().getInputStream());
-                    NewsToSQLiteBridge.getSingleton().updateNewsBlob(blob, callbackURL);
-                }
-                catch (IOException e) {
-                    Log.e("ERROR", "Exception", e);
-                }
-            }
-        }
-        else {
-            ret = BitmapFactory.decodeByteArray(blob, 0, blob.length);
-        }
-        return ret;
+        mContext = context;
     }
 
     public void updateShownNews() {
-        String tableName = Utils.getTableName(getContext());
+        String tableName = Utils.getTableName(mContext);
         Log.d("NX4", "Table name fetched: " + tableName);
         //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
             Log.d("NX4", "updateShownNews is on the if.");
-            ArrayList<HashMap<String, String>> currTable = shownNews.get(tableName);
+            ArrayList<FeedEntry> currTable = shownNews.get(tableName);
             int howManyIHave = currTable.size();
-            ArrayList<HashMap<String, String>> newNews =
+            ArrayList<FeedEntry> newNews =
                     NewsToSQLiteBridge.getSingleton().getNewNews(howManyIHave);
-            for (HashMap<String, String> x : newNews) {
+            for (FeedEntry x : newNews) {
                 currTable.add(x);
-                notifyDataSetChanged();
             }
         }
         else {
             Log.d("NX4", "updateShownNews is on the else.");
-            ArrayList<HashMap<String, String>> news =
-                    NewsToSQLiteBridge.getSingleton().getNews();
-            Log.d("NX4", "news size is " + news.size());
-            shownNews.put(tableName, news);
-            Log.d("NX4", "Table name put: " + tableName);
-            notifyDataSetChanged();
+            if (Utils.tableExists(tableName)) {
+                ArrayList<FeedEntry> news =
+                        NewsToSQLiteBridge.getSingleton().getNews();
+                Log.d("NX4", "news size is " + news.size());
+                shownNews.put(tableName, news);
+            }
         }
+        Log.d("NX4", "About to call notifyDataSetChanged");
+        notifyDataSetChanged();
     }
 
     @Override
     public int getCount() {
-        String tableName = Utils.getTableName(getContext());
-        ArrayList<HashMap<String, String>> currTable = shownNews.get(tableName);
+        String tableName = Utils.getTableName(mContext);
+        ArrayList<FeedEntry> currTable = shownNews.get(tableName);
 
+        Log.d("NX4", "Calling getCount");
         return currTable.size();
     }
 
     @Override
-    public Object getItem(int i) {
-        String tableName = Utils.getTableName(getContext());
-        ArrayList<HashMap<String, String>> currTable = shownNews.get(tableName);
+    public FeedEntry getItem(int i) {
+        String tableName = Utils.getTableName(mContext);
+        ArrayList<FeedEntry> currTable = shownNews.get(tableName);
 
         return currTable.get(i);
     }
@@ -118,31 +101,50 @@ public class NewsFragmentArrayAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView == null) {
+            convertView =
+                    ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                            .inflate(
+                                    list_item_layout, null);
+        }
         ImageView image = (ImageView) convertView.findViewById(R.id.feed_item_image);
         TextView title = (TextView) convertView.findViewById(R.id.news_feed_item_title);
         TextView desc = (TextView) convertView.findViewById(R.id.news_feed_item_desc);
 
-        int title_proportion =
-                Integer.parseInt(Utils.getString(getContext(), "feed_item_title_proportion", "-1"));
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-        ArrayList<HashMap<String, String>> currentFeed = shownNews.get(prefs
-                .getString(Utils.getString(getContext(), "pref_title_server", "pref_title_server"),
-                        "pref_title_server")
-                + "_" +
-                prefs.getString(Utils.getString(getContext(), "pref_title_lang", "pref_title_lang"),
-                        "pref_title_lang"));
-        HashMap<String, String> thisArticle = currentFeed.get(position);
+        String tableName = Utils.getTableName(mContext);
+        ArrayList<FeedEntry> currentFeed = shownNews.get(tableName);
+        FeedEntry thisArticle = currentFeed.get(position);
 
-        Bitmap bmp = getStoredBitmap(getContext(), NewsToSQLiteBridge.getSingleton()
-                .getNewsBlob(thisArticle.get(NewsToSQLiteBridge.KEY_IMG_URL)),
-                thisArticle.get(NewsToSQLiteBridge.KEY_IMG_URL));
-        image.setImageBitmap(bmp);
-        title.setTextSize(image.getHeight() * title_proportion);
-        desc.setTextSize(image.getHeight() * (1 - title_proportion));
-        title.setText(
-                Utils.getString(getContext(), thisArticle.get(NewsToSQLiteBridge.KEY_TITLE), ""));
-        desc.setText(
-                Utils.getString(getContext(), thisArticle.get(NewsToSQLiteBridge.KEY_DESC), ""));
+        title.setText(Html.fromHtml(thisArticle.getTitle()));
+        desc.setText(Html.fromHtml(thisArticle.getDescription()));
+
+        new AsyncTask<Object, Void, Void>() {
+            /**
+             * Override this method to perform a computation on a background thread. The
+             * specified parameters are the parameters passed to {@link #execute}
+             * by the caller of this task.
+             * <p/>
+             * This method can call {@link #publishProgress} to publish updates
+             * on the UI thread.
+             *
+             * @param params The parameters of the task.
+             * @return A result, defined by the subclass of this task.
+             * @see #onPreExecute()
+             * @see #onPostExecute
+             * @see #publishProgress
+             */
+            @Override
+            protected Void doInBackground(final Object... params) {
+                final Bitmap bmp = ((FeedEntry) params[1]).getImage(mContext);
+                ((Activity) mContext).runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ((ImageView) params[0]).setImageBitmap(bmp);
+                    }
+                });
+                return null;
+            }
+        }.execute(image, thisArticle);
 
         return convertView;
     }

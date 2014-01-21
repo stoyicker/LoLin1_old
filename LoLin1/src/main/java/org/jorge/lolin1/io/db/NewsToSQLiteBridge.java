@@ -3,16 +3,15 @@ package org.jorge.lolin1.io.db;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.feeds.news.FeedEntry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -36,32 +35,13 @@ import java.util.Iterator;
  */
 public class NewsToSQLiteBridge extends SQLiteOpenHelper {
 
-    public static final String LOLNEWS_FEED_HOST = "http://feed43.com/", LOLNEWS_FEED_EXTENSION = ".xml", KEY_ID = "ARTICLE_ID", KEY_TITLE = "ARTICLE_TITLE", KEY_BLOB = "ARTICLE_BLOB", KEY_URL = "ARTICLE_URL", KEY_DESC = "ARTICLE_DESC", KEY_IMG_URL = "ARTICLE_IMG_URL";
+    public static final String LOLNEWS_FEED_HOST = "http://feed43.com/", LOLNEWS_FEED_EXTENSION =
+            ".xml", NEWS_KEY_ID = "ARTICLE_ID", NEWS_KEY_TITLE = "ARTICLE_TITLE", NEWS_KEY_BLOB =
+            "ARTICLE_BLOB",
+            NEWS_KEY_URL = "ARTICLE_URL", NEWS_KEY_DESC = "ARTICLE_DESC", NEWS_KEY_IMG_URL =
+            "ARTICLE_IMG_URL";
     private static NewsToSQLiteBridge singleton;
     private static Context mContext;
-
-
-//    public void asyncExecute(String command) {
-//        String cmdType;
-//        switch (cmdType = new StringTokenizer(command).nextToken(" ").toUpperCase()) {
-//            case "INSERT":
-//            case "UPDATE":
-//            case "DELETE":
-//                try {
-//                    throw new IllegalArgumentException("Method " + NewsToSQLiteBridge.class.getName() + " " + NewsToSQLiteBridge.class.getDeclaredMethod("asyncExecute", String.class) + " should not be used for " + cmdType + "-type requests. See http://developer.android.com/reference/android/database/sqlite/SQLiteDatabase.html#execSQL(java.lang.String)");
-//                } catch (NoSuchMethodException e) {
-//                    Log.e("ERROR", "Exception", e);
-//                }
-//            default:
-//                new AsyncTask<String, Void, Void>() {
-//                    @Override
-//                    protected Void doInBackground(String... command) {
-//                        NewsToSQLiteBridge.this.getWritableDatabase().execSQL(command[0].toUpperCase());
-//                        return null;
-//                    }
-//                }.execute();
-//        }
-//    }
 
     private NewsToSQLiteBridge(Context _context) {
         super(_context, Utils.getString(_context, "db_name", "LoLin1_DB"), null, 1);
@@ -76,50 +56,71 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
 
     public static NewsToSQLiteBridge getSingleton() {
         if (singleton == null) {
-            throw new RuntimeException("Use method NewsToSQLiteBridge.setup(Context _context) at least once before calling this method.");
+            throw new RuntimeException(
+                    "Use method NewsToSQLiteBridge.setup(Context _context) at least once before calling this method.");
         }
         return singleton;
     }
 
-    public byte[] getNewsBlob(String imgUrl) {
+    public byte[] getArticleBlob(String articleUrl) {
         byte[] ret;
         String tableName = Utils.getTableName(mContext);
         SQLiteDatabase db = getReadableDatabase();
         Cursor result;
 
         db.beginTransaction();
-        result = getReadableDatabase().query(tableName, new String[]{KEY_BLOB}, "?s = ?s", new String[]{KEY_IMG_URL, imgUrl}, null, null, null, null);
+        result = db.query(tableName, new String[]{NEWS_KEY_BLOB},
+                NEWS_KEY_URL + "='" + articleUrl.replaceAll("http://", "httpxxx") + "'",
+                null, null, null, null, null);
         result.moveToFirst();
-        ret = result.getBlob(0);
+        try {
+            ret = result.getBlob(0);
+        }
+        catch (IndexOutOfBoundsException ex) { //Meaning there's no blob stored yet
+            ret = null;
+        }
         db.setTransactionSuccessful();
 
         db.endTransaction();
         return ret;
     }
 
-    public final ArrayList<HashMap<String, String>> getNews() {
-        return getFilteredNews(new String[]{KEY_TITLE, KEY_DESC, KEY_IMG_URL}, null);
+    public final ArrayList<FeedEntry> getNews() {
+        return getFilteredNews(null);
     }
 
-    public final ArrayList<HashMap<String, String>> getNewNews(int alreadyShown) {
-        return getFilteredNews(new String[]{KEY_TITLE, KEY_DESC, KEY_IMG_URL}, KEY_ID + " > " + alreadyShown);
+    public final ArrayList<FeedEntry> getNewNews(int alreadyShown) {
+        return getFilteredNews(NEWS_KEY_ID + " > " + alreadyShown);
     }
 
-    private final ArrayList<HashMap<String, String>> getFilteredNews(String[] fields, String whereClause) {
-        ArrayList<HashMap<String, String>> ret = new ArrayList<>();
+    private final ArrayList<FeedEntry> getFilteredNews(String whereClause) {
+
+        ArrayList<FeedEntry> ret = new ArrayList<>();
+        String[] fields =
+                new String[]{NEWS_KEY_IMG_URL, NEWS_KEY_URL, NEWS_KEY_TITLE, NEWS_KEY_DESC};
         ArrayList<String> fieldsAsList = new ArrayList<>(Arrays.asList(fields));
 
         SQLiteDatabase db = getReadableDatabase();
         db.beginTransaction();
         String tableName = Utils.getTableName(mContext);
-        Cursor result = db.query(tableName, fields, whereClause, null, null, null, KEY_ID + " DESC");
-        HashMap<String, String> row;
+        Cursor result =
+                db.query(tableName, fields, whereClause, null, null, null, NEWS_KEY_ID + " DESC");
+        StringBuilder data = new StringBuilder("");
+        final String separator = FeedEntry.getSEPARATOR();
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
-            row = new HashMap<>();
             for (String x : fieldsAsList) {
-                row.put(x, result.getString(result.getColumnIndex(x)));
+                if (x.contentEquals(NEWS_KEY_URL)) {
+                    data.append(
+                            result.getString(result.getColumnIndex(x))
+                                    .replaceAll("httpxxx", "http://"))
+                            .append(separator);
+                }
+                else {
+                    data.append(result.getString(result.getColumnIndex(x))).append(separator);
+                }
             }
-            ret.add(row);
+            ret.add(new FeedEntry(data.toString()));
+            data = new StringBuilder("");
         }
         result.close();
         db.setTransactionSuccessful();
@@ -127,32 +128,15 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
-    public final String getNewsUrl(int position) {
-        long count, interestIndex;
-        String ret, queryUrl, tableName = Utils.getTableName(mContext);
-
-        SQLiteDatabase db = getReadableDatabase();
-        db.beginTransaction();
-        count = DatabaseUtils.queryNumEntries(db, tableName);
-        interestIndex = count - position;
-        queryUrl = "SELECT " + KEY_URL + " FROM " + tableName + " WHERE " + KEY_ID + " = " + interestIndex;
-        Cursor cursorUrl = db.rawQuery(queryUrl, null);
-        cursorUrl.moveToFirst();
-        ret = cursorUrl.getString(0);
-        db.setTransactionSuccessful();
-        db.endTransaction();
-
-        return ret;
-    }
-
-    public final void updateNewsBlob(byte[] blob, String callbackUrl) {
+    public final void updateArticleBlob(byte[] blob, String uniqueUrl) {
         SQLiteDatabase db = getWritableDatabase();
         String tableName = Utils.getTableName(mContext);
         ContentValues contentValues = new ContentValues();
-        contentValues.put(KEY_BLOB, blob);
+        contentValues.put(NEWS_KEY_BLOB, blob);
 
         db.beginTransaction();
-        db.update(tableName, contentValues, KEY_URL + " = " + callbackUrl, null);
+        db.update(tableName, contentValues,
+                NEWS_KEY_URL + " = '" + uniqueUrl.replaceAll("http://", "httpxxx") + "'", null);
         db.setTransactionSuccessful();
         db.endTransaction();
     }
@@ -161,7 +145,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
      * @param values {@link android.content.ContentValues} The values to insert. The most recent article is the latest one
      * @return The rowID of the newly inserted row, or -1 if any error happens
      */
-    public long insertNews(ContentValues values) {
+    public long insertArticle(ContentValues values) {
         long ret;
         SQLiteDatabase db = getWritableDatabase();
         String tableName = Utils.getTableName(mContext);
@@ -192,12 +176,18 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         HashSet<String> tableNames = new HashSet<>();
-        ArrayList<String> langsInThisServer, servers = new ArrayList<>(Arrays.asList(mContext.getResources().getStringArray(R.array.servers)));
-        String prefix = Utils.getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml").replaceAll(LOLNEWS_FEED_HOST, "").replaceAll(LOLNEWS_FEED_EXTENSION, "").replaceAll("_(.*)", "") + "_";
+        ArrayList<String> langsInThisServer, servers = new ArrayList<>(
+                Arrays.asList(mContext.getResources().getStringArray(R.array.servers)));
+        String prefix =
+                Utils.getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
+                        .replaceAll(LOLNEWS_FEED_HOST, "").replaceAll(LOLNEWS_FEED_EXTENSION, "")
+                        .replaceAll("_(.*)", "") + "_";
 
         for (String x : servers) {
             langsInThisServer = new ArrayList<>();
-            for (String y : Utils.getStringArray(mContext, "lang_" + x.toLowerCase() + "_simplified", new String[]{""})) {
+            for (String y : Utils
+                    .getStringArray(mContext, "lang_" + x.toLowerCase() + "_simplified",
+                            new String[]{""})) {
                 langsInThisServer.add((prefix + x + "_" + y).toUpperCase());
             }
             tableNames.addAll(langsInThisServer);
@@ -207,12 +197,12 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         for (Iterator<String> it = tableNames.iterator(); it.hasNext(); ) {
             String tableName = it.next();
             sqLiteDatabase.execSQL(("CREATE TABLE IF NOT EXISTS " + tableName + " ( " +
-                    KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
-                    KEY_TITLE + " TEXT NOT NULL ON CONFLICT FAIL, " +
-                    KEY_BLOB + " BLOB, " +
-                    KEY_URL + " TEXT NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT IGNORE, " +
-                    KEY_DESC + " TEXT, " +
-                    KEY_IMG_URL + " TEXT NOT NULL ON CONFLICT FAIL " +
+                    NEWS_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
+                    NEWS_KEY_TITLE + " TEXT NOT NULL ON CONFLICT FAIL, " +
+                    NEWS_KEY_BLOB + " BLOB, " +
+                    NEWS_KEY_URL + " TEXT NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT IGNORE, " +
+                    NEWS_KEY_DESC + " TEXT, " +
+                    NEWS_KEY_IMG_URL + " TEXT NOT NULL ON CONFLICT FAIL " +
                     ")").toUpperCase());
         }
 

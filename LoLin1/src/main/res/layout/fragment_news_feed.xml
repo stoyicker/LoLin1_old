@@ -36,16 +36,16 @@ Created by JorgeAntonio on 02/01/14.
 		android:background="@android:color/black"
 		android:contentDescription="@string/news_header"
 		android:scaleType="centerInside"
-		android:src="@drawable/news_header"/>
+		android:src="@drawable/news_header"
+		/>
 	<ListView
 		android:id="@id/android:list"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_weight="1"
-		android:background="@android:color/holo_orange_light"
-		android:divider="@android:color/holo_orange_dark"
-		android:dividerHeight="1dp"
-		android:drawSelectorOnTop="false"
+		android:divider="@android:color/white"
+		android:dividerHeight="@dimen/feed_divider"
+		android:paddingTop="@dimen/feed_header_padding"
 		>
 	</ListView>
 	<ImageView

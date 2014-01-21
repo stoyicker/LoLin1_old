@@ -24,5 +24,5 @@ public interface FeedHandler {
 
     public void onNoInternetConnection();
 
-    public Boolean onFeedUpdated(ArrayList<String> items, String separator);
+    public Boolean onFeedUpdated(ArrayList<String> items);
 }

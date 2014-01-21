@@ -15,13 +15,8 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
-Created by JorgeAntonio on 02/01/14.
+Created by JorgeAntonio on 21/01/14.
 -->
 <resources>
-	<style name="AppTheme" parent="android:Theme.Holo.Light">
-		<item name="android:actionBarStyle">@style/ActionBarStyle</item>
-	</style>
-	<style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
-		<item name="android:background">@color/theme_dark_orange</item>
-	</style>
+	<color name="theme_dark_orange">#CCFFBB33</color>
 </resources>

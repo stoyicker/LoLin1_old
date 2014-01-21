@@ -39,9 +39,9 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".activities.MainActivity"
+			android:name="org.jorge.lolin1.activities.MainActivity"
 			android:configChanges="orientation|screenSize"
-			android:label="@string/title_activity_news"
+			android:label="@string/app_name"
 			android:logo="@drawable/icon_app">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
@@ -53,12 +53,14 @@ Created by JorgeAntonio on 02/01/14.
 			android:configChanges="orientation|screenSize"
 			android:icon="@drawable/icon_fb_share"
 			android:label="@string/title_activity_facebook"
-			android:parentActivityName=".activities.SettingsPreferenceActivity">
+			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="SettingsActivity"/>
+
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
+
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
@@ -67,12 +69,14 @@ Created by JorgeAntonio on 02/01/14.
 			android:configChanges="orientation|screenSize"
 			android:label="@string/title_activity_policy"
 			android:logo="@drawable/icon_app"
-			android:parentActivityName=".activities.SettingsPreferenceActivity">
+			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="SettingsActivity"/>
+
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
+
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
@@ -81,12 +85,14 @@ Created by JorgeAntonio on 02/01/14.
 			android:configChanges="orientation|screenSize"
 			android:label="@string/title_activity_twitter"
 			android:logo="@drawable/icon_fb_share"
-			android:parentActivityName=".activities.SettingsPreferenceActivity">
+			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="SettingsActivity"/>
+
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
+
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
@@ -95,12 +101,14 @@ Created by JorgeAntonio on 02/01/14.
 			android:configChanges="orientation|screenSize"
 			android:label="@string/title_activity_rate"
 			android:logo="@drawable/icon_rate"
-			android:parentActivityName=".activities.SettingsPreferenceActivity">
+			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="SettingsActivity"/>
+
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
+
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
@@ -111,6 +119,7 @@ Created by JorgeAntonio on 02/01/14.
 			android:logo="@drawable/icon_app">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
+
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
@@ -121,17 +130,33 @@ Created by JorgeAntonio on 02/01/14.
 			android:logo="@drawable/icon_app">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
+
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".activities.SettingsPreferenceActivity"
+			android:name="org.jorge.lolin1.activities.SettingsPreferenceActivity"
 			android:label="@string/title_activity_settings"
 			android:logo="@drawable/icon_settings"
-			android:parentActivityName=".activities.MainActivity">
+			android:parentActivityName="org.jorge.lolin1.activities.MainActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
-				android:value="NewsActivity"/>
+				android:value="MainActivity"/>
+
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
+		<activity
+			android:name=".activities.WebViewerActivity"
+			android:configChanges="orientation|screenSize"
+			android:label="@string/title_activity_web_viewer"
+			android:parentActivityName="org.jorge.lolin1.activities.MainActivity"
+			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
+			<meta-data
+				android:name="android.support.PARENT_ACTIVITY"
+				android:value="MainActivity"/>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>

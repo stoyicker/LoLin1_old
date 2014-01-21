@@ -1,12 +1,14 @@
-package org.jorge.lolin1.utils.feeds;
+package org.jorge.lolin1.utils.feeds.news;
 
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.feeds.FeedHandler;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -44,31 +46,41 @@ public class NewsFeedHandler implements FeedHandler {
             @Override
             public void run() {
                 Toast.makeText(context, msg,
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
             }
         });
+        try {
+            Thread.sleep(5000); //FIXME 3 Remove this when out of news feed refresh stage
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
-    public Boolean onFeedUpdated(ArrayList<String> items, String separator) {
+    public Boolean onFeedUpdated(ArrayList<String> items) {
+        Log.d("NX4", "Items' size: " + items.size());
         ContentValues row;
         String url, img_url, title, desc;
         boolean areThereNewNews = Boolean.FALSE;
+        Log.d("NX5", "About to check items");
         for (String x : items) {
-            StringTokenizer currentItem = new StringTokenizer(x, separator);
+            StringTokenizer currentItem = new StringTokenizer(x, FeedEntry.getSEPARATOR());
             img_url = currentItem.nextToken();
             url = currentItem.nextToken();
             title = currentItem.nextToken();
             desc = currentItem.nextToken();
             row = new ContentValues();
-            row.put(NewsToSQLiteBridge.KEY_TITLE, title);
-            row.put(NewsToSQLiteBridge.KEY_DESC, desc);
-            row.put(NewsToSQLiteBridge.KEY_IMG_URL, img_url);
-            row.put(NewsToSQLiteBridge.KEY_URL, url);
-            if (NewsToSQLiteBridge.getSingleton().insertNews(row) != -1) {
+            row.put(NewsToSQLiteBridge.NEWS_KEY_TITLE, title);
+            row.put(NewsToSQLiteBridge.NEWS_KEY_DESC, desc);
+            row.put(NewsToSQLiteBridge.NEWS_KEY_IMG_URL, img_url);
+            row.put(NewsToSQLiteBridge.NEWS_KEY_URL, url.replaceAll("http://", "httpxxx"));
+            if (NewsToSQLiteBridge.getSingleton().insertArticle(row) != -1) {
                 areThereNewNews = Boolean.TRUE;
             }
         }
         return areThereNewNews;
     }
+
+    //FIXME 1 Why refresh does not refresh the view?
 }

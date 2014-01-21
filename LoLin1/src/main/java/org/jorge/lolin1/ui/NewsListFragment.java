@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,12 +11,13 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.activities.MainActivity;
+import org.jorge.lolin1.activities.WebViewerActivity;
 import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
-import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
 import org.jorge.lolin1.utils.Utils;
 
@@ -78,6 +78,37 @@ public class NewsListFragment extends ListFragment {
     }
 
     /**
+     * Prepare the Screen's standard options menu to be displayed.  This is
+     * called right before the menu is shown, every time it is shown.  You can
+     * use this method to efficiently enable/disable items or otherwise
+     * dynamically modify the contents.  See
+     * {@link android.app.Activity#onPrepareOptionsMenu(android.view.Menu) Activity.onPrepareOptionsMenu}
+     * for more information.
+     *
+     * @param menu The options menu as last shown or first initialized by
+     *             onCreateOptionsMenu().
+     * @see #setHasOptionsMenu
+     * @see #onCreateOptionsMenu
+     */
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        View icon = getActivity().findViewById(R.id.action_ref_news);
+        if (icon != null)
+        //At certain states the view will be null so we need this statement to avoid a NPE,
+        //but it's not a problem because on such states the icon doesn't need to be animated.
+        {
+            if (this.getUPDATE_RUNNING()) {
+                icon.startAnimation(
+                        AnimationUtils
+                                .loadAnimation(getActivity(), R.anim.counter_clockwise_rotate));
+            }
+            else {
+                icon.clearAnimation();
+            }
+        }
+    }
+
+    /**
      * Called to do initial creation of a fragment.  This is called after
      * {@link #onAttach(android.app.Activity)} and before
      * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
@@ -100,8 +131,10 @@ public class NewsListFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        String url = NewsToSQLiteBridge.getSingleton().getNewsUrl(position);
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+        String url = listAdapter.getItem(position).getLink();
+        Intent inAppBrowserIntent = new Intent(getActivity(), WebViewerActivity.class);
+        inAppBrowserIntent.putExtra("url", url);
+        startActivity(inAppBrowserIntent);
     }
 
     @Override
@@ -109,24 +142,6 @@ public class NewsListFragment extends ListFragment {
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_news_feed, container, false);
     }
-
-//    /**
-//     * Prepare the Screen's standard options menu to be displayed.  This is
-//     * called right before the menu is shown, every time it is shown.  You can
-//     * use this method to efficiently enable/disable items or otherwise
-//     * dynamically modify the contents.  See
-//     * {@link android.app.Activity#onPrepareOptionsMenu(android.view.Menu) Activity.onPrepareOptionsMenu}
-//     * for more information.
-//     *
-//     * @param menu The options menu as last shown or first initialized by
-//     *             onCreateOptionsMenu().
-//     * @see #setHasOptionsMenu
-//     * @see #onCreateOptionsMenu
-//     */
-//    @Override
-//    public void onPrepareOptionsMenu(Menu menu) {
-//
-//    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -148,7 +163,7 @@ public class NewsListFragment extends ListFragment {
         );
     }
 
-    public Boolean getUPDATE_RUNNING() {
+    private final Boolean getUPDATE_RUNNING() {
         return UPDATE_RUNNING;
     }
 

@@ -31,7 +31,7 @@ import org.jorge.lolin1.utils.Utils;
  */
 public class NavigationDrawerArrayAdapter extends BaseAdapter {
 
-    private final int mResource = R.layout.navigation_drawer_list_item;
+    private final int mResource = R.layout.list_item_navigation_drawer;
     private Context mContext;
 
     public NavigationDrawerArrayAdapter(Context context) {
@@ -56,14 +56,17 @@ public class NavigationDrawerArrayAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater =
+                (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(mResource, parent, false);
 
 
         int temp = position + 1;
 
-        TextView textView = (TextView) convertView.findViewById(R.id.navigation_drawer_section_title);
-        ImageView imageView = (ImageView) convertView.findViewById(R.id.navigation_drawer_section_image);
+        TextView textView =
+                (TextView) convertView.findViewById(R.id.navigation_drawer_section_title);
+        ImageView imageView =
+                (ImageView) convertView.findViewById(R.id.navigation_drawer_section_image);
 
         textView.setText(Utils.getString(mContext, "title_section" + +temp, ""));
         imageView.setImageResource(Utils.getDrawableAsId("icon_section" + temp, -1));

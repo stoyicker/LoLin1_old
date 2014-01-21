@@ -42,7 +42,7 @@ public class InitialActivity extends Activity {
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (preferences.getBoolean(
                 Utils.getString(getApplicationContext(), "pref_first_run", "pref_first_run"),
-                Boolean.FALSE)) {//FIXME Change this to Boolean.TRUE to see the first-time stuff happen
+                Boolean.FALSE)) {//FUTURE Change this to Boolean.TRUE to see the first-time stuff happen
             final Intent firstTimeSetupIntent =
                     new Intent("org.jorge.lolin1.activities.SERVERANDLANGCHOOSERACTIVITY");
             startActivity(firstTimeSetupIntent);

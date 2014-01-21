@@ -12,8 +12,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.animation.AnimationUtils;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.NavigationDrawerFragment;
@@ -38,7 +36,7 @@ import org.jorge.lolin1.utils.Utils;
  * <p/>
  */
 public class MainActivity extends Activity
-implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -53,7 +51,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_main);
 
         FragmentManager fragmentManager = getFragmentManager();
 
@@ -129,42 +127,6 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
         }
     }
 
-    /**
-     * Prepare the Screen's standard options menu to be displayed.  This is
-     * called right before the menu is shown, every time it is shown.  You can
-     * use this method to efficiently enable/disable items or otherwise
-     * dynamically modify the contents.
-     * <p/>
-     * <p>The default implementation updates the system menu items based on the
-     * activity's state.  Deriving classes should always call through to the
-     * base class implementation.
-     *
-     * @param menu The options menu as last shown or first initialized by
-     *             onCreateOptionsMenu().
-     * @return You must return true for the menu to be displayed;
-     * if you return false it will not be shown.
-     * @see #onCreateOptionsMenu
-     */
-    @Override
-    public boolean onPrepareOptionsMenu(Menu menu) {
-        View icon = findViewById(R.id.action_ref_news);
-        NewsListFragment newsListFragment = (NewsListFragment) getFragmentManager()
-                .findFragmentByTag(Utils.getString(this, "tag_fragment_news", "ERROR"));
-        if (icon != null)
-        //At certain states the view will be null so we need this statement to avoid a NPE,
-        //but it's not a problem because on such states the icon doesn't need to be animated.
-        {
-            if (newsListFragment.getUPDATE_RUNNING()) {
-                icon.startAnimation(
-                        AnimationUtils.loadAnimation(this, R.anim.clockwise_rotate));
-            }
-            else {
-                icon.clearAnimation();
-            }
-        }
-        return super.onPrepareOptionsMenu(menu);
-    }
-
     public void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
@@ -191,7 +153,7 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
             case R.id.action_ref_news:
                 final NewsListFragment ref = (NewsListFragment) getFragmentManager()
                         .findFragmentByTag(Utils.getString(this, "tag_fragment_news", "ERROR"));
-                new AsyncTask<Void, Void, Boolean>() {
+                new AsyncTask<Void, Void, Void>() {
                     /**
                      * Runs on the UI thread before {@link #doInBackground}.
                      *
@@ -210,20 +172,24 @@ implements NavigationDrawerFragment.NavigationDrawerCallbacks {
                      * <p/>
                      * <p>This method won't be invoked if the task was cancelled.</p>
                      *
-                     * @param aBoolean The result of the operation computed by {@link #doInBackground}.
+                     * @param aVoid The result of the operation computed by {@link #doInBackground}.
                      * @see #onPreExecute
                      * @see #doInBackground
                      * @see #onCancelled(Object)
                      */
                     @Override
-                    protected void onPostExecute(Boolean aBoolean) {
+                    protected void onPostExecute(Void aVoid) {
                         ref.setUPDATE_RUNNING(Boolean.FALSE);
                         invalidateOptionsMenu();
                     }
 
                     @Override
-                    protected Boolean doInBackground(Void... voids) {
-                        return ref.getNewsFeedProvider().requestFeedRefresh();
+                    protected Void doInBackground(Void... voids) {
+//                        if (ref.getNewsFeedProvider().requestFeedRefresh()) {
+//                            ref.updateShownNewsBridge();
+//                        }
+                        ref.getNewsFeedProvider().requestFeedRefresh();
+                        return null;
                     }
                 }.execute();
                 break;
