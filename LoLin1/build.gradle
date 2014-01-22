@@ -41,8 +41,7 @@ android {
 
 //noinspection GroovyAssignabilityCheck
 dependencies {
-    //    compile 'com.github.manuelpeinado.refreshactionitem-native:RefreshActionItem:+'
-    //    compile 'com.twotoasters.jazzylistview:library:+'
+    compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.android.support:support-v4:+'
     compile files('libs/xerces.jar')
 }

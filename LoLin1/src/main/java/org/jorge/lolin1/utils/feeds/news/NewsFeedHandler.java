@@ -48,12 +48,6 @@ public class NewsFeedHandler implements FeedHandler {
                         Toast.LENGTH_SHORT).show();
             }
         });
-        try {
-            Thread.sleep(5000); //FIXME 1 Remove this when out of news feed refresh stage
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 
     @Override

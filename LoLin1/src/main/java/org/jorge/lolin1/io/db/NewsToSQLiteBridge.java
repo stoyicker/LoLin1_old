@@ -2,14 +2,21 @@ package org.jorge.lolin1.io.db;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.Utils;
 import org.jorge.lolin1.utils.feeds.news.NewsEntry;
 
+import java.io.IOException;
+import java.net.URL;
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -62,9 +69,69 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         return singleton;
     }
 
+    public static String getTableName(Context context) {
+        String prefix =
+                Utils.getString(context, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
+                        .replaceAll(NewsToSQLiteBridge.LOLNEWS_FEED_HOST, "")
+                        .replaceAll(NewsToSQLiteBridge.LOLNEWS_FEED_EXTENSION, "")
+                        .replaceAll("_(.*)", "") + "_";
+        String ret, server, lang, langSimplified;
+        final String ERROR = "PREF_NOT_FOUND", defaultTableName = "EUW_EN", defaultLanguage =
+                "ENGLISH";
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        server = preferences.getString(Utils.getString(context, "pref_title_server", "nvm"), ERROR);
+        lang = preferences.getString(Utils.getString(context, "pref_title_lang", "nvm"), ERROR);
+
+        if (server.contentEquals(ERROR) || lang.contentEquals(ERROR)) {
+            ret = prefix + defaultTableName;
+        }
+        else {
+            langSimplified = Utils.getStringArray(context, "langs_simplified",
+                    new String[]{defaultLanguage})[new ArrayList<>(
+                    Arrays.asList(Utils.getStringArray(context, "langs",
+                            new String[]{defaultLanguage})))
+                    .indexOf(lang)];
+            ret = prefix + server + "_" + langSimplified;
+        }
+
+        return ret.toUpperCase();
+    }
+
+    public static final Bitmap getArticleBitmap(Context context, byte[] blob,
+                                                final String callbackURL) {
+        Bitmap ret = null;
+        if (blob == null) {
+            if (Utils.isInternetReachable(context)) {
+                try {
+                    ret = BitmapFactory
+                            .decodeStream(
+                                    new URL(callbackURL).openConnection()
+                                            .getInputStream());
+                }
+                catch (IOException e) {
+                    ret = null;
+                }
+                int size = ret.getRowBytes() * ret.getHeight();
+                ByteBuffer b = ByteBuffer.allocate(size);
+                byte[] downloadedBitmapAsByteArray = new byte[b.remaining()];
+                ret.copyPixelsToBuffer(b);
+                b.rewind();
+                b.get(downloadedBitmapAsByteArray, 0,
+                        downloadedBitmapAsByteArray.length);
+                NewsToSQLiteBridge.getSingleton()
+                        .updateArticleBlob(downloadedBitmapAsByteArray, callbackURL);
+                return ret;
+            }
+        }
+        else {
+            ret = BitmapFactory.decodeByteArray(blob, 0, blob.length);
+        }
+        return ret;
+    }
+
     public byte[] getArticleBlob(String articleUrl) {
         byte[] ret;
-        String tableName = Utils.getTableName(mContext);
+        String tableName = getTableName(mContext);
         SQLiteDatabase db = getReadableDatabase();
         Cursor result;
 
@@ -102,7 +169,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         db.beginTransaction();
-        String tableName = Utils.getTableName(mContext);
+        String tableName = getTableName(mContext);
         Cursor result =
                 db.query(tableName, fields, whereClause, null, null, null, NEWS_KEY_ID + " DESC");
         StringBuilder data = new StringBuilder("");
@@ -130,7 +197,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
 
     public final void updateArticleBlob(byte[] blob, String uniqueUrl) {
         SQLiteDatabase db = getWritableDatabase();
-        String tableName = Utils.getTableName(mContext);
+        String tableName = getTableName(mContext);
         ContentValues contentValues = new ContentValues();
         contentValues.put(NEWS_KEY_BLOB, blob);
 
@@ -148,7 +215,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
     public long insertArticle(ContentValues values) {
         long ret;
         SQLiteDatabase db = getWritableDatabase();
-        String tableName = Utils.getTableName(mContext);
+        String tableName = getTableName(mContext);
         db.beginTransaction();
         ret = db.insert(tableName, null, values);
         db.setTransactionSuccessful();

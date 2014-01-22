@@ -6,7 +6,6 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -113,7 +112,8 @@ public class MainActivity extends Activity
             case 6:
             default:
                 newFragment = new NewsListFragment(this);
-                newFragmentTag = Utils.getString(this, "tag_fragment_news", "ERROR");
+                newFragmentTag = Utils.getString(this, "tag_fragment_news",
+                        getString(R.string.tag_fragment_news));
                 Log.wtf("ERROR", "Should never happen");
         }
         commitReplaceAllBy(newFragment, newFragmentTag);
@@ -149,49 +149,6 @@ public class MainActivity extends Activity
         switch (item.getItemId()) {
             case R.id.action_settings:
                 startActivity(new Intent(this, SettingsPreferenceActivity.class));
-                break;
-            case R.id.action_ref_news:
-                final NewsListFragment ref = (NewsListFragment) getFragmentManager()
-                        .findFragmentByTag(Utils.getString(this, "tag_fragment_news", "ERROR"));
-                new AsyncTask<Void, Void, Void>() {
-                    /**
-                     * Runs on the UI thread before {@link #doInBackground}.
-                     *
-                     * @see #onPostExecute
-                     * @see #doInBackground
-                     */
-                    @Override
-                    protected void onPreExecute() {
-                        ref.setUPDATE_RUNNING(Boolean.TRUE);
-                        invalidateOptionsMenu();
-                    }
-
-                    /**
-                     * <p>Runs on the UI thread after {@link #doInBackground}. The
-                     * specified result is the value returned by {@link #doInBackground}.</p>
-                     * <p/>
-                     * <p>This method won't be invoked if the task was cancelled.</p>
-                     *
-                     * @param aVoid The result of the operation computed by {@link #doInBackground}.
-                     * @see #onPreExecute
-                     * @see #doInBackground
-                     * @see #onCancelled(Object)
-                     */
-                    @Override
-                    protected void onPostExecute(Void aVoid) {
-                        ref.setUPDATE_RUNNING(Boolean.FALSE);
-                        invalidateOptionsMenu();
-                    }
-
-                    @Override
-                    protected Void doInBackground(Void... voids) {
-                        if (ref.getNewsFeedProvider().requestFeedRefresh()) {
-                            ref.updateShownNewsBridge();
-                        }
-//                        ref.getNewsFeedProvider().requestFeedRefresh();
-                        return null;
-                    }
-                }.execute();
                 break;
             default: //Up button
                 return super.onOptionsItemSelected(item);

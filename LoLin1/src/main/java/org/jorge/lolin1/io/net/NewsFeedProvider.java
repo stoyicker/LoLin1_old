@@ -61,14 +61,18 @@ public class NewsFeedProvider {
         Boolean ret = Boolean.FALSE;
         try {
             if (Utils.isInternetReachable(context)) {
+                Log.d("NX4", "Internet");
                 ArrayList<String> retrievedFeed = retrieveFeed();
+                Log.d("NX4", "Feed retrieved, size " + retrievedFeed.size());
                 ret = handler.onFeedUpdated(retrievedFeed);
             }
             else {
+                Log.d("NX4", "No internet");
                 handler.onNoInternetConnection();
             }
         }
         catch (IOException e) {
+            e.printStackTrace(System.err);
             Log.wtf("ERROR", "Should never happen", e);
             handler.onNoInternetConnection();
         }

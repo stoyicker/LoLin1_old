@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
-import org.jorge.lolin1.utils.Utils;
 
 import java.util.StringTokenizer;
 
@@ -50,15 +49,11 @@ public class NewsEntry {
                 + FIELD_SEPARATOR + this.description + FIELD_SEPARATOR;
     }
 
-//    public Bitmap getImage(Context context) {
-//        return Utils.getArticleBitmap(context, NewsToSQLiteBridge.getSingleton()
-//                .getArticleBlob(link), imageLink);
-//    }
-
     public Bitmap getImage(Context context) {
         if (this.image == null) {
-            this.image = Utils.getArticleBitmap(context, NewsToSQLiteBridge.getSingleton()
-                    .getArticleBlob(link), imageLink);
+            this.image =
+                    NewsToSQLiteBridge.getArticleBitmap(context, NewsToSQLiteBridge.getSingleton()
+                            .getArticleBlob(link), imageLink);
         }
         return this.image;
     }

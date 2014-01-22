@@ -1,5 +1,6 @@
 package org.jorge.lolin1.utils;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 
@@ -12,6 +13,7 @@ import java.io.Reader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.nio.charset.Charset;
 
 /**
  * This file is part of LoLin1.
@@ -71,9 +73,24 @@ public abstract class DebugUtils {
         return ret;
     }
 
+    public static final String convertStreamToString(BufferedInputStream in) throws IOException {
+        StringBuilder sb = new StringBuilder(Math.max(16, in.available()));
+        char[] tmp = new char[4096];
+
+        in.mark(Integer.MAX_VALUE);
+
+        InputStreamReader reader = new InputStreamReader(in, Charset.forName("utf-8"));
+        for (int cnt; (cnt = reader.read(tmp)) > 0; )
+            sb.append(tmp, 0, cnt);
+
+        in.reset();
+
+        return sb.toString();
+    }
+
     public static final void writeToFile(String data, Context context) {
         try {
-            OutputStreamWriter outputStreamWriter =
+            @SuppressLint("WorldReadableFiles") OutputStreamWriter outputStreamWriter =
                     new OutputStreamWriter(
                             context.openFileOutput("info.txt", Context.MODE_WORLD_READABLE));
             outputStreamWriter.write(data);

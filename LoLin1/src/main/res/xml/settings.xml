@@ -20,7 +20,7 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory android:title="@string/pref_cat_general">
 		<SwitchPreference
-			android:defaultValue="true"
+			android:defaultValue="false"
 			android:key="@string/pref_title_data"
 			android:summaryOff="@string/pref_summary_data_off"
 			android:summaryOn="@string/pref_summary_data_on"

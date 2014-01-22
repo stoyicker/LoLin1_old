@@ -51,7 +51,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
     }
 
     public void updateShownNews() {
-        String tableName = Utils.getTableName(mContext);
+        String tableName = NewsToSQLiteBridge.getTableName(mContext);
         //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
             ArrayList<NewsEntry> currTable = shownNews.get(tableName);
@@ -80,7 +80,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        String tableName = Utils.getTableName(mContext);
+        String tableName = NewsToSQLiteBridge.getTableName(mContext);
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
         return currTable.size();
@@ -88,7 +88,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     @Override
     public NewsEntry getItem(int i) {
-        String tableName = Utils.getTableName(mContext);
+        String tableName = NewsToSQLiteBridge.getTableName(mContext);
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
         return currTable.get(i);
@@ -111,7 +111,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         TextView title = (TextView) convertView.findViewById(R.id.news_feed_item_title);
         TextView desc = (TextView) convertView.findViewById(R.id.news_feed_item_desc);
 
-        String tableName = Utils.getTableName(mContext);
+        String tableName = NewsToSQLiteBridge.getTableName(mContext);
         ArrayList<NewsEntry> currentFeed = shownNews.get(tableName);
         NewsEntry thisArticle = currentFeed.get(position);
 

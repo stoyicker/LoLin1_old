@@ -18,6 +18,7 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 21/01/14.
 -->
 <resources>
-	<color name="theme_dark_orange">#CCFFBB33</color>
+	<color name="theme_light_orange">#FFDD33</color>
+	<color name="theme_dark_orange">#FFBB33</color>
 	<color name="feed_separator">#FFFFFF</color>
 </resources>

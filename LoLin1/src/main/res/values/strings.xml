@@ -107,7 +107,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_title_policy">Legal terms</string>
 	<string name="pref_first_run">firstRun</string>
 	<string name="pref_title_ads">Help to support the app</string>
-	<string name="pref_summary_ads">Show ads</string>
+	<string name="pref_summary_ads">Show an ad. Tap to dismiss it</string>
 	<string name="title_activity_init">Initializing...</string>
 	<string name="title_activity_facebook">Share to Facebook</string>
 	<string name="title_activity_policy">Privacy policy</string>

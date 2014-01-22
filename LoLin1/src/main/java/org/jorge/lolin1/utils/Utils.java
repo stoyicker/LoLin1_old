@@ -2,11 +2,8 @@ package org.jorge.lolin1.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
@@ -15,15 +12,7 @@ import android.util.Log;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.lang.reflect.Field;
-import java.net.URL;
-import java.nio.ByteBuffer;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This file is part of LoLin1.
@@ -47,21 +36,6 @@ import java.util.Arrays;
  */
 public abstract class Utils {
 
-    public static final String convertStreamToString(BufferedInputStream in) throws IOException {
-        StringBuilder sb = new StringBuilder(Math.max(16, in.available()));
-        char[] tmp = new char[4096];
-
-        in.mark(Integer.MAX_VALUE);
-
-        InputStreamReader reader = new InputStreamReader(in, Charset.forName("utf-8"));
-        for (int cnt; (cnt = reader.read(tmp)) > 0; )
-            sb.append(tmp, 0, cnt);
-
-        in.reset();
-
-        return sb.toString();
-    }
-
     public static final String[] getStringArray(Context context, String variableName,
                                                 String[] defaultRet) {
         String[] ret = defaultRet;
@@ -72,20 +46,6 @@ public abstract class Utils {
             ret = context.getResources().getStringArray(resourceId);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e("ERROR", "Exception", e);
-        }
-
-        return ret;
-    }
-
-    public static final String[] getStringArrayRegular(Context context, int variableId,
-                                                       String[] defaultRet) {
-        String[] ret = defaultRet;
-
-        try {
-            ret = context.getResources().getStringArray(variableId);
-        }
-        catch (Resources.NotFoundException e) {
             Log.e("ERROR", "Exception", e);
         }
 
@@ -141,66 +101,6 @@ public abstract class Utils {
         return ret;
     }
 
-    public static String getTableName(Context context) {
-        String prefix =
-                Utils.getString(context, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
-                        .replaceAll(NewsToSQLiteBridge.LOLNEWS_FEED_HOST, "")
-                        .replaceAll(NewsToSQLiteBridge.LOLNEWS_FEED_EXTENSION, "")
-                        .replaceAll("_(.*)", "") + "_";
-        String ret, server, lang, langSimplified;
-        final String ERROR = "PREF_NOT_FOUND", defaultTableName = "EUW_EN", defaultLanguage =
-                "ENGLISH";
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        server = preferences.getString(Utils.getString(context, "pref_title_server", "nvm"), ERROR);
-        lang = preferences.getString(Utils.getString(context, "pref_title_lang", "nvm"), ERROR);
-
-        if (server.contentEquals(ERROR) || lang.contentEquals(ERROR)) {
-            ret = prefix + defaultTableName;
-        }
-        else {
-            langSimplified = getStringArray(context, "langs_simplified",
-                    new String[]{defaultLanguage})[new ArrayList<>(
-                    Arrays.asList(getStringArray(context, "langs",
-                            new String[]{defaultLanguage})))
-                    .indexOf(lang)];
-            ret = prefix + server + "_" + langSimplified;
-        }
-
-        return ret.toUpperCase();
-    }
-
-    public static final Bitmap getArticleBitmap(Context context, byte[] blob,
-                                                final String callbackURL) {
-        Bitmap ret = null;
-        if (blob == null) {
-            if (Utils.isInternetReachable(context)) {
-                try {
-                    ret = BitmapFactory
-                            .decodeStream(
-                                    new URL(callbackURL).openConnection()
-                                            .getInputStream());
-                }
-                catch (IOException e) {
-                    ret = null;
-                }
-                int size = ret.getRowBytes() * ret.getHeight();
-                ByteBuffer b = ByteBuffer.allocate(size);
-                byte[] downloadedBitmapAsByteArray = new byte[b.remaining()];
-                ret.copyPixelsToBuffer(b);
-                b.rewind();
-                b.get(downloadedBitmapAsByteArray, 0,
-                        downloadedBitmapAsByteArray.length);
-                NewsToSQLiteBridge.getSingleton()
-                        .updateArticleBlob(downloadedBitmapAsByteArray, callbackURL);
-                return ret;
-            }
-        }
-        else {
-            ret = BitmapFactory.decodeByteArray(blob, 0, blob.length);
-        }
-        return ret;
-    }
-
     public static boolean tableExists(String tableName) {
         SQLiteDatabase db = NewsToSQLiteBridge.getSingleton().getReadableDatabase();
 
@@ -215,5 +115,20 @@ public abstract class Utils {
             cursor.close();
         }
         return false;
+    }
+
+    public static int getInt(Context context, String variableName, int defaultRet) {
+        int ret = defaultRet;
+
+        try {
+            Field resourceField = R.integer.class.getDeclaredField(variableName);
+            int resourceId = resourceField.getInt(resourceField);
+            ret = context.getResources().getInteger(resourceId);
+        }
+        catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.e("ERROR", "Exception", e);
+        }
+
+        return ret;
     }
 }
