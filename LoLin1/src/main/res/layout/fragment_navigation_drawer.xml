@@ -17,12 +17,12 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by JorgeAntonio on 02/01/14.
 -->
-<ListView xmlns:android="http://schemas.android.com/apk/res/android"
+<ListView style="@style/NavigationDrawerStyle"
+          xmlns:android="http://schemas.android.com/apk/res/android"
           xmlns:tools="http://schemas.android.com/tools"
           android:layout_width="match_parent"
           android:layout_height="match_parent"
-          android:background="@android:color/white"
           android:choiceMode="singleChoice"
-          android:divider="@android:color/darker_gray"
-          android:dividerHeight="@dimen/navigation_drawer_divider"
+          android:paddingLeft="@dimen/navigation_drawer_item_left_padding"
+          android:paddingTop="@dimen/navigation_drawer_item_top_padding"
           tools:context="org.jorge.lolin1.ui.NavigationDrawerFragment"/>

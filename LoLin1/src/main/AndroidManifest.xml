@@ -17,7 +17,8 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by JorgeAntonio on 02/01/14.
 -->
-<manifest package="org.jorge.lolin1"
+<manifest android:name="@string/app_name"
+          package="org.jorge.lolin1"
           xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -27,7 +28,7 @@ Created by JorgeAntonio on 02/01/14.
 		android:allowBackup="true"
 		android:icon="@drawable/icon_app"
 		android:logo="@drawable/icon_section1"
-		android:theme="@style/AppTheme">
+		android:theme="@style/AppStyle">
 		<activity
 			android:name="org.jorge.lolin1.activities.InitialActivity"
 			android:configChanges="orientation|screenSize"

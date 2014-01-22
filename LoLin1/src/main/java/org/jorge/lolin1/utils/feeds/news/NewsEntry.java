@@ -2,7 +2,6 @@ package org.jorge.lolin1.utils.feeds.news;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.util.Log;
 
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
@@ -27,15 +26,14 @@ import java.util.StringTokenizer;
  * <p/>
  * Created by JorgeAntonio on 20/01/14.
  */
-public class FeedEntry {
+public class NewsEntry {
 
-    private static final String SEPARATOR = "||||";
+    private static final String FIELD_SEPARATOR = "||||";
     private final String imageLink, link, title, description;
+    private Bitmap image;
 
-    public FeedEntry(final String rawData) {
-        Log.d("NX4", "rawData: " + rawData);
+    public NewsEntry(final String rawData) {
         final String cleanData = rawData.replaceAll("<p>(.*)", "");
-        Log.d("NX4", "cleanData: " + cleanData);
         final StringTokenizer tokenizer = new StringTokenizer(cleanData, "||||");
         this.imageLink = tokenizer.nextToken();
         this.link = tokenizer.nextToken();
@@ -44,17 +42,25 @@ public class FeedEntry {
     }
 
     public static final String getSEPARATOR() {
-        return SEPARATOR;
+        return FIELD_SEPARATOR;
     }
 
     public String toString() {
-        return this.imageLink + SEPARATOR + this.link + SEPARATOR + this.title
-                + SEPARATOR + this.description + SEPARATOR;
+        return this.imageLink + FIELD_SEPARATOR + this.link + FIELD_SEPARATOR + this.title
+                + FIELD_SEPARATOR + this.description + FIELD_SEPARATOR;
     }
 
+//    public Bitmap getImage(Context context) {
+//        return Utils.getArticleBitmap(context, NewsToSQLiteBridge.getSingleton()
+//                .getArticleBlob(link), imageLink);
+//    }
+
     public Bitmap getImage(Context context) {
-        return Utils.getArticleBitmap(context, NewsToSQLiteBridge.getSingleton()
-                .getArticleBlob(link), imageLink);
+        if (this.image == null) {
+            this.image = Utils.getArticleBitmap(context, NewsToSQLiteBridge.getSingleton()
+                    .getArticleBlob(link), imageLink);
+        }
+        return this.image;
     }
 
     public final String getLink() {

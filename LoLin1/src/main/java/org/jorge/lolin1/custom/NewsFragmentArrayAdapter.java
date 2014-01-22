@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +15,10 @@ import android.widget.TextView;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
-import org.jorge.lolin1.utils.feeds.news.FeedEntry;
+import org.jorge.lolin1.utils.feeds.news.NewsEntry;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 
 /**
@@ -42,7 +42,7 @@ import java.util.HashMap;
 public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     private static final int list_item_layout = R.layout.list_item_news_feed;
-    private static final HashMap<String, ArrayList<FeedEntry>> shownNews =
+    private static final HashMap<String, ArrayList<NewsEntry>> shownNews =
             new HashMap<>();
     private static Context mContext;
 
@@ -52,44 +52,44 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     public void updateShownNews() {
         String tableName = Utils.getTableName(mContext);
-        Log.d("NX4", "Table name fetched: " + tableName);
         //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
-            Log.d("NX4", "updateShownNews is on the if.");
-            ArrayList<FeedEntry> currTable = shownNews.get(tableName);
+            ArrayList<NewsEntry> currTable = shownNews.get(tableName);
             int howManyIHave = currTable.size();
-            ArrayList<FeedEntry> newNews =
+            ArrayList<NewsEntry> newNews =
                     NewsToSQLiteBridge.getSingleton().getNewNews(howManyIHave);
-            for (FeedEntry x : newNews) {
-                currTable.add(x);
+            Collections.reverse(newNews);
+            for (NewsEntry x : newNews) {
+                currTable.add(0, x);
             }
         }
         else {
-            Log.d("NX4", "updateShownNews is on the else.");
             if (Utils.tableExists(tableName)) {
-                ArrayList<FeedEntry> news =
+                ArrayList<NewsEntry> news =
                         NewsToSQLiteBridge.getSingleton().getNews();
-                Log.d("NX4", "news size is " + news.size());
                 shownNews.put(tableName, news);
             }
         }
-        Log.d("NX4", "About to call notifyDataSetChanged");
-        notifyDataSetChanged();
+        ((Activity) mContext).runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                NewsFragmentArrayAdapter.this.notifyDataSetChanged();
+            }
+        });
     }
 
     @Override
     public int getCount() {
         String tableName = Utils.getTableName(mContext);
-        ArrayList<FeedEntry> currTable = shownNews.get(tableName);
+        ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
-        Log.d("NX4", "Calling getCount");
         return currTable.size();
     }
 
     @Override
-    public FeedEntry getItem(int i) {
+    public NewsEntry getItem(int i) {
         String tableName = Utils.getTableName(mContext);
-        ArrayList<FeedEntry> currTable = shownNews.get(tableName);
+        ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
         return currTable.get(i);
     }
@@ -112,8 +112,8 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         TextView desc = (TextView) convertView.findViewById(R.id.news_feed_item_desc);
 
         String tableName = Utils.getTableName(mContext);
-        ArrayList<FeedEntry> currentFeed = shownNews.get(tableName);
-        FeedEntry thisArticle = currentFeed.get(position);
+        ArrayList<NewsEntry> currentFeed = shownNews.get(tableName);
+        NewsEntry thisArticle = currentFeed.get(position);
 
         title.setText(Html.fromHtml(thisArticle.getTitle()));
         desc.setText(Html.fromHtml(thisArticle.getDescription()));
@@ -135,7 +135,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
              */
             @Override
             protected Void doInBackground(final Object... params) {
-                final Bitmap bmp = ((FeedEntry) params[1]).getImage(mContext);
+                final Bitmap bmp = ((NewsEntry) params[1]).getImage(mContext);
                 ((Activity) mContext).runOnUiThread(new Runnable() {
                     @Override
                     public void run() {

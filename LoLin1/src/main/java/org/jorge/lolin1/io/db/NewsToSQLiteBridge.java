@@ -8,7 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.Utils;
-import org.jorge.lolin1.utils.feeds.news.FeedEntry;
+import org.jorge.lolin1.utils.feeds.news.NewsEntry;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -85,17 +85,17 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
-    public final ArrayList<FeedEntry> getNews() {
+    public final ArrayList<NewsEntry> getNews() {
         return getFilteredNews(null);
     }
 
-    public final ArrayList<FeedEntry> getNewNews(int alreadyShown) {
+    public final ArrayList<NewsEntry> getNewNews(int alreadyShown) {
         return getFilteredNews(NEWS_KEY_ID + " > " + alreadyShown);
     }
 
-    private final ArrayList<FeedEntry> getFilteredNews(String whereClause) {
+    private final ArrayList<NewsEntry> getFilteredNews(String whereClause) {
 
-        ArrayList<FeedEntry> ret = new ArrayList<>();
+        ArrayList<NewsEntry> ret = new ArrayList<>();
         String[] fields =
                 new String[]{NEWS_KEY_IMG_URL, NEWS_KEY_URL, NEWS_KEY_TITLE, NEWS_KEY_DESC};
         ArrayList<String> fieldsAsList = new ArrayList<>(Arrays.asList(fields));
@@ -106,7 +106,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         Cursor result =
                 db.query(tableName, fields, whereClause, null, null, null, NEWS_KEY_ID + " DESC");
         StringBuilder data = new StringBuilder("");
-        final String separator = FeedEntry.getSEPARATOR();
+        final String separator = NewsEntry.getSEPARATOR();
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             for (String x : fieldsAsList) {
                 if (x.contentEquals(NEWS_KEY_URL)) {
@@ -119,7 +119,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
                     data.append(result.getString(result.getColumnIndex(x))).append(separator);
                 }
             }
-            ret.add(new FeedEntry(data.toString()));
+            ret.add(new NewsEntry(data.toString()));
             data = new StringBuilder("");
         }
         result.close();
@@ -156,23 +156,6 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
-    //    /**
-//     * Simplified 'DELETE FROM TABLE' implementation that allows only for a single field matching check.
-//     *
-//     * @param fromTable   {@link String} The name of the table
-//     * @param paramName   {@link String} The parameter to be checked
-//     * @param targetValue {@link String} The value to check the parameter against
-//     * @return the number of rows affected, or -1 if any error happens
-//     */
-//    public long simpleDelete(String fromTable, String paramName, String targetValue) {
-//        long ret;
-//        SQLiteDatabase db = getWritableDatabase();
-//        db.beginTransaction();
-//        ret = db.delete(fromTable, "WHERE ? = ?", new String[]{paramName.toUpperCase(), targetValue.toUpperCase()});
-//        db.setTransactionSuccessful();
-//        db.endTransaction();
-//        return ret;
-//    }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         HashSet<String> tableNames = new HashSet<>();

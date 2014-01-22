@@ -23,29 +23,31 @@ Created by JorgeAntonio on 02/01/14.
               android:background="@color/theme_dark_orange"
               android:hapticFeedbackEnabled="true"
               android:orientation="horizontal"
-              android:paddingBottom="@dimen/feed_item_padding"
-              android:paddingTop="@dimen/feed_item_padding">
+              android:paddingBottom="@dimen/feed_item_vertical_margin"
+              android:paddingTop="@dimen/feed_item_vertical_margin">
 
 	<ImageView
 		android:id="@+id/feed_item_image"
 		android:layout_width="wrap_content"
 		android:layout_height="wrap_content"
 		android:layout_gravity="center"
-		android:paddingLeft="@dimen/feed_img_left_padding"
-		android:paddingRight="@dimen/feed_img_right_padding"/>
+		android:layout_marginLeft="@dimen/feed_item_horizontal_margin"
+		android:layout_marginRight="@dimen/feed_img_right_margin"
+		android:background="@color/feed_separator"
+		android:padding="1dp"/>
 
 	<LinearLayout
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:orientation="vertical">
+		android:orientation="vertical"
+		android:paddingRight="@dimen/feed_item_horizontal_margin">
 
 		<TextView
 			android:id="@+id/news_feed_item_title"
+			style="@style/NewsFeedTextWithShadowStyle"
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:layout_gravity="center_vertical"
-			android:textSize="@dimen/news_feed_title_size"
-			android:textStyle="bold"
 			/>
 
 		<TextView

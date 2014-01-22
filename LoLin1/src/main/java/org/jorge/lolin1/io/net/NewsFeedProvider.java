@@ -8,7 +8,7 @@ import android.util.Xml;
 
 import org.jorge.lolin1.utils.Utils;
 import org.jorge.lolin1.utils.feeds.FeedHandler;
-import org.jorge.lolin1.utils.feeds.news.FeedEntry;
+import org.jorge.lolin1.utils.feeds.news.NewsEntry;
 import org.jorge.lolin1.utils.feeds.news.NewsFeedHandler;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -42,9 +42,8 @@ import java.util.Iterator;
  */
 public class NewsFeedProvider {
 
-    private static final String AVAILABILITY_CHECKER = "<pubDate>", LOLNEWS_PREFIX =
-            "http://feed43.com/lolnews", LOLNEWS_SUFFIX = ".xml";
-    private static final Integer AVAILABILITY_DELAY_MILLIS = new Integer(1000);
+    private static final String LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX =
+            ".xml";
     private Context context;
     private FeedHandler handler;
 
@@ -63,7 +62,6 @@ public class NewsFeedProvider {
         try {
             if (Utils.isInternetReachable(context)) {
                 ArrayList<String> retrievedFeed = retrieveFeed();
-                Log.d("NX4", "retrievedFeed size: " + retrievedFeed.size());
                 ret = handler.onFeedUpdated(retrievedFeed);
             }
             else {
@@ -71,7 +69,7 @@ public class NewsFeedProvider {
             }
         }
         catch (IOException e) {
-            Log.wtf("NX4", "Should never happen", e);
+            Log.wtf("ERROR", "Should never happen", e);
             handler.onNoInternetConnection();
         }
         finally {
@@ -86,8 +84,7 @@ public class NewsFeedProvider {
      * @throws IOException
      */
     private ArrayList<String> retrieveFeed() throws IOException {
-        Log.d("NX4", "Coming into retrieveFeed");
-        ArrayList<FeedEntry> items = null;
+        ArrayList<NewsEntry> items = null;
         BufferedInputStream in;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String server = preferences
@@ -106,17 +103,6 @@ public class NewsFeedProvider {
         URLConnection urlConnection = source.openConnection();
         urlConnection.connect();
         in = new BufferedInputStream(urlConnection.getInputStream());
-        //Maybe fix the availability checker?
-//        if (!Utils.convertStreamToString(in)
-//                .contains(AVAILABILITY_CHECKER)) {
-//            try {
-//                Thread.sleep(AVAILABILITY_DELAY_MILLIS);
-//            }
-//            catch (InterruptedException e) {
-//                Log.e("ERROR", "Exception", e);
-//            }
-//            return retrieveFeed();
-//        }
 
         XmlPullParser parser = Xml.newPullParser();
         try {
@@ -126,23 +112,21 @@ public class NewsFeedProvider {
             items = readFeed(parser);
         }
         catch (XmlPullParserException e) {
-            Log.wtf("NX4", "Should never happen!", e);
+            Log.wtf("ERROR", "XML discarded", e);
         }
 
         ArrayList<String> ret = new ArrayList<>();
-        for (Iterator<FeedEntry> it = items.iterator(); it.hasNext(); ) {
+        for (Iterator<NewsEntry> it = items.iterator(); it.hasNext(); ) {
             ret.add(it.next().toString());
         }
-
-        Log.d("NX4", "About to reverse");
 
         Collections.reverse(ret);
         return ret;
     }
 
-    private ArrayList<FeedEntry> readFeed(XmlPullParser parser)
+    private ArrayList<NewsEntry> readFeed(XmlPullParser parser)
             throws IOException, XmlPullParserException {
-        final ArrayList<FeedEntry> ret = new ArrayList<>();
+        final ArrayList<NewsEntry> ret = new ArrayList<>();
         Boolean channelDescIsRead = Boolean.FALSE;
 
         parser.require(XmlPullParser.START_TAG, null, "rss");
@@ -165,17 +149,15 @@ public class NewsFeedProvider {
         return ret;
     }
 
-    private FeedEntry buildFeedEntry(XmlPullParser parser)
+    private NewsEntry buildFeedEntry(XmlPullParser parser)
             throws IOException, XmlPullParserException {
-        FeedEntry ret = null;
+        NewsEntry ret = null;
         parser.require(XmlPullParser.START_TAG, null, "description");
         String name = parser.getName();
         switch (name) {
             case "description":
-                ret = new FeedEntry(readText(parser));
+                ret = new NewsEntry(readText(parser));
                 break;
-//                case "pubDate": TODO 2 Add pubDate as a field
-//                    break;
             default:
                 skip(parser);
         }

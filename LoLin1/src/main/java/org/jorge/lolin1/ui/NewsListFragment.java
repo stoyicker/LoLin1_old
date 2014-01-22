@@ -5,7 +5,6 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -53,6 +52,10 @@ public class NewsListFragment extends ListFragment {
         listAdapter = new NewsFragmentArrayAdapter(context);
         setListAdapter(listAdapter);
         newsFeedProvider = new NewsFeedProvider(context);
+    }
+
+    public void updateShownNewsBridge() {
+        listAdapter.updateShownNews();
     }
 
     public NewsFeedProvider getNewsFeedProvider() {
@@ -145,12 +148,8 @@ public class NewsListFragment extends ListFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        Log.d("NX4", "onAttach has been called.");
         super.onAttach(activity);
-
-        Log.d("NX4", "onAttach is about to call updateShownNews.");
         listAdapter.updateShownNews();
-        Log.d("NX4", "updateShownNews has finished.");
         ((MainActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(

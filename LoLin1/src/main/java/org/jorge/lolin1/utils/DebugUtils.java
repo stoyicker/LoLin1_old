@@ -48,7 +48,7 @@ public abstract class DebugUtils {
                         new InputStreamReader(is, "UTF-8"));
             }
             catch (UnsupportedEncodingException e) {
-                Log.wtf("NX4", "Should never happen!", e);
+                Log.wtf("ERROR", "Should never happen!", e);
             }
             int n;
             while ((n = reader.read(buffer)) != -1) {
@@ -56,14 +56,14 @@ public abstract class DebugUtils {
             }
         }
         catch (IOException e) {
-            Log.wtf("NX4", "Should never happen!", e);
+            Log.wtf("ERROR", "Should never happen!", e);
         }
         finally {
             try {
                 is.reset();
             }
             catch (IOException e) {
-                Log.wtf("NX4", "Should never happen!", e);
+                Log.wtf("ERROR", "Should never happen!", e);
             }
         }
         ret = writer.toString();

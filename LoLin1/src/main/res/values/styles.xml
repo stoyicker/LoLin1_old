@@ -18,10 +18,33 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 02/01/14.
 -->
 <resources>
-	<style name="AppTheme" parent="android:Theme.Holo.Light">
+	<style name="AppStyle" parent="android:Theme.Holo.Light">
 		<item name="android:actionBarStyle">@style/ActionBarStyle</item>
 	</style>
 	<style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
 		<item name="android:background">@color/theme_dark_orange</item>
+	</style>
+	<style name="NavigationDrawerStyle">
+		<!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+ https://developer.android.com/design/patterns/navigation-drawer.html -->
+		<item name="android:width">@dimen/navigation_drawer_width</item>
+		<item name="android:background">#0B031C</item>
+	</style>
+	<style name="NewsFeedTextWithShadowStyle">
+		<item name="android:textColor">#000000</item>
+		<item name="android:textSize">@dimen/news_feed_title_size</item>
+		<item name="android:shadowColor">#ffffff</item>
+		<item name="android:shadowDx">1</item>
+		<item name="android:shadowDy">1</item>
+		<item name="android:shadowRadius">1</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="NavigationDrawerTextWithShadowStyle">
+		<item name="android:textColor">#ffffff</item>
+		<item name="android:shadowColor">@color/theme_dark_orange</item>
+		<item name="android:shadowDx">2</item>
+		<item name="android:shadowDy">2</item>
+		<item name="android:shadowRadius">1</item>
+		<item name="android:textSize">@dimen/navigation_drawer_text_size</item>
 	</style>
 </resources>

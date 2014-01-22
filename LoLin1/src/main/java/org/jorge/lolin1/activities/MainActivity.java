@@ -185,10 +185,10 @@ public class MainActivity extends Activity
 
                     @Override
                     protected Void doInBackground(Void... voids) {
-//                        if (ref.getNewsFeedProvider().requestFeedRefresh()) {
-//                            ref.updateShownNewsBridge();
-//                        }
-                        ref.getNewsFeedProvider().requestFeedRefresh();
+                        if (ref.getNewsFeedProvider().requestFeedRefresh()) {
+                            ref.updateShownNewsBridge();
+                        }
+//                        ref.getNewsFeedProvider().requestFeedRefresh();
                         return null;
                     }
                 }.execute();

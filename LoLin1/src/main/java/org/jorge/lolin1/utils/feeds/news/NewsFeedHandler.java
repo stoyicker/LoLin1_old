@@ -3,7 +3,6 @@ package org.jorge.lolin1.utils.feeds.news;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
@@ -50,7 +49,7 @@ public class NewsFeedHandler implements FeedHandler {
             }
         });
         try {
-            Thread.sleep(5000); //FIXME 3 Remove this when out of news feed refresh stage
+            Thread.sleep(5000); //FIXME 1 Remove this when out of news feed refresh stage
         }
         catch (InterruptedException e) {
             e.printStackTrace();
@@ -59,13 +58,11 @@ public class NewsFeedHandler implements FeedHandler {
 
     @Override
     public Boolean onFeedUpdated(ArrayList<String> items) {
-        Log.d("NX4", "Items' size: " + items.size());
         ContentValues row;
         String url, img_url, title, desc;
         boolean areThereNewNews = Boolean.FALSE;
-        Log.d("NX5", "About to check items");
         for (String x : items) {
-            StringTokenizer currentItem = new StringTokenizer(x, FeedEntry.getSEPARATOR());
+            StringTokenizer currentItem = new StringTokenizer(x, NewsEntry.getSEPARATOR());
             img_url = currentItem.nextToken();
             url = currentItem.nextToken();
             title = currentItem.nextToken();
@@ -81,6 +78,4 @@ public class NewsFeedHandler implements FeedHandler {
         }
         return areThereNewNews;
     }
-
-    //FIXME 1 Why refresh does not refresh the view?
 }
