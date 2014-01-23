@@ -18,11 +18,11 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 02/01/14.
 -->
 <resources>
-	<style name="AppStyle" parent="android:Theme.Holo.Light">
+	<style name="AppTheme" parent="android:Theme.Holo.Light">
 		<item name="android:actionBarStyle">@style/ActionBarStyle</item>
 	</style>
 	<style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
-		<item name="android:background">@color/theme_light_orange</item>
+		<item name="android:background">@color/theme_dark_blue</item>
 	</style>
 	<style name="NavigationDrawerStyle">
 		<!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
@@ -41,7 +41,7 @@ Created by JorgeAntonio on 02/01/14.
 	</style>
 	<style name="NavigationDrawerTextWithShadowStyle">
 		<item name="android:textColor">#ffffff</item>
-		<item name="android:shadowColor">@color/theme_light_orange</item>
+		<item name="android:shadowColor">@color/theme_dark_blue</item>
 		<item name="android:shadowDx">2</item>
 		<item name="android:shadowDy">2</item>
 		<item name="android:shadowRadius">1</item>

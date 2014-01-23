@@ -18,6 +18,5 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 10/01/14.
 -->
 <resources>
-	<integer name="ptr_minimize_delay_millis">3000</integer>
-	<integer name="feed_refresh_distance_percentage">35</integer>
+	<integer name="feed_refresh_distance_percentage">40</integer>
 </resources>

@@ -3,12 +3,18 @@ package org.jorge.lolin1.utils.feeds.news;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Log;
 import android.widget.Toast;
 
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
 import org.jorge.lolin1.utils.feeds.FeedHandler;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.StringTokenizer;
 
@@ -61,11 +67,25 @@ public class NewsFeedHandler implements FeedHandler {
             url = currentItem.nextToken();
             title = currentItem.nextToken();
             desc = currentItem.nextToken();
+            Bitmap bmp = null;
+            try {
+                bmp = BitmapFactory
+                        .decodeStream(new URL(img_url).openConnection()
+                                .getInputStream());
+            }
+            catch (IOException e) {
+                Log.w("ERROR", "Should never happen!", e);
+            }
+
+            ByteArrayOutputStream blob = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 0, blob);
+            byte[] bmpAsByteArray = blob.toByteArray();
             row = new ContentValues();
             row.put(NewsToSQLiteBridge.NEWS_KEY_TITLE, title);
             row.put(NewsToSQLiteBridge.NEWS_KEY_DESC, desc);
-            row.put(NewsToSQLiteBridge.NEWS_KEY_IMG_URL, img_url);
+            row.put(NewsToSQLiteBridge.NEWS_KEY_IMG_URL, img_url.replaceAll("http://", "httpxxx"));
             row.put(NewsToSQLiteBridge.NEWS_KEY_URL, url.replaceAll("http://", "httpxxx"));
+            row.put(NewsToSQLiteBridge.NEWS_KEY_BLOB, bmpAsByteArray);
             if (NewsToSQLiteBridge.getSingleton().insertArticle(row) != -1) {
                 areThereNewNews = Boolean.TRUE;
             }

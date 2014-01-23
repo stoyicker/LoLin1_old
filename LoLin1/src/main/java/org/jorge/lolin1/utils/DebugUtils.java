@@ -2,7 +2,11 @@ package org.jorge.lolin1.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+
+import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -35,7 +39,7 @@ import java.nio.charset.Charset;
  */
 public abstract class DebugUtils {
 
-    public static final String toString(BufferedInputStream is) {
+    public static final String BufferedInputStreamToString(BufferedInputStream is) {
         String ret;
 
         is.mark(Integer.MAX_VALUE);
@@ -101,4 +105,21 @@ public abstract class DebugUtils {
         }
     }
 
+    public static void debugSelectAllFromTable(String tag, String[] fields, String tableName) {
+        SQLiteDatabase db = NewsToSQLiteBridge.getSingleton().getReadableDatabase();
+
+        db.beginTransaction();
+        Cursor cursor = db.query(tableName, fields, null, null, null, null, null);
+        while (cursor.moveToNext()) {
+            Log.d(tag, fields[0] + ": " + cursor.getInt(0));
+            Log.d(tag, fields[1] + ": " + cursor.getString(1));
+            Log.d(tag, fields[2] + ": " + cursor.getString(2));
+            Log.d(tag, fields[3] + ": " + cursor.getString(3));
+            Log.d(tag, fields[4] + ": " + cursor.getString(4));
+            Log.d(tag, fields[5] + ": " + cursor.getBlob(5));
+        }
+        cursor.close();
+        db.setTransactionSuccessful();
+        db.endTransaction();
+    }
 }

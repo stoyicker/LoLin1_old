@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.activities.MainActivity;
 import org.jorge.lolin1.activities.WebViewerActivity;
 import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
+import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
 import org.jorge.lolin1.utils.Utils;
 
@@ -48,10 +50,9 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
  */
 public class NewsListFragment extends ListFragment implements OnRefreshListener {
 
+    private static PullToRefreshLayout mPullToRefreshLayout;
     private NewsFragmentArrayAdapter listAdapter;
     private NewsFeedProvider newsFeedProvider;
-    private Boolean UPDATE_RUNNING = Boolean.FALSE;
-    private PullToRefreshLayout mPullToRefreshLayout;
 
     public NewsListFragment(Context context) {
         super();
@@ -92,7 +93,12 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_news_feed, container, false);
+
+        View ret = inflater.inflate(R.layout.fragment_news_feed, container, false);
+
+        listAdapter.updateShownNews();
+
+        return ret;
     }
 
     /**
@@ -119,6 +125,8 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
         optionsBuilder = optionsBuilder
                 .scrollDistance(scrollDistance);
 
+        optionsBuilder = optionsBuilder.headerTransformer(new TranslatableHeaderTransformer());
+
         // We can now setup the PullToRefreshLayout
         ActionBarPullToRefresh.from(getActivity())
 
@@ -142,7 +150,9 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        listAdapter.updateShownNews();
+
+        Log.d("NX4", "Refresh successful!");
+
         ((MainActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(
@@ -154,6 +164,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
                         "Home"))
         );
     }
+
 
     @Override
     public void onRefreshStarted(View view) {

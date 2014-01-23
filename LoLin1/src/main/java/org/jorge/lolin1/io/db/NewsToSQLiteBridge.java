@@ -14,9 +14,9 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.Utils;
 import org.jorge.lolin1.utils.feeds.news.NewsEntry;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -98,28 +98,24 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
     }
 
     public static final Bitmap getArticleBitmap(Context context, byte[] blob,
-                                                final String callbackURL) {
+                                                final String imageLinkCallbackURL) {
         Bitmap ret = null;
         if (blob == null) {
             if (Utils.isInternetReachable(context)) {
                 try {
                     ret = BitmapFactory
                             .decodeStream(
-                                    new URL(callbackURL).openConnection()
+                                    new URL(imageLinkCallbackURL).openConnection()
                                             .getInputStream());
                 }
                 catch (IOException e) {
                     ret = null;
                 }
-                int size = ret.getRowBytes() * ret.getHeight();
-                ByteBuffer b = ByteBuffer.allocate(size);
-                byte[] downloadedBitmapAsByteArray = new byte[b.remaining()];
-                ret.copyPixelsToBuffer(b);
-                b.rewind();
-                b.get(downloadedBitmapAsByteArray, 0,
-                        downloadedBitmapAsByteArray.length);
+                ByteArrayOutputStream blobOS = new ByteArrayOutputStream();
+                ret.compress(Bitmap.CompressFormat.PNG, 0, blobOS);
+                byte[] bmpAsByteArray = blobOS.toByteArray();
                 NewsToSQLiteBridge.getSingleton()
-                        .updateArticleBlob(downloadedBitmapAsByteArray, callbackURL);
+                        .updateArticleBlob(bmpAsByteArray, imageLinkCallbackURL);
                 return ret;
             }
         }
@@ -129,7 +125,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
-    public byte[] getArticleBlob(String articleUrl) {
+    public byte[] getArticleBlob(String imageUrl) {
         byte[] ret;
         String tableName = getTableName(mContext);
         SQLiteDatabase db = getReadableDatabase();
@@ -137,7 +133,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
 
         db.beginTransaction();
         result = db.query(tableName, new String[]{NEWS_KEY_BLOB},
-                NEWS_KEY_URL + "='" + articleUrl.replaceAll("http://", "httpxxx") + "'",
+                NEWS_KEY_IMG_URL + "='" + imageUrl.replaceAll("http://", "httpxxx") + "'",
                 null, null, null, null, null);
         result.moveToFirst();
         try {
@@ -146,8 +142,9 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         catch (IndexOutOfBoundsException ex) { //Meaning there's no blob stored yet
             ret = null;
         }
-        db.setTransactionSuccessful();
+        result.close();
 
+        db.setTransactionSuccessful();
         db.endTransaction();
         return ret;
     }
@@ -164,7 +161,8 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
 
         ArrayList<NewsEntry> ret = new ArrayList<>();
         String[] fields =
-                new String[]{NEWS_KEY_IMG_URL, NEWS_KEY_URL, NEWS_KEY_TITLE, NEWS_KEY_DESC};
+                new String[]{NEWS_KEY_BLOB, NEWS_KEY_IMG_URL, NEWS_KEY_URL, NEWS_KEY_TITLE,
+                        NEWS_KEY_DESC};
         ArrayList<String> fieldsAsList = new ArrayList<>(Arrays.asList(fields));
 
         SQLiteDatabase db = getReadableDatabase();
@@ -176,17 +174,19 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         final String separator = NewsEntry.getSEPARATOR();
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             for (String x : fieldsAsList) {
-                if (x.contentEquals(NEWS_KEY_URL)) {
-                    data.append(
-                            result.getString(result.getColumnIndex(x))
-                                    .replaceAll("httpxxx", "http://"))
-                            .append(separator);
-                }
-                else {
-                    data.append(result.getString(result.getColumnIndex(x))).append(separator);
+                if (!x.contentEquals(NEWS_KEY_BLOB)) {
+                    if (x.contentEquals(NEWS_KEY_URL)) {
+                        data.append(
+                                result.getString(result.getColumnIndex(x))
+                                        .replaceAll("httpxxx", "http://"))
+                                .append(separator);
+                    }
+                    else {
+                        data.append(result.getString(result.getColumnIndex(x))).append(separator);
+                    }
                 }
             }
-            ret.add(new NewsEntry(data.toString()));
+            ret.add(new NewsEntry(data.toString(), result.getBlob(0)));
             data = new StringBuilder("");
         }
         result.close();
@@ -195,15 +195,15 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
-    public final void updateArticleBlob(byte[] blob, String uniqueUrl) {
+    public final void updateArticleBlob(byte[] blob, String imgUrl) {
         SQLiteDatabase db = getWritableDatabase();
         String tableName = getTableName(mContext);
         ContentValues contentValues = new ContentValues();
         contentValues.put(NEWS_KEY_BLOB, blob);
 
         db.beginTransaction();
-        db.update(tableName, contentValues,
-                NEWS_KEY_URL + " = '" + uniqueUrl.replaceAll("http://", "httpxxx") + "'", null);
+        int rowsUpdated = db.update(tableName, contentValues,
+                NEWS_KEY_IMG_URL + " = '" + imgUrl.replaceAll("http://", "httpxxx") + "'", null);
         db.setTransactionSuccessful();
         db.endTransaction();
     }

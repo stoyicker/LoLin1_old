@@ -28,7 +28,7 @@ Created by JorgeAntonio on 02/01/14.
 		android:allowBackup="true"
 		android:icon="@drawable/icon_app"
 		android:logo="@drawable/icon_section1"
-		android:theme="@style/AppStyle">
+		android:theme="@style/AppTheme">
 		<activity
 			android:name="org.jorge.lolin1.activities.InitialActivity"
 			android:configChanges="orientation|screenSize"

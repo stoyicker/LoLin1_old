@@ -33,7 +33,7 @@ Created by JorgeAntonio on 02/01/14.
 		android:layout_gravity="center"
 		android:layout_marginLeft="@dimen/feed_item_horizontal_margin"
 		android:layout_marginRight="@dimen/feed_img_right_margin"
-		android:background="@color/feed_separator"
+		android:background="@color/feed_image_border"
 		android:padding="1dp"/>
 
 	<LinearLayout

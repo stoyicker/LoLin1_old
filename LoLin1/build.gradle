@@ -43,5 +43,4 @@ android {
 dependencies {
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.android.support:support-v4:+'
-    compile files('libs/xerces.jar')
 }

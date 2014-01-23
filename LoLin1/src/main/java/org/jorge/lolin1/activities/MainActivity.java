@@ -37,6 +37,8 @@ import org.jorge.lolin1.utils.Utils;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
+    private Fragment FRAGMENT_NEWS;
+
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
      */
@@ -50,6 +52,7 @@ public class MainActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -75,7 +78,6 @@ public class MainActivity extends Activity
             x = fragmentManager.findFragmentByTag(fragment_tags[i]);
             if (x != null) {
                 removeTransaction.remove(x);
-                x = null;
             }
         }
         removeTransaction.commit();
@@ -101,7 +103,10 @@ public class MainActivity extends Activity
         String newFragmentTag = null;
         switch (position) {
             case 0:
-                newFragment = new NewsListFragment(this);
+                if (FRAGMENT_NEWS == null) {
+                    FRAGMENT_NEWS = new NewsListFragment(this);
+                }
+                newFragment = FRAGMENT_NEWS;
                 newFragmentTag = Utils.getString(this, "tag_fragment_news", "ERROR");
                 break;
             case 1:
@@ -111,7 +116,8 @@ public class MainActivity extends Activity
             case 5:
             case 6:
             default:
-                newFragment = new NewsListFragment(this);
+                newFragment =
+                        FRAGMENT_NEWS; //FIXME Remove the default once all the sections have been done
                 newFragmentTag = Utils.getString(this, "tag_fragment_news",
                         getString(R.string.tag_fragment_news));
                 Log.wtf("ERROR", "Should never happen");
