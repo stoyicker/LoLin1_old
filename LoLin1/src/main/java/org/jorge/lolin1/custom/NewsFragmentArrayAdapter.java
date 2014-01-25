@@ -13,9 +13,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.feeds.news.NewsEntry;
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
-import org.jorge.lolin1.utils.feeds.news.NewsEntry;
 
 import java.util.ArrayList;
 import java.util.Collections;

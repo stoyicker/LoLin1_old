@@ -1,4 +1,4 @@
-package org.jorge.lolin1.utils.feeds.news;
+package org.jorge.lolin1.feeds.news;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -34,7 +34,7 @@ public class NewsEntry {
 
     public NewsEntry(final String rawData, final Context context) {
         final String cleanData = rawData.replaceAll("<p>(.*)", "");
-        final StringTokenizer tokenizer = new StringTokenizer(cleanData, "||||");
+        final StringTokenizer tokenizer = new StringTokenizer(cleanData, FIELD_SEPARATOR);
         this.imageLink = tokenizer.nextToken();
         this.link = tokenizer.nextToken();
         this.title = tokenizer.nextToken();
@@ -44,7 +44,7 @@ public class NewsEntry {
 
     public NewsEntry(String rawData, byte[] blob) {
         final String cleanData = rawData.replaceAll("<p>(.*)", "");
-        final StringTokenizer tokenizer = new StringTokenizer(cleanData, "||||");
+        final StringTokenizer tokenizer = new StringTokenizer(cleanData, FIELD_SEPARATOR);
         this.imageLink = tokenizer.nextToken();
         this.link = tokenizer.nextToken();
         this.title = tokenizer.nextToken();
@@ -54,11 +54,6 @@ public class NewsEntry {
 
     public static final String getSEPARATOR() {
         return FIELD_SEPARATOR;
-    }
-
-    public String toString() {
-        return this.imageLink + FIELD_SEPARATOR + this.link + FIELD_SEPARATOR + this.title
-                + FIELD_SEPARATOR + this.description + FIELD_SEPARATOR;
     }
 
     public Bitmap getImage(Context context) {

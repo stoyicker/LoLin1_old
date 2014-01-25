@@ -102,6 +102,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_title_twitter">Share on Twitter</string>
 	<string name="pref_cat_about">ABOUT</string>
 	<string name="news_empty">No news to show</string>
+	<string name="surr_empty">Nothing to show</string>
 	<string name="pref_title_rate">Rate the app</string>
 	<string name="pref_title_developer">About the developer</string>
 	<string name="pref_title_policy">Legal terms</string>
@@ -117,6 +118,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="title_activity_server_and_lang">Initial configuration</string>
 	<string name="title_activity_rate">Rate LoLin1</string>
 	<string name="tag_fragment_news">News</string>
+	<string name="tag_fragment_surr">Surrender@20</string>
 	<string name="news_header">League of Legends News</string>
 	<string name="title_activity_web_viewer">LoLin1 Browser</string>
 	<string name="ptr_pull_text">Pull to refresh</string>

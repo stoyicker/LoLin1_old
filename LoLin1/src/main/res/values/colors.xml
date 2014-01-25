@@ -20,6 +20,6 @@ Created by JorgeAntonio on 21/01/14.
 <resources>
 	<color name="theme_dark_blue">#11CCFF</color>
 	<color name="theme_dark_orange">#FFBB33</color>
-	<color name="feed_separator">#FFFFFF</color>
-	<color name="feed_image_border">#000000</color>
+	<color name="theme_black">#000000</color>
+	<color name="theme_white">#FFFFFF</color>
 </resources>

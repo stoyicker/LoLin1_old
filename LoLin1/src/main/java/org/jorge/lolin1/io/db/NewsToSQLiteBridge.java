@@ -11,8 +11,8 @@ import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.feeds.news.NewsEntry;
 import org.jorge.lolin1.utils.Utils;
-import org.jorge.lolin1.utils.feeds.news.NewsEntry;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -202,7 +202,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         contentValues.put(NEWS_KEY_BLOB, blob);
 
         db.beginTransaction();
-        int rowsUpdated = db.update(tableName, contentValues,
+        db.update(tableName, contentValues,
                 NEWS_KEY_IMG_URL + " = '" + imgUrl.replaceAll("http://", "httpxxx") + "'", null);
         db.setTransactionSuccessful();
         db.endTransaction();

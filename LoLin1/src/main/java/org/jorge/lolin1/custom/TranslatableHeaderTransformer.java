@@ -134,7 +134,6 @@ public class TranslatableHeaderTransformer extends HeaderTransformer {
         // Apply any custom ProgressBar colors and corner radius
         applyProgressBarSettings();
 
-        // FIXME: I do not like this call here
         onReset();
     }
 

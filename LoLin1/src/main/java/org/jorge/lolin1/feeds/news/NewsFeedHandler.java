@@ -1,4 +1,4 @@
-package org.jorge.lolin1.utils.feeds.news;
+package org.jorge.lolin1.feeds.news;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -8,9 +8,9 @@ import android.graphics.BitmapFactory;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.jorge.lolin1.feeds.IFeedHandler;
 import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
-import org.jorge.lolin1.utils.feeds.FeedHandler;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -36,7 +36,7 @@ import java.util.StringTokenizer;
  * <p/>
  * Created by JorgeAntonio on 04/01/14.
  */
-public class NewsFeedHandler implements FeedHandler {
+public class NewsFeedHandler implements IFeedHandler {
 
     Context context;
 

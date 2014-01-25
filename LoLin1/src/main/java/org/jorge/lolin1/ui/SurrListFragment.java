@@ -15,9 +15,9 @@ import android.widget.ListView;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.activities.MainActivity;
 import org.jorge.lolin1.activities.WebViewerActivity;
-import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
+import org.jorge.lolin1.custom.SurrFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
-import org.jorge.lolin1.io.net.NewsFeedProvider;
+import org.jorge.lolin1.io.net.SurrFeedProvider;
 import org.jorge.lolin1.utils.Utils;
 
 import java.util.ArrayList;
@@ -45,19 +45,19 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 09/01/14.
+ * Created by JorgeAntonio on 25/01/14.
  */
-public class NewsListFragment extends ListFragment implements OnRefreshListener {
+public class SurrListFragment extends ListFragment implements OnRefreshListener {
 
     private static PullToRefreshLayout mPullToRefreshLayout;
-    private NewsFragmentArrayAdapter listAdapter;
-    private NewsFeedProvider newsFeedProvider;
+    private SurrFragmentArrayAdapter listAdapter;
+    private SurrFeedProvider surrFeedProvider;
 
-    public NewsListFragment(Context context) {
+    public SurrListFragment(Context context) {
         super();
-        listAdapter = new NewsFragmentArrayAdapter(context);
+        listAdapter = new SurrFragmentArrayAdapter(context);
         setListAdapter(listAdapter);
-        newsFeedProvider = new NewsFeedProvider(context);
+        surrFeedProvider = new SurrFeedProvider(context);
     }
 
     /**
@@ -93,7 +93,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View ret = inflater.inflate(R.layout.fragment_news_feed, container, false);
+        View ret = inflater.inflate(R.layout.fragment_surr_feed, container, false);
 
         listAdapter.updateShownNews();
 
@@ -157,8 +157,8 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
                                         getActivity().getApplicationContext(),
                                         "navigation_drawer_items", new String[]{""})
                         )
-                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section1",
-                        "Home"))
+                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section6",
+                        "Surrender@20"))
         );
     }
 
@@ -182,7 +182,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
              */
             @Override
             protected Void doInBackground(Void... params) {
-                if (newsFeedProvider.requestFeedRefresh()) {
+                if (surrFeedProvider.requestFeedRefresh()) {
                     listAdapter.updateShownNews();
                 }
                 return null;

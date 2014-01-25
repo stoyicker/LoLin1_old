@@ -6,10 +6,10 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Xml;
 
+import org.jorge.lolin1.feeds.IFeedHandler;
+import org.jorge.lolin1.feeds.news.NewsEntry;
+import org.jorge.lolin1.feeds.news.NewsFeedHandler;
 import org.jorge.lolin1.utils.Utils;
-import org.jorge.lolin1.utils.feeds.FeedHandler;
-import org.jorge.lolin1.utils.feeds.news.NewsEntry;
-import org.jorge.lolin1.utils.feeds.news.NewsFeedHandler;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -45,7 +45,7 @@ public class NewsFeedProvider {
     private static final String LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX =
             ".xml";
     private Context context;
-    private FeedHandler handler;
+    private IFeedHandler handler;
 
     /**
      * Constructor with default separator "||||"
@@ -139,7 +139,7 @@ public class NewsFeedProvider {
             String name = parser.getName();
             if (name.equals("description")) {
                 if (channelDescIsRead) {
-                    ret.add(buildFeedEntry(parser));
+                    ret.add(buildNewsEntry(parser));
                 }
                 else {
                     channelDescIsRead = Boolean.TRUE;
@@ -150,7 +150,7 @@ public class NewsFeedProvider {
         return ret;
     }
 
-    private NewsEntry buildFeedEntry(XmlPullParser parser)
+    private NewsEntry buildNewsEntry(XmlPullParser parser)
             throws IOException, XmlPullParserException {
         NewsEntry ret = null;
         parser.require(XmlPullParser.START_TAG, null, "description");

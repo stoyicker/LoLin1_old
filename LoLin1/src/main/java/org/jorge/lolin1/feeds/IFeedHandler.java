@@ -1,4 +1,4 @@
-package org.jorge.lolin1.utils.feeds;
+package org.jorge.lolin1.feeds;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ import java.util.ArrayList;
  * <p/>
  * Created by JorgeAntonio on 04/01/14.
  */
-public interface FeedHandler {
+public interface IFeedHandler {
 
     public void onNoInternetConnection();
 

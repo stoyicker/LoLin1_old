@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.NavigationDrawerFragment;
 import org.jorge.lolin1.ui.NewsListFragment;
+import org.jorge.lolin1.ui.SurrListFragment;
 import org.jorge.lolin1.utils.Utils;
 
 /**
@@ -37,7 +38,7 @@ import org.jorge.lolin1.utils.Utils;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private Fragment FRAGMENT_NEWS;
+    private Fragment FRAGMENT_NEWS, FRAGMENT_SURR;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -114,6 +115,12 @@ public class MainActivity extends Activity
             case 3:
             case 4:
             case 5:
+                if (FRAGMENT_SURR == null) {
+                    FRAGMENT_SURR = new SurrListFragment(this);
+                }
+                newFragment = FRAGMENT_SURR;
+                newFragmentTag = Utils.getString(this, "tag_fragment_surr", "ERROR");
+                break;
             case 6:
             default:
                 newFragment =
