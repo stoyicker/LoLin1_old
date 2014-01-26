@@ -1,4 +1,4 @@
-package org.jorge.lolin1.ui;
+package org.jorge.lolin1.frags;
 
 import android.app.Activity;
 import android.app.ListFragment;
@@ -11,13 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.activities.MainActivity;
 import org.jorge.lolin1.activities.WebViewerActivity;
-import org.jorge.lolin1.custom.SurrFragmentArrayAdapter;
+import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
-import org.jorge.lolin1.io.net.SurrFeedProvider;
+import org.jorge.lolin1.io.net.NewsFeedProvider;
 import org.jorge.lolin1.utils.Utils;
 
 import java.util.ArrayList;
@@ -45,19 +46,19 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 25/01/14.
+ * Created by JorgeAntonio on 09/01/14.
  */
-public class SurrListFragment extends ListFragment implements OnRefreshListener {
+public class NewsListFragment extends ListFragment implements OnRefreshListener {
 
     private static PullToRefreshLayout mPullToRefreshLayout;
-    private SurrFragmentArrayAdapter listAdapter;
-    private SurrFeedProvider surrFeedProvider;
+    private NewsFragmentArrayAdapter listAdapter;
+    private NewsFeedProvider newsFeedProvider;
 
-    public SurrListFragment(Context context) {
+    public NewsListFragment(Context context) {
         super();
-        listAdapter = new SurrFragmentArrayAdapter(context);
+        listAdapter = new NewsFragmentArrayAdapter(context);
         setListAdapter(listAdapter);
-        surrFeedProvider = new SurrFeedProvider(context);
+        newsFeedProvider = new NewsFeedProvider(context);
     }
 
     /**
@@ -83,17 +84,30 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        String url = listAdapter.getItem(position).getLink();
-        Intent inAppBrowserIntent = new Intent(getActivity(), WebViewerActivity.class);
-        inAppBrowserIntent.putExtra("url", url);
-        startActivity(inAppBrowserIntent);
+        Activity activity = getActivity();
+        if (Utils.isInternetReachable(activity)) {
+            String url = listAdapter.getItem(position).getLink();
+            Intent inAppBrowserIntent = new Intent(getActivity(), WebViewerActivity.class);
+            inAppBrowserIntent.putExtra("url", url);
+            startActivity(inAppBrowserIntent);
+        }
+        else {
+            final String msg = Utils.getString(activity, "error_no_internet", "ERROR");
+            (activity).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), msg,
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View ret = inflater.inflate(R.layout.fragment_surr_feed, container, false);
+        View ret = inflater.inflate(R.layout.fragment_news_feed, container, false);
 
         listAdapter.updateShownNews();
 
@@ -157,8 +171,8 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
                                         getActivity().getApplicationContext(),
                                         "navigation_drawer_items", new String[]{""})
                         )
-                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section6",
-                        "Surrender@20"))
+                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section1",
+                        "Home"))
         );
     }
 
@@ -182,7 +196,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
              */
             @Override
             protected Void doInBackground(Void... params) {
-                if (surrFeedProvider.requestFeedRefresh()) {
+                if (newsFeedProvider.requestFeedRefresh()) {
                     listAdapter.updateShownNews();
                 }
                 return null;

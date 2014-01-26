@@ -6,7 +6,7 @@ import android.content.Context;
 import android.widget.Toast;
 
 import org.jorge.lolin1.feeds.IFeedHandler;
-import org.jorge.lolin1.io.db.SurrToSQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteBridge;
 import org.jorge.lolin1.utils.ISO8601Time;
 import org.jorge.lolin1.utils.Utils;
 
@@ -60,11 +60,11 @@ public class SurrFeedHandler implements IFeedHandler {
         for (String x : items) {
             row = new ContentValues();
             StringTokenizer tokenizer = new StringTokenizer(x, SurrEntry.getSEPARATOR());
-            row.put(SurrToSQLiteBridge.SURR_KEY_TITLE, title = tokenizer.nextToken());
-            row.put(SurrToSQLiteBridge.SURR_KEY_LINK, tokenizer.nextToken());
-            current = SurrToSQLiteBridge.getSingleton().getSurrByTitle(title);
-            row.put(SurrToSQLiteBridge.SURR_KEY_PUBLISHED, tokenizer.nextToken());
-            row.put(SurrToSQLiteBridge.SURR_KEY_UPDATED, updated = tokenizer.nextToken());
+            row.put(SQLiteBridge.SURR_KEY_TITLE, title = tokenizer.nextToken());
+            row.put(SQLiteBridge.SURR_KEY_LINK, tokenizer.nextToken());
+            current = SQLiteBridge.getSingleton().getSurrByTitle(title);
+            row.put(SQLiteBridge.SURR_KEY_PUBLISHED, tokenizer.nextToken());
+            row.put(SQLiteBridge.SURR_KEY_UPDATED, updated = tokenizer.nextToken());
             Boolean pendingRead = Boolean.FALSE;
             if (current != null) {
                 pendingRead =
@@ -72,11 +72,11 @@ public class SurrFeedHandler implements IFeedHandler {
                                 .isMoreRecentThan(current.getUpdateString()) ?
                                 Boolean.TRUE : Boolean.FALSE;
             }
-            row.put(SurrToSQLiteBridge.SURR_KEY_READ, !pendingRead);
-            if (SurrToSQLiteBridge.getSingleton().insertArticle(row) != -1) {
+            row.put(SQLiteBridge.SURR_KEY_READ, !pendingRead);
+            if (SQLiteBridge.getSingleton().insertSurrArticle(row) != -1) {
                 isRefreshRequired = Boolean.TRUE;
             }
-            else if (SurrToSQLiteBridge.getSingleton().updateArticle(title, row) != 0) {
+            else if (SQLiteBridge.getSingleton().updateSurrArticle(title, row) != 0) {
                 isRefreshRequired = Boolean.TRUE;
             }
         }

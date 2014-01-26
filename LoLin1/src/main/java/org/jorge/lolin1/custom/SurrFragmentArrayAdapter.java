@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
-import org.jorge.lolin1.io.db.SurrToSQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteBridge;
 
 import java.util.ArrayList;
 
@@ -52,7 +52,7 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
 
         int howManyIHave = this.getCount();
         ArrayList<SurrEntry> newSurr =
-                SurrToSQLiteBridge.getSingleton().getNewSurrs(howManyIHave);
+                SQLiteBridge.getSingleton().getNewSurrs(howManyIHave);
 
         for (SurrEntry x : newSurr) {
             add(x);

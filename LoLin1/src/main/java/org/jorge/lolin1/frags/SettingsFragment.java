@@ -1,4 +1,4 @@
-package org.jorge.lolin1.ui;
+package org.jorge.lolin1.frags;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -43,7 +43,9 @@ public class SettingsFragment extends PreferenceFragment {
         serverPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                final ListPreference langPreference = (ListPreference) findPreference(Utils.getString(getActivity().getApplicationContext(), "pref_title_lang", "error"));
+                final ListPreference langPreference = (ListPreference) findPreference(
+                        Utils.getString(getActivity().getApplicationContext(), "pref_title_lang",
+                                "error"));
                 final Context context = getActivity().getApplicationContext();
                 final String chosenServer = (String) newValue;
                 int targetArray = -1;
@@ -51,16 +53,20 @@ public class SettingsFragment extends PreferenceFragment {
                 if (chosenServer.contentEquals(Utils.getString(context, "server_na", "error"))) {
                     targetArray = R.array.lang_na;
                 }
-                else if (chosenServer.contentEquals(Utils.getString(context, "server_euw", "error"))) {
+                else if (chosenServer
+                        .contentEquals(Utils.getString(context, "server_euw", "error"))) {
                     targetArray = R.array.lang_euw;
                 }
-                else if (chosenServer.contentEquals(Utils.getString(context, "server_eune", "error"))) {
+                else if (chosenServer
+                        .contentEquals(Utils.getString(context, "server_eune", "error"))) {
                     targetArray = R.array.lang_eune;
                 }
-                else if (chosenServer.contentEquals(Utils.getString(context, "server_br", "error"))) {
+                else if (chosenServer
+                        .contentEquals(Utils.getString(context, "server_br", "error"))) {
                     targetArray = R.array.lang_br;
                 }
-                else if (chosenServer.contentEquals(Utils.getString(context, "server_tr", "error"))) {
+                else if (chosenServer
+                        .contentEquals(Utils.getString(context, "server_tr", "error"))) {
                     targetArray = R.array.lang_tr;
                 }
 

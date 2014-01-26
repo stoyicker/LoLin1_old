@@ -3,7 +3,7 @@ package org.jorge.lolin1.activities;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 
-import org.jorge.lolin1.ui.SettingsFragment;
+import org.jorge.lolin1.frags.SettingsFragment;
 import org.jorge.lolin1.utils.Utils;
 
 /**

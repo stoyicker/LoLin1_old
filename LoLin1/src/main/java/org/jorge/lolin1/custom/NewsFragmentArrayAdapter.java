@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
-import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
 
 import java.util.ArrayList;
@@ -51,13 +51,13 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
     }
 
     public void updateShownNews() {
-        String tableName = NewsToSQLiteBridge.getTableName(mContext);
+        String tableName = SQLiteBridge.getNewsTableName();
         //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
             ArrayList<NewsEntry> currTable = shownNews.get(tableName);
             int howManyIHave = currTable.size();
             ArrayList<NewsEntry> newNews =
-                    NewsToSQLiteBridge.getSingleton().getNewNews(howManyIHave);
+                    SQLiteBridge.getSingleton().getNewNews(howManyIHave);
             Collections.reverse(newNews);
             for (NewsEntry x : newNews) {
                 currTable.add(0, x);
@@ -66,7 +66,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         else {
             if (Utils.tableExists(tableName)) {
                 ArrayList<NewsEntry> news =
-                        NewsToSQLiteBridge.getSingleton().getNews();
+                        SQLiteBridge.getSingleton().getNews();
                 shownNews.put(tableName, news);
             }
         }
@@ -80,7 +80,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        String tableName = NewsToSQLiteBridge.getTableName(mContext);
+        String tableName = SQLiteBridge.getNewsTableName();
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
         return currTable.size();
@@ -88,7 +88,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     @Override
     public NewsEntry getItem(int i) {
-        String tableName = NewsToSQLiteBridge.getTableName(mContext);
+        String tableName = SQLiteBridge.getNewsTableName();
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
         return currTable.get(i);
@@ -111,7 +111,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         TextView title = (TextView) convertView.findViewById(R.id.news_feed_item_title);
         TextView desc = (TextView) convertView.findViewById(R.id.news_feed_item_desc);
 
-        String tableName = NewsToSQLiteBridge.getTableName(mContext);
+        String tableName = SQLiteBridge.getNewsTableName();
         ArrayList<NewsEntry> currentFeed = shownNews.get(tableName);
         NewsEntry thisArticle = currentFeed.get(position);
 

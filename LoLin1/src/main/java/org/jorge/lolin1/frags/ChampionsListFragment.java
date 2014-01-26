@@ -1,4 +1,4 @@
-package org.jorge.lolin1.ui;
+package org.jorge.lolin1.frags;
 
 /**
  * This file is part of LoLin1.

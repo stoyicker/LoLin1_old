@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteBridge;
 
 import java.lang.reflect.Field;
 
@@ -102,7 +102,7 @@ public abstract class Utils {
     }
 
     public static boolean tableExists(String tableName) {
-        SQLiteDatabase db = NewsToSQLiteBridge.getSingleton().getReadableDatabase();
+        SQLiteDatabase db = SQLiteBridge.getSingleton().getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
                 "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName + "'",

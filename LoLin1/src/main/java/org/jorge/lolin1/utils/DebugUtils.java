@@ -6,17 +6,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteBridge;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.StringWriter;
-import java.io.UnsupportedEncodingException;
-import java.io.Writer;
 import java.nio.charset.Charset;
 
 /**
@@ -39,45 +34,19 @@ import java.nio.charset.Charset;
  */
 public abstract class DebugUtils {
 
-    public static final String BufferedInputStreamToString(BufferedInputStream is) {
-        String ret;
-
-        is.mark(Integer.MAX_VALUE);
-
-        Writer writer = new StringWriter();
-
-        char[] buffer = new char[1024];
-        try {
-            Reader reader = null;
-            try {
-                reader = new BufferedReader(
-                        new InputStreamReader(is, "UTF-8"));
-            }
-            catch (UnsupportedEncodingException e) {
-                Log.wtf("ERROR", "Should never happen!", e);
-            }
-            int n;
-            while ((n = reader.read(buffer)) != -1) {
-                writer.write(buffer, 0, n);
-            }
+    public static void showBackwardsTrace(String tag, Exception source) {
+        StackTraceElement[] trace = source.getStackTrace();
+        String toPrint = "";
+        for (StackTraceElement x : trace) {
+            toPrint += "Class " + x.getClassName() + " -  " + x.getMethodName() + ":" +
+                    x.getLineNumber();
+            toPrint += "\n";
         }
-        catch (IOException e) {
-            Log.wtf("ERROR", "Should never happen!", e);
-        }
-        finally {
-            try {
-                is.reset();
-            }
-            catch (IOException e) {
-                Log.wtf("ERROR", "Should never happen!", e);
-            }
-        }
-        ret = writer.toString();
-
-        return ret;
+        Log.d(tag, toPrint);
     }
 
-    public static final String convertStreamToString(BufferedInputStream in) throws IOException {
+    public static String convertBufferedStreamToString(BufferedInputStream in)
+            throws IOException {
         StringBuilder sb = new StringBuilder(Math.max(16, in.available()));
         char[] tmp = new char[4096];
 
@@ -92,7 +61,7 @@ public abstract class DebugUtils {
         return sb.toString();
     }
 
-    public static final void writeToFile(String data, Context context) {
+    public static void writeToFile(String data, Context context) {
         try {
             @SuppressLint("WorldReadableFiles") OutputStreamWriter outputStreamWriter =
                     new OutputStreamWriter(
@@ -106,7 +75,7 @@ public abstract class DebugUtils {
     }
 
     public static void debugSelectAllFromTable(String tag, String[] fields, String tableName) {
-        SQLiteDatabase db = NewsToSQLiteBridge.getSingleton().getReadableDatabase();
+        SQLiteDatabase db = SQLiteBridge.getSingleton().getReadableDatabase();
 
         db.beginTransaction();
         Cursor cursor = db.query(tableName, fields, null, null, null, null, null);

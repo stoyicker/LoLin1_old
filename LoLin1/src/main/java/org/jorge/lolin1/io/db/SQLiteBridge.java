@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
+import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.utils.Utils;
 
 import java.io.ByteArrayOutputStream;
@@ -40,55 +41,59 @@ import java.util.Iterator;
  * <p/>
  * Created by JorgeAntonio on 04/01/14.
  */
-public class NewsToSQLiteBridge extends SQLiteOpenHelper {
+public class SQLiteBridge extends SQLiteOpenHelper {
 
-    public static final String LOLNEWS_FEED_HOST = "http://feed43.com/", LOLNEWS_FEED_EXTENSION =
+    public static final String SURR_KEY_ID = "ARTICLE_ID", SURR_KEY_TITLE = "ARTICLE_TITLE",
+            SURR_KEY_LINK = "ARTICLE_LINK", SURR_KEY_PUBLISHED = "ARTICLE_PUBLISHED",
+            SURR_KEY_UPDATED = "ARTICLE_UPDATED", SURR_KEY_READ = "ARTICLE_READ", SURR_TABLE_NAME =
+            "SURRENDER", LOLNEWS_FEED_HOST = "http://feed43.com/", LOLNEWS_FEED_EXTENSION =
             ".xml", NEWS_KEY_ID = "ARTICLE_ID", NEWS_KEY_TITLE = "ARTICLE_TITLE", NEWS_KEY_BLOB =
-            "ARTICLE_BLOB",
-            NEWS_KEY_URL = "ARTICLE_URL", NEWS_KEY_DESC = "ARTICLE_DESC", NEWS_KEY_IMG_URL =
-            "ARTICLE_IMG_URL";
-    private static NewsToSQLiteBridge singleton;
+            "ARTICLE_BLOB", NEWS_KEY_URL = "ARTICLE_URL", NEWS_KEY_DESC = "ARTICLE_DESC",
+            NEWS_KEY_IMG_URL =
+                    "ARTICLE_IMG_URL";
+    private static SQLiteBridge singleton;
     private static Context mContext;
 
-    private NewsToSQLiteBridge(Context _context) {
+    private SQLiteBridge(Context _context) {
         super(_context, Utils.getString(_context, "db_name", "LoLin1_DB"), null, 1);
     }
 
     public static void setup(Context _context) {
         if (singleton == null) {
-            singleton = new NewsToSQLiteBridge(_context);
+            singleton = new SQLiteBridge(_context);
             mContext = _context;
         }
     }
 
-    public static NewsToSQLiteBridge getSingleton() {
+    public static SQLiteBridge getSingleton() {
         if (singleton == null) {
             throw new RuntimeException(
-                    "Use method NewsToSQLiteBridge.setup(Context _context) at least once before calling this method.");
+                    "Use method SQLiteBridge.setup(Context _context) at least once before calling this method.");
         }
         return singleton;
     }
 
-    public static String getTableName(Context context) {
+    public static String getNewsTableName() {
         String prefix =
-                Utils.getString(context, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
-                        .replaceAll(NewsToSQLiteBridge.LOLNEWS_FEED_HOST, "")
-                        .replaceAll(NewsToSQLiteBridge.LOLNEWS_FEED_EXTENSION, "")
+                Utils.getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
+                        .replaceAll(SQLiteBridge.LOLNEWS_FEED_HOST, "")
+                        .replaceAll(SQLiteBridge.LOLNEWS_FEED_EXTENSION, "")
                         .replaceAll("_(.*)", "") + "_";
         String ret, server, lang, langSimplified;
         final String ERROR = "PREF_NOT_FOUND", defaultTableName = "EUW_EN", defaultLanguage =
                 "ENGLISH";
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        server = preferences.getString(Utils.getString(context, "pref_title_server", "nvm"), ERROR);
-        lang = preferences.getString(Utils.getString(context, "pref_title_lang", "nvm"), ERROR);
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+        server =
+                preferences.getString(Utils.getString(mContext, "pref_title_server", "nvm"), ERROR);
+        lang = preferences.getString(Utils.getString(mContext, "pref_title_lang", "nvm"), ERROR);
 
         if (server.contentEquals(ERROR) || lang.contentEquals(ERROR)) {
             ret = prefix + defaultTableName;
         }
         else {
-            langSimplified = Utils.getStringArray(context, "langs_simplified",
+            langSimplified = Utils.getStringArray(mContext, "langs_simplified",
                     new String[]{defaultLanguage})[new ArrayList<>(
-                    Arrays.asList(Utils.getStringArray(context, "langs",
+                    Arrays.asList(Utils.getStringArray(mContext, "langs",
                             new String[]{defaultLanguage})))
                     .indexOf(lang)];
             ret = prefix + server + "_" + langSimplified;
@@ -97,8 +102,8 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         return ret.toUpperCase();
     }
 
-    public static final Bitmap getArticleBitmap(Context context, byte[] blob,
-                                                final String imageLinkCallbackURL) {
+    public static final Bitmap getNewsArticleBitmap(Context context, byte[] blob,
+                                                    final String imageLinkCallbackURL) {
         Bitmap ret = null;
         if (blob == null) {
             if (Utils.isInternetReachable(context)) {
@@ -114,7 +119,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
                 ByteArrayOutputStream blobOS = new ByteArrayOutputStream();
                 ret.compress(Bitmap.CompressFormat.PNG, 0, blobOS);
                 byte[] bmpAsByteArray = blobOS.toByteArray();
-                NewsToSQLiteBridge.getSingleton()
+                SQLiteBridge.getSingleton()
                         .updateArticleBlob(bmpAsByteArray, imageLinkCallbackURL);
                 return ret;
             }
@@ -125,9 +130,108 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
+
+    public final ArrayList<SurrEntry> getNewSurrs(int alreadyShown) {
+        return getFilteredSurrs(SURR_KEY_ID + " > " + alreadyShown);
+    }
+
+    public int markSurrAsRead(String title) {
+        SQLiteDatabase db = getWritableDatabase();
+        int ret;
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(SURR_KEY_READ, Boolean.TRUE);
+
+        db.beginTransaction();
+        ret = db.update(SURR_TABLE_NAME, contentValues, SURR_KEY_TITLE + "='" + title + "'", null);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        return ret;
+    }
+
+    public SurrEntry getSurrByTitle(String surrTitle) {
+        SurrEntry ret;
+        String[] fields =
+                new String[]{SURR_KEY_TITLE, SURR_KEY_LINK, SURR_KEY_PUBLISHED, SURR_KEY_UPDATED,
+                        SURR_KEY_READ};
+        ArrayList<String> fieldsAsList = new ArrayList<>(Arrays.asList(fields));
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor result =
+                db.query(SURR_TABLE_NAME, fields, SURR_KEY_TITLE + " = '" + surrTitle + "'", null,
+                        null, null,
+                        SURR_KEY_ID + " DESC");
+        StringBuilder data = null;
+        String separator = SurrEntry.getSEPARATOR();
+        Boolean read = Boolean.FALSE;
+        for (String x : fieldsAsList) {
+            if (!x.contentEquals(SURR_KEY_READ)) {
+                data.append(result.getString(result.getColumnIndex(x))).append(separator);
+            }
+            else {
+                read = result.getInt(result.getColumnIndex(x)) == 1;
+            }
+        }
+        ret = new SurrEntry(data.toString(), read);
+        result.moveToFirst();
+
+        result.close();
+
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        return ret;
+    }
+
+    private final ArrayList<SurrEntry> getFilteredSurrs(String whereClause) {
+
+        ArrayList<SurrEntry> ret = new ArrayList<>();
+        String[] fields =
+                new String[]{SURR_KEY_TITLE, SURR_KEY_LINK, SURR_KEY_PUBLISHED, SURR_KEY_UPDATED,
+                        SURR_KEY_READ};
+        ArrayList<String> fieldsAsList = new ArrayList<>(Arrays.asList(fields));
+
+        SQLiteDatabase db = getReadableDatabase();
+        db.beginTransaction();
+        Cursor result =
+                db.query(SURR_TABLE_NAME, fields, whereClause, null, null, null,
+                        SURR_KEY_ID + " DESC");
+        StringBuilder data;
+        final String separator = SurrEntry.getSEPARATOR();
+        Boolean read = Boolean.FALSE;
+        for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
+            data = new StringBuilder("");
+            for (String x : fieldsAsList) {
+                if (!x.contentEquals(SURR_KEY_READ)) {
+                    data.append(result.getString(result.getColumnIndex(x))).append(separator);
+                }
+                else {
+                    read = result.getInt(result.getColumnIndex(x)) == 1;
+                }
+            }
+            ret.add(new SurrEntry(data.toString(), read));
+        }
+        result.close();
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        return ret;
+    }
+
+    public Integer updateSurrArticle(String title, ContentValues row) {
+        SQLiteDatabase db = getWritableDatabase();
+        Integer ret;
+
+        db.beginTransaction();
+        ret = db.update(SURR_TABLE_NAME, row, SURR_KEY_TITLE + " = '" + title + "'", null);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+
+        return ret;
+    }
+
     public byte[] getArticleBlob(String imageUrl) {
         byte[] ret;
-        String tableName = getTableName(mContext);
+        String tableName = getNewsTableName();
         SQLiteDatabase db = getReadableDatabase();
         Cursor result;
 
@@ -167,11 +271,11 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         db.beginTransaction();
-        String tableName = getTableName(mContext);
+        String tableName = getNewsTableName();
         Cursor result =
                 db.query(tableName, fields, whereClause, null, null, null, NEWS_KEY_ID + " DESC");
         StringBuilder data = new StringBuilder("");
-        final String separator = NewsEntry.getSEPARATOR();
+        final String separator = NewsEntry.getFieldSeparator();
         for (result.moveToFirst(); !result.isAfterLast(); result.moveToNext()) {
             for (String x : fieldsAsList) {
                 if (!x.contentEquals(NEWS_KEY_BLOB)) {
@@ -186,7 +290,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
                     }
                 }
             }
-            ret.add(new NewsEntry(data.toString(), result.getBlob(0)));
+            ret.add(new NewsEntry(data.toString()));
             data = new StringBuilder("");
         }
         result.close();
@@ -197,7 +301,7 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
 
     public final void updateArticleBlob(byte[] blob, String imgUrl) {
         SQLiteDatabase db = getWritableDatabase();
-        String tableName = getTableName(mContext);
+        String tableName = getNewsTableName();
         ContentValues contentValues = new ContentValues();
         contentValues.put(NEWS_KEY_BLOB, blob);
 
@@ -212,12 +316,27 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
      * @param values {@link android.content.ContentValues} The values to insert. The most recent article is the latest one
      * @return The rowID of the newly inserted row, or -1 if any error happens
      */
-    public long insertArticle(ContentValues values) {
+    public long insertNewsArticle(ContentValues values) {
         long ret;
         SQLiteDatabase db = getWritableDatabase();
-        String tableName = getTableName(mContext);
+        String tableName = getNewsTableName();
         db.beginTransaction();
         ret = db.insert(tableName, null, values);
+        db.setTransactionSuccessful();
+        db.endTransaction();
+        return ret;
+    }
+
+    /**
+     * @param values {@link android.content.ContentValues} The values to insert. The most recent article is the latest one
+     * @return The rowID of the newly inserted row, or -1 if any error happens
+     */
+    public long insertSurrArticle(ContentValues values) {
+        long ret;
+        SQLiteDatabase db = getWritableDatabase();
+
+        db.beginTransaction();
+        ret = db.insert(SURR_TABLE_NAME, null, values);
         db.setTransactionSuccessful();
         db.endTransaction();
         return ret;
@@ -255,6 +374,15 @@ public class NewsToSQLiteBridge extends SQLiteOpenHelper {
                     NEWS_KEY_IMG_URL + " TEXT NOT NULL ON CONFLICT FAIL " +
                     ")").toUpperCase());
         }
+
+        sqLiteDatabase.execSQL(("CREATE TABLE IF NOT EXISTS " + SURR_TABLE_NAME + " ( " +
+                SURR_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
+                SURR_KEY_TITLE + " TEXT UNIQUE NOT NULL ON CONFLICT FAIL, " +
+                SURR_KEY_PUBLISHED + " TEXT NOT NULL ON CONFLICT FAIL, " +
+                SURR_KEY_UPDATED + " TEXT, " +
+                SURR_KEY_LINK + " TEXT NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, " +
+                SURR_KEY_READ + " BOOLEAN NOT NULL " +
+                ")").toUpperCase());
 
         sqLiteDatabase.setTransactionSuccessful();
         sqLiteDatabase.endTransaction();

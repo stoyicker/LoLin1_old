@@ -1,5 +1,7 @@
 package org.jorge.lolin1.feeds.surr;
 
+import org.jorge.lolin1.io.db.SQLiteBridge;
+
 import java.util.StringTokenizer;
 
 /**
@@ -53,5 +55,10 @@ public class SurrEntry {
 
     public final String getUpdateString() {
         return this.updated;
+    }
+
+    public void markAsRead() {
+        this.read = Boolean.TRUE;
+        SQLiteBridge.getSingleton().markSurrAsRead(this.getTitle());
     }
 }

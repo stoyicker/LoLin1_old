@@ -7,7 +7,7 @@ import android.util.Xml;
 import org.jorge.lolin1.feeds.IFeedHandler;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.feeds.surr.SurrFeedHandler;
-import org.jorge.lolin1.io.db.SurrToSQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteBridge;
 import org.jorge.lolin1.utils.ISO8601Time;
 import org.jorge.lolin1.utils.Utils;
 import org.xmlpull.v1.XmlPullParser;
@@ -148,7 +148,7 @@ public class SurrFeedProvider {
                     }
                 }
                 ret.add(new SurrEntry(title + separator + link + pubDate + updated,
-                        !SurrToSQLiteBridge.getSingleton().getSurrByTitle(title).hasBeenRead() ||
+                        !SQLiteBridge.getSingleton().getSurrByTitle(title).hasBeenRead() ||
                                 new ISO8601Time(updated)
                                         .isMoreRecentThan(pubDate)));
             }

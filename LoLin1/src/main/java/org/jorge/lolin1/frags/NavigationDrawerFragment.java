@@ -1,4 +1,4 @@
-package org.jorge.lolin1.ui;
+package org.jorge.lolin1.frags;
 
 import android.app.ActionBar;
 import android.app.Activity;

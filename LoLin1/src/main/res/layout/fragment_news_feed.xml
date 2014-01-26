@@ -28,13 +28,14 @@ Created by JorgeAntonio on 02/01/14.
 	android:paddingLeft="@dimen/activity_horizontal_margin"
 	android:paddingRight="@dimen/activity_horizontal_margin"
 	android:paddingTop="@dimen/activity_vertical_margin"
-	tools:context="org.jorge.lolin1.ui.NewsListFragment">
+	tools:context="org.jorge.lolin1.frags.NewsListFragment">
 
 	<ListView
 		android:id="@id/android:list"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		android:layout_weight="1"
+		android:background="@drawable/feed_news_background"
 		android:divider="@color/theme_black"
 		android:dividerHeight="@dimen/feed_divider"
 		>

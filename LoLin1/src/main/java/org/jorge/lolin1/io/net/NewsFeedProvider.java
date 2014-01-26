@@ -157,7 +157,7 @@ public class NewsFeedProvider {
         String name = parser.getName();
         switch (name) {
             case "description":
-                ret = new NewsEntry(readText(parser), context);
+                ret = new NewsEntry(readText(parser));
                 break;
             default:
                 skip(parser);

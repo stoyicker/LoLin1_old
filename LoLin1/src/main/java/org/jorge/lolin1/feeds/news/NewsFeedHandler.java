@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.jorge.lolin1.feeds.IFeedHandler;
-import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
 
 import java.io.ByteArrayOutputStream;
@@ -62,7 +62,7 @@ public class NewsFeedHandler implements IFeedHandler {
         String url, img_url, title, desc;
         boolean areThereNewNews = Boolean.FALSE;
         for (String x : items) {
-            StringTokenizer currentItem = new StringTokenizer(x, NewsEntry.getSEPARATOR());
+            StringTokenizer currentItem = new StringTokenizer(x, NewsEntry.getFieldSeparator());
             img_url = currentItem.nextToken();
             url = currentItem.nextToken();
             title = currentItem.nextToken();
@@ -81,12 +81,12 @@ public class NewsFeedHandler implements IFeedHandler {
             bmp.compress(Bitmap.CompressFormat.PNG, 0, blob);
             byte[] bmpAsByteArray = blob.toByteArray();
             row = new ContentValues();
-            row.put(NewsToSQLiteBridge.NEWS_KEY_TITLE, title);
-            row.put(NewsToSQLiteBridge.NEWS_KEY_DESC, desc);
-            row.put(NewsToSQLiteBridge.NEWS_KEY_IMG_URL, img_url.replaceAll("http://", "httpxxx"));
-            row.put(NewsToSQLiteBridge.NEWS_KEY_URL, url.replaceAll("http://", "httpxxx"));
-            row.put(NewsToSQLiteBridge.NEWS_KEY_BLOB, bmpAsByteArray);
-            if (NewsToSQLiteBridge.getSingleton().insertArticle(row) != -1) {
+            row.put(SQLiteBridge.NEWS_KEY_TITLE, title);
+            row.put(SQLiteBridge.NEWS_KEY_DESC, desc);
+            row.put(SQLiteBridge.NEWS_KEY_IMG_URL, img_url.replaceAll("http://", "httpxxx"));
+            row.put(SQLiteBridge.NEWS_KEY_URL, url.replaceAll("http://", "httpxxx"));
+            row.put(SQLiteBridge.NEWS_KEY_BLOB, bmpAsByteArray);
+            if (SQLiteBridge.getSingleton().insertNewsArticle(row) != -1) {
                 areThereNewNews = Boolean.TRUE;
             }
         }

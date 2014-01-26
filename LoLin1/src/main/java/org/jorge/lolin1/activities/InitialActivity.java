@@ -7,8 +7,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.io.db.NewsToSQLiteBridge;
-import org.jorge.lolin1.io.db.SurrToSQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
 
 /**
@@ -37,8 +36,7 @@ public class InitialActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        NewsToSQLiteBridge.setup(getApplicationContext());
-        SurrToSQLiteBridge.setup(getApplicationContext());
+        SQLiteBridge.setup(getApplicationContext());
         PreferenceManager.setDefaultValues(this, R.xml.settings, Boolean.FALSE);
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());

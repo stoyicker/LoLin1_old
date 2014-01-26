@@ -42,7 +42,7 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 		 the container. -->
 	<fragment
 		android:id="@+id/navigation_drawer"
-		android:name="org.jorge.lolin1.ui.NavigationDrawerFragment"
+		android:name="org.jorge.lolin1.frags.NavigationDrawerFragment"
 		android:layout_width="@dimen/navigation_drawer_width"
 		android:layout_height="match_parent"
 		android:layout_gravity="left"/>

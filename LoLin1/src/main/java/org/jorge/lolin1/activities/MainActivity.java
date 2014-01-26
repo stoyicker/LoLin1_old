@@ -13,9 +13,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.ui.NavigationDrawerFragment;
-import org.jorge.lolin1.ui.NewsListFragment;
-import org.jorge.lolin1.ui.SurrListFragment;
+import org.jorge.lolin1.frags.NavigationDrawerFragment;
+import org.jorge.lolin1.frags.NewsListFragment;
+import org.jorge.lolin1.frags.SurrListFragment;
 import org.jorge.lolin1.utils.Utils;
 
 /**

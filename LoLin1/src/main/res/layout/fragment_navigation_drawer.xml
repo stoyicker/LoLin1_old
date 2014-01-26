@@ -25,4 +25,4 @@ Created by JorgeAntonio on 02/01/14.
           android:choiceMode="singleChoice"
           android:paddingLeft="@dimen/navigation_drawer_item_left_padding"
           android:paddingTop="@dimen/navigation_drawer_item_top_padding"
-          tools:context="org.jorge.lolin1.ui.NavigationDrawerFragment"/>
+          tools:context="org.jorge.lolin1.frags.NavigationDrawerFragment"/>
