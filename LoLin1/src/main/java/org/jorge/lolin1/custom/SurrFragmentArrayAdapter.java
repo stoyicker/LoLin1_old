@@ -51,16 +51,15 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
     public void updateShownNews() {
 
         int howManyIHave = this.getCount();
-        ArrayList<SurrEntry> newSurr =
+        final ArrayList<SurrEntry> newSurr =
                 SQLiteBridge.getSingleton().getNewSurrs(howManyIHave);
-
-        for (SurrEntry x : newSurr) {
-            add(x);
-        }
 
         ((Activity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
+                for (SurrEntry x : newSurr) {
+                    add(x);
+                }
                 SurrFragmentArrayAdapter.this.notifyDataSetChanged();
             }
         });

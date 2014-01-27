@@ -21,7 +21,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Iterator;
 
 /**
  * This file is part of LoLin1.
@@ -102,8 +101,8 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         return ret.toUpperCase();
     }
 
-    public static final Bitmap getNewsArticleBitmap(Context context, byte[] blob,
-                                                    final String imageLinkCallbackURL) {
+    public static Bitmap getNewsArticleBitmap(Context context, byte[] blob,
+                                              final String imageLinkCallbackURL) {
         Bitmap ret = null;
         if (blob == null) {
             if (Utils.isInternetReachable(context)) {
@@ -117,6 +116,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
                     ret = null;
                 }
                 ByteArrayOutputStream blobOS = new ByteArrayOutputStream();
+                assert ret != null;
                 ret.compress(Bitmap.CompressFormat.PNG, 0, blobOS);
                 byte[] bmpAsByteArray = blobOS.toByteArray();
                 SQLiteBridge.getSingleton()
@@ -141,6 +141,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(SURR_KEY_READ, Boolean.TRUE);
 
+        assert db != null;
         db.beginTransaction();
         ret = db.update(SURR_TABLE_NAME, contentValues, SURR_KEY_TITLE + "='" + title + "'", null);
         db.setTransactionSuccessful();
@@ -150,30 +151,37 @@ public class SQLiteBridge extends SQLiteOpenHelper {
     }
 
     public SurrEntry getSurrByTitle(String surrTitle) {
-        SurrEntry ret;
+        SurrEntry ret = null;
         String[] fields =
                 new String[]{SURR_KEY_TITLE, SURR_KEY_LINK, SURR_KEY_PUBLISHED, SURR_KEY_UPDATED,
                         SURR_KEY_READ};
         ArrayList<String> fieldsAsList = new ArrayList<>(Arrays.asList(fields));
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor result =
-                db.query(SURR_TABLE_NAME, fields, SURR_KEY_TITLE + " = '" + surrTitle + "'", null,
-                        null, null,
-                        SURR_KEY_ID + " DESC");
-        StringBuilder data = null;
+        StringBuilder data = new StringBuilder("");
         String separator = SurrEntry.getSEPARATOR();
         Boolean read = Boolean.FALSE;
-        for (String x : fieldsAsList) {
-            if (!x.contentEquals(SURR_KEY_READ)) {
-                data.append(result.getString(result.getColumnIndex(x))).append(separator);
+        SQLiteDatabase db = getReadableDatabase();
+
+        assert db != null;
+        db.beginTransaction();
+        Cursor result =
+                db.query(SURR_TABLE_NAME, fields,
+                        SURR_KEY_TITLE + " = '" + surrTitle.replaceAll("'", "comilla") + "'",
+                        null,
+                        null, null,
+                        SURR_KEY_ID + " DESC");
+
+        if (result.moveToFirst()) {
+
+            for (String x : fieldsAsList) {
+                if (!x.contentEquals(SURR_KEY_READ)) {
+                    data.append(result.getString(result.getColumnIndex(x))).append(separator);
+                }
+                else {
+                    read = result.getInt(result.getColumnIndex(x)) == 1;
+                }
             }
-            else {
-                read = result.getInt(result.getColumnIndex(x)) == 1;
-            }
+            ret = new SurrEntry(data.toString(), read);
         }
-        ret = new SurrEntry(data.toString(), read);
-        result.moveToFirst();
 
         result.close();
 
@@ -183,7 +191,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
-    private final ArrayList<SurrEntry> getFilteredSurrs(String whereClause) {
+    private ArrayList<SurrEntry> getFilteredSurrs(String whereClause) {
 
         ArrayList<SurrEntry> ret = new ArrayList<>();
         String[] fields =
@@ -192,6 +200,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         ArrayList<String> fieldsAsList = new ArrayList<>(Arrays.asList(fields));
 
         SQLiteDatabase db = getReadableDatabase();
+        assert db != null;
         db.beginTransaction();
         Cursor result =
                 db.query(SURR_TABLE_NAME, fields, whereClause, null, null, null,
@@ -221,8 +230,10 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         Integer ret;
 
+        assert db != null;
         db.beginTransaction();
-        ret = db.update(SURR_TABLE_NAME, row, SURR_KEY_TITLE + " = '" + title + "'", null);
+        ret = db.update(SURR_TABLE_NAME, row,
+                SURR_KEY_TITLE + " = '" + title.replaceAll("'", "comilla") + "'", null);
         db.setTransactionSuccessful();
         db.endTransaction();
 
@@ -235,6 +246,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         Cursor result;
 
+        assert db != null;
         db.beginTransaction();
         result = db.query(tableName, new String[]{NEWS_KEY_BLOB},
                 NEWS_KEY_IMG_URL + "='" + imageUrl.replaceAll("http://", "httpxxx") + "'",
@@ -261,7 +273,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         return getFilteredNews(NEWS_KEY_ID + " > " + alreadyShown);
     }
 
-    private final ArrayList<NewsEntry> getFilteredNews(String whereClause) {
+    private ArrayList<NewsEntry> getFilteredNews(String whereClause) {
 
         ArrayList<NewsEntry> ret = new ArrayList<>();
         String[] fields =
@@ -270,6 +282,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         ArrayList<String> fieldsAsList = new ArrayList<>(Arrays.asList(fields));
 
         SQLiteDatabase db = getReadableDatabase();
+        assert db != null;
         db.beginTransaction();
         String tableName = getNewsTableName();
         Cursor result =
@@ -305,6 +318,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(NEWS_KEY_BLOB, blob);
 
+        assert db != null;
         db.beginTransaction();
         db.update(tableName, contentValues,
                 NEWS_KEY_IMG_URL + " = '" + imgUrl.replaceAll("http://", "httpxxx") + "'", null);
@@ -320,6 +334,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         long ret;
         SQLiteDatabase db = getWritableDatabase();
         String tableName = getNewsTableName();
+        assert db != null;
         db.beginTransaction();
         ret = db.insert(tableName, null, values);
         db.setTransactionSuccessful();
@@ -335,6 +350,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         long ret;
         SQLiteDatabase db = getWritableDatabase();
 
+        assert db != null;
         db.beginTransaction();
         ret = db.insert(SURR_TABLE_NAME, null, values);
         db.setTransactionSuccessful();
@@ -363,8 +379,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         }
 
         sqLiteDatabase.beginTransaction();
-        for (Iterator<String> it = tableNames.iterator(); it.hasNext(); ) {
-            String tableName = it.next();
+        for (String tableName : tableNames) {
             sqLiteDatabase.execSQL(("CREATE TABLE IF NOT EXISTS " + tableName + " ( " +
                     NEWS_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
                     NEWS_KEY_TITLE + " TEXT NOT NULL ON CONFLICT FAIL, " +

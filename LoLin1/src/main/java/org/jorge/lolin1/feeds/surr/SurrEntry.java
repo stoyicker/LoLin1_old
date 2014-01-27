@@ -61,4 +61,10 @@ public class SurrEntry {
         this.read = Boolean.TRUE;
         SQLiteBridge.getSingleton().markSurrAsRead(this.getTitle());
     }
+
+    public String toString() {
+
+        return getTitle() + getSEPARATOR() + getLink() + getSEPARATOR() + pubDate + getSEPARATOR() +
+                getUpdateString();
+    }
 }

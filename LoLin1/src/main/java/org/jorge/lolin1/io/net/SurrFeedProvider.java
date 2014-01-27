@@ -19,7 +19,6 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * This file is part of LoLin1.
@@ -72,9 +71,7 @@ public class SurrFeedProvider {
             Log.wtf("ERROR", "Should never happen", e);
             handler.onNoInternetConnection();
         }
-        finally {
-            return ret;
-        }
+        return ret;
     }
 
     /**
@@ -92,8 +89,10 @@ public class SurrFeedProvider {
         in = new BufferedInputStream(urlConnection.getInputStream());
 
         XmlPullParser parser = Xml.newPullParser();
+
         try {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, Boolean.FALSE);
+            parser.setFeature(XmlPullParser.FEATURE_PROCESS_DOCDECL, Boolean.TRUE);
             parser.setInput(in, null);
             parser.nextTag();
             items = readFeed(parser);
@@ -103,8 +102,9 @@ public class SurrFeedProvider {
         }
 
         ArrayList<String> ret = new ArrayList<>();
-        for (Iterator<SurrEntry> it = items.iterator(); it.hasNext(); ) {
-            ret.add(it.next().toString());
+        for (SurrEntry item : items) {
+            assert item != null;
+            ret.add(item.toString());
         }
 
         Collections.reverse(ret);
@@ -117,43 +117,68 @@ public class SurrFeedProvider {
         final String separator = SurrEntry.getSEPARATOR();
 
         parser.require(XmlPullParser.START_TAG, null, "feed");
-        String title = null, link = null, pubDate = null, updated = null, tagName = null;
+        String title = null, link, pubDate = null, updated = null, tagName;
         parser.next();
         while (!(parser.getEventType() == XmlPullParser.END_TAG &&
                 parser.getName().contentEquals("feed"))) {
-            if (!parser.getName().contentEquals("entry")) {
-                parser.nextTag();
-            }
-            else {
+            if (parser.next() == XmlPullParser.START_TAG &&
+                    parser.getName().contentEquals("entry")) {
                 while (!(parser.next() == XmlPullParser.END_TAG &&
-                        (tagName = parser.getName()).contentEquals("entry"))) {
+                        (parser.getName()).contentEquals("entry"))) {
                     if (parser.getEventType() == XmlPullParser.START_TAG) {
+                        tagName = parser.getName();
                         switch (tagName) {
                             case "title":
+                                Log.d("NX4", "SORTING TEST: title");
+                                parser.nextToken();
                                 title = parser.getText();
+                                //TODO Fix in all the sections with ENTITY_REF
+                                Log.d("NX4", "Fragment: " + parser.getText());
                                 break;
                             case "published":
+                                Log.d("NX4", "SORTING TEST: published");
+                                parser.nextToken();
                                 pubDate = parser.getText();
                                 break;
                             case "updated":
+                                Log.d("NX4", "SORTING TEST: updated");
+                                parser.nextToken();
                                 updated = parser.getText();
                                 break;
                             case "link":
                                 if (parser.getAttributeValue(null, "rel")
                                         .contentEquals("alternate")) {
+                                    Log.d("NX4", "SORTING TEST: link");
                                     link = parser.getAttributeValue(null, "href");
+                                    Log.d("NX4",
+                                            "Link assigned as " + link + " when title is " + title);
+                                    SurrEntry thisOne =
+                                            SQLiteBridge.getSingleton().getSurrByTitle(title);
+                                    Boolean read = Boolean.FALSE;
+                                    if (thisOne != null) {
+                                        read = !thisOne.hasBeenRead() ||
+                                                new ISO8601Time(updated).isMoreRecentThan(pubDate);
+                                    }
+                                    Log.d("NX4", "About to add the one titled " + title);
+                                    SurrEntry test;
+                                    ret.add(test = new SurrEntry(
+                                            title + separator + link + separator + pubDate +
+                                                    separator +
+                                                    updated,
+                                            read));
+                                    Log.d("NX4", "Added the one titled " + test.getTitle() +
+                                            " with link " + test.getLink());
                                 }
                                 break;
                         }
                     }
                 }
-                ret.add(new SurrEntry(title + separator + link + pubDate + updated,
-                        !SQLiteBridge.getSingleton().getSurrByTitle(title).hasBeenRead() ||
-                                new ISO8601Time(updated)
-                                        .isMoreRecentThan(pubDate)));
             }
         }
 
+        Log.d("NX4", "I'm out of readFeed");
+
         return ret;
+
     }
 }
