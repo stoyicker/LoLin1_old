@@ -17,30 +17,33 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by JorgeAntonio on 25/01/14.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/theme_black"
-              android:hapticFeedbackEnabled="true"
-              android:orientation="horizontal"
-              android:paddingBottom="@dimen/feed_item_vertical_margin"
-              android:paddingTop="@dimen/feed_item_vertical_margin">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/theme_surr_grey"
+                android:hapticFeedbackEnabled="true"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/feed_item_vertical_margin"
+                android:paddingTop="@dimen/feed_item_vertical_margin">
 
 	<TextView
 		android:id="@+id/surr_feed_item_title"
 		style="@style/SurrFeedTextWithShadowStyle"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
-		android:layout_gravity="center_vertical"
-		android:layout_weight="9"
-		android:background="@color/theme_black"
+		android:layout_alignParentStart="true"
+		android:layout_toLeftOf="@+id/surr_feed_item_new_content_image"
+		android:hapticFeedbackEnabled="true"
+		android:paddingLeft="@dimen/feed_item_horizontal_margin"
+		android:paddingRight="@dimen/feed_item_horizontal_margin"
 		/>
 	<ImageView
 		android:id="@+id/surr_feed_item_new_content_image"
 		android:layout_width="wrap_content"
 		android:layout_height="match_parent"
-		android:layout_gravity="right"
-		android:layout_weight="1"
+		android:layout_alignParentEnd="true"
+		android:contentDescription="@string/new_surr_content"
+		android:paddingRight="@dimen/feed_item_horizontal_margin"
 		android:src="@drawable/icon_unread"
 		android:visibility="invisible"/>
-</LinearLayout>
+</RelativeLayout>

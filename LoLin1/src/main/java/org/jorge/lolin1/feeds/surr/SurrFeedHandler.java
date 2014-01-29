@@ -3,7 +3,6 @@ package org.jorge.lolin1.feeds.surr;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Context;
-import android.util.Log;
 import android.widget.Toast;
 
 import org.jorge.lolin1.feeds.IFeedHandler;
@@ -59,7 +58,6 @@ public class SurrFeedHandler implements IFeedHandler {
         SurrEntry current;
         String title, updated;
         for (String x : items) {
-            Log.d("NX4", "SFH: " + x);
             row = new ContentValues();
             StringTokenizer tokenizer = new StringTokenizer(x, SurrEntry.getSEPARATOR());
             row.put(SQLiteBridge.SURR_KEY_TITLE, title = tokenizer.nextToken().replaceAll("comilla",
@@ -68,7 +66,7 @@ public class SurrFeedHandler implements IFeedHandler {
             current = SQLiteBridge.getSingleton().getSurrByTitle(title);
             row.put(SQLiteBridge.SURR_KEY_PUBLISHED, tokenizer.nextToken());
             row.put(SQLiteBridge.SURR_KEY_UPDATED, updated = tokenizer.nextToken());
-            Boolean pendingRead = Boolean.FALSE;
+            Boolean pendingRead = Boolean.TRUE;
             if (current != null) {
                 pendingRead =
                         !current.hasBeenRead() || new ISO8601Time(updated)

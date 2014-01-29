@@ -3,6 +3,7 @@ package org.jorge.lolin1.custom;
 import android.app.Activity;
 import android.content.Context;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -40,14 +41,15 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
 
     private static final int list_item_layout = R.layout.list_item_surr_feed;
     private static Context mContext;
-    private final Animation newContentAnimation;
+    private final Animation unreadContentAnimation;
 
     public SurrFragmentArrayAdapter(Context context) {
         super(context, list_item_layout);
         mContext = context;
-        newContentAnimation = AnimationUtils.loadAnimation(context, R.anim.anim_right_to_left);
+        unreadContentAnimation = AnimationUtils.loadAnimation(context, R.anim.anim_grow);
     }
 
+    //FIXME Refresh the ListView when back from the browser. This is here like could be anywhere else.
     public void updateShownNews() {
 
         int howManyIHave = this.getCount();
@@ -73,6 +75,7 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
                             .inflate(
                                     list_item_layout, null);
         }
+        assert convertView != null;
         TextView titleTextView = (TextView) convertView.findViewById(R.id.surr_feed_item_title);
 
         SurrEntry thisArticle = getItem(position);
@@ -81,14 +84,18 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
         ImageView itemWithNewContentImageView =
                 (ImageView) convertView.findViewById(R.id.surr_feed_item_new_content_image);
 
+        Log.d("NX4", "Before the branch");
+
         if (!thisArticle.hasBeenRead()) {
+            Log.d("NX4", "It hasn't been read");
             itemWithNewContentImageView.setVisibility(View.VISIBLE);
-            itemWithNewContentImageView.startAnimation(newContentAnimation);
+            itemWithNewContentImageView.startAnimation(unreadContentAnimation);
         }
         else {
+            Log.d("NX4", "It has been read");
             itemWithNewContentImageView.setVisibility(View.INVISIBLE);
-            newContentAnimation.cancel();
-            newContentAnimation.reset();
+            unreadContentAnimation.cancel();
+            unreadContentAnimation.reset();
         }
 
         titleTextView.setText(Html.fromHtml(thisArticle.getTitle()));
