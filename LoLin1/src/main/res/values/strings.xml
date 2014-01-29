@@ -94,9 +94,9 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_default_buff_respawn">05:00</string>
 	<string name="pref_cat_chat">CHAT</string>
 	<string name="pref_title_username">Username</string>
-	<string name="pref_default_username"></string>
+	<string name="pref_default_username"/>
 	<string name="pref_title_pass">Password</string>
-	<string name="pref_default_pass"></string>
+	<string name="pref_default_pass"/>
 	<string name="pref_cat_share">SHARE</string>
 	<string name="pref_title_facebook">Post to Facebook</string>
 	<string name="pref_title_twitter">Share on Twitter</string>
@@ -124,4 +124,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="ptr_pull_text">Pull to refresh</string>
 	<string name="ptr_refreshing_text">Loading...</string>
 	<string name="ptr_released_text">Done</string>
+	<string name="new_surr_content">New content to read!</string>
 </resources>

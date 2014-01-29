@@ -89,7 +89,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
             String url = listAdapter.getItem(position).getLink();
             Intent inAppBrowserIntent = new Intent(getActivity(), WebViewerActivity.class);
             inAppBrowserIntent.putExtra("url", url);
-            startActivity(inAppBrowserIntent);
+            getActivity().startActivity(inAppBrowserIntent);
         }
         else {
             final String msg = Utils.getString(activity, "error_no_internet", "ERROR");

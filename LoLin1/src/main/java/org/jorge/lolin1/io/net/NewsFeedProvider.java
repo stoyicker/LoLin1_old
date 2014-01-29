@@ -20,7 +20,6 @@ import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Iterator;
 
 /**
  * This file is part of LoLin1.
@@ -42,10 +41,8 @@ import java.util.Iterator;
  */
 public class NewsFeedProvider {
 
-    private static final String LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX =
-            ".xml";
-    private Context context;
-    private IFeedHandler handler;
+    private final Context context;
+    private final IFeedHandler handler;
 
     /**
      * Constructor with default separator "||||"
@@ -73,9 +70,7 @@ public class NewsFeedProvider {
             Log.wtf("ERROR", "Should never happen", e);
             handler.onNoInternetConnection();
         }
-        finally {
-            return ret;
-        }
+        return ret;
     }
 
     /**
@@ -96,7 +91,8 @@ public class NewsFeedProvider {
         String langSimplified = Utils.getStringArray(context, "langs_simplified",
                 new String[]{"en"})[new ArrayList<>(
                 Arrays.asList(Utils.getStringArray(context, "langs", new String[]{"english"})))
-                .indexOf(lang)];
+                .indexOf(lang)], LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX =
+                ".xml";
         String srcString =
                 (LOLNEWS_PREFIX + "_" + server + "_" + langSimplified + LOLNEWS_SUFFIX)
                         .toLowerCase();
@@ -117,8 +113,8 @@ public class NewsFeedProvider {
         }
 
         ArrayList<String> ret = new ArrayList<>();
-        for (Iterator<NewsEntry> it = items.iterator(); it.hasNext(); ) {
-            ret.add(it.next().toString());
+        for (NewsEntry item : items) {
+            ret.add(item.toString());
         }
 
         Collections.reverse(ret);
@@ -175,6 +171,7 @@ public class NewsFeedProvider {
         return ret;
     }
 
+    @SuppressWarnings("StatementWithEmptyBody")
     private void skip(XmlPullParser parser) throws XmlPullParserException, IOException {
         if (parser.getEventType() != XmlPullParser.START_TAG) {
             throw new IllegalStateException();

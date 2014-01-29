@@ -129,6 +129,19 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
         }
     }
 
+    /**
+     * Called when the fragment is visible to the user and actively running.
+     * This is generally
+     * tied to {@link android.app.Activity#onResume() Activity.onResume} of the containing
+     * Activity's lifecycle.
+     */
+    @Override
+    public void onResume() {
+        super.onResume();
+        listAdapter
+                .updateShownNews(); //Force the view to be refreshed when coming back from the WebView
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

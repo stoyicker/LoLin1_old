@@ -135,7 +135,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         return getFilteredSurrs(SURR_KEY_ID + " > " + alreadyShown);
     }
 
-    public int markSurrAsRead(String title) {
+    public int markSurrAsRead(String link) {
         SQLiteDatabase db = getWritableDatabase();
         int ret;
         ContentValues contentValues = new ContentValues();
@@ -143,14 +143,15 @@ public class SQLiteBridge extends SQLiteOpenHelper {
 
         assert db != null;
         db.beginTransaction();
-        ret = db.update(SURR_TABLE_NAME, contentValues, SURR_KEY_TITLE + "='" + title + "'", null);
+        ret = db.update(SURR_TABLE_NAME, contentValues,
+                SURR_KEY_LINK + "='" + link.replaceAll("http://", "httpxxx") + "'", null);
         db.setTransactionSuccessful();
         db.endTransaction();
 
         return ret;
     }
 
-    public SurrEntry getSurrByTitle(String surrTitle) {
+    public SurrEntry getSurrByLink(String surrLink) {
         SurrEntry ret = null;
         String[] fields =
                 new String[]{SURR_KEY_TITLE, SURR_KEY_LINK, SURR_KEY_PUBLISHED, SURR_KEY_UPDATED,
@@ -165,7 +166,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         db.beginTransaction();
         Cursor result =
                 db.query(SURR_TABLE_NAME, fields,
-                        SURR_KEY_TITLE + " = '" + surrTitle.replaceAll("'", "comilla") + "'",
+                        SURR_KEY_LINK + " = '" + surrLink.replaceAll("http://", "httpxxx") + "'",
                         null,
                         null, null,
                         SURR_KEY_ID + " DESC");
@@ -226,14 +227,14 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
-    public Integer updateSurrArticle(String title, ContentValues row) {
+    public Integer updateSurrArticleByLink(String link, ContentValues row) {
         SQLiteDatabase db = getWritableDatabase();
         Integer ret;
 
         assert db != null;
         db.beginTransaction();
         ret = db.update(SURR_TABLE_NAME, row,
-                SURR_KEY_TITLE + " = '" + title.replaceAll("'", "comilla") + "'", null);
+                SURR_KEY_LINK + " = '" + link.replaceAll("http://", "httpxxx") + "'", null);
         db.setTransactionSuccessful();
         db.endTransaction();
 
@@ -393,7 +394,7 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(("CREATE TABLE IF NOT EXISTS " + SURR_TABLE_NAME + " ( " +
                 SURR_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
                 SURR_KEY_TITLE + " TEXT UNIQUE NOT NULL ON CONFLICT FAIL, " +
-                SURR_KEY_PUBLISHED + " TEXT NOT NULL ON CONFLICT FAIL, " +
+                SURR_KEY_PUBLISHED + " TEXT NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, " +
                 SURR_KEY_UPDATED + " TEXT, " +
                 SURR_KEY_LINK + " TEXT NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, " +
                 SURR_KEY_READ + " BOOLEAN NOT NULL " +

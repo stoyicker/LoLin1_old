@@ -40,10 +40,8 @@ import java.util.Collections;
  */
 public class SurrFeedProvider {
 
-    private static final String SURRENDERAT20_URL =
-            "http://feeds.feedburner.com/surrenderat20/CqWw?format=xml";
-    private Context context;
-    private IFeedHandler handler;
+    private final Context context;
+    private final IFeedHandler handler;
 
     /**
      * Constructor with default separator "||||"
@@ -83,6 +81,7 @@ public class SurrFeedProvider {
     private ArrayList<String> retrieveFeed() throws IOException {
         ArrayList<SurrEntry> items = null;
         BufferedInputStream in;
+        String SURRENDERAT20_URL = "http://feeds.feedburner.com/surrenderat20/CqWw?format=xml";
         URL source = new URL(SURRENDERAT20_URL);
         URLConnection urlConnection = source.openConnection();
         urlConnection.connect();
@@ -102,6 +101,7 @@ public class SurrFeedProvider {
         }
 
         ArrayList<String> ret = new ArrayList<>();
+        assert items != null;
         for (SurrEntry item : items) {
             assert item != null;
             ret.add(item.toString());
@@ -129,45 +129,33 @@ public class SurrFeedProvider {
                         tagName = parser.getName();
                         switch (tagName) {
                             case "title":
-                                Log.d("NX4", "SORTING TEST: title");
-                                parser.nextToken();
+                                parser.next();
                                 title = parser.getText();
-                                //TODO Fix in all the sections with ENTITY_REF
-                                Log.d("NX4", "Fragment: " + parser.getText());
                                 break;
                             case "published":
-                                Log.d("NX4", "SORTING TEST: published");
                                 parser.nextToken();
                                 pubDate = parser.getText();
                                 break;
                             case "updated":
-                                Log.d("NX4", "SORTING TEST: updated");
                                 parser.nextToken();
                                 updated = parser.getText();
                                 break;
                             case "link":
                                 if (parser.getAttributeValue(null, "rel")
                                         .contentEquals("alternate")) {
-                                    Log.d("NX4", "SORTING TEST: link");
                                     link = parser.getAttributeValue(null, "href");
-                                    Log.d("NX4",
-                                            "Link assigned as " + link + " when title is " + title);
                                     SurrEntry thisOne =
-                                            SQLiteBridge.getSingleton().getSurrByTitle(title);
+                                            SQLiteBridge.getSingleton().getSurrByLink(link);
                                     Boolean read = Boolean.FALSE;
                                     if (thisOne != null) {
                                         read = !thisOne.hasBeenRead() ||
                                                 new ISO8601Time(updated).isMoreRecentThan(pubDate);
                                     }
-                                    Log.d("NX4", "About to add the one titled " + title);
-                                    SurrEntry test;
-                                    ret.add(test = new SurrEntry(
+                                    ret.add(new SurrEntry(
                                             title + separator + link + separator + pubDate +
                                                     separator +
                                                     updated,
                                             read));
-                                    Log.d("NX4", "Added the one titled " + test.getTitle() +
-                                            " with link " + test.getLink());
                                 }
                                 break;
                         }
@@ -176,9 +164,9 @@ public class SurrFeedProvider {
             }
         }
 
-        Log.d("NX4", "I'm out of readFeed");
-
         return ret;
 
     }
+
+
 }

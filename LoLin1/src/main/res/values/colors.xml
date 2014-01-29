@@ -23,4 +23,5 @@ Created by JorgeAntonio on 21/01/14.
 	<color name="theme_dark_orange">#FFBB33</color>
 	<color name="theme_black">#000000</color>
 	<color name="theme_white">#FFFFFF</color>
+	<color name="theme_surr_grey">#444444</color>
 </resources>

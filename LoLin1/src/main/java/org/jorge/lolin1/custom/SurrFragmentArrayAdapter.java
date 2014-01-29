@@ -40,12 +40,12 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
 
     private static final int list_item_layout = R.layout.list_item_surr_feed;
     private static Context mContext;
-    private final Animation newContentAnimation;
+    private final Animation unreadContentAnimation;
 
     public SurrFragmentArrayAdapter(Context context) {
         super(context, list_item_layout);
         mContext = context;
-        newContentAnimation = AnimationUtils.loadAnimation(context, R.anim.anim_right_to_left);
+        unreadContentAnimation = AnimationUtils.loadAnimation(context, R.anim.anim_grow);
     }
 
     public void updateShownNews() {
@@ -65,6 +65,7 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
         });
     }
 
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
@@ -73,22 +74,23 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
                             .inflate(
                                     list_item_layout, null);
         }
+
+        assert convertView != null;
         TextView titleTextView = (TextView) convertView.findViewById(R.id.surr_feed_item_title);
 
         SurrEntry thisArticle = getItem(position);
-
 
         ImageView itemWithNewContentImageView =
                 (ImageView) convertView.findViewById(R.id.surr_feed_item_new_content_image);
 
         if (!thisArticle.hasBeenRead()) {
             itemWithNewContentImageView.setVisibility(View.VISIBLE);
-            itemWithNewContentImageView.startAnimation(newContentAnimation);
+            itemWithNewContentImageView.startAnimation(unreadContentAnimation);
         }
         else {
             itemWithNewContentImageView.setVisibility(View.INVISIBLE);
-            newContentAnimation.cancel();
-            newContentAnimation.reset();
+            unreadContentAnimation.cancel();
+            unreadContentAnimation.reset();
         }
 
         titleTextView.setText(Html.fromHtml(thisArticle.getTitle()));

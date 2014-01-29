@@ -31,7 +31,7 @@ public class SurrEntry {
     public SurrEntry(final String data, Boolean read) {
         final StringTokenizer tokenizer = new StringTokenizer(data, FIELD_SEPARATOR);
         this.title = tokenizer.nextToken();
-        this.link = tokenizer.nextToken();
+        this.link = tokenizer.nextToken().replaceAll("httpxxx", "http://");
         this.pubDate = tokenizer.nextToken();
         this.updated = tokenizer.nextToken();
         this.read = read;
@@ -59,7 +59,7 @@ public class SurrEntry {
 
     public void markAsRead() {
         this.read = Boolean.TRUE;
-        SQLiteBridge.getSingleton().markSurrAsRead(this.getTitle());
+        SQLiteBridge.getSingleton().markSurrAsRead(this.getLink());
     }
 
     public String toString() {
