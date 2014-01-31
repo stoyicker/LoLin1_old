@@ -1,0 +1,186 @@
+{
+   "type":"champions",
+   "version":"4.1.14_01_15_16_01",
+   "data":{
+      "Aatrox":{
+         "key":"114",
+         "name":"Aatrox",
+         "title":"sabia Darkin",
+         "tags":[
+            "Luptätor",
+            "Tanc"
+         ],
+         "spells":[
+            {
+               "id":"P",
+               "name":"Fântâna de sânge",
+               "description":"Când utilizează o abilitate care îl costă viaţă, Aatrox stochează daunele auto-provocate în 'Fântâna de sânge'. Când suferă daune mortale, Aatrox extrage sângele din fântână şi îl recuperează sub formă de viaţă de-a lungul unei perioade scurte. În plus, Aatrox câştigă 1% viteză de atac pentru fiecare 2% sânge stocat în fântână."
+            },
+            {
+               "id":"Q",
+               "name":"Zbor întunecat",
+               "description":"Aatrox îşi ia zborul şi se izbeşte de locaţia ţintă, provocând daune şi aruncând în aer inamicii din centrul zonei de impact.\nAatrox îşi ia zborul şi se izbeşte de locaţia ţintă, provocând 70/115/160/205/250 (+60% bonus Attack Damage) daune fizice tuturor inamicilor din apropiere şi aruncând în aer ţintele din centrul zonei de impact timp de 1 secundă.",
+               "cost":"Costă 10% din viaţa curentă",
+               "range":"600"
+            },
+            {
+               "id":"W",
+               "name":"Sete de sânge \/ Preţul sângelui",
+               "description":"Când este activat, Aatrox provoacă daune bonus la fiecare al treilea atac consecutiv în detrimentul propriei vieţi. Când este dezactivat, Aatrox îşi reface viaţa la fiecare al treilea atac consecutiv.\nCând este dezactivat, Aatrox beneficiază de 'Sete de sânge'; când este comutat, se activează 'Preţul sângelui' şi se opreşte 'Setea de sânge'.\nSete de sânge: La fiecare al treilea atac, Aatrox îşi reface 20/25/30/35/40 (+25% bonus Attack Damage) viaţă, valoarea crescând cu 200% când nivelul de viaţă este mai mic de jumătate.\nPreţul sângelui: La fiecare al treilea atac, Aatrox provoacă 60/95/130/165/200 (+100% bonus Attack Damage) daune fizice bonus şi pierde viaţă.",
+               "cost":"Fără cost",
+               "range":"Propriu"
+            },
+            {
+               "id":"E",
+               "name":"Tăişurile suferinţei",
+               "description":"Aatrox dezlănţuie puterea sabiei sale, provocând daune tuturor inamicilor loviţi şi încetinindu-i.\nAatrox dezlănţuie puterea sabiei lui, provocând 75/110/145/180/215 (+60% Ability Power) (+60% bonus Attack Damage) daune magice tuturor inamicilor loviţi şi încetinindu-i cu 40% timp de 1.75/2/2.25/2.5/2.75 secunde.",
+               "cost":"Costă 5% din viaţa curentă",
+               "range":"1000"
+            },
+            {
+               "id":"R",
+               "name":"Masacru",
+               "description":"Aatrox absoarbe sângele inamicilor săi, provocând daune tuturor campionilor inamici din jurul său şi câştigând viteză de atac şi rază de atac bonus pentru o scurtă perioadă de timp.\nAatrox absoarbe sângele inamicilor lui, provocând 200/300/400 (+100% Ability Power) daune magice tuturor campionilor inamici din jurul lui, crescându-şi viteza de atac cu 40/50/60% şi câştigând 175 rază de atac timp de 12 secunde.",
+               "cost":"Fără cost",
+               "range":"550"
+            }
+         ]
+      },
+      "Ahri":{
+         "key":"90",
+         "name":"Ahri",
+         "title":"vulpea cu nouă cozi",
+         "tags":[
+            "Mag",
+            "Asasin"
+         ],
+         "spells":[
+            {
+               "id":"P",
+               "name":"Furt de esenţă",
+               "description":"Câştigă un cumul de 'Furt de esenţă' de fiecare dată când o vrajă loveşte un inamic (max: 3 cumuluri per vrajă). Când se ajunge la 9 cumuluri, următoarea vrajă a lui Ahri o vindecă de fiecare dată când loveşte un inamic."
+            },
+            {
+               "id":"Q",
+               "name":"Sfera amăgirii",
+               "description":"Ahri lansează şi apoi își cheamă înapoi sfera, provocând daune magice la dus şi daune reale la întoarcere.\nProvoacă 40/65/90/115/140 (+33% Ability Power) daune magice la lansare şi 40/65/90/115/140 (+33% Ability Power) daune reale la întoarcere.",
+               "cost":"70/75/80/85/90 mană",
+               "range":"880"
+            },
+            {
+               "id":"W",
+               "name":"Flăcări magice",
+               "description":"Ahri eliberează trei flăcări magice, care urmăresc şi atacă inamicii din apropiere.\nEliberează trei flăcări magice care ţintesc inamicii din apropiere (alege cu prioritate campionii) provocând daune magice de 40/65/90/115/140 (+40% Ability Power). Inamicii loviţi de mai multe flăcări suferă 30% daune de la fiecare flacără suplimentară, până la un maximum de 0 daune asupra unui singur inamic.",
+               "cost":"50 mană",
+               "range":"800"
+            },
+            {
+               "id":"E",
+               "name":"Seducţie",
+               "description":"Ahri trimite un sărut care seduce şi provoacă daune inamicilor pe care-i atinge, forţându-i să se apropie de ea fără a o putea ataca. Ahri le provoacă daune suplimentare inamicilor seduşi recent.\nTrimite în zbor un sărut care provoacă 60/90/120/150/180 (+35% Ability Power) daune magice şi seduce un inamic, făcându-l să vină fără apărare spre Ahri timp de 1/1.25/1.5/1.75/2 secundă(e).Inamicii loviţi de 'Seducţie' suferă cu 20% mai multe daune magice din partea lui Ahri, timp de 6 secunde. Daunele reale ale 'Sferei amăgirii' sunt şi ele sporite de acest efect.",
+               "cost":"85 mană",
+               "range":"975"
+            },
+            {
+               "id":"R",
+               "name":"Goana spiritului",
+               "description":"Ahri se năpusteşte în faţă şi trimite fulgere, provocând daune asupra a 3 inamici din apropiere (fulgerele prioritizează campionii). 'Goana spiritului' se poate folosi de maxim trei ori înainte să intre în perioada de reactivare.\nAhri se năpusteşte înainte şi trage cu 3 fulgere în inamicii din apropiere (prioritizând campionii), provocând 70/110/150 (+30% Ability Power) daune magice. Se poate folosi de maxim trei ori în intervalul de 10 secunde de dinainte de a intra în perioada de reactivare.",
+               "cost":"100 mană",
+               "range":"450"
+            }
+         ]
+      },
+      "Akali":{
+         "key":"55",
+         "name":"Akali",
+         "title":"tăișul umbrei",
+         "tags":[
+            "Asasin"
+         ],
+         "spells":[
+            {
+               "id":"P",
+               "name":"Discipline gemene",
+               "description":"Disciplina forţei: atacurile de bază ale lui Akali provoacă în plus 6% daune magice bonus, crescând cu 1% pentru fiecare 6 puncte de puterea abilităţilor\nDisciplina puterii: Akali câştigă 6% vitalizare magică, valoare care crește cu 1% pentru fiecare 6 puncte bonus de daune din atac."
+            },
+            {
+               "id":"Q",
+               "name":"Marque d'assassin",
+               "description":"Akali îşi rotește secerile kama înspre ţinta inamică, producând daune magice şi însemnând ţinta pentru 6 secunde. Atacurile corp la corp ale lui Akali asupra unei ţinte marcate vor declanşa şi vor consuma însemnul pentru a provoca daune suplimentare şi pentru a-i reface energia.\nAkali îşi aruncă secera kama înspre ţinta inamică, producând 35/55/75/95/115 (+40% Ability Power) daune magice şi însemnând ţinta timp de 6 secunde.Atacurile melee ale lui Akali asupra unei ţinte marcate vor consuma însemnul pentru a provoca 45/70/95/120/145 (+50% Ability Power) daune magice suplimentare şi pentru a reface 20/25/30/35/40 energie.",
+               "cost":"60 Energie",
+               "range":"600"
+            },
+            {
+               "id":"W",
+               "name":"Mantie crepusculară",
+               "description":"Akali se învăluie într-o mantie de fum. Cât timp se află în această zonă, Akali câştigă armură şi rezistenţă la magie şi devine invizibilă. Dacă atacă sau îşi foloseşte abilităţile va deveni vizibilă pentru scurt timp. Inamicii prinşi în această mantie vor avea viteza de mişcare redusă.\nAkali se înconjoară cu o mantie de fum, care durează 8 secunde. Cât timp se află în zona afectată, Akali câştigă 10/20/30/40/50 armură şi rezistenţă la magie şi devine invizibilă. Dacă atacă sau îşi foloseşte abilităţile va deveni vizibilă pentru scurt timp.Inamicii din interiorul mantiei sunt încetiniţi cu 14/18/22/26/30%.",
+               "cost":"80/75/70/65/60 Energie",
+               "range":"700"
+            },
+            {
+               "id":"E",
+               "name":"Spintecare",
+               "description":"Akali îşi rotește secerile kama, provocând daune în funcție de daunele din atac și puterea abilităților.\nAkali îşi roteşte secerile kama, tăind unităţile inamice din apropiere şi provocându-le 30/55/80/105/130 (+60% Attack Damage) (+30% Ability Power) daune fizice.Declanșează 'Însemnul asasinului' asupra ţintelor afectate.",
+               "cost":"60/55/50/45/40 Energie",
+               "range":"325"
+            },
+            {
+               "id":"R",
+               "name":"Dansul umbrelor",
+               "description":"Akali se mişcă rapid printre umbre, lovindu-şi ţinta, producând daune şi consumând un cumul al esenței umbrelor. Akali reîncarcă esenţa umbrelor periodic, dar şi atunci când ucide sau participă la o ucidere (maximum 3 cumuluri).\nAkali se mişcă rapid printre umbre, lovindu-şi ţinta, producând 100/175/250 (+50% Ability Power) daune magice.Akali stochează o esenţă a umbrelor când ucide sau participă la o ucidere şi la fiecare 30/22.5/15 secunde, până la un total de 3.",
+               "cost":"1 Esenţă de umbre",
+               "range":"800"
+            }
+         ]
+      },
+      "Alistar":{
+         "key":"12",
+         "name":"Alistar",
+         "title":"minotaurul",
+         "tags":[
+            "Tanc"
+         ],
+         "spells":[
+            {
+               "id":"P",
+               "name":"Calcă",
+               "description":"Când Alistar foloseşte o vrajă, zdrobește unităţile şi turetele din apropiere timp de câteva secunde, provocând daune unităţilor pe care calcă."
+            },
+            {
+               "id":"Q",
+               "name":"Atomisation",
+               "description":"Alistar izbeşte pământul, provocând daune tuturor inamicilor din apropiere şi proiectându-i în aer. Când aterizează, inamicii sunt ameţiţi.\nAlistar izbeşte pământul, provocând 60/105/150/195/240 (+50% Ability Power) daune magice, proiectând în aer toate unităţile inamice din apropiere şi ameţindu-le timp de 1,5 secunde.",
+               "cost":"70/80/90/100/110 mană",
+               "range":"365"
+            },
+            {
+               "id":"W",
+               "name":"Lovitură de cap",
+               "description":"Alistar izbeşte ţinta cu capul, provocându-i daune şi proiectând-o în spate.\nAlistar se năpusteşte asupra unui inamic şi îl loveşte cu forţă, provocându-i 55/110/165/220/275 (+70% Ability Power) daune magice, ameţindu-l şi proiectându-l în spate.",
+               "cost":"70/80/90/100/110 mană",
+               "range":"650"
+            },
+            {
+               "id":"E",
+               "name":"Răcnet triumfător",
+               "description":"Alistar scoate un strigăt de luptă mobilizator, refăcând jumătate din vitalitatea proprie şi a unităţilor aliate din apropiere. Se poate folosi mai des dacă inamicii din apropiere sunt pe moarte.\nÎi reface 60/90/120/150/180 (+20% Ability Power) viaţă lui Alistar şi jumătate din această valoare aliaţilor din apropiere. Timpul de reactivare se reduce cu 2 secunde de fiecare dată când unitatea inamică din apropiere moare.",
+               "cost":"40/50/60/70/80 mană",
+               "range":"575"
+            },
+            {
+               "id":"R",
+               "name":"Voinţă trainică",
+               "description":"Alistar scoate un răget sălbatic, câştigând daune bonus, eliminând toate efectele de control al maselor care i s-au aplicat şi reducând daunele fizice şi daunele magice suferite pe toată durata efectului.\nAnulează neutralizările de care suferă Alistar și acesta câştigă 60/75/90 daune din atac şi primește daune fizice și magice reduse cu 50/60/70% timp de 7 secunde.",
+               "cost":"100 mană",
+               "range":"Propriu"
+            }
+         ]
+      }
+   },
+   "keys":{
+      "114":"Aatrox",
+      "90":"Ahri",
+      "55":"Akali",
+      "12":"Alistar"
+   }
+}

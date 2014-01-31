@@ -1,18 +1,24 @@
 package org.jorge.lolin1.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
+import android.util.DisplayMetrics;
 import android.util.Log;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 /**
  * This file is part of LoLin1.
@@ -36,8 +42,8 @@ import java.lang.reflect.Field;
  */
 public abstract class Utils {
 
-    public static final String[] getStringArray(Context context, String variableName,
-                                                String[] defaultRet) {
+    public static String[] getStringArray(Context context, String variableName,
+                                          String[] defaultRet) {
         String[] ret = defaultRet;
 
         try {
@@ -52,7 +58,7 @@ public abstract class Utils {
         return ret;
     }
 
-    public static final String getString(Context context, String variableName, String defaultRet) {
+    public static String getString(Context context, String variableName, String defaultRet) {
         String ret = defaultRet;
 
         try {
@@ -67,7 +73,7 @@ public abstract class Utils {
         return ret;
     }
 
-    public static final int getDrawableAsId(String variableName, int defaultRet) {
+    public static int getDrawableAsId(String variableName, int defaultRet) {
         int ret = defaultRet;
 
         try {
@@ -81,7 +87,7 @@ public abstract class Utils {
         return ret;
     }
 
-    public static final Boolean isInternetReachable(Context context) {
+    public static Boolean isInternetReachable(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         Boolean ret;
 
@@ -130,5 +136,16 @@ public abstract class Utils {
         }
 
         return ret;
+    }
+
+    public static void setLocale(String lang, Activity activity) {
+        Locale myLocale = new Locale(lang.toLowerCase());
+        Resources res = activity.getResources();
+        DisplayMetrics dm = res.getDisplayMetrics();
+        Configuration conf = res.getConfiguration();
+        conf.locale = myLocale;
+        res.updateConfiguration(conf, dm);
+        Intent refresh = new Intent(activity, activity.getClass());
+        activity.startActivity(refresh);
     }
 }

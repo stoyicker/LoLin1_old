@@ -51,7 +51,7 @@ Created by JorgeAntonio on 02/01/14.
 		</activity>
 		<activity
 			android:name="org.jorge.lolin1.activities.ShareToFBActivity"
-			android:configChanges="orientation|screenSize"
+			android:configChanges="locale|orientation|screenSize"
 			android:icon="@drawable/icon_fb_share"
 			android:label="@string/title_activity_facebook"
 			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
@@ -60,7 +60,6 @@ Created by JorgeAntonio on 02/01/14.
 				android:value="SettingsActivity"/>
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
-
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>

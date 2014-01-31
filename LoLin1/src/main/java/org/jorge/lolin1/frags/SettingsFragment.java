@@ -9,6 +9,9 @@ import android.preference.PreferenceFragment;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.Utils;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -75,6 +78,28 @@ public class SettingsFragment extends PreferenceFragment {
                 langPreference.setValue(langPreference.getEntries()[0].toString());
 
                 return Boolean.TRUE;
+            }
+        });
+
+        final ListPreference langPreference = (ListPreference) findPreference(
+                Utils.getString(getActivity().getApplicationContext(), "pref_title_lang",
+                        "error"));
+        langPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+            @Override
+            public boolean onPreferenceChange(Preference preference, Object newValue) {
+                Boolean ret = Boolean.FALSE;
+                String chosenLang = (String) newValue;
+                int langIndex =
+                        new ArrayList<>(Arrays.asList(Utils.getStringArray(getActivity(), "langs",
+                                new String[]{"error"})))
+                                .indexOf(chosenLang);
+                if (langIndex != -1) {
+                    Utils.setLocale(
+                            Utils.getStringArray(getActivity(), "langs_simplified",
+                                    new String[]{"error"})[langIndex], getActivity());
+                    ret = Boolean.TRUE;
+                }
+                return ret;
             }
         });
     }
