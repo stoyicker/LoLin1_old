@@ -71,7 +71,8 @@ public class InitialActivity extends Activity {
              */
             @Override
             protected Void doInBackground(Void... params) {
-                ChampionManager.readChampions();
+                ChampionManager.setContext(getApplicationContext());
+                ChampionManager.readInfo();
                 return null;
             }
         }.execute();

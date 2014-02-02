@@ -4,6 +4,7 @@ import android.content.Context;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.utils.Utils;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -37,8 +38,8 @@ public final class ChampionManager {
         ChampionManager.context = context;
     }
 
-
-    public static void readChampions() {
+    public static void readInfo() {
+        LinkedList<JSONObject> stats = readStats();
         final String fileName = champsFileName + Utils.getStringArray(context, "langs_simplified",
                 new String[]{"en"})[new ArrayList<>(
                 Arrays.asList(Utils.getStringArray(context, "langs",
@@ -46,6 +47,13 @@ public final class ChampionManager {
                 .indexOf(PreferenceManager.getDefaultSharedPreferences(context)
                         .getString("pref_title_lang", "english"))].toLowerCase() +
                 champsFileExtension;
-        //TODO Parsing champions
+        //TODO Parse champions
+        //TODO Set stats to each champions
+    }
+
+    private static LinkedList<JSONObject> readStats() {
+        final LinkedList<JSONObject> ret = new LinkedList<>();
+        //TODO Read champ_stats.json into ret
+        return ret;
     }
 }

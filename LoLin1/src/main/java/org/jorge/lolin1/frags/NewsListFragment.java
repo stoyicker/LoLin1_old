@@ -3,7 +3,6 @@ package org.jorge.lolin1.frags;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.activities.MainActivity;
-import org.jorge.lolin1.activities.WebViewerActivity;
 import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
@@ -53,6 +50,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     private static PullToRefreshLayout mPullToRefreshLayout;
     private NewsFragmentArrayAdapter listAdapter;
     private NewsFeedProvider newsFeedProvider;
+    private NewsListFragmentListener mCallback;
 
     public NewsListFragment(Context context) {
         super();
@@ -81,26 +79,49 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
         setHasOptionsMenu(Boolean.TRUE);
     }
 
+    /**
+     * Called when the Fragment is visible to the user.  This is generally
+     * tied to {@link android.app.Activity#onStart() Activity.onStart} of the containing
+     * Activity's lifecycle.
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+    }
+
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Activity activity = getActivity();
-        if (Utils.isInternetReachable(activity)) {
-            String url = listAdapter.getItem(position).getLink();
-            Intent inAppBrowserIntent = new Intent(getActivity(), WebViewerActivity.class);
-            inAppBrowserIntent.putExtra("url", url);
-            getActivity().startActivity(inAppBrowserIntent);
+
+        String url = listAdapter.getItem(position).getLink();
+        getListView().setItemChecked(position, Boolean.TRUE);
+        mCallback.onNewsArticleSelected(url);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (NewsListFragmentListener) activity;
         }
-        else {
-            final String msg = Utils.getString(activity, "error_no_internet", "ERROR");
-            (activity).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getActivity(), msg,
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+        catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement NewsListFragmentListener");
         }
+
+        ((MainActivity) activity).onSectionAttached(
+                new ArrayList<>(
+                        Arrays.asList(
+                                Utils.getStringArray(
+                                        getActivity().getApplicationContext(),
+                                        "navigation_drawer_items", new String[]{""})
+                        )
+                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section1",
+                        "Home"))
+        );
     }
 
     @Override
@@ -161,23 +182,6 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        ((MainActivity) activity).onSectionAttached(
-                new ArrayList<>(
-                        Arrays.asList(
-                                Utils.getStringArray(
-                                        getActivity().getApplicationContext(),
-                                        "navigation_drawer_items", new String[]{""})
-                        )
-                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section1",
-                        "Home"))
-        );
-    }
-
-
-    @Override
     public void onRefreshStarted(View view) {
         new AsyncTask<Void, Void, Void>() {
             /**
@@ -235,5 +239,10 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
                 mPullToRefreshLayout.setRefreshComplete();
             }
         }.execute();
+    }
+
+
+    public interface NewsListFragmentListener {
+        public void onNewsArticleSelected(String url);
     }
 }

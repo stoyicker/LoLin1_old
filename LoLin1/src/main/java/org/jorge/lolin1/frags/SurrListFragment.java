@@ -3,7 +3,6 @@ package org.jorge.lolin1.frags;
 import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,11 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.activities.MainActivity;
-import org.jorge.lolin1.activities.WebViewerActivity;
 import org.jorge.lolin1.custom.SurrFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
@@ -54,6 +51,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     private static PullToRefreshLayout mPullToRefreshLayout;
     private SurrFragmentArrayAdapter listAdapter;
     private SurrFeedProvider surrFeedProvider;
+    private SurrListFragmentListener mCallback;
 
     public SurrListFragment(Context context) {
         super();
@@ -85,10 +83,13 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
+
+        getListView().setItemChecked(position, Boolean.TRUE);
+        final SurrEntry selectedEntry = listAdapter.getItem(position);
+        mCallback.onSurrArticleSelected(selectedEntry.getLink());
+
         Activity activity = getActivity();
         if (Utils.isInternetReachable(activity)) {
-            final SurrEntry selectedEntry = listAdapter.getItem(position);
-            String url = selectedEntry.getLink();
             new AsyncTask<Void, Void, Void>() {
                 /**
                  * Override this method to perform a computation on a background thread. The
@@ -113,19 +114,6 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
                     return null;
                 }
             }.execute();
-            Intent inAppBrowserIntent = new Intent(getActivity(), WebViewerActivity.class);
-            inAppBrowserIntent.putExtra("url", url);
-            startActivity(inAppBrowserIntent);
-        }
-        else {
-            final String msg = Utils.getString(activity, "error_no_internet", "ERROR");
-            (activity).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getActivity(), msg,
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
         }
     }
 
@@ -142,6 +130,24 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
                 .updateShownNews(); //Force the view to be refreshed when coming back from the WebView
     }
 
+    /**
+     * Provide default implementation to return a simple list view.  Subclasses
+     * can override to replace with their own layout.  If doing so, the
+     * returned view hierarchy <em>must</em> have a ListView whose id
+     * is {@link android.R.id#list android.R.id.list} and can optionally
+     * have a sibling view id {@link android.R.id#empty android.R.id.empty}
+     * that is to be shown when the list is empty.
+     * <p/>
+     * <p>If you are overriding this method with your own custom content,
+     * consider including the standard layout {@link android.R.layout#list_content}
+     * in your layout file, so that you continue to retain all of the standard
+     * behavior of ListFragment.  In particular, this is currently the only
+     * way to have the built-in indeterminant progress state be shown.
+     *
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -151,6 +157,18 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
         listAdapter.updateShownNews();
 
         return ret;
+    }
+
+    /**
+     * Called when the Fragment is visible to the user.  This is generally
+     * tied to {@link android.app.Activity#onStart() Activity.onStart} of the containing
+     * Activity's lifecycle.
+     */
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     /**
@@ -203,6 +221,14 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
+        try {
+            mCallback = (SurrListFragmentListener) activity;
+        }
+        catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement SurrListFragmentListener");
+        }
+
         ((MainActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(
@@ -214,7 +240,6 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
                         "Surrender@20"))
         );
     }
-
 
     @Override
     public void onRefreshStarted(View view) {
@@ -274,5 +299,10 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
                 mPullToRefreshLayout.setRefreshComplete();
             }
         }.execute();
+    }
+
+
+    public interface SurrListFragmentListener {
+        public void onSurrArticleSelected(String url);
     }
 }

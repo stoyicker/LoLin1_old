@@ -58,7 +58,7 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
             @Override
             public void run() {
                 for (SurrEntry x : newSurr) {
-                    add(x);
+                    insert(x, 0);
                 }
                 SurrFragmentArrayAdapter.this.notifyDataSetChanged();
             }

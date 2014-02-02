@@ -146,20 +146,6 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
-		<activity
-			android:name=".activities.WebViewerActivity"
-			android:configChanges="orientation|screenSize"
-			android:label="@string/title_activity_web_viewer"
-			android:parentActivityName="org.jorge.lolin1.activities.MainActivity"
-			android:theme="@android:style/Theme.NoTitleBar.Fullscreen">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="MainActivity"/>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
 	</application>
 
 </manifest>

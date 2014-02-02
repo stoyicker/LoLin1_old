@@ -1,5 +1,10 @@
 package org.jorge.lolin1.champs;
 
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.LinkedList;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -19,4 +24,41 @@ package org.jorge.lolin1.champs;
  * Created by JorgeAntonio on 02/02/14.
  */
 public class Champion {
+
+    //    private final int key;
+    private final LinkedList<String> tags = new LinkedList<>();
+    //    private final String name, title;
+    private final HashMap<Character, Ability> abilityHashMap = new HashMap<>();
+    private float hp = -1, hpperlevel = -1, movespeed = -1, armor = -1, armorperlevel = -1, mr = -1,
+            mrperlevel = -1, range = -1,
+            hpregen = -1, hpregenperlevel = -1, attackdamage = -1, attackdamageperlevel = -1,
+            attackspeed = -1,
+            attackspeedpercperlevel = -1;
+
+    public Champion(JSONObject data) {
+        //TODO
+    }
+
+    public void setStats(JSONObject stats) {
+        //TODO
+    }
+
+    public class Ability {
+        private final String description, cost, cooldown, range;
+
+        protected Ability(String description, String cost) {
+            this(description, cost, null);
+        }
+
+        protected Ability(String description, String cost, String cooldown) {
+            this(description, cost, cooldown, null);
+        }
+
+        protected Ability(String description, String cost, String cooldown, String range) {
+            this.description = description;
+            this.cost = cost;
+            this.cooldown = cooldown;
+            this.range = range;
+        }
+    }
 }

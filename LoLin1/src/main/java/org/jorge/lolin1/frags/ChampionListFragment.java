@@ -21,6 +21,7 @@ package org.jorge.lolin1.frags;
 
 import android.app.Activity;
 import android.app.ListFragment;
+import android.content.Context;
 
 import org.jorge.lolin1.activities.MainActivity;
 import org.jorge.lolin1.utils.Utils;
@@ -28,10 +29,10 @@ import org.jorge.lolin1.utils.Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class ChampionsListFragment extends ListFragment {
+public class ChampionListFragment extends ListFragment {
 
-    public ChampionsListFragment() {
-        //TODO -1 ChampionsListFragment
+    public ChampionListFragment(Context context) {
+        //TODO -1 ChampionListFragment
         // Required empty public constructor
     }
 
@@ -46,7 +47,7 @@ public class ChampionsListFragment extends ListFragment {
                                         getActivity().getApplicationContext(),
                                         "navigation_drawer_items", new String[]{""})
                         )
-                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section",
+                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section5",
                         "Champions")));
     }
 }

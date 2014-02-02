@@ -13,9 +13,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.frags.ChampionListFragment;
 import org.jorge.lolin1.frags.NavigationDrawerFragment;
 import org.jorge.lolin1.frags.NewsListFragment;
 import org.jorge.lolin1.frags.SurrListFragment;
+import org.jorge.lolin1.frags.WebViewerFragment;
 import org.jorge.lolin1.utils.Utils;
 
 /**
@@ -36,9 +38,10 @@ import org.jorge.lolin1.utils.Utils;
  * <p/>
  */
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks,
+        NewsListFragment.NewsListFragmentListener, SurrListFragment.SurrListFragmentListener {
 
-    private Fragment FRAGMENT_NEWS, FRAGMENT_SURR;
+    private Fragment FRAGMENT_NEWS, FRAGMENT_SURR, FRAGMENT_CHAMPS;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -68,25 +71,35 @@ public class MainActivity extends Activity
                 (DrawerLayout) findViewById(R.id.drawer_layout));
     }
 
-    private final int commitReplaceAllBy(Fragment newFragment, String newFragmentTag) {
+    private int commitReplaceAllBy(Fragment newFragment, String newFragmentTag) {
         FragmentManager fragmentManager = getFragmentManager();
+        Fragment webViewerFragment = fragmentManager.findFragmentById(R.id.web_viewer);
         FragmentTransaction removeTransaction = fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         String[] fragment_tags =
                 Utils.getStringArray(this, "main_fragments_tags", new String[]{"ERROR"});
         Fragment x;
-        for (int i = 0; i < fragment_tags.length; i++) {
-            x = fragmentManager.findFragmentByTag(fragment_tags[i]);
+        for (String fragment_tag : fragment_tags) {
+            x = fragmentManager.findFragmentByTag(fragment_tag);
             if (x != null) {
                 removeTransaction.remove(x);
             }
         }
+
+        if (webViewerFragment != null) {
+            removeTransaction.remove(webViewerFragment);
+        }
+
+        removeTransaction.addToBackStack(null);
+
         removeTransaction.commit();
 
         FragmentTransaction addTransaction = fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
 
         addTransaction.replace(R.id.main_container, newFragment, newFragmentTag);
+
+        addTransaction.addToBackStack(null);
 
         return addTransaction.commit();
     }
@@ -100,8 +113,8 @@ public class MainActivity extends Activity
         else {
             lastSelectedNavDrawerItem = position;
         }
-        Fragment newFragment = null;
-        String newFragmentTag = null;
+        Fragment newFragment;
+        String newFragmentTag;
         switch (position) {
             case 0:
                 if (FRAGMENT_NEWS == null) {
@@ -114,6 +127,12 @@ public class MainActivity extends Activity
             case 2:
             case 3:
             case 4:
+                if (FRAGMENT_CHAMPS == null) {
+                    FRAGMENT_CHAMPS = new ChampionListFragment(this);
+                }
+                newFragment = FRAGMENT_CHAMPS;
+                newFragmentTag = Utils.getString(this, "tag_fragment_champs", "ERROR");
+                break;
             case 5:
                 if (FRAGMENT_SURR == null) {
                     FRAGMENT_SURR = new SurrListFragment(this);
@@ -167,5 +186,38 @@ public class MainActivity extends Activity
                 return super.onOptionsItemSelected(item);
         }
         return true;
+    }
+
+    @Override
+    public void onNewsArticleSelected(String url) {
+        showUrlInWebViewerFragment(url);
+    }
+
+    private void showUrlInWebViewerFragment(String url) {
+        WebViewerFragment webViewerFragment =
+                (WebViewerFragment) getFragmentManager().findFragmentById(R.id.web_viewer);
+
+        if (webViewerFragment != null) {
+            webViewerFragment.showUrl(url);
+        }
+        else {
+            Bundle urlBundle = new Bundle();
+            urlBundle.putString("url", url);
+
+            webViewerFragment = new WebViewerFragment();
+            webViewerFragment.setArguments(urlBundle);
+
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.replace(R.id.main_container, webViewerFragment);
+
+            transaction.addToBackStack(null);
+
+            transaction.commit();
+        }
+    }
+
+    @Override
+    public void onSurrArticleSelected(String url) {
+        showUrlInWebViewerFragment(url);
     }
 }

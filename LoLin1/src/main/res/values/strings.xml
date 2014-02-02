@@ -119,6 +119,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="title_activity_rate">Rate LoLin1</string>
 	<string name="tag_fragment_news">News</string>
 	<string name="tag_fragment_surr">Surrender@20</string>
+	<string name="tag_fragment_champs">Champions</string>
 	<string name="news_header">League of Legends News</string>
 	<string name="title_activity_web_viewer">LoLin1 Browser</string>
 	<string name="ptr_pull_text">Pull to refresh</string>

@@ -15,11 +15,13 @@
  You should have received a copy of the GNU General Public License
  along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  <p/>
- Created by JorgeAntonio on 21/01/14.
+ Created by JorgeAntonio on 02/02/2014.
  -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
+              android:layout_width="0dp"
               android:layout_height="match_parent"
+              android:layout_weight="2"
+              android:background="@drawable/nothing_to_do_here"
               android:orientation="vertical">
 
 
