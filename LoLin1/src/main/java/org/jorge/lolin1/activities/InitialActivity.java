@@ -3,10 +3,12 @@ package org.jorge.lolin1.activities;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.champs.ChampionManager;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
 
@@ -52,6 +54,27 @@ public class InitialActivity extends Activity {
                     Boolean.FALSE);
             firstRunEditor.apply();
         }
+        new AsyncTask<Void, Void, Void>() {
+            /**
+             * Override this method to perform a computation on a background thread. The
+             * specified parameters are the parameters passed to {@link #execute}
+             * by the caller of this task.
+             * <p/>
+             * This method can call {@link #publishProgress} to publish updates
+             * on the UI thread.
+             *
+             * @param params The parameters of the task.
+             * @return A result, defined by the subclass of this task.
+             * @see #onPreExecute()
+             * @see #onPostExecute
+             * @see #publishProgress
+             */
+            @Override
+            protected Void doInBackground(Void... params) {
+                ChampionManager.readChampions();
+                return null;
+            }
+        }.execute();
         if (preferences.getBoolean(
                 Utils.getString(getApplicationContext(), "pref_title_ads", "pref_title_ads"),
                 Boolean.FALSE)) {
