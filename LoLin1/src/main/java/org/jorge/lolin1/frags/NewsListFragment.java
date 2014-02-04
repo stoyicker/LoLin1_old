@@ -5,6 +5,7 @@ import android.app.ListFragment;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,10 +95,13 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-
+        Log.d("NX4", "After the super");
         String url = listAdapter.getItem(position).getLink();
+        Log.d("NX4", "After the getItem");
         getListView().setItemChecked(position, Boolean.TRUE);
+        Log.d("NX4", "After the setItemChecked. url is " + url);
         mCallback.onNewsArticleSelected(url);
+        Log.d("NX4", "After the onNewsArticleSelected");
     }
 
     @Override

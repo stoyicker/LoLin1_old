@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
@@ -182,7 +181,6 @@ public class SQLiteBridge extends SQLiteOpenHelper {
                     read = result.getInt(result.getColumnIndex(x)) == 1;
                 }
             }
-            Log.d("NX4", "Building from getSurrByTitle");
             ret = new SurrEntry(data.toString(), read);
         }
 
@@ -221,7 +219,6 @@ public class SQLiteBridge extends SQLiteOpenHelper {
                     read = result.getInt(result.getColumnIndex(x)) == 1;
                 }
             }
-            Log.d("NX4", "Building from getFilteredSurrs");
             ret.add(new SurrEntry(data.toString(), read));
         }
         result.close();
@@ -229,6 +226,9 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         db.endTransaction();
         return ret;
     }
+
+    //FUTURE Go up from settings always goes to the news feed. It shall go to the last built fragment (could be anywhere)
+    //FIXME fix the NPE with the WebViewer (anywhere)
 
     public Integer updateSurrArticleByLink(String link, ContentValues row) {
         SQLiteDatabase db = getWritableDatabase();

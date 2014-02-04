@@ -17,6 +17,7 @@ import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * This file is part of LoLin1.
@@ -51,13 +52,13 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
     public void updateShownNews() {
 
         int howManyIHave = this.getCount();
-        final ArrayList<SurrEntry> newSurr =
+        final ArrayList<SurrEntry> newSurrs =
                 SQLiteBridge.getSingleton().getNewSurrs(howManyIHave);
-
+        Collections.reverse(newSurrs);
         ((Activity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (SurrEntry x : newSurr) {
+                for (SurrEntry x : newSurrs) {
                     insert(x, 0);
                 }
                 SurrFragmentArrayAdapter.this.notifyDataSetChanged();

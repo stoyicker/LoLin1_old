@@ -91,4 +91,10 @@ public abstract class DebugUtils {
         db.setTransactionSuccessful();
         db.endTransaction();
     }
+
+    public static void logArray(String tag, String arrayName, Object[] array) {
+        Log.d(tag, "Logging array " + arrayName);
+        for (Object x : array)
+            Log.d(tag, x + "\n");
+    }
 }

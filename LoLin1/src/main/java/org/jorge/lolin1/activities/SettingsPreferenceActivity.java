@@ -43,6 +43,7 @@ public class SettingsPreferenceActivity extends PreferenceActivity {
         super.onCreate(savedInstanceState);
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new SettingsFragment(),
-                Utils.getString(this, "title_activity_settings", "Settings")).commit();
+                Utils.getString(this, "title_activity_settings", "Settings")).addToBackStack("")
+                .commit();
     }
 }

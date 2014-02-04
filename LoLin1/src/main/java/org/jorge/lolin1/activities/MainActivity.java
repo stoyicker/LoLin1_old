@@ -90,7 +90,7 @@ public class MainActivity extends Activity
             removeTransaction.remove(webViewerFragment);
         }
 
-        removeTransaction.addToBackStack(null);
+        removeTransaction.addToBackStack("");
 
         removeTransaction.commit();
 
@@ -99,7 +99,7 @@ public class MainActivity extends Activity
 
         addTransaction.replace(R.id.main_container, newFragment, newFragmentTag);
 
-        addTransaction.addToBackStack(null);
+        addTransaction.addToBackStack("");
 
         return addTransaction.commit();
     }
@@ -210,7 +210,7 @@ public class MainActivity extends Activity
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.replace(R.id.main_container, webViewerFragment);
 
-            transaction.addToBackStack(null);
+            transaction.addToBackStack("");
 
             transaction.commit();
         }
@@ -220,4 +220,5 @@ public class MainActivity extends Activity
     public void onSurrArticleSelected(String url) {
         showUrlInWebViewerFragment(url);
     }
+
 }

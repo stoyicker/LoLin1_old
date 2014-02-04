@@ -40,13 +40,17 @@ public final class ChampionManager {
 
     public static void readInfo() {
         LinkedList<JSONObject> stats = readStats();
-        final String fileName = champsFileName + Utils.getStringArray(context, "langs_simplified",
-                new String[]{"en"})[new ArrayList<>(
-                Arrays.asList(Utils.getStringArray(context, "langs",
-                        new String[]{"error"})))
-                .indexOf(PreferenceManager.getDefaultSharedPreferences(context)
-                        .getString("pref_title_lang", "english"))].toLowerCase() +
-                champsFileExtension;
+        final String[] langs_simplified = Utils.getStringArray(context, "langs_simplified",
+                new String[]{"en"}), langs = Utils.getStringArray(context, "langs",
+                new String[]{"error"});
+        final String selectedLang =
+                PreferenceManager.getDefaultSharedPreferences(context).getString(
+                        Utils.getString(context, "pref_title_lang", "Language"), "English");
+        final String fileName =
+                champsFileName + langs_simplified[new ArrayList<>(
+                        Arrays.asList(langs))
+                        .indexOf(selectedLang)].toLowerCase() +
+                        champsFileExtension;
         //TODO Parse champions
         //TODO Set stats to each champions
     }
