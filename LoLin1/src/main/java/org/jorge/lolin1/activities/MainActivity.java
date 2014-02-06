@@ -73,7 +73,7 @@ public class MainActivity extends Activity
 
     private int commitReplaceAllBy(Fragment newFragment, String newFragmentTag) {
         FragmentManager fragmentManager = getFragmentManager();
-        Fragment webViewerFragment = fragmentManager.findFragmentById(R.id.web_viewer);
+        Fragment webViewerFragment = fragmentManager.findFragmentByTag("feedWebViewer");
         FragmentTransaction removeTransaction = fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
         String[] fragment_tags =
@@ -195,10 +195,10 @@ public class MainActivity extends Activity
 
     private void showUrlInWebViewerFragment(String url) {
         WebViewerFragment webViewerFragment =
-                (WebViewerFragment) getFragmentManager().findFragmentById(R.id.web_viewer);
+                (WebViewerFragment) getFragmentManager().findFragmentByTag("feedWebViewer");
 
         if (webViewerFragment != null) {
-            webViewerFragment.showUrl(url);
+            webViewerFragment.loadUrl(url);
         }
         else {
             Bundle urlBundle = new Bundle();
@@ -208,7 +208,7 @@ public class MainActivity extends Activity
             webViewerFragment.setArguments(urlBundle);
 
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
-            transaction.replace(R.id.main_container, webViewerFragment);
+            transaction.replace(R.id.main_container, webViewerFragment, "feedWebViewer");
 
             transaction.addToBackStack("");
 

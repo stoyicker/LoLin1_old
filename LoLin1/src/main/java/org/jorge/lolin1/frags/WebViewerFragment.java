@@ -1,19 +1,13 @@
 package org.jorge.lolin1.frags;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewFragment;
-import android.widget.ProgressBar;
-import android.widget.Toast;
-
-import org.jorge.lolin1.R;
-import org.jorge.lolin1.custom.ProgressSpinnerWebViewClient;
-import org.jorge.lolin1.utils.Utils;
+import android.webkit.WebViewClient;
 
 /**
  * This file is part of LoLin1.
@@ -31,48 +25,105 @@ import org.jorge.lolin1.utils.Utils;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 02/02/14.
  */
-public class WebViewerFragment extends WebViewFragment {
+public class WebViewerFragment extends Fragment {
 
-    WebView webView;
+    private WebView mWebView;
+    private boolean mIsWebViewAvailable;
+    private String mUrl = null;
 
+    /**
+     * Called to instantiate the view. Creates and returns the WebView.
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View mainView = (View) inflater.inflate(R.layout.web_viewer_layout, container, false);
-        webView = (WebView) mainView.findViewById(R.id.web_viewer);
-        webView.loadUrl("http://www.google.com");
+        if (mWebView != null) {
+            mWebView.destroy();
+        }
 
-        WebSettings settings = webView.getSettings();
-        settings.setJavaScriptEnabled(Boolean.TRUE);
+        mWebView = new WebView(getActivity());
+        mWebView.loadUrl(mUrl = getArguments().getString("url"));
+
+        mWebView.setWebViewClient(new InnerWebViewClient());
+        mWebView.loadUrl(mUrl);
+        mIsWebViewAvailable = Boolean.TRUE;
+        WebSettings settings = mWebView.getSettings();
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setLoadWithOverviewMode(Boolean.TRUE);
         settings.setUseWideViewPort(Boolean.TRUE);
+        settings.setBuiltInZoomControls(Boolean.TRUE);
         settings.setLoadsImagesAutomatically(Boolean.TRUE);
         settings.setJavaScriptCanOpenWindowsAutomatically(Boolean.TRUE);
-        ProgressBar progressBar = (ProgressBar) mainView.findViewById(R.id.web_viewer_progress_bar);
-        webView.setWebViewClient(new ProgressSpinnerWebViewClient(progressBar));
-        webView.loadUrl(getArguments().getString("url"));
+        mWebView.loadUrl(getArguments().getString("url"));
 
-        return mainView;
+        return mWebView;
     }
 
-    public void showUrl(String url) {
-        Activity activity = getActivity();
-        if (Utils.isInternetReachable(activity)) {
-            webView.loadUrl(url);
+    /**
+     * Convenience method for loading a url.
+     *
+     * @param url
+     */
+    public void loadUrl(String url) {
+        if (mIsWebViewAvailable) {
+            getWebView().loadUrl(mUrl = url);
         }
-        else {
-            final String msg = Utils.getString(activity, "error_no_internet", "ERROR");
-            (activity).runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(getActivity(), msg,
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+    }
+
+    /**
+     * Called when the fragment is visible to the user and actively running. Resumes the WebView.
+     */
+    @Override
+    public void onPause() {
+        super.onPause();
+        mWebView.onPause();
+    }
+
+    /**
+     * Called when the fragment is no longer resumed. Pauses the WebView.
+     */
+    @Override
+    public void onResume() {
+        mWebView.onResume();
+        super.onResume();
+    }
+
+    /**
+     * Called when the WebView has been detached from the fragment.
+     * The WebView is no longer available after this time.
+     */
+    @Override
+    public void onDestroyView() {
+        mIsWebViewAvailable = false;
+        super.onDestroyView();
+    }
+
+    /**
+     * Called when the fragment is no longer in use. Destroys the internal state of the WebView.
+     */
+    @Override
+    public void onDestroy() {
+        if (mWebView != null) {
+            mWebView.destroy();
+            mWebView = null;
+        }
+        super.onDestroy();
+    }
+
+    /**
+     * Gets the WebView.
+     */
+    public WebView getWebView() {
+        return mIsWebViewAvailable ? mWebView : null;
+    }
+
+    private class InnerWebViewClient extends WebViewClient {
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            view.loadUrl(url);
+            return true;
         }
     }
 }
