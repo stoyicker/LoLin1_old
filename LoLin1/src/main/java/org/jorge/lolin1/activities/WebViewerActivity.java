@@ -2,6 +2,7 @@ package org.jorge.lolin1.activities;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.frags.WebViewerFragment;
@@ -29,8 +30,6 @@ public class WebViewerActivity extends FragmentActivity {
 
     WebViewerFragment webViewerFragment;
 
-    //FIXME (could be anywhere) add the up button to the in-app browser
-
     @Override
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +39,8 @@ public class WebViewerActivity extends FragmentActivity {
             finish();
             return;
         }
+
+        getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
 
         getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content,
@@ -59,6 +60,18 @@ public class WebViewerActivity extends FragmentActivity {
                     .commit();
             getSupportFragmentManager().executePendingTransactions();
             finish();
+        }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Respond to the action bar's Up button
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
     }
 }

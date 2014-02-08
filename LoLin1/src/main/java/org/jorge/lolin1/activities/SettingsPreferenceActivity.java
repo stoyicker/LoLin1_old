@@ -2,6 +2,7 @@ package org.jorge.lolin1.activities;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
+import android.view.MenuItem;
 
 import org.jorge.lolin1.frags.SettingsFragment;
 import org.jorge.lolin1.utils.Utils;
@@ -41,9 +42,22 @@ public class SettingsPreferenceActivity extends PreferenceActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new SettingsFragment(),
                 Utils.getString(this, "title_activity_settings", "Settings")).addToBackStack("")
                 .commit();
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                // Respond to the action bar's Up button
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 }

@@ -53,11 +53,7 @@ Created by JorgeAntonio on 02/01/14.
 			android:name="org.jorge.lolin1.activities.SettingsPreferenceActivity"
 			android:configChanges="keyboardHidden"
 			android:label="@string/title_activity_settings"
-			android:logo="@drawable/icon_settings"
-			android:parentActivityName="org.jorge.lolin1.activities.NewsReaderActivity">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="MainActivity"/>
+			android:logo="@drawable/icon_settings">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>

@@ -32,8 +32,6 @@ import java.util.Arrays;
  */
 public class SettingsFragment extends PreferenceFragment {
 
-    //FIXME anywhere - The first three items are shown twice upon coming from another fragment
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

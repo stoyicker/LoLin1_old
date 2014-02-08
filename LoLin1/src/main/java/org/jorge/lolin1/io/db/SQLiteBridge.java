@@ -227,9 +227,6 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
-    //FUTURE Go up from settings always goes to the news feed. It shall go to the last built fragment (could be anywhere) - REQUIRES API Level 16
-    //FIXME fix the NPE with the WebViewer (anywhere)
-
     public Integer updateSurrArticleByLink(String link, ContentValues row) {
         SQLiteDatabase db = getWritableDatabase();
         Integer ret;
