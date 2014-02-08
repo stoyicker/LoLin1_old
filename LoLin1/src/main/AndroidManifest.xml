@@ -69,7 +69,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity android:name=".activities.WebViewerActivity"
-		          android:configChanges="keyboardHidden"
+		          android:configChanges="keyboardHidden|orientation|screenSize"
 		          android:label="@string/title_activity_web_viewer"
 		          android:logo="@drawable/icon_section1">
 			<intent-filter>

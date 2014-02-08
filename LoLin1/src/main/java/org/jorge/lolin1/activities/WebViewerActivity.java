@@ -1,7 +1,11 @@
 package org.jorge.lolin1.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
@@ -31,7 +35,6 @@ public class WebViewerActivity extends FragmentActivity {
     WebViewerFragment webViewerFragment;
 
     @Override
-
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -39,6 +42,8 @@ public class WebViewerActivity extends FragmentActivity {
             finish();
             return;
         }
+
+        Log.d("NX4", "Creating webViewerActivity");
 
         getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
 
@@ -55,10 +60,7 @@ public class WebViewerActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         if (!webViewerFragment.succedeedGoingBack()) {
-            getSupportFragmentManager().beginTransaction().remove(webViewerFragment).addToBackStack(
-                    "")
-                    .commit();
-            getSupportFragmentManager().executePendingTransactions();
+            protectAgainstWindowLeaks();
             finish();
         }
     }
@@ -68,10 +70,26 @@ public class WebViewerActivity extends FragmentActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Respond to the action bar's Up button
+                protectAgainstWindowLeaks();
                 finish();
                 return true;
+            case R.id.action_settings:
+                startActivity(new Intent(this, SettingsPreferenceActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.standard, menu);
+        return true;
+    }
+
+    private void protectAgainstWindowLeaks() {
+        getSupportFragmentManager().beginTransaction().remove(webViewerFragment).addToBackStack("")
+                .commit();
+        getSupportFragmentManager().executePendingTransactions();
     }
 }

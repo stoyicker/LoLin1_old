@@ -3,6 +3,7 @@ package org.jorge.lolin1.activities;
 import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -61,7 +62,8 @@ public class NewsReaderActivity extends FragmentActivity implements
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         if (position == lastSelectedNavDrawerItem) {
-            //We don't want to perform a useless fragment reload
+            //We don't want to perform a useless Activity reload
+            //noinspection UnnecessaryReturnStatement
             return;
         }
         else {
@@ -103,6 +105,10 @@ public class NewsReaderActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+            Log.d("NX4", "I'm in landscape!");
+            return;
+        }
         setContentView(R.layout.activity_news);
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -122,8 +128,8 @@ public class NewsReaderActivity extends FragmentActivity implements
                 (WebViewerFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.fragment_web_viewer);
 
-        View webView = findViewById(R.id.fragment_web_viewer);
-        isDualPane = webView != null && webView.getVisibility() == View.VISIBLE;
+        isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
+                WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;
         restoreState(savedInstanceState);
     }
 
@@ -134,7 +140,6 @@ public class NewsReaderActivity extends FragmentActivity implements
             onNewsArticleSelected(index);
         }
     }
-
 
     @Override
     public void onNewsArticleSelected(int index) {

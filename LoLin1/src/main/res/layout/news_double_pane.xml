@@ -29,12 +29,12 @@
 	<fragment
 		android:id="@+id/fragment_news"
 		android:name="org.jorge.lolin1.frags.NewsListFragment"
-		android:layout_width="@dimen/feed_item_length_percentage"
+		android:layout_width="0dp"
 		android:layout_height="match_parent"/>
 	<fragment
 		android:id="@+id/fragment_web_viewer"
 		android:name="org.jorge.lolin1.frags.WebViewerFragment"
-		android:layout_width="match_parent"
+		android:layout_width="0dp"
 		android:layout_height="match_parent"
 		android:background="@drawable/nothing_to_do_here"/>
 	<fragment

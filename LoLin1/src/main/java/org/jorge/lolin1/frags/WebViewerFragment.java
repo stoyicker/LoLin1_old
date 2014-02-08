@@ -2,17 +2,18 @@ package org.jorge.lolin1.frags;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.devspark.progressfragment.ProgressFragment;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.utils.Utils;
 
 /**
  * This file is part of LoLin1.
@@ -36,6 +37,9 @@ public class WebViewerFragment extends ProgressFragment {
     private WebView mWebView;
     private boolean mIsWebViewAvailable;
     private String mUrl = null;
+
+    public WebViewerFragment() {
+    }
 
     public WebViewerFragment(String url) {
         mUrl = url;
@@ -63,7 +67,6 @@ public class WebViewerFragment extends ProgressFragment {
         mIsWebViewAvailable = Boolean.TRUE;
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(Boolean.TRUE);
-        settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setLoadWithOverviewMode(Boolean.TRUE);
         settings.setUseWideViewPort(Boolean.TRUE);
         settings.setBuiltInZoomControls(Boolean.TRUE);
@@ -175,10 +178,15 @@ public class WebViewerFragment extends ProgressFragment {
         public void onReceivedError(WebView view, int errorCode, String description,
                                     String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            Log.wtf("NX4", "Should never happen",
-                    new RuntimeException("Received errorCode" + errorCode));
-            WebViewerFragment.this.setContentView(mWebView);
-            WebViewerFragment.this.setContentShown(Boolean.TRUE);
+            final String msg = Utils.getString(getActivity(), "error_no_internet", "ERROR");
+            (getActivity()).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(getActivity(), msg,
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            getActivity().finish();
         }
     }
 }
