@@ -151,6 +151,10 @@ public class SQLiteBridge extends SQLiteOpenHelper {
         return ret;
     }
 
+    public ArrayList<SurrEntry> getSurrs() {
+        return getFilteredSurrs(null);
+    }
+
     public SurrEntry getSurrByLink(String surrLink) {
         SurrEntry ret = null;
         String[] fields =

@@ -16,7 +16,7 @@
 
 <!-- BEGIN_INCLUDE(all) -->
 <resources>
-	<item name="activity_news" type="layout">@layout/news_single_pane</item>
+	<item name="activity_news" type="layout">@layout/list_single_pane</item>
 	<bool name="has_two_panes">false</bool>
 </resources>
 	<!-- END_INCLUDE(all) -->

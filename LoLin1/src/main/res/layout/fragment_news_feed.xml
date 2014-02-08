@@ -38,6 +38,7 @@ Created by JorgeAntonio on 02/01/14.
 		android:background="@drawable/feed_news_background"
 		android:divider="@color/theme_black"
 		android:dividerHeight="@dimen/feed_divider"
+		android:requiresFadingEdge="vertical"
 		>
 	</ListView>
 	<ImageView

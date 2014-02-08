@@ -47,9 +47,14 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 public class NewsListFragment extends ListFragment implements OnRefreshListener {
 
     private static PullToRefreshLayout mPullToRefreshLayout;
+    private static int selectedIndex = 0;
     private NewsFragmentArrayAdapter listAdapter;
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
+
+    public static int getSelectedIndex() {
+        return selectedIndex;
+    }
 
     /**
      * Called to do initial creation of a fragment.  This is called after
@@ -82,6 +87,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         getListView().setItemChecked(position, Boolean.TRUE);
+        selectedIndex = position;
         mCallback.onNewsArticleSelected(position);
     }
 

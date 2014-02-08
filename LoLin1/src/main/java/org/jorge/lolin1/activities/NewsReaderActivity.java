@@ -3,11 +3,9 @@ package org.jorge.lolin1.activities;
 import android.app.ActionBar;
 import android.app.FragmentManager;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -40,7 +38,7 @@ import org.jorge.lolin1.utils.Utils;
 public class NewsReaderActivity extends FragmentActivity implements
         NewsListFragment.NewsListFragmentListener,
         NavigationDrawerFragment.NavigationDrawerCallbacks {
-    private Boolean isDualPane = Boolean.FALSE;
+    private static Boolean isDualPane = Boolean.FALSE;
     private NewsListFragment NEWS_FRAGMENT;
     private WebViewerFragment WEB_FRAGMENT;
     private int lastSelectedNavDrawerItem = 0;
@@ -62,7 +60,7 @@ public class NewsReaderActivity extends FragmentActivity implements
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         if (position == lastSelectedNavDrawerItem) {
-            //We don't want to perform a useless Activity reload
+            //We don't want to perform an unnecessary Activity reload
             //noinspection UnnecessaryReturnStatement
             return;
         }
@@ -105,10 +103,6 @@ public class NewsReaderActivity extends FragmentActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            Log.d("NX4", "I'm in landscape!");
-            return;
-        }
         setContentView(R.layout.activity_news);
 
         FragmentManager fragmentManager = getFragmentManager();
@@ -123,7 +117,7 @@ public class NewsReaderActivity extends FragmentActivity implements
                 (DrawerLayout) findViewById(R.id.drawer_layout));
 
         NEWS_FRAGMENT =
-                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news);
+                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_list);
         WEB_FRAGMENT =
                 (WebViewerFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.fragment_web_viewer);
@@ -142,17 +136,21 @@ public class NewsReaderActivity extends FragmentActivity implements
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt("index", NewsListFragment.getSelectedIndex());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     public void onNewsArticleSelected(int index) {
         showUrlInWebViewerFragment(index);
     }
 
     private void showUrlInWebViewerFragment(int index) {
         if (isDualPane) {
-            Log.d("NX4", "Double pane mode");
             WEB_FRAGMENT.loadUrl(SQLiteBridge.getSingleton().getNews().get(index).getLink());
         }
         else {
-            Log.d("NX4", "Single pane mode");
             Intent singleViewIntent = new Intent(this, WebViewerActivity.class);
             singleViewIntent.putExtra("index", index);
             startActivity(singleViewIntent);

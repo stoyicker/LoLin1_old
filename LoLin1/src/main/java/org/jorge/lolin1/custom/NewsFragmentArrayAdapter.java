@@ -3,9 +3,9 @@ package org.jorge.lolin1.custom;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.text.Html;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
+import org.jorge.lolin1.frags.NewsListFragment;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
 
@@ -52,7 +53,6 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
     }
 
     public void updateShownNews() {
-        Log.d("NX4", "updateShownNews");
         String tableName = SQLiteBridge.getNewsTableName();
         //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
@@ -120,6 +120,14 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
         title.setText(Html.fromHtml(thisArticle.getTitle()));
         desc.setText(Html.fromHtml(thisArticle.getDescription()));
+
+        if (position == NewsListFragment.getSelectedIndex() &&
+                mContext.getResources().getBoolean(R.bool.has_two_panes)) {
+            convertView.setBackgroundResource(R.color.theme_light_blue);
+        }
+        else {
+            convertView.setBackgroundColor(Color.TRANSPARENT);
+        }
 
         new AsyncTask<Object, Void, Void>() {
             /**

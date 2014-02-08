@@ -31,7 +31,6 @@ import java.util.Arrays;
  * Created by JorgeAntonio on 06/01/14.
  */
 public class SettingsFragment extends PreferenceFragment {
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

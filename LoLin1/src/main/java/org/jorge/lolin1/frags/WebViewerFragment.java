@@ -58,8 +58,8 @@ public class WebViewerFragment extends ProgressFragment {
             mWebView = null;
         }
 
-        View ret = inflater
-                .inflate(R.layout.fragment_web_viewer, container, Boolean.FALSE);
+        View ret = inflater.inflate(R.layout.fragment_web_viewer, container,
+                Boolean.FALSE);
 
         mWebView = (WebView) ret.findViewById(R.id.web_view);
         mWebView.setVisibility(View.VISIBLE);
@@ -76,6 +76,12 @@ public class WebViewerFragment extends ProgressFragment {
         if (getArguments() != null) {
             mUrl = getArguments().getString("url");
         }
+
+        if (!Utils.isInternetReachable(getActivity())) {
+            ret = inflater.inflate(R.layout.fragment_web_viewer_nothing_loaded, container,
+                    Boolean.FALSE);
+        }
+
         loadUrl(mUrl);
 
         return ret;
@@ -98,7 +104,9 @@ public class WebViewerFragment extends ProgressFragment {
     @Override
     public void onPause() {
         super.onPause();
-        mWebView.onPause();
+        if (mWebView != null) {
+            mWebView.onPause();
+        }
     }
 
     /**
@@ -106,7 +114,9 @@ public class WebViewerFragment extends ProgressFragment {
      */
     @Override
     public void onResume() {
-        mWebView.onResume();
+        if (mWebView != null) {
+            mWebView.onResume();
+        }
         super.onResume();
     }
 
@@ -117,7 +127,9 @@ public class WebViewerFragment extends ProgressFragment {
     @Override
     public void onDestroyView() {
         mIsWebViewAvailable = false;
-        mWebView.setVisibility(View.GONE);
+        if (mWebView != null) {
+            mWebView.setVisibility(View.GONE);
+        }
         super.onDestroyView();
     }
 
@@ -186,7 +198,7 @@ public class WebViewerFragment extends ProgressFragment {
                             Toast.LENGTH_SHORT).show();
                 }
             });
-            getActivity().finish();
+            setContentShown(Boolean.TRUE);
         }
     }
 }

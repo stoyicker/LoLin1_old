@@ -37,6 +37,7 @@ Created by JorgeAntonio on 25/01/14.
 		android:layout_weight="1"
 		android:divider="@color/theme_white"
 		android:dividerHeight="@dimen/feed_divider"
+		android:requiresFadingEdge="vertical"
 		>
 	</ListView>
 	<ImageView

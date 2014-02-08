@@ -23,15 +23,21 @@
 	android:layout_height="match_parent"
 	tools:context="org.jorge.lolin1.activities.MainActivity">
 
-	<fragment android:id="@+id/fragment_news"
+	<fragment android:id="@+id/fragment_list"
 	          android:name="org.jorge.lolin1.frags.NewsListFragment"
 	          android:layout_width="match_parent"
-	          android:layout_height="match_parent"/>
+	          android:layout_height="match_parent"
+	          android:layout_marginBottom="@dimen/activity_vertical_margin"
+	          android:layout_marginLeft="@dimen/activity_horizontal_margin"
+	          android:layout_marginRight="@dimen/activity_horizontal_margin"
+	          android:layout_marginTop="@dimen/activity_vertical_margin"
+	          tools:layout="@layout/fragment_news_feed"/>
 	<fragment
 		android:id="@+id/navigation_drawer"
 		android:name="org.jorge.lolin1.frags.NavigationDrawerFragment"
 		android:layout_width="@dimen/navigation_drawer_width"
 		android:layout_height="match_parent"
-		android:layout_gravity="left"/>
+		android:layout_gravity="left"
+		tools:layout="@layout/fragment_navigation_drawer"/>
 </android.support.v4.widget.DrawerLayout>
 	<!-- END_INCLUDE(all) -->

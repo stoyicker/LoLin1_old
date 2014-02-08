@@ -3,7 +3,6 @@ package org.jorge.lolin1.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -43,15 +42,18 @@ public class WebViewerActivity extends FragmentActivity {
             return;
         }
 
-        Log.d("NX4", "Creating webViewerActivity");
-
         getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
 
         getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content,
-                        webViewerFragment =
-                                new WebViewerFragment(SQLiteBridge.getSingleton().getNews()
-                                        .get(getIntent().getExtras().getInt("index", 0)).getLink()))
+                        webViewerFragment = new WebViewerFragment(
+                                getParent() instanceof NewsReaderActivity ?
+                                        SQLiteBridge.getSingleton().getNews()
+                                                .get(getIntent().getExtras().getInt("index", 0))
+                                                .getLink() :
+                                        SQLiteBridge.getSingleton().getSurrs().get(
+                                                getIntent().getExtras().getInt("index", 0))
+                                                .getLink()))
                 .addToBackStack("").commit();
 
         getSupportFragmentManager().executePendingTransactions();
