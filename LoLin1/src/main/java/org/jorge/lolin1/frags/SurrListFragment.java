@@ -2,7 +2,6 @@ package org.jorge.lolin1.frags;
 
 import android.app.Activity;
 import android.app.ListFragment;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,15 +11,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.activities.MainActivity;
 import org.jorge.lolin1.custom.SurrFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.io.net.SurrFeedProvider;
 import org.jorge.lolin1.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.Options;
@@ -53,13 +48,6 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     private SurrFeedProvider surrFeedProvider;
     private SurrListFragmentListener mCallback;
 
-    public SurrListFragment(Context context) {
-        super();
-        listAdapter = new SurrFragmentArrayAdapter(context);
-        setListAdapter(listAdapter);
-        surrFeedProvider = new SurrFeedProvider(context);
-    }
-
     /**
      * Called to do initial creation of a fragment.  This is called after
      * {@link #onAttach(android.app.Activity)} and before
@@ -77,7 +65,13 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(Boolean.TRUE);
+        if (listAdapter == null) {
+            listAdapter = new SurrFragmentArrayAdapter(getActivity());
+            setListAdapter(listAdapter);
+        }
+        if (surrFeedProvider == null) {
+            surrFeedProvider = new SurrFeedProvider(getActivity());
+        }
     }
 
     @Override
@@ -127,7 +121,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     public void onResume() {
         super.onResume();
         listAdapter
-                .updateShownNews(); //Force the view to be refreshed when coming back from the WebView
+                .updateShownSurrs(); //Force the view to be refreshed when coming back from the WebView
     }
 
     /**
@@ -141,7 +135,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
      * <p>If you are overriding this method with your own custom content,
      * consider including the standard layout {@link android.R.layout#list_content}
      * in your layout file, so that you continue to retain all of the standard
-     * behavior of ListFragment.  In particular, this is currently the only
+     * behavior of ListFragment. In particular, this is currently the only
      * way to have the built-in indeterminant progress state be shown.
      *
      * @param inflater
@@ -153,22 +147,9 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
                              Bundle savedInstanceState) {
 
         View ret = inflater.inflate(R.layout.fragment_surr_feed, container, false);
-
-        listAdapter.updateShownNews();
+        listAdapter.updateShownSurrs();
 
         return ret;
-    }
-
-    /**
-     * Called when the Fragment is visible to the user.  This is generally
-     * tied to {@link android.app.Activity#onStart() Activity.onStart} of the containing
-     * Activity's lifecycle.
-     */
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     /**
@@ -215,30 +196,34 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
         }).options(optionsBuilder.build())
                 // Finally commit the setup to our PullToRefreshLayout
                 .setup(mPullToRefreshLayout);
+
+        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-
-        try {
-            mCallback = (SurrListFragmentListener) activity;
-        }
-        catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement SurrListFragmentListener");
-        }
-
-        ((MainActivity) activity).onSectionAttached(
-                new ArrayList<>(
-                        Arrays.asList(
-                                Utils.getStringArray(
-                                        getActivity().getApplicationContext(),
-                                        "navigation_drawer_items", new String[]{""})
-                        )
-                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section6",
-                        "Surrender@20"))
-        );
+//
+//        TODO
+//
+//        try {
+//            mCallback = (SurrListFragmentListener) activity;
+//        }
+//        catch (ClassCastException e) {
+//            throw new ClassCastException(activity.toString()
+//                    + " must implement SurrListFragmentListener");
+//        }
+//
+//        ((SurrenderReaderActivity) activity).onSectionAttached(
+//                new ArrayList<>(
+//                        Arrays.asList(
+//                                Utils.getStringArray(
+//                                        getActivity(),
+//                                        "navigation_drawer_items", new String[]{""})
+//                        )
+//                ).indexOf(Utils.getString(getActivity(), "title_section6",
+//                        "Surrender@20"))
+//        );
     }
 
     @Override
@@ -261,7 +246,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
             @Override
             protected Void doInBackground(Void... params) {
                 if (surrFeedProvider.requestFeedRefresh()) {
-                    listAdapter.updateShownNews();
+                    listAdapter.updateShownSurrs();
                 }
                 return null;
             }

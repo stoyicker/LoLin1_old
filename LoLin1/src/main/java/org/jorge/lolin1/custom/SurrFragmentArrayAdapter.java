@@ -49,7 +49,7 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
         unreadContentAnimation = AnimationUtils.loadAnimation(context, R.anim.anim_grow);
     }
 
-    public void updateShownNews() {
+    public void updateShownSurrs() {
 
         int howManyIHave = this.getCount();
         final ArrayList<SurrEntry> newSurrs =

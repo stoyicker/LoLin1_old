@@ -1,13 +1,18 @@
 package org.jorge.lolin1.frags;
 
-import android.app.Fragment;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+
+import com.devspark.progressfragment.ProgressFragment;
+
+import org.jorge.lolin1.R;
 
 /**
  * This file is part of LoLin1.
@@ -26,11 +31,15 @@ import android.webkit.WebViewClient;
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
  */
-public class WebViewerFragment extends Fragment {
+public class WebViewerFragment extends ProgressFragment {
 
     private WebView mWebView;
     private boolean mIsWebViewAvailable;
     private String mUrl = null;
+
+    public WebViewerFragment(String url) {
+        mUrl = url;
+    }
 
     /**
      * Called to instantiate the view. Creates and returns the WebView.
@@ -40,25 +49,33 @@ public class WebViewerFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         if (mWebView != null) {
+            mWebView.setVisibility(View.GONE);
             mWebView.destroy();
+            mWebView = null;
         }
 
-        mWebView = new WebView(getActivity());
-        mWebView.loadUrl(mUrl = getArguments().getString("url"));
+        View ret = inflater
+                .inflate(R.layout.fragment_web_viewer, container, Boolean.FALSE);
 
+        mWebView = (WebView) ret.findViewById(R.id.web_view);
+        mWebView.setVisibility(View.VISIBLE);
         mWebView.setWebViewClient(new InnerWebViewClient());
-        mWebView.loadUrl(mUrl);
         mIsWebViewAvailable = Boolean.TRUE;
         WebSettings settings = mWebView.getSettings();
+        settings.setJavaScriptEnabled(Boolean.TRUE);
         settings.setCacheMode(WebSettings.LOAD_CACHE_ELSE_NETWORK);
         settings.setLoadWithOverviewMode(Boolean.TRUE);
         settings.setUseWideViewPort(Boolean.TRUE);
         settings.setBuiltInZoomControls(Boolean.TRUE);
         settings.setLoadsImagesAutomatically(Boolean.TRUE);
         settings.setJavaScriptCanOpenWindowsAutomatically(Boolean.TRUE);
-        mWebView.loadUrl(getArguments().getString("url"));
 
-        return mWebView;
+        if (getArguments() != null) {
+            mUrl = getArguments().getString("url");
+        }
+        loadUrl(mUrl);
+
+        return ret;
     }
 
     /**
@@ -97,19 +114,8 @@ public class WebViewerFragment extends Fragment {
     @Override
     public void onDestroyView() {
         mIsWebViewAvailable = false;
+        mWebView.setVisibility(View.GONE);
         super.onDestroyView();
-    }
-
-    /**
-     * Called when the fragment is no longer in use. Destroys the internal state of the WebView.
-     */
-    @Override
-    public void onDestroy() {
-        if (mWebView != null) {
-            mWebView.destroy();
-            mWebView = null;
-        }
-        super.onDestroy();
     }
 
     /**
@@ -119,11 +125,60 @@ public class WebViewerFragment extends Fragment {
         return mIsWebViewAvailable ? mWebView : null;
     }
 
+    public Boolean succedeedGoingBack() {
+        if (mWebView != null && mWebView.canGoBack()) {
+            mWebView.goBack();
+            return Boolean.TRUE;
+        }
+        else {
+            return Boolean.FALSE;
+        }
+    }
+
     private class InnerWebViewClient extends WebViewClient {
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            super.onPageStarted(view, url, favicon);
+            WebViewerFragment.this.setContentShown(Boolean.FALSE);
+        }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             view.loadUrl(url);
-            return true;
+            return Boolean.TRUE;
+        }
+
+        @Override
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
+            try {
+                WebViewerFragment.this.setContentShown(Boolean.TRUE);
+            }
+            catch (IllegalStateException ex) {
+                //Means that the webpage has been closed too quickly, and thus the host
+                // activity is already finished, so just ignore this new call to onPageFinished(...)
+            }
+        }
+
+        /**
+         * Report an error to the host application. These errors are unrecoverable
+         * (i.e. the main resource is unavailable). The errorCode parameter
+         * corresponds to one of the ERROR_* constants.
+         *
+         * @param view        The WebView that is initiating the callback.
+         * @param errorCode   The error code corresponding to an ERROR_* value.
+         * @param description A String describing the error.
+         * @param failingUrl  The url that failed to load.
+         */
+        @Override
+        public void onReceivedError(WebView view, int errorCode, String description,
+                                    String failingUrl) {
+            super.onReceivedError(view, errorCode, description, failingUrl);
+            Log.wtf("NX4", "Should never happen",
+                    new RuntimeException("Received errorCode" + errorCode));
+            WebViewerFragment.this.setContentView(mWebView);
+            WebViewerFragment.this.setContentShown(Boolean.TRUE);
         }
     }
 }

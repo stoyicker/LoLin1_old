@@ -23,12 +23,6 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 
-import org.jorge.lolin1.activities.MainActivity;
-import org.jorge.lolin1.utils.Utils;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class ChampionListFragment extends ListFragment {
 
     public ChampionListFragment(Context context) {
@@ -38,16 +32,16 @@ public class ChampionListFragment extends ListFragment {
 
     @Override
     public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-        ((MainActivity) activity).onSectionAttached(
-                new ArrayList<>(
-                        Arrays.asList(
-                                Utils.getStringArray(
-                                        getActivity().getApplicationContext(),
-                                        "navigation_drawer_items", new String[]{""})
-                        )
-                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section5",
-                        "Champions")));
+//        super.onAttach(activity);
+//
+//        ((ChampionListActivity) activity).onSectionAttached(
+//                new ArrayList<>(
+//                        Arrays.asList(
+//                                Utils.getStringArray(
+//                                        getActivity(),
+//                                        "navigation_drawer_items", new String[]{""})
+//                        )
+//                ).indexOf(Utils.getString(getActivity(), "title_section5",
+//                        "Champions")));
     }
 }

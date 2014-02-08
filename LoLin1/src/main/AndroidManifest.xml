@@ -31,7 +31,7 @@ Created by JorgeAntonio on 02/01/14.
 		android:theme="@style/AppTheme">
 		<activity
 			android:name="org.jorge.lolin1.activities.InitialActivity"
-			android:configChanges="orientation|screenSize"
+			android:configChanges="orientation|screenSize|keyboardHidden"
 			android:label="@string/app_name"
 			android:logo="@drawable/icon_app">
 			<intent-filter>
@@ -40,107 +40,42 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.jorge.lolin1.activities.MainActivity"
-			android:configChanges="orientation|screenSize"
-			android:label="@string/app_name"
-			android:logo="@drawable/icon_app">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name="org.jorge.lolin1.activities.ShareToFBActivity"
-			android:configChanges="locale|orientation|screenSize"
-			android:icon="@drawable/icon_fb_share"
-			android:label="@string/title_activity_facebook"
-			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="SettingsActivity"/>
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name="org.jorge.lolin1.activities.PolicyActivity"
-			android:configChanges="orientation|screenSize"
-			android:label="@string/title_activity_policy"
-			android:logo="@drawable/icon_app"
-			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="SettingsActivity"/>
-
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name="org.jorge.lolin1.activities.ShareToTwitterActivity"
-			android:configChanges="orientation|screenSize"
-			android:label="@string/title_activity_twitter"
-			android:logo="@drawable/icon_fb_share"
-			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="SettingsActivity"/>
-
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name="org.jorge.lolin1.activities.RateActivity"
-			android:configChanges="orientation|screenSize"
-			android:label="@string/title_activity_rate"
-			android:logo="@drawable/icon_rate"
-			android:parentActivityName="org.jorge.lolin1.activities.SettingsPreferenceActivity">
-			<meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-				android:value="SettingsActivity"/>
-
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name="org.jorge.lolin1.activities.ServerAndLangChooserActivity"
-			android:configChanges="orientation|screenSize"
-			android:label="@string/title_activity_server_and_lang"
-			android:logo="@drawable/icon_app">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
 			android:name="org.jorge.lolin1.activities.AdsActivity"
-			android:configChanges="orientation|screenSize"
+			android:configChanges="orientation|screenSize|keyboardHidden"
 			android:label="@string/title_activity_ads"
 			android:logo="@drawable/icon_app">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
-
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
 		<activity
 			android:name="org.jorge.lolin1.activities.SettingsPreferenceActivity"
+			android:configChanges="keyboardHidden"
 			android:label="@string/title_activity_settings"
 			android:logo="@drawable/icon_settings"
-			android:parentActivityName="org.jorge.lolin1.activities.MainActivity">
+			android:parentActivityName="org.jorge.lolin1.activities.NewsReaderActivity">
 			<meta-data
 				android:name="android.support.PARENT_ACTIVITY"
 				android:value="MainActivity"/>
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
+		<activity android:name=".activities.NewsReaderActivity"
+		          android:configChanges="keyboardHidden"
+		          android:label="@string/title_section1"
+		          android:logo="@drawable/icon_section1">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
+		<activity android:name=".activities.WebViewerActivity"
+		          android:configChanges="keyboardHidden"
+		          android:label="@string/title_activity_web_viewer"
+		          android:logo="@drawable/icon_section1">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>

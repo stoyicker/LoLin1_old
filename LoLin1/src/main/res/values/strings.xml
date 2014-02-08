@@ -126,4 +126,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="ptr_refreshing_text">Loading...</string>
 	<string name="ptr_released_text">Done</string>
 	<string name="new_surr_content">New content to read!</string>
+	<string name="loading">Loading...</string>
 </resources>

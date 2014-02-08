@@ -5,8 +5,6 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
-import android.util.Log;
-import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.Utils;
@@ -34,28 +32,7 @@ import java.util.Arrays;
  */
 public class SettingsFragment extends PreferenceFragment {
 
-    /**
-     * This hook is called whenever an item in your options menu is selected.
-     * The default implementation simply returns false to have the normal
-     * processing happen (calling the item's Runnable or sending a message to
-     * its Handler as appropriate).  You can use this method for any items
-     * for which you would like to do processing without those other
-     * facilities.
-     * <p/>
-     * <p>Derived classes should call through to the base class for it to
-     * perform the default menu handling.
-     *
-     * @param item The menu item that was selected.
-     * @return boolean Return false to allow normal menu processing to
-     * proceed, true to consume it here.
-     * @see #onCreateOptionsMenu
-     */
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        Log.d("NX4", "Popeo");
-        getFragmentManager().popBackStack();
-        return super.onOptionsItemSelected(item);
-    }
+    //FIXME anywhere - The first three items are shown twice upon coming from another fragment
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -71,9 +48,9 @@ public class SettingsFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 final ListPreference langPreference = (ListPreference) findPreference(
-                        Utils.getString(getActivity().getApplicationContext(), "pref_title_lang",
+                        Utils.getString(getActivity(), "pref_title_lang",
                                 "error"));
-                final Context context = getActivity().getApplicationContext();
+                final Context context = getActivity();
                 final String chosenServer = (String) newValue;
                 int targetArray = -1;
 
@@ -106,7 +83,7 @@ public class SettingsFragment extends PreferenceFragment {
         });
 
         final ListPreference langPreference = (ListPreference) findPreference(
-                Utils.getString(getActivity().getApplicationContext(), "pref_title_lang",
+                Utils.getString(getActivity(), "pref_title_lang",
                         "error"));
         langPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override

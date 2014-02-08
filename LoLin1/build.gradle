@@ -42,5 +42,6 @@ android {
 //noinspection GroovyAssignabilityCheck
 dependencies {
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
+    compile 'com.github.johnkil.android-progressfragment:progressfragment:+'
     compile 'com.android.support:support-v4:+'
 }

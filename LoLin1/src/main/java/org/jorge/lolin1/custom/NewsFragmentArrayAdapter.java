@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
     }
 
     public void updateShownNews() {
+        Log.d("NX4", "updateShownNews");
         String tableName = SQLiteBridge.getNewsTableName();
         //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
@@ -81,6 +83,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
     @Override
     public int getCount() {
         String tableName = SQLiteBridge.getNewsTableName();
+
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
         return currTable.size();

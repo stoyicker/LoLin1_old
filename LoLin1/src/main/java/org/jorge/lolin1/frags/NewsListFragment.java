@@ -2,10 +2,8 @@ package org.jorge.lolin1.frags;
 
 import android.app.Activity;
 import android.app.ListFragment;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.activities.MainActivity;
+import org.jorge.lolin1.activities.NewsReaderActivity;
 import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
@@ -53,13 +51,6 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
 
-    public NewsListFragment(Context context) {
-        super();
-        listAdapter = new NewsFragmentArrayAdapter(context);
-        setListAdapter(listAdapter);
-        newsFeedProvider = new NewsFeedProvider(context);
-    }
-
     /**
      * Called to do initial creation of a fragment.  This is called after
      * {@link #onAttach(android.app.Activity)} and before
@@ -77,31 +68,21 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(Boolean.TRUE);
-    }
 
-    /**
-     * Called when the Fragment is visible to the user.  This is generally
-     * tied to {@link android.app.Activity#onStart() Activity.onStart} of the containing
-     * Activity's lifecycle.
-     */
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        if (listAdapter == null) {
+            listAdapter = new NewsFragmentArrayAdapter(getActivity());
+            setListAdapter(listAdapter);
+        }
+        if (newsFeedProvider == null) {
+            newsFeedProvider = new NewsFeedProvider(getActivity());
+        }
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        Log.d("NX4", "After the super");
-        String url = listAdapter.getItem(position).getLink();
-        Log.d("NX4", "After the getItem");
         getListView().setItemChecked(position, Boolean.TRUE);
-        Log.d("NX4", "After the setItemChecked. url is " + url);
-        mCallback.onNewsArticleSelected(url);
-        Log.d("NX4", "After the onNewsArticleSelected");
+        mCallback.onNewsArticleSelected(position);
     }
 
     @Override
@@ -116,14 +97,14 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
                     + " must implement NewsListFragmentListener");
         }
 
-        ((MainActivity) activity).onSectionAttached(
+        ((NewsReaderActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(
                                 Utils.getStringArray(
-                                        getActivity().getApplicationContext(),
+                                        getActivity(),
                                         "navigation_drawer_items", new String[]{""})
                         )
-                ).indexOf(Utils.getString(getActivity().getApplicationContext(), "title_section1",
+                ).indexOf(Utils.getString(getActivity(), "title_section1",
                         "Home"))
         );
     }
@@ -131,7 +112,6 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
         View ret = inflater.inflate(R.layout.fragment_news_feed, container, false);
 
         listAdapter.updateShownNews();
@@ -183,6 +163,9 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
         }).options(optionsBuilder.build())
                 // Finally commit the setup to our PullToRefreshLayout
                 .setup(mPullToRefreshLayout);
+
+        getListView().setChoiceMode(
+                ListView.CHOICE_MODE_SINGLE);
     }
 
     @Override
@@ -247,6 +230,6 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
 
 
     public interface NewsListFragmentListener {
-        public void onNewsArticleSelected(String url);
+        public void onNewsArticleSelected(int index);
     }
 }
