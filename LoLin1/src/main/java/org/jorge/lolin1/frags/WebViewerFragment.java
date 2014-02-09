@@ -151,7 +151,7 @@ public class WebViewerFragment extends ProgressFragment {
         return mIsWebViewAvailable ? mWebView : null;
     }
 
-    public Boolean succedeedGoingBack() {
+    public Boolean tryToGoBack() {
         if (mWebView != null && mWebView.canGoBack()) {
             Log.d("NX4", "I can go back");
             mWebView.goBack();

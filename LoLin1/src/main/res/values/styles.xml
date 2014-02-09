@@ -24,6 +24,7 @@ Created by JorgeAntonio on 02/01/14.
 	<style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
 		<item name="android:background">@color/theme_light_blue</item>
 		<item name="android:textStyle">bold</item>
+		<item name="android:textSize">@dimen/action_bar_text_size</item>
 	</style>
 	<style name="NavigationDrawerStyle">
 		<!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
