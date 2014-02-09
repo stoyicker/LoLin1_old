@@ -13,8 +13,10 @@ import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.frags.NavigationDrawerFragment;
-import org.jorge.lolin1.utils.DebugUtils;
 import org.jorge.lolin1.utils.Utils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This file is part of LoLin1.
@@ -37,13 +39,13 @@ import org.jorge.lolin1.utils.Utils;
 public abstract class DrawerLayoutFragmentActivity extends FragmentActivity implements
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static int lastSelectedNavDrawerItem = 0;
-    private NavigationDrawerFragment mNavigationDrawerFragment;
+    private static final ArrayList<Integer> navigatedItemsStack =
+            new ArrayList<>(Arrays.asList(0));
     private DrawerLayout drawerLayout;
     private CharSequence mTitle;
 
     public static int getLastSelectedNavDavIndex() {
-        return lastSelectedNavDrawerItem;
+        return navigatedItemsStack.get(0);
     }
 
     /**
@@ -101,16 +103,14 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
      */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        if (position == lastSelectedNavDrawerItem) {
+        if (position == getLastSelectedNavDavIndex()) {
             //We don't want to perform an unnecessary Activity reload
             //noinspection UnnecessaryReturnStatement
             return;
         }
         else {
-            lastSelectedNavDrawerItem = position;
+            navigatedItemsStack.add(0, position);
         }
-
-        DebugUtils.showTrace("NX4", new Exception());
 
         Class target = null;
         switch (position) {
@@ -124,7 +124,24 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                 Log.wtf("NX4", "Should never happen - Selected index - " + position);
         }
         startActivity(new Intent(this, target));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mTitle = Utils.getString(this, "title_section" + (getLastSelectedNavDavIndex() + 1), "");
+        restoreActionBar();
+    }
+
+    @Override
+    public void onBackPressed() {
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        navigatedItemsStack.remove(0);
+        super.onDestroy();
     }
 
     @Override
@@ -134,7 +151,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
 
         FragmentManager fragmentManager = getFragmentManager();
 
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
+        NavigationDrawerFragment mNavigationDrawerFragment = (NavigationDrawerFragment)
                 fragmentManager.findFragmentById(R.id.navigation_drawer);
 
         mNavigationDrawerFragment.setHasOptionsMenu(Boolean.TRUE);

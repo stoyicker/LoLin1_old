@@ -74,9 +74,14 @@ public class WebViewerActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
+        Log.d("NX4", "Back pressed!");
         if (!webViewerFragment.succedeedGoingBack()) {
+            Log.d("NX4", "Couldn't go back :(");
             protectAgainstWindowLeaks();
-            finish();
+            if (!getResources().getBoolean(R.bool.feed_has_two_panes)) {
+                Log.d("NX4", "I'm going to call finish()");
+                finish();
+            }
         }
     }
 
