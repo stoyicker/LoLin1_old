@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,15 +47,10 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
  */
 public class SurrListFragment extends ListFragment implements OnRefreshListener {
 
-    private static int selectedIndex = 0;
     private static PullToRefreshLayout mPullToRefreshLayout;
     private SurrFragmentArrayAdapter listAdapter;
     private SurrFeedProvider surrFeedProvider;
     private SurrListFragmentListener mCallback;
-
-    public static int getSelectedIndex() {
-        return selectedIndex;
-    }
 
     /**
      * Called to do initial creation of a fragment.  This is called after
@@ -87,7 +83,8 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
         super.onListItemClick(l, v, position, id);
 
         if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
-            selectedIndex = position;
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                    .putInt("lastSelectedSurrIndex", position).commit();
         }
 
         getListView().setItemChecked(position, Boolean.TRUE);

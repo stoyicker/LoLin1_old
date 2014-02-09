@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
-import org.jorge.lolin1.frags.NewsListFragment;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 import org.jorge.lolin1.utils.Utils;
 
@@ -121,7 +121,8 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         title.setText(Html.fromHtml(thisArticle.getTitle()));
         desc.setText(Html.fromHtml(thisArticle.getDescription()));
 
-        if (position == NewsListFragment.getSelectedIndex() &&
+        if (position == PreferenceManager.getDefaultSharedPreferences(mContext)
+                .getInt("lastSelectedNewsIndex", -1) &&
                 mContext.getResources().getBoolean(R.bool.feed_has_two_panes)) {
             convertView.setBackgroundResource(R.color.theme_light_blue);
         }

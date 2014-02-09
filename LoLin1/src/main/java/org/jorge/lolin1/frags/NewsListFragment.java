@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,14 +47,9 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 public class NewsListFragment extends ListFragment implements OnRefreshListener {
 
     private static PullToRefreshLayout mPullToRefreshLayout;
-    private static int selectedIndex = 0;
     private NewsFragmentArrayAdapter listAdapter;
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
-
-    public static int getSelectedIndex() {
-        return selectedIndex;
-    }
 
     /**
      * Called to do initial creation of a fragment.  This is called after
@@ -87,7 +83,8 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
         super.onListItemClick(l, v, position, id);
         getListView().setItemChecked(position, Boolean.TRUE);
         if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
-            selectedIndex = position;
+            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                    .putInt("lastSelectedNewsIndex", position).commit();
         }
         mCallback.onNewsArticleSelected(position);
     }

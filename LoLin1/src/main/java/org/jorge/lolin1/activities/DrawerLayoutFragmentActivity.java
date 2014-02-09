@@ -16,7 +16,6 @@ import org.jorge.lolin1.frags.NavigationDrawerFragment;
 import org.jorge.lolin1.utils.Utils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * This file is part of LoLin1.
@@ -40,7 +39,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private static final ArrayList<Integer> navigatedItemsStack =
-            new ArrayList<>(Arrays.asList(0));
+            new ArrayList<>();
     private DrawerLayout drawerLayout;
     private CharSequence mTitle;
 
@@ -93,6 +92,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
+        navigatedItemsStack.add(0, navigatedItemsStack.get(0));
         recreate();
     }
 
@@ -135,7 +135,9 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
 
     @Override
     public void onBackPressed() {
-        finish();
+        if (navigatedItemsStack.size() > 1) {
+            finish();
+        }
     }
 
     @Override
@@ -148,6 +150,10 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(savedInstanceState.getInt("layout"));
+
+        if (navigatedItemsStack.isEmpty()) {
+            navigatedItemsStack.add(0);
+        }
 
         FragmentManager fragmentManager = getFragmentManager();
 
