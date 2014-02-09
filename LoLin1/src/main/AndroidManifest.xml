@@ -60,7 +60,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity android:name=".activities.NewsReaderActivity"
-		          android:configChanges="keyboardHidden"
+		          android:configChanges="keyboardHidden|orientation|screenSize"
 		          android:label="@string/title_section1"
 		          android:logo="@drawable/icon_section1">
 			<intent-filter>

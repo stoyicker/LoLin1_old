@@ -22,13 +22,6 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	tools:context="org.jorge.lolin1.activities.MainActivity">
-	<fragment
-		android:id="@+id/navigation_drawer"
-		android:name="org.jorge.lolin1.frags.NavigationDrawerFragment"
-		android:layout_width="@dimen/navigation_drawer_width"
-		android:layout_height="match_parent"
-		android:layout_gravity="left"
-		tools:layout="@layout/fragment_navigation_drawer"/>
 	<LinearLayout android:layout_width="match_parent"
 	              android:layout_height="match_parent"
 	              android:layout_marginBottom="@dimen/activity_vertical_margin"
@@ -47,8 +40,16 @@
 			android:name="org.jorge.lolin1.frags.WebViewerFragment"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
+			android:layout_marginLeft="@dimen/pane_separator"
 			android:layout_weight="1"
 			tools:layout="@layout/fragment_web_viewer"/>
 	</LinearLayout>
+	<fragment
+		android:id="@+id/navigation_drawer"
+		android:name="org.jorge.lolin1.frags.NavigationDrawerFragment"
+		android:layout_width="@dimen/navigation_drawer_width"
+		android:layout_height="match_parent"
+		android:layout_gravity="left"
+		tools:layout="@layout/fragment_navigation_drawer"/>
 </android.support.v4.widget.DrawerLayout>
 	<!-- END_INCLUDE(all) -->

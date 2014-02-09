@@ -11,7 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.activities.NewsReaderActivity;
+import org.jorge.lolin1.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
@@ -87,7 +87,9 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         getListView().setItemChecked(position, Boolean.TRUE);
-        selectedIndex = position;
+        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
+            selectedIndex = position;
+        }
         mCallback.onNewsArticleSelected(position);
     }
 
@@ -103,7 +105,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
                     + " must implement NewsListFragmentListener");
         }
 
-        ((NewsReaderActivity) activity).onSectionAttached(
+        ((DrawerLayoutFragmentActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(
                                 Utils.getStringArray(

@@ -122,7 +122,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         desc.setText(Html.fromHtml(thisArticle.getDescription()));
 
         if (position == NewsListFragment.getSelectedIndex() &&
-                mContext.getResources().getBoolean(R.bool.has_two_panes)) {
+                mContext.getResources().getBoolean(R.bool.feed_has_two_panes)) {
             convertView.setBackgroundResource(R.color.theme_light_blue);
         }
         else {

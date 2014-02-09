@@ -38,6 +38,8 @@ public class WebViewerFragment extends ProgressFragment {
     private boolean mIsWebViewAvailable;
     private String mUrl = null;
 
+    //This method is indeed used when instantiating the fragment through XML
+    @SuppressWarnings("UnusedDeclaration")
     public WebViewerFragment() {
     }
 
@@ -58,7 +60,8 @@ public class WebViewerFragment extends ProgressFragment {
             mWebView = null;
         }
 
-        View ret = inflater.inflate(R.layout.fragment_web_viewer, container,
+        View ret;
+        ret = inflater.inflate(R.layout.fragment_web_viewer, container,
                 Boolean.FALSE);
 
         mWebView = (WebView) ret.findViewById(R.id.web_view);
@@ -83,6 +86,7 @@ public class WebViewerFragment extends ProgressFragment {
         }
 
         loadUrl(mUrl);
+
 
         return ret;
     }
@@ -155,7 +159,12 @@ public class WebViewerFragment extends ProgressFragment {
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
-            WebViewerFragment.this.setContentShown(Boolean.FALSE);
+            try {
+                WebViewerFragment.this.setContentShown(Boolean.FALSE);
+            }
+            catch (IllegalStateException ex) {
+                //Content view not yet created (too quick user)!
+            }
         }
 
         @Override

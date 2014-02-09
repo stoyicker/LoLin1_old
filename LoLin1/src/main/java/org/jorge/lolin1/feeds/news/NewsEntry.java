@@ -3,6 +3,7 @@ package org.jorge.lolin1.feeds.news;
 import android.content.Context;
 import android.graphics.Bitmap;
 
+import org.jorge.lolin1.feeds.BaseEntry;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 
 import java.util.StringTokenizer;
@@ -25,10 +26,10 @@ import java.util.StringTokenizer;
  * <p/>
  * Created by JorgeAntonio on 20/01/14.
  */
-public class NewsEntry {
+public class NewsEntry extends BaseEntry {
 
     private static final String FIELD_SEPARATOR = "||||";
-    private final String imageLink, link, title, description;
+    private final String imageLink, description;
     private Bitmap image;
 
     public NewsEntry(String rawData) {
@@ -51,14 +52,6 @@ public class NewsEntry {
                             .getArticleBlob(imageLink), imageLink.replaceAll("httpxxx", "http://"));
         }
         return this.image;
-    }
-
-    public final String getLink() {
-        return link;
-    }
-
-    public final String getTitle() {
-        return title;
     }
 
     public final String getDescription() {

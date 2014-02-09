@@ -23,10 +23,10 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.content.Context;
 
+@SuppressWarnings("UnusedDeclaration") //TODO Remove this
 public class ChampionListFragment extends ListFragment {
 
     public ChampionListFragment(Context context) {
-        //TODO -1 ChampionListFragment
         // Required empty public constructor
     }
 

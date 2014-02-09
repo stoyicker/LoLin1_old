@@ -3,13 +3,15 @@ package org.jorge.lolin1.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.util.Log;
 import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.feeds.BaseEntry;
 import org.jorge.lolin1.frags.WebViewerFragment;
 import org.jorge.lolin1.io.db.SQLiteBridge;
+
+import java.util.ArrayList;
 
 /**
  * This file is part of LoLin1.
@@ -37,23 +39,32 @@ public class WebViewerActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getResources().getBoolean(R.bool.has_two_panes)) {
+        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
             finish();
             return;
         }
 
         getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
 
+        ArrayList<BaseEntry> elements = new ArrayList<>();
+
+        switch (DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex()) {
+            case 0:
+                elements.addAll(SQLiteBridge.getSingleton().getNews());
+                break;
+            case 5:
+                elements.addAll(SQLiteBridge.getSingleton().getSurrs());
+                break;
+            default:
+                Log.wtf("ERROR",
+                        "Should never happen - NewsReaderActivity.getLastSelectedNavDavIndex() is " +
+                                DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex());
+        }
+
         getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content,
                         webViewerFragment = new WebViewerFragment(
-                                getParent() instanceof NewsReaderActivity ?
-                                        SQLiteBridge.getSingleton().getNews()
-                                                .get(getIntent().getExtras().getInt("index", 0))
-                                                .getLink() :
-                                        SQLiteBridge.getSingleton().getSurrs().get(
-                                                getIntent().getExtras().getInt("index", 0))
-                                                .getLink()))
+                                elements.get(getIntent().getExtras().getInt("index", 0)).getLink()))
                 .addToBackStack("").commit();
 
         getSupportFragmentManager().executePendingTransactions();
@@ -80,13 +91,6 @@ public class WebViewerActivity extends FragmentActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.standard, menu);
-        return true;
     }
 
     private void protectAgainstWindowLeaks() {

@@ -1,5 +1,6 @@
 package org.jorge.lolin1.feeds.surr;
 
+import org.jorge.lolin1.feeds.BaseEntry;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 
 import java.util.StringTokenizer;
@@ -22,10 +23,10 @@ import java.util.StringTokenizer;
  * <p/>
  * Created by JorgeAntonio on 20/01/14.
  */
-public class SurrEntry {
+public class SurrEntry extends BaseEntry {
 
     private static final String FIELD_SEPARATOR = "||||";
-    private final String title, link, pubDate, updated;
+    private final String pubDate, updated;
     private boolean read;
 
     public SurrEntry(final String data, Boolean read) {
@@ -37,16 +38,8 @@ public class SurrEntry {
         this.read = read;
     }
 
-    public static final String getSEPARATOR() {
+    public static String getSEPARATOR() {
         return FIELD_SEPARATOR;
-    }
-
-    public final String getLink() {
-        return link;
-    }
-
-    public final String getTitle() {
-        return title;
     }
 
     public final Boolean hasBeenRead() {
