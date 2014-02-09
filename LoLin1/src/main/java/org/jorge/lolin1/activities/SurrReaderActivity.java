@@ -1,9 +1,9 @@
 package org.jorge.lolin1.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
 import org.jorge.lolin1.R;
@@ -44,6 +44,8 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
         if (wasSavedInstanceStateNull) {
             savedInstanceState = new Bundle();
         }
+
+        Log.d("NX4", "onCreate (surr)");
         savedInstanceState.putInt("layout", R.layout.surr_reader);
 
         super.onCreate(savedInstanceState);
@@ -59,10 +61,15 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
 
         isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
                 WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;
-        if (wasSavedInstanceStateNull) {
-            savedInstanceState = null;
+
+        int index;
+        if (!wasSavedInstanceStateNull) {
+            restoreState(savedInstanceState);
         }
-        restoreState(savedInstanceState);
+        else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
+                .getInt("lastSelectedSurrIndex", -1)) != -1) {
+            onSurrArticleSelected(index);
+        }
     }
 
     private void restoreState(Bundle savedInstanceState) {
@@ -82,12 +89,11 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
 
     @Override
     public void onSurrArticleSelected(int index) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        preferences.edit().putBoolean("hasASurrEvenBeenLoaded", Boolean.TRUE).commit();
         showUrlInWebViewerFragment(index);
     }
 
     private void showUrlInWebViewerFragment(int index) {
+        Log.d("NX4", "Caling suiwvf (surr)");
         ArrayList<SurrEntry> surrs;
         if (isDualPane) {
             if (isDualPane) {

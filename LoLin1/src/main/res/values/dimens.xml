@@ -34,5 +34,5 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="feed_item_horizontal_margin">7dp</dimen>
 	<dimen name="loading_margin_bar_to_text">4dp</dimen>
 	<dimen name="loading_text_size">14sp</dimen>
-	<dimen name="action_bar_text_size">15sp</dimen>
+	<dimen name="action_bar_text_size">16sp</dimen>
 </resources>

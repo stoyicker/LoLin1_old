@@ -1,9 +1,9 @@
 package org.jorge.lolin1.activities;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 
 import org.jorge.lolin1.R;
@@ -59,10 +59,15 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
 
         isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
                 WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;
-        if (wasSavedInstanceStateNull) {
-            savedInstanceState = null;
+
+        int index;
+        if (!wasSavedInstanceStateNull) {
+            restoreState(savedInstanceState);
         }
-        restoreState(savedInstanceState);
+        else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
+                .getInt("lastSelectedNewsIndex", -1)) != -1) {
+            onNewsArticleSelected(index);
+        }
     }
 
     private void restoreState(Bundle savedInstanceState) {
@@ -82,12 +87,11 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
 
     @Override
     public void onNewsArticleSelected(int index) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        preferences.edit().putBoolean("hasASurrEvenBeenLoaded", Boolean.TRUE).commit();
         showUrlInWebViewerFragment(index);
     }
 
     private void showUrlInWebViewerFragment(int index) {
+        Log.d("NX4", "Caling suiwvf (news)");
         ArrayList<NewsEntry> news;
         if (isDualPane) {
             if (!(news = SQLiteBridge.getSingleton().getNews()).isEmpty()) {

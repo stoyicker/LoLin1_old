@@ -2,7 +2,6 @@ package org.jorge.lolin1.frags;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,19 +152,10 @@ public class WebViewerFragment extends ProgressFragment {
 
     public Boolean tryToGoBack() {
         if (mWebView != null && mWebView.canGoBack()) {
-            Log.d("NX4", "I can go back");
             mWebView.goBack();
             return Boolean.TRUE;
         }
-        else {
-            if (mWebView == null) {
-                Log.d("NX4", "I can't go back because mWebView is null");
-            }
-            else {
-                Log.d("NX4", "I can't go back because the method says that I can't");
-            }
-            return Boolean.FALSE;
-        }
+        return Boolean.FALSE;
     }
 
     private class InnerWebViewClient extends WebViewClient {
