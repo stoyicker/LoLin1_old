@@ -13,6 +13,7 @@ import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.frags.NavigationDrawerFragment;
+import org.jorge.lolin1.utils.DebugUtils;
 import org.jorge.lolin1.utils.Utils;
 
 /**
@@ -93,7 +94,6 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         recreate();
     }
 
-
     /**
      * Called when an item in the navigation drawer is selected.
      *
@@ -109,16 +109,22 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         else {
             lastSelectedNavDrawerItem = position;
         }
+
+        DebugUtils.showTrace("NX4", new Exception());
+
+        Class target = null;
         switch (position) {
             case 0:
-                startActivity(new Intent(this, NewsReaderActivity.class));
+                target = NewsReaderActivity.class;
                 break;
             case 5:
-//                startActivity(new Intent(this, SurrReaderActivity.class));
-//                break;
+                target = SurrReaderActivity.class;
+                break;
             default:
-                Log.wtf("NX4", "Should never happen - Position selected - " + position);
+                Log.wtf("NX4", "Should never happen - Selected index - " + position);
         }
+        startActivity(new Intent(this, target));
+        finish();
     }
 
     @Override

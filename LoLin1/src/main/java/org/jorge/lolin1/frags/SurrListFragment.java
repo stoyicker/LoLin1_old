@@ -11,11 +11,14 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.custom.SurrFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.io.net.SurrFeedProvider;
 import org.jorge.lolin1.utils.Utils;
+
+import java.util.Arrays;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
 import uk.co.senab.actionbarpulltorefresh.library.Options;
@@ -43,10 +46,15 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
  */
 public class SurrListFragment extends ListFragment implements OnRefreshListener {
 
+    private static int selectedIndex = 0;
     private static PullToRefreshLayout mPullToRefreshLayout;
     private SurrFragmentArrayAdapter listAdapter;
     private SurrFeedProvider surrFeedProvider;
     private SurrListFragmentListener mCallback;
+
+    public static int getSelectedIndex() {
+        return selectedIndex;
+    }
 
     /**
      * Called to do initial creation of a fragment.  This is called after
@@ -78,12 +86,15 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
+        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
+            selectedIndex = position;
+        }
+
         getListView().setItemChecked(position, Boolean.TRUE);
         final SurrEntry selectedEntry = listAdapter.getItem(position);
-        mCallback.onSurrArticleSelected(selectedEntry.getLink());
+        mCallback.onSurrArticleSelected(position);
 
-        Activity activity = getActivity();
-        if (Utils.isInternetReachable(activity)) {
+        if (Utils.isInternetReachable(getActivity())) {
             new AsyncTask<Void, Void, Void>() {
                 /**
                  * Override this method to perform a computation on a background thread. The
@@ -109,19 +120,6 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
                 }
             }.execute();
         }
-    }
-
-    /**
-     * Called when the fragment is visible to the user and actively running.
-     * This is generally
-     * tied to {@link android.app.Activity#onResume() Activity.onResume} of the containing
-     * Activity's lifecycle.
-     */
-    @Override
-    public void onResume() {
-        super.onResume();
-        listAdapter
-                .updateShownSurrs(); //Force the view to be refreshed when coming back from the WebView
     }
 
     /**
@@ -203,27 +201,22 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-//
-//        TODO
-//
-//        try {
-//            mCallback = (SurrListFragmentListener) activity;
-//        }
-//        catch (ClassCastException e) {
-//            throw new ClassCastException(activity.toString()
-//                    + " must implement SurrListFragmentListener");
-//        }
-//
-//        ((SurrenderReaderActivity) activity).onSectionAttached(
-//                new ArrayList<>(
-//                        Arrays.asList(
-//                                Utils.getStringArray(
-//                                        getActivity(),
-//                                        "navigation_drawer_items", new String[]{""})
-//                        )
-//                ).indexOf(Utils.getString(getActivity(), "title_section6",
-//                        "Surrender@20"))
-//        );
+
+        try {
+            mCallback = (SurrListFragmentListener) activity;
+        }
+        catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement SurrListFragmentListener");
+        }
+
+        ((DrawerLayoutFragmentActivity) activity)
+                .onSectionAttached(Arrays.asList(
+                        Utils.getStringArray(getActivity(), "navigation_drawer_items",
+                                new String[]{""}))
+                        .indexOf(Utils.getString(getActivity(), "title_section6",
+                                "Surrender@20"))
+                );
     }
 
     @Override
@@ -288,6 +281,6 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
 
 
     public interface SurrListFragmentListener {
-        public void onSurrArticleSelected(String url);
+        public void onSurrArticleSelected(int index);
     }
 }

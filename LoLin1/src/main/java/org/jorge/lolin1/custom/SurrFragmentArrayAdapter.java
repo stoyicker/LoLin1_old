@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
+import org.jorge.lolin1.frags.SurrListFragment;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 
 import java.util.ArrayList;
@@ -83,6 +84,14 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
 
         ImageView itemWithNewContentImageView =
                 (ImageView) convertView.findViewById(R.id.surr_feed_item_new_content_image);
+
+        if (position == SurrListFragment.getSelectedIndex() &&
+                mContext.getResources().getBoolean(R.bool.feed_has_two_panes)) {
+            convertView.setBackgroundResource(R.color.theme_black);
+        }
+        else {
+            convertView.setBackgroundResource(R.color.theme_surr_grey);
+        }
 
         if (!thisArticle.hasBeenRead()) {
             itemWithNewContentImageView.setVisibility(View.VISIBLE);

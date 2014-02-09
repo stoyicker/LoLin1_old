@@ -5,8 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.feeds.news.NewsEntry;
-import org.jorge.lolin1.frags.NewsListFragment;
+import org.jorge.lolin1.feeds.surr.SurrEntry;
+import org.jorge.lolin1.frags.SurrListFragment;
 import org.jorge.lolin1.frags.WebViewerFragment;
 import org.jorge.lolin1.io.db.SQLiteBridge;
 
@@ -28,12 +28,12 @@ import java.util.ArrayList;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 07/02/14.
+ * Created by JorgeAntonio on 09/02/14.
  */
-public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
-        NewsListFragment.NewsListFragmentListener {
+public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
+        SurrListFragment.SurrListFragmentListener {
     private static Boolean isDualPane = Boolean.FALSE;
-    private NewsListFragment NEWS_FRAGMENT;
+    private SurrListFragment SURR_FRAGMENT;
     private WebViewerFragment WEB_FRAGMENT;
 
     @Override
@@ -42,12 +42,12 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
         if (wasSavedInstanceStateNull) {
             savedInstanceState = new Bundle();
         }
-        savedInstanceState.putInt("layout", R.layout.news_reader);
+        savedInstanceState.putInt("layout", R.layout.surr_reader);
 
         super.onCreate(savedInstanceState);
 
-        NEWS_FRAGMENT =
-                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_list);
+        SURR_FRAGMENT =
+                (SurrListFragment) getFragmentManager().findFragmentById(R.id.fragment_list);
         WEB_FRAGMENT =
                 (WebViewerFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.fragment_web_viewer);
@@ -66,27 +66,29 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
     private void restoreState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             int index = savedInstanceState.getInt("index", 0);
-            NEWS_FRAGMENT.setSelection(index);
-            onNewsArticleSelected(index);
+            SURR_FRAGMENT.setSelection(index);
+            onSurrArticleSelected(index);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("index", NewsListFragment.getSelectedIndex());
+        outState.putInt("index", SurrListFragment.getSelectedIndex());
         super.onSaveInstanceState(outState);
     }
 
     @Override
-    public void onNewsArticleSelected(int index) {
+    public void onSurrArticleSelected(int index) {
         showUrlInWebViewerFragment(index);
     }
 
     private void showUrlInWebViewerFragment(int index) {
-        ArrayList<NewsEntry> news;
+        ArrayList<SurrEntry> surrs;
         if (isDualPane) {
-            if (!(news = SQLiteBridge.getSingleton().getNews()).isEmpty()) {
-                WEB_FRAGMENT.loadUrl(news.get(index).getLink());
+            if (isDualPane) {
+                if (!(surrs = SQLiteBridge.getSingleton().getSurrs()).isEmpty()) {
+                    WEB_FRAGMENT.loadUrl(surrs.get(index).getLink());
+                }
             }
         }
         else {

@@ -68,6 +68,15 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".activities.SurrReaderActivity"
+		          android:configChanges="keyboardHidden|orientation|screenSize"
+		          android:label="@string/title_section6"
+		          android:logo="@drawable/icon_section6">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
 		<activity android:name=".activities.WebViewerActivity"
 		          android:configChanges="keyboardHidden|orientation|screenSize"
 		          android:label="@string/title_activity_web_viewer"

@@ -64,7 +64,9 @@ public class WebViewerActivity extends FragmentActivity {
         getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content,
                         webViewerFragment = new WebViewerFragment(
-                                elements.get(getIntent().getExtras().getInt("index", 0)).getLink()))
+                                elements.isEmpty() ? null :
+                                        elements.get(getIntent().getExtras().getInt("index", 0))
+                                                .getLink()))
                 .addToBackStack("").commit();
 
         getSupportFragmentManager().executePendingTransactions();

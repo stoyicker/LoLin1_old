@@ -63,7 +63,6 @@ public class WebViewerFragment extends ProgressFragment {
         View ret;
         ret = inflater.inflate(R.layout.fragment_web_viewer, container,
                 Boolean.FALSE);
-
         mWebView = (WebView) ret.findViewById(R.id.web_view);
         mWebView.setVisibility(View.VISIBLE);
         mWebView.setWebViewClient(new InnerWebViewClient());
@@ -81,14 +80,21 @@ public class WebViewerFragment extends ProgressFragment {
         }
 
         if (!Utils.isInternetReachable(getActivity())) {
-            ret = inflater.inflate(R.layout.fragment_web_viewer_nothing_loaded, container,
+            ret = inflater.inflate(R.layout.fragment_web_viewer_no_internet, container,
                     Boolean.FALSE);
         }
 
-        loadUrl(mUrl);
-
+        if (mUrl != null) {
+            loadUrl(mUrl);
+        }
 
         return ret;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        setContentShown(Boolean.TRUE);
     }
 
     /**

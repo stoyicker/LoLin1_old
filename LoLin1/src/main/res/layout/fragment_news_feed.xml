@@ -45,7 +45,7 @@ Created by JorgeAntonio on 02/01/14.
 		android:id="@id/android:empty"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:contentDescription="@string/news_empty"
+		android:contentDescription="@string/empty_content"
 		android:scaleType="centerInside"
 		android:src="@drawable/nothing_to_do_here"/>
 

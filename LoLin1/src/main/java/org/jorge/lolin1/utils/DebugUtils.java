@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.nio.charset.Charset;
+import java.util.Arrays;
 
 /**
  * This file is part of LoLin1.
@@ -32,9 +33,10 @@ import java.nio.charset.Charset;
  * <p/>
  * Created by JorgeAntonio on 19/01/14.
  */
+@SuppressWarnings({"UnusedDeclaration", "deprecation"})
 public abstract class DebugUtils {
 
-    public static void showBackwardsTrace(String tag, Exception source) {
+    public static void showTrace(String tag, Exception source) {
         StackTraceElement[] trace = source.getStackTrace();
         String toPrint = "";
         for (StackTraceElement x : trace) {
@@ -85,7 +87,7 @@ public abstract class DebugUtils {
             Log.d(tag, fields[2] + ": " + cursor.getString(2));
             Log.d(tag, fields[3] + ": " + cursor.getString(3));
             Log.d(tag, fields[4] + ": " + cursor.getString(4));
-            Log.d(tag, fields[5] + ": " + cursor.getBlob(5));
+            Log.d(tag, fields[5] + ": " + Arrays.toString(cursor.getBlob(5)));
         }
         cursor.close();
         db.setTransactionSuccessful();

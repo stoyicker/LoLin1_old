@@ -17,7 +17,6 @@ import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
 import org.jorge.lolin1.utils.Utils;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import uk.co.senab.actionbarpulltorefresh.library.ActionBarPullToRefresh;
@@ -106,14 +105,9 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
         }
 
         ((DrawerLayoutFragmentActivity) activity).onSectionAttached(
-                new ArrayList<>(
-                        Arrays.asList(
-                                Utils.getStringArray(
-                                        getActivity(),
-                                        "navigation_drawer_items", new String[]{""})
-                        )
-                ).indexOf(Utils.getString(getActivity(), "title_section1",
-                        "Home"))
+                Arrays.asList(Utils.getStringArray(getActivity(), "navigation_drawer_items",
+                        new String[]{""}))
+                        .indexOf(Utils.getString(getActivity(), "title_section1", "Home"))
         );
     }
 
