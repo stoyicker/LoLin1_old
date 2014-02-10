@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "title":"a Espada Darkin",
+         "titleView":"a Espada Darkin",
          "tags":[
             "Lutador",
             "Tanque"
@@ -14,33 +14,33 @@
             {
                "id":"P",
                "name":"Poço de Sangue",
-               "description":"Ao usar uma habilidade com custo de Vida, Aatrox armazena o dano autoinfligido no Poço de Sangue. Ao receber dano letal, Aatrox extrai o sangue do poço e o recupera em forma de Vida ao longo de uma breve duração. Além disso, Aatrox recebe 1% de Velocidade de Ataque para cada 2% de sangue que houver no poço."
+               "descriptionView":"Ao usar uma habilidade com custo de Vida, Aatrox armazena o dano autoinfligido no Poço de Sangue. Ao receber dano letal, Aatrox extrai o sangue do poço e o recupera em forma de Vida ao longo de uma breve duração. Além disso, Aatrox recebe 1% de Velocidade de Ataque para cada 2% de sangue que houver no poço."
             },
             {
                "id":"Q",
                "name":"Voo Sombrio",
-               "description":"Aatrox levanta voo e se joga em um local alvo, causando dano e lançando ao ar inimigos ao centro do impacto.\nAatrox levanta voo e se joga em um local alvo, causando 70/115/160/205/250 (+60% de Dano de Ataque Bônus) de dano físico a todos os inimigos e lançando ao ar alvos no centro do impacto por 1 segundo(s).",
+               "descriptionView":"Aatrox levanta voo e se joga em um local alvo, causando dano e lançando ao ar inimigos ao centro do impacto.\nAatrox levanta voo e se joga em um local alvo, causando 70/115/160/205/250 (+60% de Dano de Ataque Bônus) de dano físico a todos os inimigos e lançando ao ar alvos no centro do impacto por 1 segundo(s).",
                "cost":"10% da Vida atual",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Sede de Sangue \/ Preço em Sangue",
-               "description":"Enquanto ativado, Aatrox causa dano bônus a cada três ataques, ao custo de sua própria Vida. Enquanto desativado, Aatrox restaura Vida a cada três ataques.\nEnquanto desativado, Aatrox se beneficia de Sede de Sangue. Enquanto ativado, Preço em Sangue é ativado e remove Sede de Sangue.\nSede de Sangue: Todo terceiro ataque de Aatrox restaura 20/25/30/35/40 (+25% de Dano de Ataque Bônus) de Vida, aumentando para 200% caso esteja com menos de metade da Vida.\nPreço em Sangue: Todo terceiro ataque de Aatrox causa 60/95/130/165/200 (+100% de Dano de Ataque Bônus) de dano físico bônus e perde de Vida.",
+               "descriptionView":"Enquanto ativado, Aatrox causa dano bônus a cada três ataques, ao custo de sua própria Vida. Enquanto desativado, Aatrox restaura Vida a cada três ataques.\nEnquanto desativado, Aatrox se beneficia de Sede de Sangue. Enquanto ativado, Preço em Sangue é ativado e remove Sede de Sangue.\nSede de Sangue: Todo terceiro ataque de Aatrox restaura 20/25/30/35/40 (+25% de Dano de Ataque Bônus) de Vida, aumentando para 200% caso esteja com menos de metade da Vida.\nPreço em Sangue: Todo terceiro ataque de Aatrox causa 60/95/130/165/200 (+100% de Dano de Ataque Bônus) de dano físico bônus e perde de Vida.",
                "cost":"Sem custo",
                "range":"Si mesmo"
             },
             {
                "id":"E",
                "name":"Lâminas da Aflição",
-               "description":"Aatrox desfere um poderoso golpe de espada, causando dano e lentidão a todos os inimigos atingidos.\nAatrox desfere o poder de sua espada, causando 75/110/145/180/215 (+60% de Poder de Habilidade) (+60% de Dano de Ataque Bônus) de Dano Mágico e 40% de lentidão a todos os inimigos atingidos por 1.75/2/2.25/2.5/2.75 segundos.",
+               "descriptionView":"Aatrox desfere um poderoso golpe de espada, causando dano e lentidão a todos os inimigos atingidos.\nAatrox desfere o poder de sua espada, causando 75/110/145/180/215 (+60% de Poder de Habilidade) (+60% de Dano de Ataque Bônus) de Dano Mágico e 40% de lentidão a todos os inimigos atingidos por 1.75/2/2.25/2.5/2.75 segundos.",
                "cost":"5% da Vida atual",
                "range":"1000"
             },
             {
                "id":"R",
                "name":"Massacre",
-               "description":"Aatrox colhe o sangue de suas vítimas, causando dano a todos os campeões inimigos ao seu redor e recebendo aumento de Velocidade de Ataque e de Alcance de Ataque por um curto período.\nAatrox colhe o sangue de suas vítimas, causando 200/300/400 (+100% de Poder de Habilidade) de Dano Mágico a todos os campeões inimigos ao seu redor, aumentando sua Velocidade de Ataque em 40/50/60% e recebendo 175 de Alcance de Ataque por 12 segundos.",
+               "descriptionView":"Aatrox colhe o sangue de suas vítimas, causando dano a todos os campeões inimigos ao seu redor e recebendo aumento de Velocidade de Ataque e de Alcance de Ataque por um curto período.\nAatrox colhe o sangue de suas vítimas, causando 200/300/400 (+100% de Poder de Habilidade) de Dano Mágico a todos os campeões inimigos ao seu redor, aumentando sua Velocidade de Ataque em 40/50/60% e recebendo 175 de Alcance de Ataque por 12 segundos.",
                "cost":"Sem custo",
                "range":"550"
             }
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "title":"a Raposa de Nove Caudas",
+         "titleView":"a Raposa de Nove Caudas",
          "tags":[
             "Mago",
             "Assassino"
@@ -58,33 +58,33 @@
             {
                "id":"P",
                "name":"Furto de Essência",
-               "description":"Recebe uma carga de Furto de Essência sempre que um de seus feitiços atinge um inimigo (máx.: 3 cargas por feitiço). Ao atingir 9 cargas, o próximo feitiço de Ahri a cura em a cada vez que atinge um inimigo."
+               "descriptionView":"Recebe uma carga de Furto de Essência sempre que um de seus feitiços atinge um inimigo (máx.: 3 cargas por feitiço). Ao atingir 9 cargas, o próximo feitiço de Ahri a cura em a cada vez que atinge um inimigo."
             },
             {
                "id":"Q",
                "name":"Orbe da Ilusão",
-               "description":"Ahri envia e recupera sua orbe, causando dano mágico na ida e dano verdadeiro na volta.\nCausa 40/65/90/115/140 (+33% de Poder de Habilidade) de Dano Mágico no caminho de ida e 40/65/90/115/140 (+33% de Poder de Habilidade) de Dano Verdadeiro no caminho de volta.",
+               "descriptionView":"Ahri envia e recupera sua orbe, causando dano mágico na ida e dano verdadeiro na volta.\nCausa 40/65/90/115/140 (+33% de Poder de Habilidade) de Dano Mágico no caminho de ida e 40/65/90/115/140 (+33% de Poder de Habilidade) de Dano Verdadeiro no caminho de volta.",
                "cost":"70/75/80/85/90 de Mana",
                "range":"880"
             },
             {
                "id":"W",
                "name":"Fogo de Raposa",
-               "description":"Ahri libera três fogos de raposa que travam alvo e atacam inimigos próximos.\nCria 3 fogos de raposa que travam mira em inimigos próximos (priorizando campeões), causando 40/65/90/115/140 (+40% de Poder de Habilidade) de Dano Mágico.Inimigos atingidos por mais de um fogo de raposa recebem 30% de dano de cada fogo de raposa adicional, com o máximo de 0 de dano a um único inimigo.",
+               "descriptionView":"Ahri libera três fogos de raposa que travam alvo e atacam inimigos próximos.\nCria 3 fogos de raposa que travam mira em inimigos próximos (priorizando campeões), causando 40/65/90/115/140 (+40% de Poder de Habilidade) de Dano Mágico.Inimigos atingidos por mais de um fogo de raposa recebem 30% de dano de cada fogo de raposa adicional, com o máximo de 0 de dano a um único inimigo.",
                "cost":"50 de Mana",
                "range":"800"
             },
             {
                "id":"E",
                "name":"Encanto",
-               "description":"Ahri lança um beijo que causa dano e encanta um inimigo que encontre, fazendo com que andem inofensivamente em direção à ela. Ahri causa dano adicional a inimigos recentemente encantados.\nSopra um beijo que causa 60/90/120/150/180 (+35% de Poder de Habilidade) de Dano Mágico e encanta um inimigo, fazendo com que ele caminhe inofensivamente na direção de Ahri por 1/1.25/1.5/1.75/2 segundo(s).Inimigos atingidos por Encanto recebem 20% a mais de Dano Mágico de Ahri por 6 segundos. O dano verdadeiro de Orbe da Ilusão também aumenta com este efeito.",
+               "descriptionView":"Ahri lança um beijo que causa dano e encanta um inimigo que encontre, fazendo com que andem inofensivamente em direção à ela. Ahri causa dano adicional a inimigos recentemente encantados.\nSopra um beijo que causa 60/90/120/150/180 (+35% de Poder de Habilidade) de Dano Mágico e encanta um inimigo, fazendo com que ele caminhe inofensivamente na direção de Ahri por 1/1.25/1.5/1.75/2 segundo(s).Inimigos atingidos por Encanto recebem 20% a mais de Dano Mágico de Ahri por 6 segundos. O dano verdadeiro de Orbe da Ilusão também aumenta com este efeito.",
                "cost":"85 de Mana",
                "range":"975"
             },
             {
                "id":"R",
                "name":"Ímpeto Espiritual",
-               "description":"Ahri corre adiante e dispara raios de essência, causando dano em 3 inimigos próximos (priorizando Campeões). Ímpeto Espiritual pode ser lançado até três vezes antes de entrar em Tempo de Recarga.\nLepidamente avança e dispara 3 raios de essência em inimigos próximos (priorizando campeões), causando 70/110/150 (+30% de Poder de Habilidade) de dano mágico. Pode ser lançado até três vezes dentro de 10 segundos antes de iniciar o tempo de recarga.",
+               "descriptionView":"Ahri corre adiante e dispara raios de essência, causando dano em 3 inimigos próximos (priorizando Campeões). Ímpeto Espiritual pode ser lançado até três vezes antes de entrar em Tempo de Recarga.\nLepidamente avança e dispara 3 raios de essência em inimigos próximos (priorizando campeões), causando 70/110/150 (+30% de Poder de Habilidade) de dano mágico. Pode ser lançado até três vezes dentro de 10 segundos antes de iniciar o tempo de recarga.",
                "cost":"100 de Mana",
                "range":"450"
             }
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "title":"o Punho das Sombras",
+         "titleView":"o Punho das Sombras",
          "tags":[
             "Asesino"
          ],
@@ -101,33 +101,33 @@
             {
                "id":"P",
                "name":"Disciplinas Gêmeas",
-               "description":"Disciplina da Força: Os ataques básicos de Akali causam 6% de dano mágico adicional bônus, aumentando em 1% a cada 6 pontos de Poder de Habilidade.\nDisciplina do Poder: Akali recebe 6% de Vampirismo Mágico, aumentado em 1% a cada 6 pontos de Dano de Ataque bônus."
+               "descriptionView":"Disciplina da Força: Os ataques básicos de Akali causam 6% de dano mágico adicional bônus, aumentando em 1% a cada 6 pontos de Poder de Habilidade.\nDisciplina do Poder: Akali recebe 6% de Vampirismo Mágico, aumentado em 1% a cada 6 pontos de Dano de Ataque bônus."
             },
             {
                "id":"Q",
                "name":"Marca do Assassino",
-               "description":"Akali arremessa sua kama em um inimigo alvo para causar Dano Mágico e marcar o alvo por 6 segundos. Os ataques corpo-a-corpo de Akali contra um inimigo marcado consumirão a marca para causar dano adicional e restaurar Energia.\nAkali arremessa sua kama em um inimigo alvo, causando 35/55/75/95/115 (+40% de Poder de Habilidade) de dano mágico e marca o alvo por 6 segundo(s).Os ataques corpo a corpo de Akali contra um inimigo marcado consumirão a marca, para causar 45/70/95/120/145 (+50% de Poder de Habilidade) de dano mágico e restaurar 20/25/30/35/40 de Energia.",
+               "descriptionView":"Akali arremessa sua kama em um inimigo alvo para causar Dano Mágico e marcar o alvo por 6 segundos. Os ataques corpo-a-corpo de Akali contra um inimigo marcado consumirão a marca para causar dano adicional e restaurar Energia.\nAkali arremessa sua kama em um inimigo alvo, causando 35/55/75/95/115 (+40% de Poder de Habilidade) de dano mágico e marca o alvo por 6 segundo(s).Os ataques corpo a corpo de Akali contra um inimigo marcado consumirão a marca, para causar 45/70/95/120/145 (+50% de Poder de Habilidade) de dano mágico e restaurar 20/25/30/35/40 de Energia.",
                "cost":"60 Energia",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Proteção do Crepúsculo",
-               "description":"Akali lança uma cobertura de fumaça. Enquanto estiver dentro da área, Akali ganha Armadura e Resistência Mágica e fica invisível. Atacar ou usar habilidades a revelarão brevemente. Inimigos dentro da fumaça terão a Velocidade de Movimento reduzida.\nAkali posiciona uma cortina de fumaça que dura 8 segundo(s). Enquanto estiver nesta área, Akali receberá 10/20/30/40/50 de Armadura e Resistência Mágica e ficará invisível. Ataques e uso de habilidades farão com que ela volte a ser visível.Inimigos dentro da fumaça sofrem lentidão de 14/18/22/26/30%.",
+               "descriptionView":"Akali lança uma cobertura de fumaça. Enquanto estiver dentro da área, Akali ganha Armadura e Resistência Mágica e fica invisível. Atacar ou usar habilidades a revelarão brevemente. Inimigos dentro da fumaça terão a Velocidade de Movimento reduzida.\nAkali posiciona uma cortina de fumaça que dura 8 segundo(s). Enquanto estiver nesta área, Akali receberá 10/20/30/40/50 de Armadura e Resistência Mágica e ficará invisível. Ataques e uso de habilidades farão com que ela volte a ser visível.Inimigos dentro da fumaça sofrem lentidão de 14/18/22/26/30%.",
                "cost":"80/75/70/65/60 Energia",
                "range":"700"
             },
             {
                "id":"E",
                "name":"Corte Crescente",
-               "description":"Akali brande suas kamas, causando dano baseado em seu Dano de Ataque e Poder de Habilidade.\nAkali brande suas kamas, cortando os inimigos próximos em 30/55/80/105/130 (+60% de Dano de Ataque) (+30% de Poder de Habilidade) de Dano Físico.Ativa Marca da Assassina em alvos afetados pela habilidade.",
+               "descriptionView":"Akali brande suas kamas, causando dano baseado em seu Dano de Ataque e Poder de Habilidade.\nAkali brande suas kamas, cortando os inimigos próximos em 30/55/80/105/130 (+60% de Dano de Ataque) (+30% de Poder de Habilidade) de Dano Físico.Ativa Marca da Assassina em alvos afetados pela habilidade.",
                "cost":"60/55/50/45/40 Energia",
                "range":"325"
             },
             {
                "id":"R",
                "name":"Dança das Sombras",
-               "description":"Akali se move pelas sombras para rapidamente atacar seu alvo, causando dano e consumindo uma carga da Essência da Sombra. Akali reabastece as cargas da Essência da Sombra tanto periodicamente quanto em abates e assistências, máximo de 3 acúmulos.\nAkali se move pelas sombras para atacar rapidamente o seu alvo, causando 100/175/250 (+50% de Poder de Habilidade) de dano mágico.Akali acumula Essência da Sombra a cada abate e assistência, assim como a cada 30/22.5/15 segundo(s).\nTotal máximo: 3.",
+               "descriptionView":"Akali se move pelas sombras para rapidamente atacar seu alvo, causando dano e consumindo uma carga da Essência da Sombra. Akali reabastece as cargas da Essência da Sombra tanto periodicamente quanto em abates e assistências, máximo de 3 acúmulos.\nAkali se move pelas sombras para atacar rapidamente o seu alvo, causando 100/175/250 (+50% de Poder de Habilidade) de dano mágico.Akali acumula Essência da Sombra a cada abate e assistência, assim como a cada 30/22.5/15 segundo(s).\nTotal máximo: 3.",
                "cost":"1 Essência da Sombra",
                "range":"800"
             }
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "title":"o Minotauro",
+         "titleView":"o Minotauro",
          "tags":[
             "Tanque"
          ],
@@ -144,33 +144,33 @@
             {
                "id":"P",
                "name":"Atropelar",
-               "description":"Cada vez que Alistar lança um feitiço, ele Pisoteia unidades e torres próximas por poucos segundos, causando dano às unidades as quais ele passar por cima."
+               "descriptionView":"Cada vez que Alistar lança um feitiço, ele Pisoteia unidades e torres próximas por poucos segundos, causando dano às unidades as quais ele passar por cima."
             },
             {
                "id":"Q",
                "name":"Pulverizar",
-               "description":"Alistar esmurra o chão, causando dano a todos os inimigos próximos e lançando-os ao ar. Ao cair, os inimigos ficam atordoados.\nAlistar destrói o chão, causando 60/105/150/195/240 (+50% de Poder de Habilidade) de dano mágico e lançando ao ar todas as unidades inimigas, atordoando-as por 1,5 segundos.",
+               "descriptionView":"Alistar esmurra o chão, causando dano a todos os inimigos próximos e lançando-os ao ar. Ao cair, os inimigos ficam atordoados.\nAlistar destrói o chão, causando 60/105/150/195/240 (+50% de Poder de Habilidade) de dano mágico e lançando ao ar todas as unidades inimigas, atordoando-as por 1,5 segundos.",
                "cost":"70/80/90/100/110 de Mana",
                "range":"365"
             },
             {
                "id":"W",
                "name":"Cabeçada",
-               "description":"Alistar atinge o inimigo com sua cabeça, causando dano e jogando o alvo para trás.\nAlistar avança em um inimigo e colide com ele, causando 55/110/165/220/275 (+70% de Poder de Habilidade) de dano mágico e atordoando-o enquanto o derruba.",
+               "descriptionView":"Alistar atinge o inimigo com sua cabeça, causando dano e jogando o alvo para trás.\nAlistar avança em um inimigo e colide com ele, causando 55/110/165/220/275 (+70% de Poder de Habilidade) de dano mágico e atordoando-o enquanto o derruba.",
                "cost":"70/80/90/100/110 de Mana",
                "range":"650"
             },
             {
                "id":"E",
                "name":"Urro Triunfante",
-               "description":"Alistar solta um grito impetuoso de guerra, restaurando sua Vida e a de unidades aliadas próximas em metade desta quantia. Pode ser conjurado com maior frequência se houver inimigos próximos prestes a morrer.\nRestaura 60/90/120/150/180 (+20% de Poder de Habilidade) de Vida para Alistar e metade deste valor para aliados próximos. A recarga é reduzida em 2 segundo(s) cada vez que uma unidade inimiga morre.",
+               "descriptionView":"Alistar solta um grito impetuoso de guerra, restaurando sua Vida e a de unidades aliadas próximas em metade desta quantia. Pode ser conjurado com maior frequência se houver inimigos próximos prestes a morrer.\nRestaura 60/90/120/150/180 (+20% de Poder de Habilidade) de Vida para Alistar e metade deste valor para aliados próximos. A recarga é reduzida em 2 segundo(s) cada vez que uma unidade inimiga morre.",
                "cost":"40/50/60/70/80 de Mana",
                "range":"575"
             },
             {
                "id":"R",
                "name":"Vontade Indestrutível",
-               "description":"Alistar solta um urro selvagem, recebendo dano adicional, removendo todos os seus efeitos de controle de grupo, e reduzindo os danos físicos e mágicos por toda a duração de seu efeito.\nRemove o desarme de Alistar, e Alistar ganha 60/75/90 de Dano de Ataque e recebe 50/60/70% de dano mágico e físico reduzido por 7 segundo(s).",
+               "descriptionView":"Alistar solta um urro selvagem, recebendo dano adicional, removendo todos os seus efeitos de controle de grupo, e reduzindo os danos físicos e mágicos por toda a duração de seu efeito.\nRemove o desarme de Alistar, e Alistar ganha 60/75/90 de Dano de Ataque e recebe 50/60/70% de dano mágico e físico reduzido por 7 segundo(s).",
                "cost":"100 de Mana",
                "range":"Si mesmo"
             }

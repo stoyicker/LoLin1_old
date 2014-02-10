@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -54,7 +54,7 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
 
         int howManyIHave = this.getCount();
         final ArrayList<SurrEntry> newSurrs =
-                SQLiteBridge.getSingleton().getNewSurrs(howManyIHave);
+                SQLiteDAO.getSingleton().getNewSurrs(howManyIHave);
         Collections.reverse(newSurrs);
         ((Activity) mContext).runOnUiThread(new Runnable() {
             @Override
@@ -67,28 +67,30 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
         });
     }
 
-
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView =
                     ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                             .inflate(
                                     list_item_layout, null);
-        }
 
-        assert convertView != null;
-        TextView titleTextView = (TextView) convertView.findViewById(R.id.surr_feed_item_title);
+            viewHolder = new ViewHolder();
+            viewHolder.setTitleView((TextView) convertView.findViewById(R.id.surr_feed_item_title));
+            viewHolder.setItemWithNewContentImageView(
+                    (ImageView) convertView.findViewById(R.id.surr_feed_item_new_content_image));
+            convertView.setTag(viewHolder);
+        }
+        else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
         SurrEntry thisArticle = getItem(position);
 
-        ImageView itemWithNewContentImageView =
-                (ImageView) convertView.findViewById(R.id.surr_feed_item_new_content_image);
-
-        if (
-                position == PreferenceManager.getDefaultSharedPreferences(mContext)
-                        .getInt("lastSelectedSurrIndex", -1) &&
-                        mContext.getResources().getBoolean(R.bool.feed_has_two_panes)) {
+        if (position == PreferenceManager.getDefaultSharedPreferences(mContext).getInt(
+                "lastSelectedSurrIndex", -1) &&
+                mContext.getResources().getBoolean(R.bool.feed_has_two_panes)) {
             convertView.setBackgroundResource(R.color.theme_black);
         }
         else {
@@ -96,17 +98,38 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
         }
 
         if (!thisArticle.hasBeenRead()) {
-            itemWithNewContentImageView.setVisibility(View.VISIBLE);
-            itemWithNewContentImageView.startAnimation(unreadContentAnimation);
+            viewHolder.getItemWithNewContentImageView().setVisibility(View.VISIBLE);
+            viewHolder.getItemWithNewContentImageView().startAnimation(unreadContentAnimation);
         }
         else {
-            itemWithNewContentImageView.setVisibility(View.INVISIBLE);
+            viewHolder.getItemWithNewContentImageView().setVisibility(View.INVISIBLE);
             unreadContentAnimation.cancel();
             unreadContentAnimation.reset();
         }
 
-        titleTextView.setText(Html.fromHtml(thisArticle.getTitle()));
+        viewHolder.getTitleView().setText(Html.fromHtml(thisArticle.getTitle()));
 
         return convertView;
+    }
+
+    private final static class ViewHolder {
+        private TextView titleView;
+        private ImageView itemWithNewContentImageView;
+
+        public TextView getTitleView() {
+            return titleView;
+        }
+
+        public void setTitleView(TextView title) {
+            this.titleView = title;
+        }
+
+        public ImageView getItemWithNewContentImageView() {
+            return itemWithNewContentImageView;
+        }
+
+        public void setItemWithNewContentImageView(ImageView itemWithNewContentImageView) {
+            this.itemWithNewContentImageView = itemWithNewContentImageView;
+        }
     }
 }

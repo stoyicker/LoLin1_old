@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "title":"Die Klinge der Düsteren",
+         "titleView":"Die Klinge der Düsteren",
          "tags":[
             "Kämpfer",
             "Tank"
@@ -14,33 +14,33 @@
             {
                "id":"P",
                "name":"Blutbrunnen",
-               "description":"Wenn er eine Fähigkeit nutzt, die Leben kostet, sammelt Aatrox den selbst beigefügten Schaden im Blutbrunnen. Sobald er tödlichen Schaden erleidet, schöpft Aatrox das Blut aus dem Brunnen ab und stellt es über einen kurzen Zeitraum hinweg als Leben wieder her. Zusätzlich erhält Aatrox pro 2 % Blut im Brunnen 1 % Angriffstempo."
+               "descriptionView":"Wenn er eine Fähigkeit nutzt, die Leben kostet, sammelt Aatrox den selbst beigefügten Schaden im Blutbrunnen. Sobald er tödlichen Schaden erleidet, schöpft Aatrox das Blut aus dem Brunnen ab und stellt es über einen kurzen Zeitraum hinweg als Leben wieder her. Zusätzlich erhält Aatrox pro 2 % Blut im Brunnen 1 % Angriffstempo."
             },
             {
                "id":"Q",
                "name":"Düsterflug",
-               "description":"Aatrox fliegt los und prallt an einer Zielposition auf, wo er Schaden verursacht und beim Einschlag Gegner im Einschlagzentrum hochschlägt.\nAatrox fliegt los und prallt an einer Zielposition auf, wo er 70/115/160/205/250 (+60% zusätzlicher Angriffsschaden) normalen Schaden an Gegnern in der Nähe verursacht und Ziele im Einschlagszentrum 1 Sekunden lang hochschleudert.",
+               "descriptionView":"Aatrox fliegt los und prallt an einer Zielposition auf, wo er Schaden verursacht und beim Einschlag Gegner im Einschlagzentrum hochschlägt.\nAatrox fliegt los und prallt an einer Zielposition auf, wo er 70/115/160/205/250 (+60% zusätzlicher Angriffsschaden) normalen Schaden an Gegnern in der Nähe verursacht und Ziele im Einschlagszentrum 1 Sekunden lang hochschleudert.",
                "cost":"10 % des aktuellen Lebens",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Blutdurst\/Blutzoll",
-               "description":"Bei Aktivierung verursacht Aatrox bei jedem dritten aufeinanderfolgenden Angriff zusätzlichen Schaden auf Kosten seines eigenen Lebens. Bei Deaktivierung stellt Aatrox bei jedem dritten aufeinanderfolgenden Angriff Leben wieder her.\nWährend dies ausgeschaltet ist, profitiert Aatrox von Blutdurst, während dies eingeschaltet ist, ist Blutzoll aktiv und entfernt Blutdurst.\nBlutdurst: Bei jedem dritten Angriff stellt Aatrox 20/25/30/35/40(+25% zusätzlicher Angriffsschaden) Leben wieder her, dieser Wert wird um 200 % erhöht, wenn er weniger als die Hälfte seines Lebens besitzt.\nBlutzoll: Mit jedem dritten Angriff verursacht Aatrox 60/95/130/165/200 (+100% zusätzlicher Angriffsschaden) zusätzlichen normalen Schaden und verliert Leben.",
+               "descriptionView":"Bei Aktivierung verursacht Aatrox bei jedem dritten aufeinanderfolgenden Angriff zusätzlichen Schaden auf Kosten seines eigenen Lebens. Bei Deaktivierung stellt Aatrox bei jedem dritten aufeinanderfolgenden Angriff Leben wieder her.\nWährend dies ausgeschaltet ist, profitiert Aatrox von Blutdurst, während dies eingeschaltet ist, ist Blutzoll aktiv und entfernt Blutdurst.\nBlutdurst: Bei jedem dritten Angriff stellt Aatrox 20/25/30/35/40(+25% zusätzlicher Angriffsschaden) Leben wieder her, dieser Wert wird um 200 % erhöht, wenn er weniger als die Hälfte seines Lebens besitzt.\nBlutzoll: Mit jedem dritten Angriff verursacht Aatrox 60/95/130/165/200 (+100% zusätzlicher Angriffsschaden) zusätzlichen normalen Schaden und verliert Leben.",
                "cost":"Keine Kosten",
                "range":"Selbst"
             },
             {
                "id":"E",
                "name":"Klingen der Qual",
-               "description":"Aatrox entfesselt die Kraft seiner Klinge, wodurch er an allen getroffenen Gegnern Schaden verursacht und diese verlangsamt.\nAatrox entfesselt die Kraft seiner Klinge, wodurch er an allen getroffenen Gegnern 75/110/145/180/215 (+60% Fähigkeitsstärke) (+60% zusätzlicher Angriffsschaden) magischen Schaden verursacht und diese 1.75/2/2.25/2.5/2.75 Sekunden lang um 40 % verlangsamt.",
+               "descriptionView":"Aatrox entfesselt die Kraft seiner Klinge, wodurch er an allen getroffenen Gegnern Schaden verursacht und diese verlangsamt.\nAatrox entfesselt die Kraft seiner Klinge, wodurch er an allen getroffenen Gegnern 75/110/145/180/215 (+60% Fähigkeitsstärke) (+60% zusätzlicher Angriffsschaden) magischen Schaden verursacht und diese 1.75/2/2.25/2.5/2.75 Sekunden lang um 40 % verlangsamt.",
                "cost":"5 % des aktuellen Lebens",
                "range":"1000"
             },
             {
                "id":"R",
                "name":"Massaker",
-               "description":"Aatrox saugt das Blut seiner Widersacher auf, verursacht an allen gegnerischen Champions in der Nähe Schaden und erhält für kurze Zeit erhöhtes Angriffstempo und zusätzliche Angriffsreichweite.\nAatrox nimmt das Blut seiner Widersacher auf und verursacht 200/300/400 (+100% Fähigkeitsstärke) magischen Schaden an allen gegnerischen Champions um ihn herum, sein Angriffstempo wird um 40/50/60 % erhöht und er erhält 12 Sekunden lang 175 Angriffsreichweite.",
+               "descriptionView":"Aatrox saugt das Blut seiner Widersacher auf, verursacht an allen gegnerischen Champions in der Nähe Schaden und erhält für kurze Zeit erhöhtes Angriffstempo und zusätzliche Angriffsreichweite.\nAatrox nimmt das Blut seiner Widersacher auf und verursacht 200/300/400 (+100% Fähigkeitsstärke) magischen Schaden an allen gegnerischen Champions um ihn herum, sein Angriffstempo wird um 40/50/60 % erhöht und er erhält 12 Sekunden lang 175 Angriffsreichweite.",
                "cost":"Keine Kosten",
                "range":"550"
             }
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "title":"Die neunschwänzige Füchsin",
+         "titleView":"Die neunschwänzige Füchsin",
          "tags":[
             "Magier",
             "Assassine"
@@ -58,33 +58,33 @@
             {
                "id":"P",
                "name":"Essenzdieb",
-               "description":"Erhält eine Ladung Essenzdieb, wenn ein Zauber einen Gegner trifft (max. 3 Ladungen pro Zauber). Hat Ahri mit 9 Zaubern getroffen, heilt ihre nächste Fähigkeit sie, wenn diese einen Gegner trifft."
+               "descriptionView":"Erhält eine Ladung Essenzdieb, wenn ein Zauber einen Gegner trifft (max. 3 Ladungen pro Zauber). Hat Ahri mit 9 Zaubern getroffen, heilt ihre nächste Fähigkeit sie, wenn diese einen Gegner trifft."
             },
             {
                "id":"Q",
                "name":"Kugel der Täuschung",
-               "description":"Ahri entsendet ihre Kugel und holt diese zurück, wobei sie auf dem Hinweg magischen Schaden und auf dem Rückweg absoluten Schaden verursacht.\nVerursacht auf dem Hinweg 40/65/90/115/140 (+33% Fähigkeitsstärke) magischen Schaden und auf dem Rückweg 40/65/90/115/140 (+33% Fähigkeitsstärke) absoluten Schaden.",
+               "descriptionView":"Ahri entsendet ihre Kugel und holt diese zurück, wobei sie auf dem Hinweg magischen Schaden und auf dem Rückweg absoluten Schaden verursacht.\nVerursacht auf dem Hinweg 40/65/90/115/140 (+33% Fähigkeitsstärke) magischen Schaden und auf dem Rückweg 40/65/90/115/140 (+33% Fähigkeitsstärke) absoluten Schaden.",
                "cost":"70/75/80/85/90 Mana",
                "range":"880"
             },
             {
                "id":"W",
                "name":"Fuchsfeuer",
-               "description":"Ahri beschwört drei Fuchsfeuer, die nahe Gegner suchen und diese angreifen.\nEntfesselt drei Fuchsfeuer, die sich nahe Gegner suchen und diese angreifen. Sie priorisieren Champions und verursachen 40/65/90/115/140 (+40% Fähigkeitsstärke) magischen Schaden.Getroffene Gegner erleiden von weiteren Fuchsfeuern nach dem ersten Treffer 30 % Schaden, wobei ein einzelner Gegner maximal 0 Schaden erleidet.",
+               "descriptionView":"Ahri beschwört drei Fuchsfeuer, die nahe Gegner suchen und diese angreifen.\nEntfesselt drei Fuchsfeuer, die sich nahe Gegner suchen und diese angreifen. Sie priorisieren Champions und verursachen 40/65/90/115/140 (+40% Fähigkeitsstärke) magischen Schaden.Getroffene Gegner erleiden von weiteren Fuchsfeuern nach dem ersten Treffer 30 % Schaden, wobei ein einzelner Gegner maximal 0 Schaden erleidet.",
                "cost":"50 Mana",
                "range":"800"
             },
             {
                "id":"E",
                "name":"Bezaubern",
-               "description":"Ahri wirft eine Kusshand, die einem getroffenen Gegner Schaden zufügt und diesen bezaubert, wodurch dieser wehrlos auf sie zu torkelt. Ahri verursacht zusätzlichen Schaden an kürzlich bezauberten Gegnern.\nWirft einen Handkuss, der einem getroffenen Gegner 60/90/120/150/180 (+35% Fähigkeitsstärke) magischen Schaden zufügt und diesen bezaubert, wodurch dieser 1/1.25/1.5/1.75/2 Sekunden lang wehrlos auf Ahri zutorkelt.Gegner, die von Bezaubern getroffen werden, erleiden 6 Sekunden lang 20 % mehr magischen Schaden von Ahri. Der absolute Schaden von Kugel der Täuschung wird durch diesen Effekt auch erhöht.",
+               "descriptionView":"Ahri wirft eine Kusshand, die einem getroffenen Gegner Schaden zufügt und diesen bezaubert, wodurch dieser wehrlos auf sie zu torkelt. Ahri verursacht zusätzlichen Schaden an kürzlich bezauberten Gegnern.\nWirft einen Handkuss, der einem getroffenen Gegner 60/90/120/150/180 (+35% Fähigkeitsstärke) magischen Schaden zufügt und diesen bezaubert, wodurch dieser 1/1.25/1.5/1.75/2 Sekunden lang wehrlos auf Ahri zutorkelt.Gegner, die von Bezaubern getroffen werden, erleiden 6 Sekunden lang 20 % mehr magischen Schaden von Ahri. Der absolute Schaden von Kugel der Täuschung wird durch diesen Effekt auch erhöht.",
                "cost":"50 Mana",
                "range":"975"
             },
             {
                "id":"R",
                "name":"Geisterhast",
-               "description":"Ahri sprintet nach vorn und feuert Essenzbolzen, die 3 nahen Gegnern (bevorzugt Champions) Schaden zufügen. Geisterhast kann bis zu dreimal aktiviert werden, bevor die Abklingzeit ausgelöst wird.\nSprintet nach vorn und feuert drei Essenzbolzen, die 3 nahen Gegnern 70/110/150 (+30% Fähigkeitsstärke) magischen Schaden zufügen und dabei Champions bevorzugen. Kann innerhalb von 10 Sekunden bis zu dreimal aktiviert werden, bevor die Abklingzeit ausgelöst wird.",
+               "descriptionView":"Ahri sprintet nach vorn und feuert Essenzbolzen, die 3 nahen Gegnern (bevorzugt Champions) Schaden zufügen. Geisterhast kann bis zu dreimal aktiviert werden, bevor die Abklingzeit ausgelöst wird.\nSprintet nach vorn und feuert drei Essenzbolzen, die 3 nahen Gegnern 70/110/150 (+30% Fähigkeitsstärke) magischen Schaden zufügen und dabei Champions bevorzugen. Kann innerhalb von 10 Sekunden bis zu dreimal aktiviert werden, bevor die Abklingzeit ausgelöst wird.",
                "cost":"100 Mana",
                "range":"450"
             }
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "title":"Die Faust der Schatten",
+         "titleView":"Die Faust der Schatten",
          "tags":[
             "Assassine"
          ],
@@ -101,33 +101,33 @@
             {
                "id":"P",
                "name":"Zwillingsdisziplin",
-               "description":"Disziplin der Gewalt: Akalis Treffer verursachen zusätzlich 6 % zusätzlichen magischen Schaden, der pro 6 Fähigkeitsstärke um 1 % erhöht wird.\nDisziplin der Macht: Akali erhält 6 % Zaubervampir, der pro 6 zusätzliche Fähigkeitsstärke um 1 % erhöht wird."
+               "descriptionView":"Disziplin der Gewalt: Akalis Treffer verursachen zusätzlich 6 % zusätzlichen magischen Schaden, der pro 6 Fähigkeitsstärke um 1 % erhöht wird.\nDisziplin der Macht: Akali erhält 6 % Zaubervampir, der pro 6 zusätzliche Fähigkeitsstärke um 1 % erhöht wird."
             },
             {
                "id":"Q",
                "name":"Zeichen der Assassine",
-               "description":"Akali schleudert ihr Kama gegen ein gegnerisches Ziel, verursacht so magischen Schaden und zeichnet dieses für 6 Sekunden. Akalis normale Angriffe gegen ein gezeichnetes Ziel werden das Zeichen aktivieren, wodurch es sich auflöst, am Ziel zusätzlichen magischen Schaden verursacht und an Akali Energie wiederherstellt.\nAkali schleudert ihr Kama gegen ein gegnerisches Ziel, verursacht so 35/55/75/95/115 (+40% Fähigkeitsstärke) magischen Schaden und zeichnet dieses für 6 Sekunden.Akalis normale Angriffe gegen ein gezeichnetes Ziel werden das Zeichen aktivieren, wodurch es sich auflöst, am Ziel zusätzlich 45/70/95/120/145 (+50% Fähigkeitsstärke) magischen Schaden verursacht und an Akali 20/25/30/35/40 Energie wiederherstellt.",
+               "descriptionView":"Akali schleudert ihr Kama gegen ein gegnerisches Ziel, verursacht so magischen Schaden und zeichnet dieses für 6 Sekunden. Akalis normale Angriffe gegen ein gezeichnetes Ziel werden das Zeichen aktivieren, wodurch es sich auflöst, am Ziel zusätzlichen magischen Schaden verursacht und an Akali Energie wiederherstellt.\nAkali schleudert ihr Kama gegen ein gegnerisches Ziel, verursacht so 35/55/75/95/115 (+40% Fähigkeitsstärke) magischen Schaden und zeichnet dieses für 6 Sekunden.Akalis normale Angriffe gegen ein gezeichnetes Ziel werden das Zeichen aktivieren, wodurch es sich auflöst, am Ziel zusätzlich 45/70/95/120/145 (+50% Fähigkeitsstärke) magischen Schaden verursacht und an Akali 20/25/30/35/40 Energie wiederherstellt.",
                "cost":"60 Energie",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Zwielicht-Schleier",
-               "description":"Akali hüllt ein Gebiet in Rauch ein. Wenn sich Akali in diesem Gebiet befindet erhält sie zusätzliche Rüstung und Magieresistenz und wird unsichtbar. Angriffe und eingesetzte Fähigkeiten machen sie kurz sichtbar. Gegner innerhalb des Rauchs besitzen ein verringertes Lauftempo.\nAkali hüllt 8 Sekunden lang ein Gebiet in Rauch ein. Wenn sich Akali in diesem Gebiet befindet erhält sie zusätzlich 10/20/30/40/50 Rüstung und Magieresistenz und wird unsichtbar. Angriffe und eingesetzte Fähigkeiten machen sie kurz sichtbar. Gegner innerhalb des Rauchs werden um 14/18/22/26/30 % verlangsamt.",
+               "descriptionView":"Akali hüllt ein Gebiet in Rauch ein. Wenn sich Akali in diesem Gebiet befindet erhält sie zusätzliche Rüstung und Magieresistenz und wird unsichtbar. Angriffe und eingesetzte Fähigkeiten machen sie kurz sichtbar. Gegner innerhalb des Rauchs besitzen ein verringertes Lauftempo.\nAkali hüllt 8 Sekunden lang ein Gebiet in Rauch ein. Wenn sich Akali in diesem Gebiet befindet erhält sie zusätzlich 10/20/30/40/50 Rüstung und Magieresistenz und wird unsichtbar. Angriffe und eingesetzte Fähigkeiten machen sie kurz sichtbar. Gegner innerhalb des Rauchs werden um 14/18/22/26/30 % verlangsamt.",
                "cost":"80/75/70/65/60 Energie",
                "range":"700"
             },
             {
                "id":"E",
                "name":"Crescent Slash",
-               "description":"Akali schwingt ihre Kamas und verursacht so Schaden basierend auf ihrem Angriffsschaden und ihrer Fähigkeitsstärke.\nAkali schwingt ihre Kamas und schneidet so nahegelegene Einheit für 30/55/80/105/130 (+60% Angriffsschaden) (+30% Fähigkeitsstärke) normalen Schaden.Löst Zeichen der Assassine auf beeinflussten Zielen aus.",
+               "descriptionView":"Akali schwingt ihre Kamas und verursacht so Schaden basierend auf ihrem Angriffsschaden und ihrer Fähigkeitsstärke.\nAkali schwingt ihre Kamas und schneidet so nahegelegene Einheit für 30/55/80/105/130 (+60% Angriffsschaden) (+30% Fähigkeitsstärke) normalen Schaden.Löst Zeichen der Assassine auf beeinflussten Zielen aus.",
                "cost":"60/55/50/45/40 Energy",
                "range":"325"
             },
             {
                "id":"R",
                "name":"Schattentanz",
-               "description":"Akali bewegt sich durch die Schatten, um ihr Ziel schnell anzugreifen, wobei dieses Schaden erleidet und eine Essenz des Schattens verbraucht wird. Akali regeneriert diese sowohl mit der Zeit als auch bei Tötungen und Unterstützungen bis zu einer maximalen Anzahl von drei.\nAkali bewegt sich durch die Schatten, um ihr Ziel schnell anzugreifen, wobei dieses 100/175/250 (+50% Fähigkeitsstärke) magischen Schaden erleidet und eine Essenz des Schattens verbraucht wird.Akali regeneriert sowohl alle 30/22.5/15 Sekunden als auch bei Tötungen und Unterstützungen eine Essenz des Schattens bis zu einer maximalen Anzahl von 3.",
+               "descriptionView":"Akali bewegt sich durch die Schatten, um ihr Ziel schnell anzugreifen, wobei dieses Schaden erleidet und eine Essenz des Schattens verbraucht wird. Akali regeneriert diese sowohl mit der Zeit als auch bei Tötungen und Unterstützungen bis zu einer maximalen Anzahl von drei.\nAkali bewegt sich durch die Schatten, um ihr Ziel schnell anzugreifen, wobei dieses 100/175/250 (+50% Fähigkeitsstärke) magischen Schaden erleidet und eine Essenz des Schattens verbraucht wird.Akali regeneriert sowohl alle 30/22.5/15 Sekunden als auch bei Tötungen und Unterstützungen eine Essenz des Schattens bis zu einer maximalen Anzahl von 3.",
                "cost":"1 Essenz des Schattens",
                "range":"800"
             }
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "title":"Der Minotaurus",
+         "titleView":"Der Minotaurus",
          "tags":[
             "Tank"
          ],
@@ -144,33 +144,33 @@
             {
                "id":"P",
                "name":"Trampeln",
-               "description":"Immer, wenn Alistar eine Fähigkeit einsetzt, kann er sich kurzzeitig durch Einheiten und Türme bewegen und verursacht dabei Schaden an nahen Gegnern und Gebäuden."
+               "descriptionView":"Immer, wenn Alistar eine Fähigkeit einsetzt, kann er sich kurzzeitig durch Einheiten und Türme bewegen und verursacht dabei Schaden an nahen Gegnern und Gebäuden."
             },
             {
                "id":"Q",
                "name":"Pulverisieren",
-               "description":"Alistar schlägt auf den Boden, verursacht an allen nahen Gegnern Schaden und schleudert sie in die Luft. Bei der Landung werden die Gegner betäubt.\nAlistar schlägt auf den Boden und verursacht an allen gegnerischen Einheiten in der Nähe 60/105/150/195/240 (+50% Fähigkeitsstärke) magischen Schaden. Außerdem werden die Gegner in die Luft geschleudert und 1,5 Sekunden lang betäubt.",
+               "descriptionView":"Alistar schlägt auf den Boden, verursacht an allen nahen Gegnern Schaden und schleudert sie in die Luft. Bei der Landung werden die Gegner betäubt.\nAlistar schlägt auf den Boden und verursacht an allen gegnerischen Einheiten in der Nähe 60/105/150/195/240 (+50% Fähigkeitsstärke) magischen Schaden. Außerdem werden die Gegner in die Luft geschleudert und 1,5 Sekunden lang betäubt.",
                "cost":"70/80/90/100/110 Mana",
                "range":"365"
             },
             {
                "id":"W",
                "name":"Kopfstoß",
-               "description":"Alistar rammt ein Ziel mit seinem Kopf, wobei er Schaden verursacht und das Ziel zurückstößt.\nAlistar stürmt auf einen Gegner los und rammt ihn mit gesenktem Kopf. Dabei verursacht er 55/110/165/220/275 (+70% Fähigkeitsstärke) magischen Schaden und stößt den Gegner zurück, währenddessen dieser betäubt wird.",
+               "descriptionView":"Alistar rammt ein Ziel mit seinem Kopf, wobei er Schaden verursacht und das Ziel zurückstößt.\nAlistar stürmt auf einen Gegner los und rammt ihn mit gesenktem Kopf. Dabei verursacht er 55/110/165/220/275 (+70% Fähigkeitsstärke) magischen Schaden und stößt den Gegner zurück, währenddessen dieser betäubt wird.",
                "cost":"70/80/90/100/110 Mana",
                "range":"650"
             },
             {
                "id":"E",
                "name":"Siegesschrei",
-               "description":"Alistar stößt einen Kriegsschrei aus, der bei ihm selbst und allen verbündeten Einheiten in der Nähe die Hälfte des Lebens wiederherstellt. Kann häufiger benutzt werden, wenn nahe Gegner sterben.\nStellt sofort 60/90/120/150/180 (+20% Fähigkeitsstärke) Leben bei ihm selbst und die Hälfte davon bei allen verbündeten Einheiten in der Nähe wieder her. Die Abklingzeit verringert sich jedes Mal um 2 Sekunden, wenn eine gegnerische Einheit in der Nähe stirbt.",
+               "descriptionView":"Alistar stößt einen Kriegsschrei aus, der bei ihm selbst und allen verbündeten Einheiten in der Nähe die Hälfte des Lebens wiederherstellt. Kann häufiger benutzt werden, wenn nahe Gegner sterben.\nStellt sofort 60/90/120/150/180 (+20% Fähigkeitsstärke) Leben bei ihm selbst und die Hälfte davon bei allen verbündeten Einheiten in der Nähe wieder her. Die Abklingzeit verringert sich jedes Mal um 2 Sekunden, wenn eine gegnerische Einheit in der Nähe stirbt.",
                "cost":"40/50/60/70/80 Mana",
                "range":"575"
             },
             {
                "id":"R",
                "name":"Unbeugsamer Wille",
-               "description":"Alistar stößt ein lautes Gebrüll aus, das zusätzlichen Schaden verursacht, alle Massenkontrolleffekte von ihm entfernt und erhaltenen normalen und magischen Schaden während der Wirkungsdauer verringert.\nEntfernt alle kampfunfähig machenden Effekte von Alistar. Er erhält 7 Sekunden lang zusätzlich 60/75/90 Angriffsschaden und erleidet 50/60/70 % weniger normalen und magischen Schaden.",
+               "descriptionView":"Alistar stößt ein lautes Gebrüll aus, das zusätzlichen Schaden verursacht, alle Massenkontrolleffekte von ihm entfernt und erhaltenen normalen und magischen Schaden während der Wirkungsdauer verringert.\nEntfernt alle kampfunfähig machenden Effekte von Alistar. Er erhält 7 Sekunden lang zusätzlich 60/75/90 Angriffsschaden und erleidet 50/60/70 % weniger normalen und magischen Schaden.",
                "cost":"100 Mana",
                "range":"Selbst"
             }

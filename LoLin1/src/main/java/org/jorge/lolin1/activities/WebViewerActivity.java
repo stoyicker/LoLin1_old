@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.BaseEntry;
 import org.jorge.lolin1.frags.WebViewerFragment;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.util.ArrayList;
 
@@ -50,10 +50,10 @@ public class WebViewerActivity extends FragmentActivity {
 
         switch (DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex()) {
             case 0:
-                elements.addAll(SQLiteBridge.getSingleton().getNews());
+                elements.addAll(SQLiteDAO.getSingleton().getNews());
                 break;
             case 5:
-                elements.addAll(SQLiteBridge.getSingleton().getSurrs());
+                elements.addAll(SQLiteDAO.getSingleton().getSurrs());
                 break;
             default:
                 Log.wtf("ERROR",

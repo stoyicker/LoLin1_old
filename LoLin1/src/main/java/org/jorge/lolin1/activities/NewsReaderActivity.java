@@ -10,7 +10,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
 import org.jorge.lolin1.frags.NewsListFragment;
 import org.jorge.lolin1.frags.WebViewerFragment;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.util.ArrayList;
 
@@ -65,9 +65,12 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
             restoreState(savedInstanceState);
         }
         else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("lastSelectedNewsIndex", -1)) != -1) {
+                .getInt("lastSelectedNewsIndex", -1)) != -1 &&
+                getResources().getBoolean(R.bool.feed_has_two_panes)) {
+            Log.d("NX4", "I'm in");
             onNewsArticleSelected(index);
         }
+
     }
 
     private void restoreState(Bundle savedInstanceState) {
@@ -91,10 +94,9 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
     }
 
     private void showUrlInWebViewerFragment(int index) {
-        Log.d("NX4", "Caling suiwvf (news)");
         ArrayList<NewsEntry> news;
         if (isDualPane) {
-            if (!(news = SQLiteBridge.getSingleton().getNews()).isEmpty()) {
+            if (!(news = SQLiteDAO.getSingleton().getNews()).isEmpty()) {
                 WEB_FRAGMENT.loadUrl(news.get(index).getLink());
             }
         }

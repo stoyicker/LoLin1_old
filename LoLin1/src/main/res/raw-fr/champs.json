@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "title":"Épée des Darkin",
+         "titleView":"Épée des Darkin",
          "tags":[
             "Combattant",
             "Tank"
@@ -14,33 +14,33 @@
             {
                "id":"P",
                "name":"Puits de sang",
-               "description":"Quand vous utilisez une compétence qui coûte des PV, Aatrox stocke les dégâts qu'il s'inflige dans le Puits de sang. Quand il subit une blessure fatale, Aatrox extrait le sang du puits et le transforme en PV sur une brève période. En outre, Aatrox gagne 1% de vitesse d'attaque tous les 2% de sang dans le puits."
+               "descriptionView":"Quand vous utilisez une compétence qui coûte des PV, Aatrox stocke les dégâts qu'il s'inflige dans le Puits de sang. Quand il subit une blessure fatale, Aatrox extrait le sang du puits et le transforme en PV sur une brève période. En outre, Aatrox gagne 1% de vitesse d'attaque tous les 2% de sang dans le puits."
             },
             {
                "id":"Q",
                "name":"Vol obscur",
-               "description":"Aatrox s'envole et s'abat à l'endroit ciblé, blessant et projetant dans les airs les ennemis au centre de l'impact.\nAatrox s'envole et s'abat à l'endroit ciblé, infligeant 70/115/160/205/250 (+60% dégâts d'attaque supplémentaires) pts de dégâts physiques à tous les ennemis proches et projetant en l'air les cibles au centre de l'impact pendant 1 sec.",
+               "descriptionView":"Aatrox s'envole et s'abat à l'endroit ciblé, blessant et projetant dans les airs les ennemis au centre de l'impact.\nAatrox s'envole et s'abat à l'endroit ciblé, infligeant 70/115/160/205/250 (+60% dégâts d'attaque supplémentaires) pts de dégâts physiques à tous les ennemis proches et projetant en l'air les cibles au centre de l'impact pendant 1 sec.",
                "cost":"Coûte 10% des PV actuels",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Choc vital\/Sanguinaire",
-               "description":"Quand la compétence est active, Aatrox inflige des dégâts supplémentaires toutes les trois attaques au dépens de ses PV. Quand elle est inactive, Aatrox récupère des PV toutes les trois attaques.\nDésactivé, Aatrox bénéficie de Choc vital. Activé, Sanguinaire remplace Choc vital.\nChoc vital : toutes les trois attaques, Aatrox récupère 20/25/30/35/40 (+25% dégâts d'attaque supplémentaires) PV, augmentés de 200% s'il a moins de la moitié de ses PV.\nSanguinaire : toutes les trois attaques, Aatrox inflige 60/95/130/165/200 (+100% dégâts d'attaque supplémentaires) pts de dégâts physiques supplémentaires et perd PV.",
+               "descriptionView":"Quand la compétence est active, Aatrox inflige des dégâts supplémentaires toutes les trois attaques au dépens de ses PV. Quand elle est inactive, Aatrox récupère des PV toutes les trois attaques.\nDésactivé, Aatrox bénéficie de Choc vital. Activé, Sanguinaire remplace Choc vital.\nChoc vital : toutes les trois attaques, Aatrox récupère 20/25/30/35/40 (+25% dégâts d'attaque supplémentaires) PV, augmentés de 200% s'il a moins de la moitié de ses PV.\nSanguinaire : toutes les trois attaques, Aatrox inflige 60/95/130/165/200 (+100% dégâts d'attaque supplémentaires) pts de dégâts physiques supplémentaires et perd PV.",
                "cost":"Pas de coût",
                "range":"Soi-même"
             },
             {
                "id":"E",
                "name":"Lames du tourment",
-               "description":"Aatrox libère la puissance de sa lame, blessant et ralentissant tous les ennemis touchés.\nAatrox libère la puissance de sa lame, infligeant 75/110/145/180/215 (+60% puissance) (+60% dégâts d'attaque supplémentaires) pts de dégâts magiques à tous les ennemis touchés et les ralentissant de 40% pendant 1.75/2/2.25/2.5/2.75 sec.",
+               "descriptionView":"Aatrox libère la puissance de sa lame, blessant et ralentissant tous les ennemis touchés.\nAatrox libère la puissance de sa lame, infligeant 75/110/145/180/215 (+60% puissance) (+60% dégâts d'attaque supplémentaires) pts de dégâts magiques à tous les ennemis touchés et les ralentissant de 40% pendant 1.75/2/2.25/2.5/2.75 sec.",
                "cost":"Coûte 5% des PV actuels",
                "range":"1000"
             },
             {
                "id":"R",
                "name":"Massacre",
-               "description":"Aatrox aspire le sang de ses ennemis, blessant tous les champions ennemis proches et augmentant sa vitesse d'attaque ainsi que sa portée d'attaque pendant un court instant.\nAatrox aspire le sang de ses ennemis, infligeant 200/300/400 (+100% puissance) pts de dégâts magiques à tous les champions ennemis autour de lui. En outre, il augmente sa vitesse d'attaque de 40/50/60% et sa portée d'attaque de 175 pendant 12 sec.",
+               "descriptionView":"Aatrox aspire le sang de ses ennemis, blessant tous les champions ennemis proches et augmentant sa vitesse d'attaque ainsi que sa portée d'attaque pendant un court instant.\nAatrox aspire le sang de ses ennemis, infligeant 200/300/400 (+100% puissance) pts de dégâts magiques à tous les champions ennemis autour de lui. En outre, il augmente sa vitesse d'attaque de 40/50/60% et sa portée d'attaque de 175 pendant 12 sec.",
                "cost":"Pas de coût",
                "range":"550"
             }
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "title":"Renard à neuf queues",
+         "titleView":"Renard à neuf queues",
          "tags":[
             "Mage",
             "Assassin"
@@ -58,33 +58,33 @@
             {
                "id":"P",
                "name":"Vol essentiel",
-               "description":"Octroie une charge de Vol essentiel à chaque fois qu'un sort touche un ennemi (max : 3 charges par sort). Avec 9 charges, le prochain sort d'Ahri la soigne en touchant un ennemi."
+               "descriptionView":"Octroie une charge de Vol essentiel à chaque fois qu'un sort touche un ennemi (max : 3 charges par sort). Avec 9 charges, le prochain sort d'Ahri la soigne en touchant un ennemi."
             },
             {
                "id":"Q",
                "name":"Orbe d'illusion",
-               "description":"Ahri lance son orbe et le ramène vers elle, infligeant des dégâts magiques à l'aller et des dégâts bruts au retour.\nInflige 40/65/90/115/140 (+33% puissance) pts de dégâts magiques à l'aller, puis 40/65/90/115/140 (+33% puissance) pts de dégâts bruts au retour.",
+               "descriptionView":"Ahri lance son orbe et le ramène vers elle, infligeant des dégâts magiques à l'aller et des dégâts bruts au retour.\nInflige 40/65/90/115/140 (+33% puissance) pts de dégâts magiques à l'aller, puis 40/65/90/115/140 (+33% puissance) pts de dégâts bruts au retour.",
                "cost":"70/75/80/85/90 pts de mana",
                "range":"880"
             },
             {
                "id":"W",
                "name":"Lucioles",
-               "description":"Ahri libère trois lucioles qui verrouillent et attaquent les ennemis proches.\nLibère trois lucioles qui s'agrippent aux ennemis proches (les champions en priorité), leur infligeant 40/65/90/115/140 (+40% puissance) pts de dégâts magiques.Les ennemis touchés par de multiples Lucioles subissent 30% de dégâts de chaque Luciole supplémentaire après la première, jusqu'à un maximum de 0 pts de dégâts à un seul ennemi.",
+               "descriptionView":"Ahri libère trois lucioles qui verrouillent et attaquent les ennemis proches.\nLibère trois lucioles qui s'agrippent aux ennemis proches (les champions en priorité), leur infligeant 40/65/90/115/140 (+40% puissance) pts de dégâts magiques.Les ennemis touchés par de multiples Lucioles subissent 30% de dégâts de chaque Luciole supplémentaire après la première, jusqu'à un maximum de 0 pts de dégâts à un seul ennemi.",
                "cost":"50 pts de mana",
                "range":"800"
             },
             {
                "id":"E",
                "name":"Charme",
-               "description":"Ahri envoie un baiser qui inflige des dégâts et charme le premier ennemi qu'il touche, le faisant marcher docilement vers elle. Ahri inflige des dégâts supplémentaires aux ennemis récemment charmés.\nEnvoie un baiser qui inflige 60/90/120/150/180 (+35% puissance) pts de dégâts magiques et charme un ennemi, le faisant marcher docilement vers Ahri pendant 1/1.25/1.5/1.75/2 sec.Les ennemis touchés par Charme subissent 20% de dégâts magiques supplémentaires de la part d'Ahri pendant 6 sec. Les dégâts bruts d'Orbe d'illusion sont également accrus par cet effet.",
+               "descriptionView":"Ahri envoie un baiser qui inflige des dégâts et charme le premier ennemi qu'il touche, le faisant marcher docilement vers elle. Ahri inflige des dégâts supplémentaires aux ennemis récemment charmés.\nEnvoie un baiser qui inflige 60/90/120/150/180 (+35% puissance) pts de dégâts magiques et charme un ennemi, le faisant marcher docilement vers Ahri pendant 1/1.25/1.5/1.75/2 sec.Les ennemis touchés par Charme subissent 20% de dégâts magiques supplémentaires de la part d'Ahri pendant 6 sec. Les dégâts bruts d'Orbe d'illusion sont également accrus par cet effet.",
                "cost":"85 pts de mana",
                "range":"975"
             },
             {
                "id":"R",
                "name":"Assaut spirituel",
-               "description":"Ahri se jette en avant et tire des traits spirituels, infligeant des dégâts à 3 ennemis proches (les champions en priorité). Assaut spirituel peut être lancé jusqu'à 3 fois en 10 secondes avant d'entrer en phase de récupération.\nFonce vers l'avant et tire 3 traits spirituels sur les ennemis proches (les champions en priorité), infligeant 70/110/150 (+30% puissance) pts de dégâts magiques. Peut être lancé jusqu'à 3 fois en 10 secondes avant d'entrer en phase de récupération.",
+               "descriptionView":"Ahri se jette en avant et tire des traits spirituels, infligeant des dégâts à 3 ennemis proches (les champions en priorité). Assaut spirituel peut être lancé jusqu'à 3 fois en 10 secondes avant d'entrer en phase de récupération.\nFonce vers l'avant et tire 3 traits spirituels sur les ennemis proches (les champions en priorité), infligeant 70/110/150 (+30% puissance) pts de dégâts magiques. Peut être lancé jusqu'à 3 fois en 10 secondes avant d'entrer en phase de récupération.",
                "cost":"100 pts de mana",
                "range":"450"
             }
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "title":"Poing des ombres",
+         "titleView":"Poing des ombres",
          "tags":[
             "Assassin"
          ],
@@ -101,33 +101,33 @@
             {
                "id":"P",
                "name":"Maîtrises jumelles",
-               "description":"Maîtrise de la puissance : les attaques de base d'Akali infligent 6% de dégâts magiques supplémentaires, plus 1% tous les 6 pts de puissance.\nMaîtrise de la force : Akali gagne un effet Sort vampirique de 6%, plus 1% tous les 6 pts de dégâts d'attaque supplémentaires."
+               "descriptionView":"Maîtrise de la puissance : les attaques de base d'Akali infligent 6% de dégâts magiques supplémentaires, plus 1% tous les 6 pts de puissance.\nMaîtrise de la force : Akali gagne un effet Sort vampirique de 6%, plus 1% tous les 6 pts de dégâts d'attaque supplémentaires."
             },
             {
                "id":"Q",
                "name":"Marque d'assassin",
-               "description":"Akali lance son kama sur un ennemi, infligeant des dégâts magiques et marquant sa cible pendant 6 secondes. Si elle utilise une attaque de mêlée contre une cible marquée, la marque est activée et inflige des dégâts supplémentaires en plus de lui rendre de l'énergie.\nAkali lance son kama et inflige 35/55/75/95/115 (+40% puissance) pts de dégâts magiques et marque sa cible pendant 6 secondes.Si elle utilise une attaque de mêlée contre une cible marquée, la marque est activée, inflige 45/70/95/120/145 (+50% puissance) pts de dégâts magiques et restaure 20/25/30/35/40 pts d'énergie.",
+               "descriptionView":"Akali lance son kama sur un ennemi, infligeant des dégâts magiques et marquant sa cible pendant 6 secondes. Si elle utilise une attaque de mêlée contre une cible marquée, la marque est activée et inflige des dégâts supplémentaires en plus de lui rendre de l'énergie.\nAkali lance son kama et inflige 35/55/75/95/115 (+40% puissance) pts de dégâts magiques et marque sa cible pendant 6 secondes.Si elle utilise une attaque de mêlée contre une cible marquée, la marque est activée, inflige 45/70/95/120/145 (+50% puissance) pts de dégâts magiques et restaure 20/25/30/35/40 pts d'énergie.",
                "cost":"60 pts d'énergie",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Linceul nébuleux",
-               "description":"Akali déploie des fumigènes dans la zone ciblée. Elle y est invisible et y profite d'un surcroît d'armure et de résistance magique. Si elle attaque ou utilise des compétences, elle est temporairement révélée. La vitesse de déplacement des ennemis dans la fumée est réduite.\nAkali lève un voile de fumée pendant 8 secondes. Tant qu'elle reste dans la zone, Akali gagne 10/20/30/40/50 pts d'armure et de résistance magique et est invisible. Si elle attaque ou utilise des compétences, elle est temporairement révélée.Les ennemis dans la fumée sont ralentis de 14/18/22/26/30%.",
+               "descriptionView":"Akali déploie des fumigènes dans la zone ciblée. Elle y est invisible et y profite d'un surcroît d'armure et de résistance magique. Si elle attaque ou utilise des compétences, elle est temporairement révélée. La vitesse de déplacement des ennemis dans la fumée est réduite.\nAkali lève un voile de fumée pendant 8 secondes. Tant qu'elle reste dans la zone, Akali gagne 10/20/30/40/50 pts d'armure et de résistance magique et est invisible. Si elle attaque ou utilise des compétences, elle est temporairement révélée.Les ennemis dans la fumée sont ralentis de 14/18/22/26/30%.",
                "cost":"80/75/70/65/60 pts d'énergie",
                "range":"700"
             },
             {
                "id":"E",
                "name":"Taille incurvée",
-               "description":"Akali balance ses kamas, infligeant des dégâts en fonction de ses dégâts d'attaque et de sa puissance.\nAkali balance ses kamas, infligeant aux ennemis proches 30/55/80/105/130 (+60% dégâts d'attaque) (+30% puissance) pts de dégâts physiques.Déclenche Marque d'assassin sur les cibles marquées.",
+               "descriptionView":"Akali balance ses kamas, infligeant des dégâts en fonction de ses dégâts d'attaque et de sa puissance.\nAkali balance ses kamas, infligeant aux ennemis proches 30/55/80/105/130 (+60% dégâts d'attaque) (+30% puissance) pts de dégâts physiques.Déclenche Marque d'assassin sur les cibles marquées.",
                "cost":"60/55/50/45/40 pts d'énergie",
                "range":"325"
             },
             {
                "id":"R",
                "name":"Danse des ombres",
-               "description":"Akali traverse les ombres pour frapper rapidement sa cible, infligeant des dégâts et consommant une charge d'Essence des ombres. Akali stocke une charge d'Essence des ombres (3 max) soit périodiquement, soit selon les morts et assist.\nAkali traverse les ombres pour frapper rapidement sa cible, infligeant 100/175/250 (+50% puissance) pts de dégâts magiques.Akali stocke une charge d'Essence des ombres en tuant des champions et en faisant des assistances, ou toutes les 30/22.5/15 secondes (3 max).",
+               "descriptionView":"Akali traverse les ombres pour frapper rapidement sa cible, infligeant des dégâts et consommant une charge d'Essence des ombres. Akali stocke une charge d'Essence des ombres (3 max) soit périodiquement, soit selon les morts et assist.\nAkali traverse les ombres pour frapper rapidement sa cible, infligeant 100/175/250 (+50% puissance) pts de dégâts magiques.Akali stocke une charge d'Essence des ombres en tuant des champions et en faisant des assistances, ou toutes les 30/22.5/15 secondes (3 max).",
                "cost":"1 Essence(s) des ombres",
                "range":"800"
             }
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "title":"Minotaure",
+         "titleView":"Minotaure",
          "tags":[
             "Tank"
          ],
@@ -144,33 +144,33 @@
             {
                "id":"P",
                "name":"Piétinement",
-               "description":"Quand Alistar utilise une compétence, il profite de Piétinement et inflige des dégâts aux unités et tourelles proches pendant quelques secondes."
+               "descriptionView":"Quand Alistar utilise une compétence, il profite de Piétinement et inflige des dégâts aux unités et tourelles proches pendant quelques secondes."
             },
             {
                "id":"Q",
                "name":"Atomisation",
-               "description":"Alistar frappe le sol, infligeant des dégâts à tous les ennemis proches et les projetant dans les airs. En atterrissant, les ennemis sont étourdis.\nAlistar frappe le sol, inflige 60/105/150/195/240 (+50% puissance) pts de dégâts magiques à tous les ennemis proches et les projette dans les airs, les étourdissant pendant 1,5 secondes.",
+               "descriptionView":"Alistar frappe le sol, infligeant des dégâts à tous les ennemis proches et les projetant dans les airs. En atterrissant, les ennemis sont étourdis.\nAlistar frappe le sol, inflige 60/105/150/195/240 (+50% puissance) pts de dégâts magiques à tous les ennemis proches et les projette dans les airs, les étourdissant pendant 1,5 secondes.",
                "cost":"70/80/90/100/110 pts de mana",
                "range":"365"
             },
             {
                "id":"W",
                "name":"Coup de tête",
-               "description":"Alistar charge une cible, lui inflige des dégâts et la fait tomber à la renverse.\nAlistar charge un ennemi, lui inflige 55/110/165/220/275 (+70% puissance) pts de dégâts magiques et le repousse en l'étourdissant.",
+               "descriptionView":"Alistar charge une cible, lui inflige des dégâts et la fait tomber à la renverse.\nAlistar charge un ennemi, lui inflige 55/110/165/220/275 (+70% puissance) pts de dégâts magiques et le repousse en l'étourdissant.",
                "cost":"70/80/90/100/110 pts de mana",
                "range":"650"
             },
             {
                "id":"E",
                "name":"Cri triomphant",
-               "description":"Alistar pousse un cri de guerre et se rend des PV ainsi que la moitié de l'effet à toutes les unités alliées proches. Peut être utilisé plus souvent si des ennemis proches meurent.\nRend 60/90/120/150/180 (+20% puissance) PV à Alistar et moitié moins aux alliés proches. Le délai de récupération est réduit de 2 sec à chaque fois qu'une unité ennemie est tuée à proximité.",
+               "descriptionView":"Alistar pousse un cri de guerre et se rend des PV ainsi que la moitié de l'effet à toutes les unités alliées proches. Peut être utilisé plus souvent si des ennemis proches meurent.\nRend 60/90/120/150/180 (+20% puissance) PV à Alistar et moitié moins aux alliés proches. Le délai de récupération est réduit de 2 sec à chaque fois qu'une unité ennemie est tuée à proximité.",
                "cost":"40/50/60/70/80 pts de mana",
                "range":"575"
             },
             {
                "id":"R",
                "name":"Volonté de fer",
-               "description":"Alistar lâche un puissant rugissement, gagnant un bonus aux dégâts, purgeant tous les effets de contrôle de foule qui l'affectent et réduisant les dégâts physiques et magiques subis pendant la durée d'effet.\nPurge les effets entravants qui affectent Alistar, lequel gagne 60/75/90 pts de dégâts d'attaque et subit des dégâts physiques et magiques réduits de 50/60/70% pendant 7 sec.",
+               "descriptionView":"Alistar lâche un puissant rugissement, gagnant un bonus aux dégâts, purgeant tous les effets de contrôle de foule qui l'affectent et réduisant les dégâts physiques et magiques subis pendant la durée d'effet.\nPurge les effets entravants qui affectent Alistar, lequel gagne 60/75/90 pts de dégâts d'attaque et subit des dégâts physiques et magiques réduits de 50/60/70% pendant 7 sec.",
                "cost":"100 pts de mana",
                "range":"Soi-même"
             }

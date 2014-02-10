@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -77,7 +77,7 @@ public abstract class DebugUtils {
     }
 
     public static void debugSelectAllFromTable(String tag, String[] fields, String tableName) {
-        SQLiteDatabase db = SQLiteBridge.getSingleton().getReadableDatabase();
+        SQLiteDatabase db = SQLiteDAO.getSingleton().getReadableDatabase();
 
         db.beginTransaction();
         Cursor cursor = db.query(tableName, fields, null, null, null, null, null);

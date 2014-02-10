@@ -1,7 +1,7 @@
 package org.jorge.lolin1.feeds.surr;
 
 import org.jorge.lolin1.feeds.BaseEntry;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.util.StringTokenizer;
 
@@ -52,7 +52,7 @@ public class SurrEntry extends BaseEntry {
 
     public void markAsRead() {
         this.read = Boolean.TRUE;
-        SQLiteBridge.getSingleton().markSurrAsRead(this.getLink());
+        SQLiteDAO.getSingleton().markSurrAsRead(this.getLink());
     }
 
     public String toString() {

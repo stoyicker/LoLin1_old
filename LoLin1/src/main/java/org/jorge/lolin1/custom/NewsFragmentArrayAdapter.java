@@ -16,7 +16,7 @@ import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.utils.Utils;
 
 import java.util.ArrayList;
@@ -53,13 +53,13 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
     }
 
     public void updateShownNews() {
-        String tableName = SQLiteBridge.getNewsTableName();
+        String tableName = SQLiteDAO.getNewsTableName();
         //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
             ArrayList<NewsEntry> currTable = shownNews.get(tableName);
             int howManyIHave = currTable.size();
             ArrayList<NewsEntry> newNews =
-                    SQLiteBridge.getSingleton().getNewNews(howManyIHave);
+                    SQLiteDAO.getSingleton().getNewNews(howManyIHave);
             Collections.reverse(newNews);
             for (NewsEntry x : newNews) {
                 currTable.add(0, x);
@@ -68,7 +68,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         else {
             if (Utils.tableExists(tableName)) {
                 ArrayList<NewsEntry> news =
-                        SQLiteBridge.getSingleton().getNews();
+                        SQLiteDAO.getSingleton().getNews();
                 shownNews.put(tableName, news);
             }
         }
@@ -82,7 +82,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        String tableName = SQLiteBridge.getNewsTableName();
+        String tableName = SQLiteDAO.getNewsTableName();
 
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
@@ -91,7 +91,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     @Override
     public NewsEntry getItem(int i) {
-        String tableName = SQLiteBridge.getNewsTableName();
+        String tableName = SQLiteDAO.getNewsTableName();
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
         return currTable.get(i);
@@ -104,22 +104,30 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ViewHolder viewHolder;
         if (convertView == null) {
             convertView =
                     ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
                             .inflate(
                                     list_item_layout, null);
-        }
-        ImageView image = (ImageView) convertView.findViewById(R.id.feed_item_image);
-        TextView title = (TextView) convertView.findViewById(R.id.news_feed_item_title);
-        TextView desc = (TextView) convertView.findViewById(R.id.news_feed_item_desc);
 
-        String tableName = SQLiteBridge.getNewsTableName();
+            viewHolder = new ViewHolder();
+            viewHolder.setTitleView((TextView) convertView.findViewById(R.id.news_feed_item_title));
+            viewHolder.setDescriptionView(
+                    (TextView) convertView.findViewById(R.id.news_feed_item_desc));
+            viewHolder.setImageView((ImageView) convertView.findViewById(R.id.feed_item_image));
+            convertView.setTag(viewHolder);
+        }
+        else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
+
+        String tableName = SQLiteDAO.getNewsTableName();
         ArrayList<NewsEntry> currentFeed = shownNews.get(tableName);
         NewsEntry thisArticle = currentFeed.get(position);
 
-        title.setText(Html.fromHtml(thisArticle.getTitle()));
-        desc.setText(Html.fromHtml(thisArticle.getDescription()));
+        viewHolder.getTitleView().setText(Html.fromHtml(thisArticle.getTitle()));
+        viewHolder.getDescriptionView().setText(Html.fromHtml(thisArticle.getDescription()));
 
         if (position == PreferenceManager.getDefaultSharedPreferences(mContext)
                 .getInt("lastSelectedNewsIndex", -1) &&
@@ -156,8 +164,37 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
                 });
                 return null;
             }
-        }.execute(image, thisArticle);
+        }.execute(viewHolder.getImageView(), thisArticle);
 
         return convertView;
+    }
+
+    private final static class ViewHolder {
+        private ImageView imageView;
+        private TextView titleView, descriptionView;
+
+        public ImageView getImageView() {
+            return imageView;
+        }
+
+        public void setImageView(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        public TextView getTitleView() {
+            return titleView;
+        }
+
+        public void setTitleView(TextView titleView) {
+            this.titleView = titleView;
+        }
+
+        public TextView getDescriptionView() {
+            return descriptionView;
+        }
+
+        public void setDescriptionView(TextView descriptionView) {
+            this.descriptionView = descriptionView;
+        }
     }
 }

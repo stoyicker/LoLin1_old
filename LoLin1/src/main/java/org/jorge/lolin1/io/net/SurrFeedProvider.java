@@ -7,7 +7,7 @@ import android.util.Xml;
 import org.jorge.lolin1.feeds.IFeedHandler;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.feeds.surr.SurrFeedHandler;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.utils.ISO8601Time;
 import org.jorge.lolin1.utils.Utils;
 import org.xmlpull.v1.XmlPullParser;
@@ -145,7 +145,7 @@ public class SurrFeedProvider {
                                         .contentEquals("alternate")) {
                                     link = parser.getAttributeValue(null, "href");
                                     SurrEntry thisOne =
-                                            SQLiteBridge.getSingleton().getSurrByLink(link);
+                                            SQLiteDAO.getSingleton().getSurrByLink(link);
                                     Boolean read = Boolean.FALSE;
                                     if (thisOne != null) {
                                         read = !thisOne.hasBeenRead() ||

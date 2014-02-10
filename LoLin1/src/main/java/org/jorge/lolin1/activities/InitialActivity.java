@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.champs.ChampionManager;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.utils.Utils;
 
 /**
@@ -38,7 +38,7 @@ public class InitialActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SQLiteBridge.setup(getApplicationContext());
+        SQLiteDAO.setup(getApplicationContext());
         PreferenceManager.setDefaultValues(this, R.xml.settings, Boolean.FALSE);
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(this);

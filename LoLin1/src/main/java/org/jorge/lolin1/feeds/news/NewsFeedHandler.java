@@ -9,7 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import org.jorge.lolin1.feeds.IFeedHandler;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.utils.Utils;
 
 import java.io.ByteArrayOutputStream;
@@ -81,12 +81,12 @@ public class NewsFeedHandler implements IFeedHandler {
             bmp.compress(Bitmap.CompressFormat.PNG, 0, blob);
             byte[] bmpAsByteArray = blob.toByteArray();
             row = new ContentValues();
-            row.put(SQLiteBridge.NEWS_KEY_TITLE, title);
-            row.put(SQLiteBridge.NEWS_KEY_DESC, desc);
-            row.put(SQLiteBridge.NEWS_KEY_IMG_URL, img_url.replaceAll("http://", "httpxxx"));
-            row.put(SQLiteBridge.NEWS_KEY_URL, url.replaceAll("http://", "httpxxx"));
-            row.put(SQLiteBridge.NEWS_KEY_BLOB, bmpAsByteArray);
-            if (SQLiteBridge.getSingleton().insertNewsArticle(row) != -1) {
+            row.put(SQLiteDAO.NEWS_KEY_TITLE, title);
+            row.put(SQLiteDAO.NEWS_KEY_DESC, desc);
+            row.put(SQLiteDAO.NEWS_KEY_IMG_URL, img_url.replaceAll("http://", "httpxxx"));
+            row.put(SQLiteDAO.NEWS_KEY_URL, url.replaceAll("http://", "httpxxx"));
+            row.put(SQLiteDAO.NEWS_KEY_BLOB, bmpAsByteArray);
+            if (SQLiteDAO.getSingleton().insertNewsArticle(row) != -1) {
                 areThereNewNews = Boolean.TRUE;
             }
         }

@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 
 import org.jorge.lolin1.feeds.BaseEntry;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.util.StringTokenizer;
 
@@ -48,7 +48,7 @@ public class NewsEntry extends BaseEntry {
     public Bitmap getImage(Context context) {
         if (this.image == null) {
             this.image =
-                    SQLiteBridge.getNewsArticleBitmap(context, SQLiteBridge.getSingleton()
+                    SQLiteDAO.getNewsArticleBitmap(context, SQLiteDAO.getSingleton()
                             .getArticleBlob(imageLink), imageLink.replaceAll("httpxxx", "http://"));
         }
         return this.image;

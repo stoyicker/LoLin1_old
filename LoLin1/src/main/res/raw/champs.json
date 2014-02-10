@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "title":"the Darkin Blade",
+         "titleView":"the Darkin Blade",
          "tags":[
             "Fighter",
             "Tank"
@@ -14,33 +14,33 @@
             {
                "id":"P",
                "name":"Blood Well",
-               "description":"When using an ability that costs Health, Aatrox stores the self-inflicted damage into the Blood Well. Upon taking fatal damage Aatrox extracts the blood from the well and recovers it as health over a brief duration. Additionally, Aatrox gains 1% Attack Speed for every 2% blood that is in the well."
+               "descriptionView":"When using an ability that costs Health, Aatrox stores the self-inflicted damage into the Blood Well. Upon taking fatal damage Aatrox extracts the blood from the well and recovers it as health over a brief duration. Additionally, Aatrox gains 1% Attack Speed for every 2% blood that is in the well."
             },
             {
                "id":"Q",
                "name":"Dark Flight",
-               "description":"Aatrox takes flight and slams down at a targeted location, dealing damage and knocking up enemies at the center of impact.\nAatrox takes flight and slams down at a targeted location, dealing 70/115/160/205/250 (+60% bonus Attack Damage) physical damage to all nearby enemies and knocking up targets at the center of impact for 1 second.",
+               "descriptionView":"Aatrox takes flight and slams down at a targeted location, dealing damage and knocking up enemies at the center of impact.\nAatrox takes flight and slams down at a targeted location, dealing 70/115/160/205/250 (+60% bonus Attack Damage) physical damage to all nearby enemies and knocking up targets at the center of impact for 1 second.",
                "cost":"10% of Current Health",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Blood Thirst \/ Blood Price",
-               "description":"While toggled on Aatrox deals bonus damage every third subsequent attack at the expense of his own Health. While toggled off Aatrox restores Health every third subsequent attack.\nWhile toggled off Aatrox benefits from Blood Thirst, while toggled on Blood Price is activated and removes Blood Thirst.\nBlood Thirst: Every third attack, Aatrox restores 20/25/30/35/40 (+25% bonus Attack Damage) Health, increased by 200% when below half Health.\nBlood Price: Every third attack, Aatrox deals 60/95/130/165/200 (+100% bonus Attack Damage) bonus physical damage and loses Health.",
+               "descriptionView":"While toggled on Aatrox deals bonus damage every third subsequent attack at the expense of his own Health. While toggled off Aatrox restores Health every third subsequent attack.\nWhile toggled off Aatrox benefits from Blood Thirst, while toggled on Blood Price is activated and removes Blood Thirst.\nBlood Thirst: Every third attack, Aatrox restores 20/25/30/35/40 (+25% bonus Attack Damage) Health, increased by 200% when below half Health.\nBlood Price: Every third attack, Aatrox deals 60/95/130/165/200 (+100% bonus Attack Damage) bonus physical damage and loses Health.",
                "cost":"No Cost",
                "range":"Self"
             },
             {
                "id":"E",
                "name":"Blades of Torment",
-               "description":"Aatrox unleashes the power of his blade, dealing damage to all enemies hit and slowing them.\nAatrox unleashes the power of his blade, dealing 75/110/145/180/215 (+60% Ability Power) (+60% bonus Attack Damage) Magic Damage to all enemies hit and slowing them by 40% for 1.75/2/2.25/2.5/2.75 seconds.",
+               "descriptionView":"Aatrox unleashes the power of his blade, dealing damage to all enemies hit and slowing them.\nAatrox unleashes the power of his blade, dealing 75/110/145/180/215 (+60% Ability Power) (+60% bonus Attack Damage) Magic Damage to all enemies hit and slowing them by 40% for 1.75/2/2.25/2.5/2.75 seconds.",
                "cost":"5% of Current Health",
                "range":"1000"
             },
             {
                "id":"R",
                "name":"Massacre",
-               "description":"Aatrox draws in the blood of his foes, damaging all nearby enemy champions around him and gaining increased Attack Speed and bonus Attack Range for a short duration.\nAatrox draws in the blood of his foes, dealing 200/300/400 (+100% Ability Power) magic damage to all enemy champions around him, increasing his Attack Speed by 40/50/60%, and gaining 175 Attack Range for 12 seconds.",
+               "descriptionView":"Aatrox draws in the blood of his foes, damaging all nearby enemy champions around him and gaining increased Attack Speed and bonus Attack Range for a short duration.\nAatrox draws in the blood of his foes, dealing 200/300/400 (+100% Ability Power) magic damage to all enemy champions around him, increasing his Attack Speed by 40/50/60%, and gaining 175 Attack Range for 12 seconds.",
                "cost":"No Cost",
                "range":"550"
             }
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "title":"the Nine-Tailed Fox",
+         "titleView":"the Nine-Tailed Fox",
          "tags":[
             "Mage",
             "Assassin"
@@ -58,33 +58,33 @@
             {
                "id":"P",
                "name":"Essence Theft",
-               "description":"Gains a charge of Essence Theft whenever a spell hits an enemy (max: 3 charges per spell). Upon reaching 9 charges, Ahri's next spell heals her whenever it hits an enemy."
+               "descriptionView":"Gains a charge of Essence Theft whenever a spell hits an enemy (max: 3 charges per spell). Upon reaching 9 charges, Ahri's next spell heals her whenever it hits an enemy."
             },
             {
                "id":"Q",
                "name":"Orb of Deception",
-               "description":"Ahri sends out and pulls back her orb, dealing magic damage on the way out and true damage on the way back.\nDeals 40/65/90/115/140 (+33% Ability Power) magic damage on the way out, and 40/65/90/115/140 (+33% Ability Power) true damage on the way back.",
+               "descriptionView":"Ahri sends out and pulls back her orb, dealing magic damage on the way out and true damage on the way back.\nDeals 40/65/90/115/140 (+33% Ability Power) magic damage on the way out, and 40/65/90/115/140 (+33% Ability Power) true damage on the way back.",
                "cost":"70/75/80/85/90 Mana",
                "range":"880"
             },
             {
                "id":"W",
                "name":"Fox-Fire",
-               "description":"Ahri releases three fox-fires, that lock onto and attack nearby enemies.\nReleases three fox-fires that lock on to nearby enemies (prioritizes Champions) dealing 40/65/90/115/140 (+40% Ability Power) magic damage.Enemies hit with multiple fox-fires take 30% damage from each additional fox-fire beyond the first, for a maximum of 0 damage to a single enemy.",
+               "descriptionView":"Ahri releases three fox-fires, that lock onto and attack nearby enemies.\nReleases three fox-fires that lock on to nearby enemies (prioritizes Champions) dealing 40/65/90/115/140 (+40% Ability Power) magic damage.Enemies hit with multiple fox-fires take 30% damage from each additional fox-fire beyond the first, for a maximum of 0 damage to a single enemy.",
                "cost":"50 Mana",
                "range":"800"
             },
             {
                "id":"E",
                "name":"Charm",
-               "description":"Ahri blows a kiss that damages and charms an enemy it encounters, causing them to walk harmlessly towards her. Ahri deals additional damage to recently charmed enemies.\nBlows a kiss dealing 60/90/120/150/180 (+35% Ability Power) magic damage and charms an enemy causing them to walk harmlessly towards Ahri for 1/1.25/1.5/1.75/2 second(s).Enemies hit by Charm take 20% more magic damage from Ahri for 6 seconds. Orb of Deception's true damage is also increased by this effect.",
+               "descriptionView":"Ahri blows a kiss that damages and charms an enemy it encounters, causing them to walk harmlessly towards her. Ahri deals additional damage to recently charmed enemies.\nBlows a kiss dealing 60/90/120/150/180 (+35% Ability Power) magic damage and charms an enemy causing them to walk harmlessly towards Ahri for 1/1.25/1.5/1.75/2 second(s).Enemies hit by Charm take 20% more magic damage from Ahri for 6 seconds. Orb of Deception's true damage is also increased by this effect.",
                "cost":"50 Mana",
                "range":"975"
             },
             {
                "id":"R",
                "name":"Spirit Rush",
-               "description":"Ahri dashes forward and fires essence bolts, damaging 3 nearby enemies (prioritizes Champions). Spirit Rush can be cast up to three times before going on cooldown.\nNimbly dashes forward firing 3 essence bolts at nearby enemies (prioritizes Champions) dealing 70/110/150 (+30% Ability Power) magic damage. Can be cast up to three times within 10 seconds before going on cooldown.",
+               "descriptionView":"Ahri dashes forward and fires essence bolts, damaging 3 nearby enemies (prioritizes Champions). Spirit Rush can be cast up to three times before going on cooldown.\nNimbly dashes forward firing 3 essence bolts at nearby enemies (prioritizes Champions) dealing 70/110/150 (+30% Ability Power) magic damage. Can be cast up to three times within 10 seconds before going on cooldown.",
                "cost":"100 Mana",
                "range":"450"
             }
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "title":"the Fist of Shadow",
+         "titleView":"the Fist of Shadow",
          "tags":[
             "Assassin"
          ],
@@ -101,33 +101,33 @@
             {
                "id":"P",
                "name":"Twin Disciplines",
-               "description":"Discipline of Force: Akali's basic attacks deal an additional 6% bonus magic damage, increasing by 1% for every 6 Ability Power.\nDiscipline of Might: Akali gains 6% Spell Vamp, increasing by 1% for every 6 Bonus Attack Damage."
+               "descriptionView":"Discipline of Force: Akali's basic attacks deal an additional 6% bonus magic damage, increasing by 1% for every 6 Ability Power.\nDiscipline of Might: Akali gains 6% Spell Vamp, increasing by 1% for every 6 Bonus Attack Damage."
             },
             {
                "id":"Q",
                "name":"Mark of the Assassin",
-               "description":"Akali spins her kama at a target enemy to deal magic damage and mark the target for 6 seconds. Akali's melee attacks against a marked target will trigger and consume the mark to cause additional damage and restore Energy.\nAkali throws her kama at a target enemy to deal 35/55/75/95/115 (+40% Ability Power) magic damage and mark the target for 6 seconds.Akali's melee attacks against a marked target will consume the mark to cause 45/70/95/120/145 (+50% Ability Power) magic damage and restore 20/25/30/35/40 Energy.",
+               "descriptionView":"Akali spins her kama at a target enemy to deal magic damage and mark the target for 6 seconds. Akali's melee attacks against a marked target will trigger and consume the mark to cause additional damage and restore Energy.\nAkali throws her kama at a target enemy to deal 35/55/75/95/115 (+40% Ability Power) magic damage and mark the target for 6 seconds.Akali's melee attacks against a marked target will consume the mark to cause 45/70/95/120/145 (+50% Ability Power) magic damage and restore 20/25/30/35/40 Energy.",
                "cost":"60 Energy",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Twilight Shroud",
-               "description":"Akali throws down a cover of smoke. While inside the area, Akali gains Armor and Magic Resist and becomes invisible. Attacking or using abilities will briefly reveal her. Enemies inside the smoke have their Movement Speed reduced.\nAkali throws down a cover of smoke that lasts for 8 seconds. While inside the area, Akali gains 10/20/30/40/50 Armor and Magic Resist and becomes invisible. Attacking or using abilities will briefly reveal her.Enemies inside the smoke are slowed by 14/18/22/26/30%.",
+               "descriptionView":"Akali throws down a cover of smoke. While inside the area, Akali gains Armor and Magic Resist and becomes invisible. Attacking or using abilities will briefly reveal her. Enemies inside the smoke have their Movement Speed reduced.\nAkali throws down a cover of smoke that lasts for 8 seconds. While inside the area, Akali gains 10/20/30/40/50 Armor and Magic Resist and becomes invisible. Attacking or using abilities will briefly reveal her.Enemies inside the smoke are slowed by 14/18/22/26/30%.",
                "cost":"80/75/70/65/60 Energy",
                "range":"700"
             },
             {
                "id":"E",
                "name":"Crescent Slash",
-               "description":"Akali flourishes her kamas, dealing damage based on her Attack Damage and Ability Power.\nAkali flourishes her kamas, slicing nearby enemy units for 30/55/80/105/130 (+60% Attack Damage) (+30% Ability Power) physical damage.Triggers Mark of the Assassin on targets affected by it.",
+               "descriptionView":"Akali flourishes her kamas, dealing damage based on her Attack Damage and Ability Power.\nAkali flourishes her kamas, slicing nearby enemy units for 30/55/80/105/130 (+60% Attack Damage) (+30% Ability Power) physical damage.Triggers Mark of the Assassin on targets affected by it.",
                "cost":"60/55/50/45/40 Energy",
                "range":"325"
             },
             {
                "id":"R",
                "name":"Shadow Dance",
-               "description":"Akali moves through shadows to quickly strike her target, dealing damage and consuming an Essence of Shadow charge. Akali recharges Essence of Shadow charges both periodically and upon kills and assists, max 3 stacks.\nAkali moves through shadows to quickly strike her target, dealing 100/175/250 (+50% Ability Power) magic damage.Akali stores an Essence of Shadow on kills and assists as well as every 30/22.5/15 seconds up to 3 total.",
+               "descriptionView":"Akali moves through shadows to quickly strike her target, dealing damage and consuming an Essence of Shadow charge. Akali recharges Essence of Shadow charges both periodically and upon kills and assists, max 3 stacks.\nAkali moves through shadows to quickly strike her target, dealing 100/175/250 (+50% Ability Power) magic damage.Akali stores an Essence of Shadow on kills and assists as well as every 30/22.5/15 seconds up to 3 total.",
                "cost":"1 Essence of Shadow",
                "range":"800"
             }
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "title":"the Fist of Shadow",
+         "titleView":"the Fist of Shadow",
          "tags":[
             "Tank"
          ],
@@ -144,33 +144,33 @@
             {
                "id":"P",
                "name":"Trample",
-               "description":"Each time Alistar casts a spell, he tramples nearby units and turrets for a few seconds, dealing damage to units he walks over."
+               "descriptionView":"Each time Alistar casts a spell, he tramples nearby units and turrets for a few seconds, dealing damage to units he walks over."
             },
             {
                "id":"Q",
                "name":"Pulverize",
-               "description":"Alistar smashes the ground, dealing damage to all nearby enemies and tossing them into the air. On landing, enemies are stunned.\nAlistar smashes the ground, dealing 60/105/150/195/240 (+50% Ability Power) magic damage and tossing all nearby enemy units into the air, stunning them for 1.5 seconds.",
+               "descriptionView":"Alistar smashes the ground, dealing damage to all nearby enemies and tossing them into the air. On landing, enemies are stunned.\nAlistar smashes the ground, dealing 60/105/150/195/240 (+50% Ability Power) magic damage and tossing all nearby enemy units into the air, stunning them for 1.5 seconds.",
                "cost":"70/80/90/100/110 Mana",
                "range":"365"
             },
             {
                "id":"W",
                "name":"Headbutt",
-               "description":"Alistar rams a target with his head, dealing damage and knocking the target back.\nAlistar charges at an enemy and rams them, dealing 55/110/165/220/275 (+70% Ability Power) magic damage and stunning them while knocking them back.",
+               "descriptionView":"Alistar rams a target with his head, dealing damage and knocking the target back.\nAlistar charges at an enemy and rams them, dealing 55/110/165/220/275 (+70% Ability Power) magic damage and stunning them while knocking them back.",
                "cost":"70/80/90/100/110 Mana",
                "range":"650"
             },
             {
                "id":"E",
                "name":"Triumphant Roar",
-               "description":"Alistar lets out a commanding war cry, restoring health to himself and nearby friendly units for half the amount. Can be cast more often if nearby enemies are dying.\nRestores 60/90/120/150/180 (+20% Ability Power) health to Alistar and half as much to nearby allies. Cooldown is reduced by 2 seconds each time a nearby enemy unit dies.",
+               "descriptionView":"Alistar lets out a commanding war cry, restoring health to himself and nearby friendly units for half the amount. Can be cast more often if nearby enemies are dying.\nRestores 60/90/120/150/180 (+20% Ability Power) health to Alistar and half as much to nearby allies. Cooldown is reduced by 2 seconds each time a nearby enemy unit dies.",
                "cost":"40/50/60/70/80 Mana",
                "range":"575"
             },
             {
                "id":"R",
                "name":"Unbreakable Will",
-               "description":"Alistar lets out a wild roar, gaining bonus damage, removing all crowd-control effects on himself, and reducing incoming physical and magical damage for the duration.\nRemoves disables from Alistar, and Alistar gains 60/75/90 Attack Damage and takes 50/60/70% reduced physical and magic damage for 7 seconds.",
+               "descriptionView":"Alistar lets out a wild roar, gaining bonus damage, removing all crowd-control effects on himself, and reducing incoming physical and magical damage for the duration.\nRemoves disables from Alistar, and Alistar gains 60/75/90 Attack Damage and takes 50/60/70% reduced physical and magic damage for 7 seconds.",
                "cost":"100 Mana",
                "range":"Self"
             }

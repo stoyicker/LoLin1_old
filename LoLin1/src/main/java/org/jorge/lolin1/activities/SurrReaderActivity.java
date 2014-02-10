@@ -3,14 +3,13 @@ package org.jorge.lolin1.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.frags.SurrListFragment;
 import org.jorge.lolin1.frags.WebViewerFragment;
-import org.jorge.lolin1.io.db.SQLiteBridge;
+import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.util.ArrayList;
 
@@ -45,7 +44,6 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
             savedInstanceState = new Bundle();
         }
 
-        Log.d("NX4", "onCreate (surr)");
         savedInstanceState.putInt("layout", R.layout.surr_reader);
 
         super.onCreate(savedInstanceState);
@@ -67,7 +65,8 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
             restoreState(savedInstanceState);
         }
         else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("lastSelectedSurrIndex", -1)) != -1) {
+                .getInt("lastSelectedSurrIndex", -1)) != -1 &&
+                getResources().getBoolean(R.bool.feed_has_two_panes)) {
             onSurrArticleSelected(index);
         }
     }
@@ -93,11 +92,10 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
     }
 
     private void showUrlInWebViewerFragment(int index) {
-        Log.d("NX4", "Caling suiwvf (surr)");
         ArrayList<SurrEntry> surrs;
         if (isDualPane) {
             if (isDualPane) {
-                if (!(surrs = SQLiteBridge.getSingleton().getSurrs()).isEmpty()) {
+                if (!(surrs = SQLiteDAO.getSingleton().getSurrs()).isEmpty()) {
                     WEB_FRAGMENT.loadUrl(surrs.get(index).getLink());
                 }
             }

@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "title":"Ostrze Darkinów",
+         "titleView":"Ostrze Darkinów",
          "tags":[
             "Wojownik"
          ],
@@ -13,33 +13,33 @@
             {
                "id":"P",
                "name":"Studnia Krwi",
-               "description":"Używając umiejętności, która kosztuje zdrowie, Aatrox przechowuje zadane sobie obrażenia w Studni Krwi. Po otrzymaniu śmiertelnych obrażeń używa krwi ze studni i przywraca sobie zdrowie. Ponadto Aatrox zyskuje 1% prędkości ataku za każde 2% wypełnienia studni."
+               "descriptionView":"Używając umiejętności, która kosztuje zdrowie, Aatrox przechowuje zadane sobie obrażenia w Studni Krwi. Po otrzymaniu śmiertelnych obrażeń używa krwi ze studni i przywraca sobie zdrowie. Ponadto Aatrox zyskuje 1% prędkości ataku za każde 2% wypełnienia studni."
             },
             {
                "id":"Q",
                "name":"Mroczny Lot",
-               "description":"Aatrox unosi się w powietrze i ląduje w wybranym miejscu, zadając obrażenia i podrzucając wrogów w epicentrum uderzenia.\nAatrox wyskakuje w powietrze i ląduje w wybranym miejscu, zadając 70/115/160/205/250 (+60% dodatkowe obrażenia od ataku) pkt. obrażeń pobliskim wrogom i podrzucając tych, którzy znajdą się w epicentrum na 1 sek.",
+               "descriptionView":"Aatrox unosi się w powietrze i ląduje w wybranym miejscu, zadając obrażenia i podrzucając wrogów w epicentrum uderzenia.\nAatrox wyskakuje w powietrze i ląduje w wybranym miejscu, zadając 70/115/160/205/250 (+60% dodatkowe obrażenia od ataku) pkt. obrażeń pobliskim wrogom i podrzucając tych, którzy znajdą się w epicentrum na 1 sek.",
                "cost":"Kosztuje 10% aktualnego zdrowia",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Żądza Krwi \/ Cena Krwi",
-               "description":"Po włączeniu Aatrox zadaje dodatkowe obrażenia co trzeci atak, tracąc przy tym zdrowie. Po wyłączeniu Aatrox przywraca sobie zdrowie co trzeci atak.\nKiedy umiejętność jest wyłączona, Aatrox korzysta z Żądzy Krwi, a po włączeniu jej aktywuje się Cena Krwi, anulując Żądzę Krwi.\nŻądza Krwi: Co trzeci atak Aatroxa przywraca mu 20/25/30/35/40 (+25% dodatkowe obrażenia od ataku) pkt. zdrowia, o 200% więcej jeśli ma poniżej połowy zdrowia.\nCena Krwi: Co trzeci atak Aatroxa zadaje 60/95/130/165/200 (+100% dodatkowe obrażenia od ataku) dodatkowych pkt. obrażeń fizycznych i sprawia, że traci on pkt. zdrowia.",
+               "descriptionView":"Po włączeniu Aatrox zadaje dodatkowe obrażenia co trzeci atak, tracąc przy tym zdrowie. Po wyłączeniu Aatrox przywraca sobie zdrowie co trzeci atak.\nKiedy umiejętność jest wyłączona, Aatrox korzysta z Żądzy Krwi, a po włączeniu jej aktywuje się Cena Krwi, anulując Żądzę Krwi.\nŻądza Krwi: Co trzeci atak Aatroxa przywraca mu 20/25/30/35/40 (+25% dodatkowe obrażenia od ataku) pkt. zdrowia, o 200% więcej jeśli ma poniżej połowy zdrowia.\nCena Krwi: Co trzeci atak Aatroxa zadaje 60/95/130/165/200 (+100% dodatkowe obrażenia od ataku) dodatkowych pkt. obrażeń fizycznych i sprawia, że traci on pkt. zdrowia.",
                "cost":"Umiejętność darmowa",
                "range":"Wlasne"
             },
             {
                "id":"E",
                "name":"Ostrza Udręki",
-               "description":"Aatrox uwalnia moc swojego ostrza, zadając obrażenia wszystkim trafionym wrogom i spowalniając ich.\nAatrox uwalnia moc swojego ostrza, zadając 75/110/145/180/215 (+60% Moc umiejętności) (+60% dodatkowe obrażenia od ataku) pkt. obrażeń magicznych wszystkim trafionym wrogom i spowalniając ich o 40% na 1.75/2/2.25/2.5/2.75 sek.",
+               "descriptionView":"Aatrox uwalnia moc swojego ostrza, zadając obrażenia wszystkim trafionym wrogom i spowalniając ich.\nAatrox uwalnia moc swojego ostrza, zadając 75/110/145/180/215 (+60% Moc umiejętności) (+60% dodatkowe obrażenia od ataku) pkt. obrażeń magicznych wszystkim trafionym wrogom i spowalniając ich o 40% na 1.75/2/2.25/2.5/2.75 sek.",
                "cost":"Kosztuje 5% aktualnego zdrowia",
                "range":"1000"
             },
             {
                "id":"R",
                "name":"Masakra",
-               "description":"Aatrox wysysa krew swoich wrogów, zadając obrażenia wszystkim wrogim bohaterom w pobliżu i zyskując premię do prędkości i zasięgu ataku.\nAatrox wysysa krew przeciwników, zadając 200/300/400 (+100% Moc umiejętności) pkt. obrażenia magiczne wrogim bohaterom dookoła, co zwiększając swoją prędkość ataku o 40/50/60% oraz zasięg ataku o 175 na 12 sekund.",
+               "descriptionView":"Aatrox wysysa krew swoich wrogów, zadając obrażenia wszystkim wrogim bohaterom w pobliżu i zyskując premię do prędkości i zasięgu ataku.\nAatrox wysysa krew przeciwników, zadając 200/300/400 (+100% Moc umiejętności) pkt. obrażenia magiczne wrogim bohaterom dookoła, co zwiększając swoją prędkość ataku o 40/50/60% oraz zasięg ataku o 175 na 12 sekund.",
                "cost":"Umiejętność darmowa",
                "range":"550"
             }
@@ -48,7 +48,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "title":"Lisica o Dziewięciu Ogonach",
+         "titleView":"Lisica o Dziewięciu Ogonach",
          "tags":[
             "Mag"
          ],
@@ -56,33 +56,33 @@
             {
                "id":"P",
                "name":"Kradzież Esencji",
-               "description":"Otrzymuje ładunek Kradzieży Esencji kiedy trafi wroga zaklęciem (maksymalnie: 3 ładunki na zaklęcie). Po naładowaniu 9 ładunków następne zaklęcie rzucone przez Ahri uleczy ją, ilekroć trafi przeciwnika."
+               "descriptionView":"Otrzymuje ładunek Kradzieży Esencji kiedy trafi wroga zaklęciem (maksymalnie: 3 ładunki na zaklęcie). Po naładowaniu 9 ładunków następne zaklęcie rzucone przez Ahri uleczy ją, ilekroć trafi przeciwnika."
             },
             {
                "id":"Q",
                "name":"Zwodnicza Kula",
-               "description":"Ahri wypuszcza swoją kulę, która następnie wraca do niej i zadaje obrażenia magiczne w drodze do celu i nieuchronne obrażenia, kiedy wraca.\nZadaje 40/65/90/115/140 (+33% Moc umiejętności) pkt. obrażeń magicznych, lecąc w jedną stronę, a 40/65/90/115/140 (+33% Moc umiejętności) pkt. obrażeń nieuchronnych w drodze powrotnej.",
+               "descriptionView":"Ahri wypuszcza swoją kulę, która następnie wraca do niej i zadaje obrażenia magiczne w drodze do celu i nieuchronne obrażenia, kiedy wraca.\nZadaje 40/65/90/115/140 (+33% Moc umiejętności) pkt. obrażeń magicznych, lecąc w jedną stronę, a 40/65/90/115/140 (+33% Moc umiejętności) pkt. obrażeń nieuchronnych w drodze powrotnej.",
                "cost":"70/75/80/85/90 pkt. many",
                "range":"880"
             },
             {
                "id":"W",
                "name":"Ogniki",
-               "description":"Ahri wypuszcza trzy ogniki, które namierzają i atakują pobliskich wrogów.\nTworzy trzy ogniki, które namierzają pobliskich wrogów (starając się trafić bohaterów) i zadają 40/65/90/115/140 (+40% Moc umiejętności) pkt. obrażeń magicznych.Przeciwnicy trafieni kilkoma Ognikami otrzymują o 30% zwiększone obrażenia od każdego następnego Ognika po pierwszym. Pojedynczy przeciwnik otrzyma maksymalnie 0 pkt. obrażeń.",
+               "descriptionView":"Ahri wypuszcza trzy ogniki, które namierzają i atakują pobliskich wrogów.\nTworzy trzy ogniki, które namierzają pobliskich wrogów (starając się trafić bohaterów) i zadają 40/65/90/115/140 (+40% Moc umiejętności) pkt. obrażeń magicznych.Przeciwnicy trafieni kilkoma Ognikami otrzymują o 30% zwiększone obrażenia od każdego następnego Ognika po pierwszym. Pojedynczy przeciwnik otrzyma maksymalnie 0 pkt. obrażeń.",
                "cost":"50 pkt. many",
                "range":"800"
             },
             {
                "id":"E",
                "name":"Urok",
-               "description":"Ahri przesyła buziaka, który rani i rzuca urok na pierwszego wroga, którego napotka na swojej drodze, dzięki czemu podchodzi on do niej całkiem bezbronny. Ahri zadaje dodatkowe obrażenia przeciwnikom, na których niedawno rzucono urok.\nPrzesyła całusa, który zadaje 60/90/120/150/180 (+35% Moc umiejętności) obrażeń magicznych i oczarowuje pierwszego trafionego wroga, który idzie bezbronny w stronę Ahri przez 1/1.25/1.5/1.75/2 sek.Przeciwnicy trafieni Urokiem otrzymują o 20% więcej obrażeń magicznych od Ahri przez 6 sekund. Nieuchronne obrażenia Zwodniczej Kuli także są zwiększone przez ten efekt.",
+               "descriptionView":"Ahri przesyła buziaka, który rani i rzuca urok na pierwszego wroga, którego napotka na swojej drodze, dzięki czemu podchodzi on do niej całkiem bezbronny. Ahri zadaje dodatkowe obrażenia przeciwnikom, na których niedawno rzucono urok.\nPrzesyła całusa, który zadaje 60/90/120/150/180 (+35% Moc umiejętności) obrażeń magicznych i oczarowuje pierwszego trafionego wroga, który idzie bezbronny w stronę Ahri przez 1/1.25/1.5/1.75/2 sek.Przeciwnicy trafieni Urokiem otrzymują o 20% więcej obrażeń magicznych od Ahri przez 6 sekund. Nieuchronne obrażenia Zwodniczej Kuli także są zwiększone przez ten efekt.",
                "cost":"85 pkt. many",
                "range":"975"
             },
             {
                "id":"R",
                "name":"Widmowa Szarża",
-               "description":"Ahri skacze do przodu i wystrzeliwuje pociski esencji, zadając obrażenia trzem pobliskim przeciwnikom (bohaterowie mają priorytet). Widmowej Szarży można użyć do 3 razy, zanim zacznie się odnawiać.\nSkacze do przodu i wystrzeliwuje pociski esencji w stronę 3 pobliskich wrogów (priorytet mają bohaterowie), zadając 70/110/150 (+30% Moc umiejętności) pkt. obrażeń magicznych. W ciągu 10 sek. umiejętności można użyć do 3 razy, zanim zacznie się odnawiać.",
+               "descriptionView":"Ahri skacze do przodu i wystrzeliwuje pociski esencji, zadając obrażenia trzem pobliskim przeciwnikom (bohaterowie mają priorytet). Widmowej Szarży można użyć do 3 razy, zanim zacznie się odnawiać.\nSkacze do przodu i wystrzeliwuje pociski esencji w stronę 3 pobliskich wrogów (priorytet mają bohaterowie), zadając 70/110/150 (+30% Moc umiejętności) pkt. obrażeń magicznych. W ciągu 10 sek. umiejętności można użyć do 3 razy, zanim zacznie się odnawiać.",
                "cost":"100 pkt. many",
                "range":"450"
             }
@@ -91,7 +91,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "title":"Pięść Cienia",
+         "titleView":"Pięść Cienia",
          "tags":[
             "Zabójca"
          ],
@@ -99,33 +99,33 @@
             {
                "id":"P",
                "name":"Bliźniacze Techniki",
-               "description":"Technika Siły: Podstawowe ataki Akali zadają dodatkowo 6% obrażeń magicznych, które wzrastają o 1% na każde 6 punktów mocy umiejętności.\nTechnika Mocy: Akali zyskuje 6% wampiryzmu zaklęć, który zwiększa się o 1% za każde 6 punktów premii do obrażeń od ataku."
+               "descriptionView":"Technika Siły: Podstawowe ataki Akali zadają dodatkowo 6% obrażeń magicznych, które wzrastają o 1% na każde 6 punktów mocy umiejętności.\nTechnika Mocy: Akali zyskuje 6% wampiryzmu zaklęć, który zwiększa się o 1% za każde 6 punktów premii do obrażeń od ataku."
             },
             {
                "id":"Q",
                "name":"Znak Zabójcy",
-               "description":"Akali rzuca kamą w przeciwnika, zadając obrażenia magiczne i oznaczając cel na 6 sekund. Zaatakowanie oznaczonego przeciwnika zużyje znak, zadając dodatkowe obrażenia i odnawiając energię.\nAkali rzuca w przeciwnika kamę i zdaje 35/55/75/95/115 (+40% Moc umiejętności) pkt. obrażeń magicznych, i oznacza cel na 6 sekund.Jeśli Akali zaatakuje wręcz oznaczony cel, znak uaktywni się i zada 45/70/95/120/145 (+50% Moc umiejętności) pkt. obrażeń magicznych i przywróci jej 20/25/30/35/40 pkt. energii.",
+               "descriptionView":"Akali rzuca kamą w przeciwnika, zadając obrażenia magiczne i oznaczając cel na 6 sekund. Zaatakowanie oznaczonego przeciwnika zużyje znak, zadając dodatkowe obrażenia i odnawiając energię.\nAkali rzuca w przeciwnika kamę i zdaje 35/55/75/95/115 (+40% Moc umiejętności) pkt. obrażeń magicznych, i oznacza cel na 6 sekund.Jeśli Akali zaatakuje wręcz oznaczony cel, znak uaktywni się i zada 45/70/95/120/145 (+50% Moc umiejętności) pkt. obrażeń magicznych i przywróci jej 20/25/30/35/40 pkt. energii.",
                "cost":"60 pkt. energii",
                "range":"600"
             },
             {
                "id":"W",
                "name":"Osłona Zmierzchu",
-               "description":"Akali rzuca zasłonę dymną. Znajdując się w środku, Akali zyskuje pancerz i odporność na magię oraz jest niewidzialna. Atakowanie lub użycie umiejętności ujawni ją na chwilę. Wrogowie znajdujący się w środku zostają spowolnieni.\nAkali wytwarza zasłonę dymną, która utrzymuje się przez 8 sek. Znajdując się w środku, Akali zyskuje 10/20/30/40/50 dodatkowego pancerza i odporności na magię oraz jest niewidzialna. Jeśli kogoś zaatakuje lub skorzysta ze swoich umiejętności, stanie się na chwilę widoczna. Przeciwnicy w chmurze dymu zostają spowolnieni o 14/18/22/26/30%.",
+               "descriptionView":"Akali rzuca zasłonę dymną. Znajdując się w środku, Akali zyskuje pancerz i odporność na magię oraz jest niewidzialna. Atakowanie lub użycie umiejętności ujawni ją na chwilę. Wrogowie znajdujący się w środku zostają spowolnieni.\nAkali wytwarza zasłonę dymną, która utrzymuje się przez 8 sek. Znajdując się w środku, Akali zyskuje 10/20/30/40/50 dodatkowego pancerza i odporności na magię oraz jest niewidzialna. Jeśli kogoś zaatakuje lub skorzysta ze swoich umiejętności, stanie się na chwilę widoczna. Przeciwnicy w chmurze dymu zostają spowolnieni o 14/18/22/26/30%.",
                "cost":"80/75/70/65/60 pkt. energii",
                "range":"700"
             },
             {
                "id":"E",
                "name":"Cięcie Półksiężyca",
-               "description":"Akali wykonuje zamach, zadając obrażenia na podstawie obrażeń od ataku i mocy umiejętności.\nAkali wykonuje ciosy kamami, zadając pobliskim jednostkom 30/55/80/105/130 (+60% Obrażenia od ataku) (+30% Moc umiejętności) pkt. obrażeń fizycznych.Uaktywnia Znak Zabójcy na naznaczonych celach.",
+               "descriptionView":"Akali wykonuje zamach, zadając obrażenia na podstawie obrażeń od ataku i mocy umiejętności.\nAkali wykonuje ciosy kamami, zadając pobliskim jednostkom 30/55/80/105/130 (+60% Obrażenia od ataku) (+30% Moc umiejętności) pkt. obrażeń fizycznych.Uaktywnia Znak Zabójcy na naznaczonych celach.",
                "cost":"60/55/50/45/40 pkt. energii",
                "range":"325"
             },
             {
                "id":"R",
                "name":"Taniec Cienia",
-               "description":"Akali błyskawiczne porusza się poprzez cienie, atakując przeciwnika i zużywając ładunek Esencji Cienia. Esencja Cienia odnawia się wraz z upływem czasu, jak i przy zabiciach oraz asystach, maks. 3 ładunki.\nAkali zwinnie i szybko porusza się w cieniu, by zaatakować cel, zadając mu 100/175/250 (+50% Moc umiejętności) pkt. obrażeń magicznych.Akali otrzymuje przy każdym zabójstwie i asyście oraz co 30/22.5/15 sek. Esencję Cienia. Maksymalnie może posiadać 3.",
+               "descriptionView":"Akali błyskawiczne porusza się poprzez cienie, atakując przeciwnika i zużywając ładunek Esencji Cienia. Esencja Cienia odnawia się wraz z upływem czasu, jak i przy zabiciach oraz asystach, maks. 3 ładunki.\nAkali zwinnie i szybko porusza się w cieniu, by zaatakować cel, zadając mu 100/175/250 (+50% Moc umiejętności) pkt. obrażeń magicznych.Akali otrzymuje przy każdym zabójstwie i asyście oraz co 30/22.5/15 sek. Esencję Cienia. Maksymalnie może posiadać 3.",
                "cost":"Esencje Cienia: 1",
                "range":"800"
             }
@@ -134,7 +134,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "title":"Minotaur",
+         "titleView":"Minotaur",
          "tags":[
             "Obrońca"
          ],
@@ -142,33 +142,33 @@
             {
                "id":"P",
                "name":"Tratowanie",
-               "description":"Ilekroć Alistar rzuci zaklęcie, przez kilka sekund Tratuje pobliskie jednostki i wieże i zadaje obrażenia tym, po których przejdzie."
+               "descriptionView":"Ilekroć Alistar rzuci zaklęcie, przez kilka sekund Tratuje pobliskie jednostki i wieże i zadaje obrażenia tym, po których przejdzie."
             },
             {
                "id":"Q",
                "name":"Zmiażdżenie",
-               "description":"Alistar uderza w ziemię, zadając obrażenia pobliskim wrogom i wyrzucając ich w powietrze. Po wylądowaniu zostają oni ogłuszeni.\nAlistar uderza w ziemię, zadając 60/105/150/195/240 (+50% Moc umiejętności) pkt. obrażeń magicznych, wyrzucając pobliskich wrogów w powietrze i ogłuszając ich na 1,5 sekundy.",
+               "descriptionView":"Alistar uderza w ziemię, zadając obrażenia pobliskim wrogom i wyrzucając ich w powietrze. Po wylądowaniu zostają oni ogłuszeni.\nAlistar uderza w ziemię, zadając 60/105/150/195/240 (+50% Moc umiejętności) pkt. obrażeń magicznych, wyrzucając pobliskich wrogów w powietrze i ogłuszając ich na 1,5 sekundy.",
                "cost":"70/80/90/100/110 pkt. many",
                "range":"365"
             },
             {
                "id":"W",
                "name":"Z Byka",
-               "description":"Alistar taranuje przeciwnika głową, zadając mu obrażenia i odrzucając do tyłu.\nAlistar szarżuje na przeciwnika i taranuje go, zadając 55/110/165/220/275 (+70% Moc umiejętności) pkt. obrażeń magicznych, ogłuszając i odrzucając go do tyłu.",
+               "descriptionView":"Alistar taranuje przeciwnika głową, zadając mu obrażenia i odrzucając do tyłu.\nAlistar szarżuje na przeciwnika i taranuje go, zadając 55/110/165/220/275 (+70% Moc umiejętności) pkt. obrażeń magicznych, ogłuszając i odrzucając go do tyłu.",
                "cost":"70/80/90/100/110 pkt. many",
                "range":"650"
             },
             {
                "id":"E",
                "name":"Triumfalny Ryk",
-               "description":"Alistar wznosi okrzyk bojowy, którzy przywraca mu trochę zdrowia, sojusznikom zaś - połowę tego co jemu. Z umiejętności tej można korzystać częściej, jeśli wokół giną wrogowie.\nPrzywraca 60/90/120/150/180 (+20% Moc umiejętności) pkt. życia Alistarowi oraz połowę tej ilości pobliskim sojusznikom. Czas odnowienia skraca się o 2 sek. za każdym razem, kiedy w pobliżu ginie wroga jednostka.",
+               "descriptionView":"Alistar wznosi okrzyk bojowy, którzy przywraca mu trochę zdrowia, sojusznikom zaś - połowę tego co jemu. Z umiejętności tej można korzystać częściej, jeśli wokół giną wrogowie.\nPrzywraca 60/90/120/150/180 (+20% Moc umiejętności) pkt. życia Alistarowi oraz połowę tej ilości pobliskim sojusznikom. Czas odnowienia skraca się o 2 sek. za każdym razem, kiedy w pobliżu ginie wroga jednostka.",
                "cost":"40/50/60/70/80 pkt. many",
                "range":"575"
             },
             {
                "id":"R",
                "name":"Niezłomna Wola",
-               "description":"Alistar ryczy dziko, zyskując obrażenia, usuwając wszystkie negatywne efekty na sobie i zmniejszając wszystkie obrażenia fizyczne i magiczne w czasie trwania umiejętności.\nUsuwa osłabienia z Alistara, a ponadto ten zyskuje premię 60/75/90 pkt. do obrażeń od ataku oraz przez 7 sek. otrzymuje o 50/60/70% mniej obrażeń fizycznych i magicznych.",
+               "descriptionView":"Alistar ryczy dziko, zyskując obrażenia, usuwając wszystkie negatywne efekty na sobie i zmniejszając wszystkie obrażenia fizyczne i magiczne w czasie trwania umiejętności.\nUsuwa osłabienia z Alistara, a ponadto ten zyskuje premię 60/75/90 pkt. do obrażeń od ataku oraz przez 7 sek. otrzymuje o 50/60/70% mniej obrażeń fizycznych i magicznych.",
                "cost":"100 pkt. many",
                "range":"Własne"
             }
