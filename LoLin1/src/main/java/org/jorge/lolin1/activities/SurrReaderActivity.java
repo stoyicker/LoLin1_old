@@ -94,10 +94,8 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
     private void showUrlInWebViewerFragment(int index) {
         ArrayList<SurrEntry> surrs;
         if (isDualPane) {
-            if (isDualPane) {
-                if (!(surrs = SQLiteDAO.getSingleton().getSurrs()).isEmpty()) {
-                    WEB_FRAGMENT.loadUrl(surrs.get(index).getLink());
-                }
+            if (!(surrs = SQLiteDAO.getSingleton().getSurrs()).isEmpty() && index > -1) {
+                WEB_FRAGMENT.loadUrl(surrs.get(index).getLink());
             }
         }
         else {

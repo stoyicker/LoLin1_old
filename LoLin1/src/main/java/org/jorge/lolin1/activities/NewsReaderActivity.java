@@ -3,7 +3,6 @@ package org.jorge.lolin1.activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 
 import org.jorge.lolin1.R;
@@ -67,7 +66,6 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
         else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
                 .getInt("lastSelectedNewsIndex", -1)) != -1 &&
                 getResources().getBoolean(R.bool.feed_has_two_panes)) {
-            Log.d("NX4", "I'm in");
             onNewsArticleSelected(index);
         }
 
@@ -96,7 +94,7 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
     private void showUrlInWebViewerFragment(int index) {
         ArrayList<NewsEntry> news;
         if (isDualPane) {
-            if (!(news = SQLiteDAO.getSingleton().getNews()).isEmpty()) {
+            if (!(news = SQLiteDAO.getSingleton().getNews()).isEmpty() && index > -1) {
                 WEB_FRAGMENT.loadUrl(news.get(index).getLink());
             }
         }
