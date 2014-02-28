@@ -1,7 +1,7 @@
 LoLin1
 ======
 
-Repository for the League of Legends LoLin1 app for Android.
+League of Legends LoLin1 app for Android.
 
 *UNDER ACTIVE DEVELOPMENT*
 
