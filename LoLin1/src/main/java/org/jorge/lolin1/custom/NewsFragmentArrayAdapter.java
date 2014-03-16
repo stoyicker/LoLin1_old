@@ -57,9 +57,8 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         //If this table has ever been shown it, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {
             ArrayList<NewsEntry> currTable = shownNews.get(tableName);
-            int howManyIHave = currTable.size();
-            ArrayList<NewsEntry> newNews =
-                    SQLiteDAO.getSingleton().getNewNews(howManyIHave);
+            currTable.clear();
+            ArrayList<NewsEntry> newNews = SQLiteDAO.getSingleton().getNews();
             Collections.reverse(newNews);
             for (NewsEntry x : newNews) {
                 currTable.add(0, x);

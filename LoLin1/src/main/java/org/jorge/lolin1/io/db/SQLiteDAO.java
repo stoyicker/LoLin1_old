@@ -93,7 +93,8 @@ public class SQLiteDAO extends SQLiteOpenHelper {
             langSimplified = Utils.getStringArray(mContext, "langs_simplified",
                     new String[]{defaultLanguage})[new ArrayList<>(
                     Arrays.asList(Utils.getStringArray(mContext, "langs",
-                            new String[]{defaultLanguage})))
+                            new String[]{defaultLanguage}))
+            )
                     .indexOf(lang)];
             ret = prefix + server + "_" + langSimplified;
         }
@@ -110,7 +111,8 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                     ret = BitmapFactory
                             .decodeStream(
                                     new URL(imageLinkCallbackURL).openConnection()
-                                            .getInputStream());
+                                            .getInputStream()
+                            );
                 }
                 catch (IOException e) {
                     ret = null;
@@ -274,10 +276,6 @@ public class SQLiteDAO extends SQLiteOpenHelper {
         return getFilteredNews(null);
     }
 
-    public final ArrayList<NewsEntry> getNewNews(int alreadyShown) {
-        return getFilteredNews(NEWS_KEY_ID + " > " + alreadyShown);
-    }
-
     private ArrayList<NewsEntry> getFilteredNews(String whereClause) {
 
         ArrayList<NewsEntry> ret = new ArrayList<>();
@@ -300,7 +298,8 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                     if (x.contentEquals(NEWS_KEY_URL)) {
                         data.append(
                                 result.getString(result.getColumnIndex(x))
-                                        .replaceAll("httpxxx", "http://"))
+                                        .replaceAll("httpxxx", "http://")
+                        )
                                 .append(separator);
                     }
                     else {
