@@ -79,9 +79,9 @@ public class InitialActivity extends Activity {
         if (preferences.getBoolean(
                 Utils.getString(this, "pref_title_ads", "pref_title_ads"),
                 Boolean.FALSE)) {
-            startActivity(new Intent(this, AdsActivity.class));
+            startActivity(new Intent(this, AdsActivity.class)); //MAYBE Set-up properly the ad
         }
-        final Intent newsIntent = new Intent(this, NewsReaderActivity.class);
+        final Intent newsIntent = new Intent(this, SplashFragmentActivity.class);
         startActivity(newsIntent);
         finish();
     }

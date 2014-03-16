@@ -59,28 +59,43 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".activities.NewsReaderActivity"
-		          android:configChanges="keyboardHidden|orientation|screenSize"
-		          android:label="@string/title_section1"
-		          android:logo="@drawable/icon_section1">
+		<activity
+			android:name="org.jorge.lolin1.activities.NewsReaderActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:label="@string/title_section1"
+			android:logo="@drawable/icon_section1">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
+		<activity
+			android:name="org.jorge.lolin1.activities.SurrReaderActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:label="@string/title_section6"
+			android:logo="@drawable/icon_section6">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".activities.SurrReaderActivity"
-		          android:configChanges="keyboardHidden|orientation|screenSize"
-		          android:label="@string/title_section6"
-		          android:logo="@drawable/icon_section6">
+		<activity
+			android:name="org.jorge.lolin1.activities.WebViewerActivity"
+			android:configChanges="keyboardHidden|orientation|screenSize"
+			android:label="@string/title_activity_web_viewer"
+			android:logo="@drawable/icon_section1">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
+
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
-		<activity android:name=".activities.WebViewerActivity"
-		          android:configChanges="keyboardHidden|orientation|screenSize"
-		          android:label="@string/title_activity_web_viewer"
-		          android:logo="@drawable/icon_section1">
+		<activity
+			android:name=".activities.SplashFragmentActivity"
+			android:configChanges="orientation|keyboardHidden"
+			android:label="@string/title_activity_splash"
+			android:logo="@drawable/icon_app">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
