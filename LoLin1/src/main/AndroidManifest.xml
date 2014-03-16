@@ -92,10 +92,11 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".activities.SplashFragmentActivity"
+			android:name=".activities.SplashActivity"
 			android:configChanges="orientation|keyboardHidden"
 			android:label="@string/title_activity_splash"
-			android:logo="@drawable/icon_app">
+			android:logo="@drawable/icon_app"
+			android:theme="@android:style/Theme.NoTitleBar">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>

@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import org.jorge.lolin1.R;
 
-public class SplashFragmentActivity extends Activity {
+public class SplashActivity extends Activity {
 
     /**
      * Perform initialization of all fragments and loaders.

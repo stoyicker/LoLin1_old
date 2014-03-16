@@ -38,6 +38,7 @@ public class InitialActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.splash);
         SQLiteDAO.setup(getApplicationContext());
         PreferenceManager.setDefaultValues(this, R.xml.settings, Boolean.FALSE);
         SharedPreferences preferences =
@@ -81,7 +82,7 @@ public class InitialActivity extends Activity {
                 Boolean.FALSE)) {
             startActivity(new Intent(this, AdsActivity.class)); //MAYBE Set-up properly the ad
         }
-        final Intent newsIntent = new Intent(this, SplashFragmentActivity.class);
+        final Intent newsIntent = new Intent(this, SplashActivity.class);
         startActivity(newsIntent);
         finish();
     }
