@@ -32,6 +32,9 @@ Created by JorgeAntonio on 02/01/14.
 		<item name="android:width">@dimen/navigation_drawer_width</item>
 		<item name="android:background">@color/theme_dark_blue</item>
 	</style>
+	<style name="ProgressBarTheme" parent="SmoothProgressBar">
+		<item name="android:progressDrawable">@drawable/progress_bar_drawable</item>
+	</style>
 	<style name="NewsFeedTextWithShadowStyle">
 		<item name="android:textColor">@color/theme_black</item>
 		<item name="android:textSize">@dimen/news_feed_title_size</item>
@@ -61,5 +64,8 @@ Created by JorgeAntonio on 02/01/14.
 	<style name="LoadingWebViewerTextStyle">
 		<item name="android:textStyle">bold</item>
 		<item name="android:textSize">@dimen/loading_text_size</item>
+	</style>
+	<style name="NewsFeedBodyText">
+		<item name="android:textSize">@dimen/news_feed_desc_size</item>
 	</style>
 </resources>

@@ -18,19 +18,24 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.splash);
-
-        onSplashRun();
     }
 
-    private void onSplashRun() {
-        try {
-            Thread.sleep(5000);
-        }
-        catch (InterruptedException e) {
-            e.printStackTrace(System.err);
-        }
+    /**
+     * Called when the activity has detected the user's press of the back
+     * key.  The default implementation simply finishes the current activity,
+     * but you can override this to do whatever you want.
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        launchNewsReader();
+    }
+
+    private void launchNewsReader() {
         final Intent newsIntent = new Intent(this, NewsReaderActivity.class);
         startActivity(newsIntent);
         finish();
     }
 }
+
+//FUTURE Remote 	<item name="news_reader" type="layout">@layout/news_double_pane</item><item name="surr_reader" type="layout">@layout/surr_double_pane</item><bool name="feed_has_two_panes">true</bool> from values-land/layouts.xml

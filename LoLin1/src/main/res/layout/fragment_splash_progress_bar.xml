@@ -23,16 +23,12 @@ Created by JorgeAntonio on 25/01/14.
               android:layout_height="match_parent"
               android:background="@color/theme_white"
               android:orientation="vertical"
-              android:paddingBottom="@dimen/splash_image_vertical_margin"
-              android:paddingLeft="@dimen/splash_image_horizontal_margin"
-              android:paddingRight="@dimen/splash_image_horizontal_margin"
-              android:paddingTop="@dimen/splash_image_vertical_margin"
-              tools:context="org.jorge.lolin1.frags.SplashImageFragment">
-	<ImageView android:id="@+id/fragment_splash_image_view"
-	           android:layout_width="match_parent"
-	           android:layout_height="match_parent"
-	           android:layout_gravity="center"
-	           android:adjustViewBounds="true"
-	           android:contentDescription="@string/splash_image_content_description"
-	           android:src="@drawable/icon_splash"/>
+              android:paddingBottom="@dimen/splash_progress_bar_vertical_margin"
+              android:paddingLeft="@dimen/splash_progress_bar_horizontal_margin"
+              android:paddingRight="@dimen/splash_progress_bar_horizontal_margin"
+              android:paddingTop="@dimen/splash_progress_bar_vertical_margin"
+              tools:context="org.jorge.lolin1.frags.SplashProgressBarFragment">
+	<ProgressBar style="@style/ProgressBarTheme"
+	             android:layout_width="match_parent"
+	             android:layout_height="match_parent"/>
 </LinearLayout>
