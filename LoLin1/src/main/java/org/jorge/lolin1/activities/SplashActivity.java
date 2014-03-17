@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.widget.ProgressBar;
+import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.jorge.lolin1.R;
 
+import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
+import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
+
 public class SplashActivity extends Activity {
 
-    ProgressBar progressBar;
+    SmoothProgressBar progressBar;
 
     /**
      * Perform initialization of all fragments and loaders.
@@ -21,9 +24,14 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-        progressBar = (ProgressBar) findViewById(R.id.fragment_splash_progress_bar_view);
+        progressBar = (SmoothProgressBar) findViewById(R.id.fragment_splash_progress_bar_view);
+        progressBar.setIndeterminateDrawable(
+                new SmoothProgressDrawable.Builder(getApplicationContext())
+                        .color(getApplicationContext().getResources()
+                                .getColor(R.color.theme_strong_orange))
+                        .interpolator(new AccelerateDecelerateInterpolator()).build()
+        );
         simulateProgressBarLoad();
-//        launchNewsReader();
     }
 
     private void simulateProgressBarLoad() {
@@ -42,6 +50,7 @@ public class SplashActivity extends Activity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                launchNewsReader();
             }
 
             /**
@@ -55,7 +64,6 @@ public class SplashActivity extends Activity {
             @Override
             protected void onProgressUpdate(Integer... values) {
                 super.onProgressUpdate(values);
-                progressBar.incrementProgressBy(values[0]);
             }
 
             /**
@@ -76,7 +84,7 @@ public class SplashActivity extends Activity {
             protected Void doInBackground(Void... params) {
                 for (int i = 0; i < 100; i++) {
                     try {
-                        Thread.sleep(300);
+                        Thread.sleep(100);
                     }
                     catch (InterruptedException e) {
                         e.printStackTrace(System.err);

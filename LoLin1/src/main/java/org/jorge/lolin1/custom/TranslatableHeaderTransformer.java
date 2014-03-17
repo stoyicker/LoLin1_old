@@ -250,72 +250,6 @@ public class TranslatableHeaderTransformer extends HeaderTransformer {
         return changeVis;
     }
 
-    /**
-     * Set color to apply to the progress bar.
-     * <p/>
-     * The best way to apply a color is to load the color from resources: {@code
-     * setProgressBarColor(getResources().getColor(uk.co.senab.actionbarpulltorefresh.library.R.color.your_color_name))}.
-     *
-     * @param color The color to use.
-     */
-    public void setProgressBarColor(int color) {
-        if (color != mProgressDrawableColor) {
-            mProgressDrawableColor = color;
-            applyProgressBarSettings();
-        }
-    }
-
-    /**
-     * Set the progress bar style. {@code style} must be one of {@link #PROGRESS_BAR_STYLE_OUTSIDE}
-     * or {@link #PROGRESS_BAR_STYLE_INSIDE}.
-     */
-    public void setProgressBarStyle(int style) {
-        if (mProgressBarStyle != style) {
-            mProgressBarStyle = style;
-            applyProgressBarStyle();
-        }
-    }
-
-    /**
-     * Set the progress bar height.
-     */
-    public void setProgressBarHeight(int height) {
-        if (mProgressBarHeight != height) {
-            mProgressBarHeight = height;
-            applyProgressBarStyle();
-        }
-    }
-
-    /**
-     * Set Text to show to prompt the user is pull (or keep pulling).
-     *
-     * @param pullText - Text to display.
-     */
-    public void setPullText(CharSequence pullText) {
-        mPullRefreshLabel = pullText;
-        if (mHeaderTextView != null) {
-            mHeaderTextView.setText(mPullRefreshLabel);
-        }
-    }
-
-    /**
-     * Set Text to show to tell the user that a refresh is currently in progress.
-     *
-     * @param refreshingText - Text to display.
-     */
-    public void setRefreshingText(CharSequence refreshingText) {
-        mRefreshingLabel = refreshingText;
-    }
-
-    /**
-     * Set Text to show to tell the user has scrolled enough to refresh.
-     *
-     * @param releaseText - Text to display.
-     */
-    public void setReleaseText(CharSequence releaseText) {
-        mReleaseLabel = releaseText;
-    }
-
     private void setupViewsFromStyles(Activity activity, View headerView) {
         final TypedArray styleAttrs = obtainStyledAttrsFromThemeAttr(activity,
                 uk.co.senab.actionbarpulltorefresh.library.R.attr.ptrHeaderStyle,
@@ -323,10 +257,9 @@ public class TranslatableHeaderTransformer extends HeaderTransformer {
 
         // Retrieve the Action Bar size from the app theme or the Action Bar's style
         if (mContentLayout != null) {
-            final int height = styleAttrs.getDimensionPixelSize(
+            mContentLayout.getLayoutParams().height = styleAttrs.getDimensionPixelSize(
                     uk.co.senab.actionbarpulltorefresh.library.R.styleable.PullToRefreshHeader_ptrHeaderHeight,
                     getActionBarSize(activity));
-            mContentLayout.getLayoutParams().height = height;
             mContentLayout.requestLayout();
         }
 
@@ -337,7 +270,7 @@ public class TranslatableHeaderTransformer extends HeaderTransformer {
                 uk.co.senab.actionbarpulltorefresh.library.R.styleable.PullToRefreshHeader_ptrHeaderBackground)
                 : getActionBarBackground(activity);
         if (bg != null) {
-            mHeaderTextView.setBackgroundDrawable(bg);
+            mHeaderTextView.setBackground(bg);
 
             // If we have an opaque background we can remove the background from the content layout
             if (mContentLayout != null && bg.getOpacity() == PixelFormat.OPAQUE) {
@@ -408,8 +341,9 @@ public class TranslatableHeaderTransformer extends HeaderTransformer {
             mHeaderProgressBar.setIndeterminateDrawable(
                     new SmoothProgressDrawable.Builder(mHeaderProgressBar.getContext())
                             .color(mProgressDrawableColor)
-                            .width(strokeWidth)
-                            .build());
+                            .strokeWidth(strokeWidth)
+                            .build()
+            );
 
             ShapeDrawable shape = new ShapeDrawable();
             shape.setShape(new RectShape());
