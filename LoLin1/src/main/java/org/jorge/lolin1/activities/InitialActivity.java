@@ -77,7 +77,7 @@ public class InitialActivity extends Activity {
             }
         }.execute();
         final Intent newsIntent = new Intent(this, SplashActivity.class);
-        startActivity(newsIntent);
         finish();
+        startActivity(newsIntent);
     }
 }
