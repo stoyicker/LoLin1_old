@@ -16,7 +16,7 @@ import org.jorge.lolin1.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.custom.NewsFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.Arrays;
 
@@ -102,9 +102,9 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
         }
 
         ((DrawerLayoutFragmentActivity) activity).onSectionAttached(
-                Arrays.asList(Utils.getStringArray(getActivity(), "navigation_drawer_items",
+                Arrays.asList(LoLin1Utils.getStringArray(getActivity(), "navigation_drawer_items",
                         new String[]{""}))
-                        .indexOf(Utils.getString(getActivity(), "title_section1", "Home"))
+                        .indexOf(LoLin1Utils.getString(getActivity(), "title_section1", "Home"))
         );
     }
 
@@ -136,7 +136,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
 
         Options.Builder optionsBuilder = Options.create();
 
-        int retrieved = Utils.getInt(getActivity(), "feed_refresh_distance_percentage",
+        int retrieved = LoLin1Utils.getInt(getActivity(), "feed_refresh_distance_percentage",
                 R.integer.feed_refresh_distance_percentage);
         float scrollDistance = (float) retrieved / 100;
         optionsBuilder = optionsBuilder

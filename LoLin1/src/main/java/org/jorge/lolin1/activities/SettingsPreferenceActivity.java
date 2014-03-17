@@ -5,7 +5,7 @@ import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
 import org.jorge.lolin1.frags.SettingsFragment;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -45,7 +45,8 @@ public class SettingsPreferenceActivity extends PreferenceActivity {
         getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new SettingsFragment(),
-                Utils.getString(this, "title_activity_settings", "Settings")).addToBackStack("")
+                LoLin1Utils.getString(this, "title_activity_settings", "Settings"))
+                .addToBackStack("")
                 .commit();
     }
 

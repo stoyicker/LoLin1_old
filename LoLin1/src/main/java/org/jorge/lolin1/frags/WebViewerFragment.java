@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.devspark.progressfragment.ProgressFragment;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -79,7 +79,7 @@ public class WebViewerFragment extends ProgressFragment {
             mUrl = getArguments().getString("url");
         }
 
-        if (!Utils.isInternetReachable(getActivity())) {
+        if (!LoLin1Utils.isInternetReachable(getActivity())) {
             ret = inflater.inflate(R.layout.fragment_web_viewer_no_internet, container,
                     Boolean.FALSE);
         }
@@ -203,7 +203,7 @@ public class WebViewerFragment extends ProgressFragment {
         public void onReceivedError(WebView view, int errorCode, String description,
                                     String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            final String msg = Utils.getString(getActivity(), "error_no_internet", "ERROR");
+            final String msg = LoLin1Utils.getString(getActivity(), "error_no_internet", "ERROR");
             (getActivity()).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

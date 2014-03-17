@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import org.jorge.lolin1.feeds.IFeedHandler;
 import org.jorge.lolin1.io.db.SQLiteDAO;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -46,7 +46,7 @@ public class NewsFeedHandler implements IFeedHandler {
 
     @Override
     public void onNoInternetConnection() {
-        final String msg = Utils.getString(context, "error_no_internet", "ERROR");
+        final String msg = LoLin1Utils.getString(context, "error_no_internet", "ERROR");
         ((Activity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {

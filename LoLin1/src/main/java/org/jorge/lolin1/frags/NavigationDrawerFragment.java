@@ -20,7 +20,7 @@ import android.widget.ListView;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.custom.NavigationDrawerArrayAdapter;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -151,9 +151,11 @@ public class NavigationDrawerFragment extends Fragment {
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(Boolean.TRUE);
         actionBar.setTitle(
-                Utils.getString(getActivity(), "title_section" + (
-                        DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex() + 1),
-                        "Home"));
+                LoLin1Utils.getString(getActivity(), "title_section" + (
+                                DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex() + 1),
+                        "Home"
+                )
+        );
     }
 
     private void selectItem(int position) {

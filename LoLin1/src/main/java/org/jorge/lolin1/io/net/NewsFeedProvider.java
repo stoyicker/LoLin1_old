@@ -9,7 +9,7 @@ import android.util.Xml;
 import org.jorge.lolin1.feeds.IFeedHandler;
 import org.jorge.lolin1.feeds.news.NewsEntry;
 import org.jorge.lolin1.feeds.news.NewsFeedHandler;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -57,7 +57,7 @@ public class NewsFeedProvider {
     public Boolean requestFeedRefresh() {
         Boolean ret = Boolean.FALSE;
         try {
-            if (Utils.isInternetReachable(context)) {
+            if (LoLin1Utils.isInternetReachable(context)) {
                 ArrayList<String> retrievedFeed = retrieveFeed();
                 ret = handler.onFeedUpdated(retrievedFeed);
             }
@@ -84,13 +84,15 @@ public class NewsFeedProvider {
         BufferedInputStream in;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String server = preferences
-                .getString(Utils.getString(context, "pref_title_server", "pref_title_server"),
+                .getString(LoLin1Utils.getString(context, "pref_title_server", "pref_title_server"),
                         "euw"), lang = preferences
-                .getString(Utils.getString(context, "pref_title_lang", "pref_title_lang"), "en");
+                .getString(LoLin1Utils.getString(context, "pref_title_lang", "pref_title_lang"),
+                        "en");
 
-        String langSimplified = Utils.getStringArray(context, "langs_simplified",
+        String langSimplified = LoLin1Utils.getStringArray(context, "langs_simplified",
                 new String[]{"en"})[new ArrayList<>(
-                Arrays.asList(Utils.getStringArray(context, "langs", new String[]{"english"})))
+                Arrays.asList(
+                        LoLin1Utils.getStringArray(context, "langs", new String[]{"english"})))
                 .indexOf(lang)], LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX =
                 ".xml";
         String srcString =

@@ -17,7 +17,7 @@ import org.jorge.lolin1.custom.SurrFragmentArrayAdapter;
 import org.jorge.lolin1.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.io.net.SurrFeedProvider;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.Arrays;
 
@@ -91,7 +91,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
         final SurrEntry selectedEntry = listAdapter.getItem(position);
         mCallback.onSurrArticleSelected(position);
 
-        if (Utils.isInternetReachable(getActivity())) {
+        if (LoLin1Utils.isInternetReachable(getActivity())) {
             new AsyncTask<Void, Void, Void>() {
                 /**
                  * Override this method to perform a computation on a background thread. The
@@ -165,7 +165,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
 
         Options.Builder optionsBuilder = Options.create();
 
-        int retrieved = Utils.getInt(getActivity(), "feed_refresh_distance_percentage",
+        int retrieved = LoLin1Utils.getInt(getActivity(), "feed_refresh_distance_percentage",
                 R.integer.feed_refresh_distance_percentage);
         float scrollDistance = (float) retrieved / 100;
         optionsBuilder = optionsBuilder
@@ -209,10 +209,11 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
 
         ((DrawerLayoutFragmentActivity) activity)
                 .onSectionAttached(Arrays.asList(
-                        Utils.getStringArray(getActivity(), "navigation_drawer_items",
-                                new String[]{""}))
-                        .indexOf(Utils.getString(getActivity(), "title_section6",
-                                "Surrender@20"))
+                                LoLin1Utils.getStringArray(getActivity(), "navigation_drawer_items",
+                                        new String[]{""})
+                        )
+                                .indexOf(LoLin1Utils.getString(getActivity(), "title_section6",
+                                        "Surrender@20"))
                 );
     }
 

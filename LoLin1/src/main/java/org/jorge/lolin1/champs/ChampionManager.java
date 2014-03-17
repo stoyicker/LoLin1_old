@@ -3,7 +3,7 @@ package org.jorge.lolin1.champs;
 import android.content.Context;
 import android.preference.PreferenceManager;
 
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -40,12 +40,12 @@ public final class ChampionManager {
 
     public static void readInfo() {
         LinkedList<JSONObject> stats = readStats();
-        final String[] langs_simplified = Utils.getStringArray(context, "langs_simplified",
-                new String[]{"en"}), langs = Utils.getStringArray(context, "langs",
+        final String[] langs_simplified = LoLin1Utils.getStringArray(context, "langs_simplified",
+                new String[]{"en"}), langs = LoLin1Utils.getStringArray(context, "langs",
                 new String[]{"error"});
         final String selectedLang =
                 PreferenceManager.getDefaultSharedPreferences(context).getString(
-                        Utils.getString(context, "pref_title_lang", "Language"), "English");
+                        LoLin1Utils.getString(context, "pref_title_lang", "Language"), "English");
         final String fileName =
                 champsFileName + langs_simplified[new ArrayList<>(
                         Arrays.asList(langs))

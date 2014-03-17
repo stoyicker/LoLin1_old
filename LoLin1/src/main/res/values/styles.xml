@@ -65,4 +65,12 @@ Created by JorgeAntonio on 02/01/14.
 	<style name="NewsFeedBodyText">
 		<item name="android:textSize">@dimen/news_feed_desc_size</item>
 	</style>
+	<style name="SplashDisclaimerTextStyle">
+		<item name="android:textColor">@color/theme_black</item>
+		<item name="android:textSize">@dimen/news_feed_title_size</item>
+		<item name="android:shadowColor">@color/theme_strong_orange</item>
+		<item name="android:shadowDx">1</item>
+		<item name="android:shadowDy">1</item>
+		<item name="android:shadowRadius">1</item>
+	</style>
 </resources>

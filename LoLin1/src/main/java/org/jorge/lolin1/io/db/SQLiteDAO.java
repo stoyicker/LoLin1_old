@@ -13,7 +13,7 @@ import android.preference.PreferenceManager;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
 import org.jorge.lolin1.feeds.surr.SurrEntry;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -54,7 +54,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
     private static Context mContext;
 
     private SQLiteDAO(Context _context) {
-        super(_context, Utils.getString(_context, "db_name", "LoLin1_DB"), null, 1);
+        super(_context, LoLin1Utils.getString(_context, "db_name", "LoLin1_DB"), null, 1);
     }
 
     public static void setup(Context _context) {
@@ -74,7 +74,8 @@ public class SQLiteDAO extends SQLiteOpenHelper {
 
     public static String getNewsTableName() {
         String prefix =
-                Utils.getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
+                LoLin1Utils
+                        .getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
                         .replaceAll(SQLiteDAO.LOLNEWS_FEED_HOST, "")
                         .replaceAll(SQLiteDAO.LOLNEWS_FEED_EXTENSION, "")
                         .replaceAll("_(.*)", "") + "_";
@@ -83,16 +84,18 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                 "ENGLISH";
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         server =
-                preferences.getString(Utils.getString(mContext, "pref_title_server", "nvm"), ERROR);
-        lang = preferences.getString(Utils.getString(mContext, "pref_title_lang", "nvm"), ERROR);
+                preferences.getString(LoLin1Utils.getString(mContext, "pref_title_server", "nvm"),
+                        ERROR);
+        lang = preferences
+                .getString(LoLin1Utils.getString(mContext, "pref_title_lang", "nvm"), ERROR);
 
         if (server.contentEquals(ERROR) || lang.contentEquals(ERROR)) {
             ret = prefix + defaultTableName;
         }
         else {
-            langSimplified = Utils.getStringArray(mContext, "langs_simplified",
+            langSimplified = LoLin1Utils.getStringArray(mContext, "langs_simplified",
                     new String[]{defaultLanguage})[new ArrayList<>(
-                    Arrays.asList(Utils.getStringArray(mContext, "langs",
+                    Arrays.asList(LoLin1Utils.getStringArray(mContext, "langs",
                             new String[]{defaultLanguage}))
             )
                     .indexOf(lang)];
@@ -106,7 +109,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                                               final String imageLinkCallbackURL) {
         Bitmap ret = null;
         if (blob == null) {
-            if (Utils.isInternetReachable(context)) {
+            if (LoLin1Utils.isInternetReachable(context)) {
                 try {
                     ret = BitmapFactory
                             .decodeStream(
@@ -368,13 +371,14 @@ public class SQLiteDAO extends SQLiteOpenHelper {
         ArrayList<String> langsInThisServer, servers = new ArrayList<>(
                 Arrays.asList(mContext.getResources().getStringArray(R.array.servers)));
         String prefix =
-                Utils.getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
+                LoLin1Utils
+                        .getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
                         .replaceAll(LOLNEWS_FEED_HOST, "").replaceAll(LOLNEWS_FEED_EXTENSION, "")
                         .replaceAll("_(.*)", "") + "_";
 
         for (String x : servers) {
             langsInThisServer = new ArrayList<>();
-            for (String y : Utils
+            for (String y : LoLin1Utils
                     .getStringArray(mContext, "lang_" + x.toLowerCase() + "_simplified",
                             new String[]{""})) {
                 langsInThisServer.add((prefix + x + "_" + y).toUpperCase());

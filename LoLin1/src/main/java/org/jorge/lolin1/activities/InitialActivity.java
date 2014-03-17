@@ -10,7 +10,7 @@ import android.preference.PreferenceManager;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.champs.ChampionManager;
 import org.jorge.lolin1.io.db.SQLiteDAO;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -43,14 +43,14 @@ public class InitialActivity extends Activity {
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(this);
         if (preferences.getBoolean(
-                Utils.getString(this, "pref_first_run", "pref_first_run"),
+                LoLin1Utils.getString(this, "pref_first_run", "pref_first_run"),
                 Boolean.FALSE)) {//FUTURE Change this to Boolean.TRUE to see the first-time stuff happen
             final Intent firstTimeSetupIntent =
                     new Intent("org.jorge.lolin1.activities.SERVERANDLANGCHOOSERACTIVITY");
             startActivity(firstTimeSetupIntent);
             SharedPreferences.Editor firstRunEditor = preferences.edit();
             firstRunEditor.putBoolean(
-                    Utils.getString(this, "pref_first_run", "pref_first_run"),
+                    LoLin1Utils.getString(this, "pref_first_run", "pref_first_run"),
                     Boolean.FALSE);
             firstRunEditor.apply();
         }

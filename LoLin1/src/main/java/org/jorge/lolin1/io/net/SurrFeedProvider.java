@@ -9,7 +9,7 @@ import org.jorge.lolin1.feeds.surr.SurrEntry;
 import org.jorge.lolin1.feeds.surr.SurrFeedHandler;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.utils.ISO8601Time;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
@@ -56,7 +56,7 @@ public class SurrFeedProvider {
     public Boolean requestFeedRefresh() {
         Boolean ret = Boolean.FALSE;
         try {
-            if (Utils.isInternetReachable(context)) {
+            if (LoLin1Utils.isInternetReachable(context)) {
                 ArrayList<String> retrievedFeed = retrieveFeed();
                 ret = handler.onFeedUpdated(retrievedFeed);
             }
@@ -155,7 +155,8 @@ public class SurrFeedProvider {
                                             title + separator + link + separator + pubDate +
                                                     separator +
                                                     updated,
-                                            read));
+                                            read
+                                    ));
                                 }
                                 break;
                         }

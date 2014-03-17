@@ -17,7 +17,7 @@ import android.widget.TextView;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.feeds.news.NewsEntry;
 import org.jorge.lolin1.io.db.SQLiteDAO;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -65,7 +65,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
             }
         }
         else {
-            if (Utils.tableExists(tableName)) {
+            if (LoLin1Utils.tableExists(tableName)) {
                 ArrayList<NewsEntry> news =
                         SQLiteDAO.getSingleton().getNews();
                 shownNews.put(tableName, news);

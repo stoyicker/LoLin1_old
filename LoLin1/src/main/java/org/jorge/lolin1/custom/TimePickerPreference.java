@@ -7,7 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -54,7 +54,8 @@ public class TimePickerPreference extends DialogPreference
                 instanceType = "ERROR";
         }
         defaultTime =
-                Utils.getString(getContext(), "pref_default_" + instanceType + "_respawn", "ERROR");
+                LoLin1Utils.getString(getContext(), "pref_default_" + instanceType + "_respawn",
+                        "ERROR");
         TYPE_COUNTER++;
     }
 

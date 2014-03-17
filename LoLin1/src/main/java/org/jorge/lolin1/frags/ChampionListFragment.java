@@ -37,11 +37,11 @@ public class ChampionListFragment extends ListFragment {
 //        ((ChampionListActivity) activity).onSectionAttached(
 //                new ArrayList<>(
 //                        Arrays.asList(
-//                                Utils.getStringArray(
+//                                LoLin1Utils.getStringArray(
 //                                        getActivity(),
 //                                        "navigation_drawer_items", new String[]{""})
 //                        )
-//                ).indexOf(Utils.getString(getActivity(), "title_section5",
+//                ).indexOf(LoLin1Utils.getString(getActivity(), "title_section5",
 //                        "Champions")));
     }
 }

@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -46,7 +46,7 @@ public class NavigationDrawerArrayAdapter extends BaseAdapter {
     @Override
     public Object getItem(int i) {
         int temp = i + 1;
-        return Utils.getString(mContext, "title_section" + temp, "");
+        return LoLin1Utils.getString(mContext, "title_section" + temp, "");
     }
 
     @Override
@@ -68,8 +68,8 @@ public class NavigationDrawerArrayAdapter extends BaseAdapter {
         ImageView imageView =
                 (ImageView) convertView.findViewById(R.id.navigation_drawer_section_image);
 
-        textView.setText(Utils.getString(mContext, "title_section" + +temp, ""));
-        imageView.setImageResource(Utils.getDrawableAsId("icon_section" + temp, -1));
+        textView.setText(LoLin1Utils.getString(mContext, "title_section" + +temp, ""));
+        imageView.setImageResource(LoLin1Utils.getDrawableAsId("icon_section" + temp, -1));
 
         return convertView;
     }

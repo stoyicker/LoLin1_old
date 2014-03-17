@@ -40,7 +40,7 @@ import java.util.Locale;
  * <p/>
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */
-public abstract class Utils {
+public abstract class LoLin1Utils {
 
     public static String[] getStringArray(Context context, String variableName,
                                           String[] defaultRet) {

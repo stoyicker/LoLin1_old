@@ -23,14 +23,16 @@ Created by JorgeAntonio on 17/03/14.
               android:layout_height="match_parent"
               android:background="@color/theme_white"
               android:orientation="vertical"
-              android:paddingLeft="@dimen/splash_progress_bar_horizontal_margin"
-              android:paddingRight="@dimen/splash_progress_bar_horizontal_margin"
-              android:paddingTop="@dimen/splash_progress_bar_vertical_margin"
-              tools:context="org.jorge.lolin1.frags.SplashProgressBarFragment">
-	<fr.castorflex.android.smoothprogressbar.SmoothProgressBar
-		android:id="@+id/fragment_splash_progress_bar_view"
-		style="@style/SmoothProgressBar"
+              android:paddingBottom="@dimen/splash_disclaimer_text_vertical_margin"
+              android:paddingLeft="@dimen/splash_disclaimer_text_horizontal_margin"
+              android:paddingRight="@dimen/splash_disclaimer_text_horizontal_margin"
+              android:paddingTop="@dimen/splash_disclaimer_text_vertical_margin"
+              tools:context="org.jorge.lolin1.frags.SplashDisclaimerTextFragment">
+	<TextView
+		android:id="@+id/fragment_splash_disclaimer_text_view"
+		style="@style/SplashDisclaimerTextStyle"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:indeterminate="true"/>
+		android:gravity="center"
+		android:text="@string/legal_jibber_jabber"/>
 </LinearLayout>

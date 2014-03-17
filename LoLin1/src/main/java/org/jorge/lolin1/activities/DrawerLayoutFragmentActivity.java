@@ -13,7 +13,7 @@ import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.frags.NavigationDrawerFragment;
-import org.jorge.lolin1.utils.Utils;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
 
@@ -129,7 +129,8 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     @Override
     protected void onResume() {
         super.onResume();
-        mTitle = Utils.getString(this, "title_section" + (getLastSelectedNavDavIndex() + 1), "");
+        mTitle = LoLin1Utils
+                .getString(this, "title_section" + (getLastSelectedNavDavIndex() + 1), "");
         restoreActionBar();
     }
 
@@ -172,7 +173,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
 
     public void onSectionAttached(int number) {
         int shiftedPos = number + 1;
-        mTitle = Utils.getString(this, "title_section" + shiftedPos, "");
+        mTitle = LoLin1Utils.getString(this, "title_section" + shiftedPos, "");
         if (mTitle.toString().isEmpty()) {
             mTitle = getString(R.string.title_section1);
         }

@@ -34,7 +34,7 @@ import java.util.Arrays;
  * Created by JorgeAntonio on 19/01/14.
  */
 @SuppressWarnings({"UnusedDeclaration", "deprecation"})
-public abstract class DebugUtils {
+public abstract class LoLin1DebugUtils {
 
     public static void showTrace(String tag, Exception source) {
         StackTraceElement[] trace = source.getStackTrace();
