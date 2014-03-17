@@ -55,7 +55,7 @@ public class SettingsPreferenceActivity extends PreferenceActivity {
             case android.R.id.home:
                 // Respond to the action bar's Up button
                 finish();
-                return true;
+                return Boolean.TRUE;
             default:
                 return super.onOptionsItemSelected(item);
         }

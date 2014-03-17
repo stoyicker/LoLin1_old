@@ -40,16 +40,6 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.jorge.lolin1.activities.AdsActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden"
-			android:label="@string/title_activity_ads"
-			android:logo="@drawable/icon_app">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
 			android:name="org.jorge.lolin1.activities.SettingsPreferenceActivity"
 			android:configChanges="keyboardHidden"
 			android:label="@string/title_activity_settings"

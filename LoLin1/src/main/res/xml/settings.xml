@@ -97,12 +97,6 @@
 			<intent android:action="org.jorge.lolin1.activities.RATEACTIVITY"
 				/>
 		</Preference>
-		<CheckBoxPreference
-			android:defaultValue="false"
-			android:key="@string/pref_title_ads"
-			android:summary="@string/pref_summary_ads"
-			android:title="@string/pref_title_ads"
-			/>
 		<Preference android:title="@string/pref_title_developer">
 			<intent android:action="http://www.linkedin.com/in/jorgediazbenitosoriano"
 				/>
