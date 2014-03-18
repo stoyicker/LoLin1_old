@@ -70,7 +70,21 @@ public class SplashActivity extends Activity {
             @Override
             protected void onProgressUpdate(Integer... values) {
                 super.onProgressUpdate(values);
-                LOG_FRAGMENT.appendToSameLine(values[0] + "");
+                LOG_FRAGMENT.appendToSameLine(
+                        values[0] + "" + values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0] + values[0] + values[0] + values[0] + values[0] +
+                                values[0]
+                );
             }
 
             /**
@@ -97,7 +111,7 @@ public class SplashActivity extends Activity {
                     catch (InterruptedException e) {
                         e.printStackTrace(System.err);
                     }
-                    publishProgress(100 / iterations);
+                    publishProgress(i);
                 }
                 try {
                     //Sleep a little bit so I can see the result

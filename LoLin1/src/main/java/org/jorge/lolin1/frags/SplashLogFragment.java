@@ -3,10 +3,10 @@ package org.jorge.lolin1.frags;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ScrollView;
 
 import com.devspark.robototextview.widget.RobotoTextView;
 
@@ -33,9 +33,15 @@ import org.jorge.lolin1.R;
 public class SplashLogFragment extends Fragment {
 
     private RobotoTextView logTextView;
+    private ScrollView logScrollView;
 
     public void appendToSameLine(CharSequence text) {
         logTextView.append(text);
+        logScrollView.post(new Runnable() {
+            public void run() {
+                logScrollView.smoothScrollTo(0, logTextView.getBottom());
+            }
+        });
     }
 
     public void appendToNewLine(CharSequence text) {
@@ -79,9 +85,7 @@ public class SplashLogFragment extends Fragment {
                 inflater.inflate(R.layout.fragment_splash_log_text, container, false);
 
         logTextView = ((RobotoTextView) ret.findViewById(R.id.fragment_splash_log_text_view));
-
-        Log.d("NX4", logTextView == null ? "null" : "fine");
-
+        logScrollView = (ScrollView) logTextView.getParent();
         return ret;
     }
 }

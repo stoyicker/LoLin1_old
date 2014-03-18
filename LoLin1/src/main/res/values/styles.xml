@@ -73,4 +73,8 @@ Created by JorgeAntonio on 02/01/14.
 		<item name="android:shadowDy">1</item>
 		<item name="android:shadowRadius">1</item>
 	</style>
+	<style name="LogTextStyle">
+		<item name="android:textColor">@color/theme_black</item>
+		<item name="android:textStyle">bold</item>
+	</style>
 </resources>

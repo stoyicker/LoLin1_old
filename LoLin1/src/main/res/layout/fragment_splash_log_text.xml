@@ -30,6 +30,7 @@ Created by JorgeAntonio on 18/03/2014.
             tools:context="org.jorge.lolin1.frags.SplashLogFragment">
 	<com.devspark.robototextview.widget.RobotoTextView
 		android:id="@+id/fragment_splash_log_text_view"
+		style="@style/LogTextStyle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:gravity="center"
