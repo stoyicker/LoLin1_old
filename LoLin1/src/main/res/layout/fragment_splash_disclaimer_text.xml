@@ -17,35 +17,22 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by JorgeAntonio on 17/03/14.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/theme_white"
-              android:orientation="vertical"
-              android:paddingBottom="@dimen/splash_disclaimer_text_vertical_margin"
-              android:paddingLeft="@dimen/splash_disclaimer_text_horizontal_margin"
-              android:paddingRight="@dimen/splash_disclaimer_text_horizontal_margin"
-              android:paddingTop="@dimen/splash_disclaimer_text_vertical_margin"
-              tools:context="org.jorge.lolin1.frags.SplashDisclaimerTextFragment">
-
-	<ScrollView
-		android:id="@+id/fragment_splash_disclaimer_scroll_view"
-		android:layout_width="fill_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/theme_white"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/splash_disclaimer_text_vertical_margin"
+            android:paddingLeft="@dimen/splash_disclaimer_text_horizontal_margin"
+            android:paddingRight="@dimen/splash_disclaimer_text_horizontal_margin"
+            android:paddingTop="@dimen/splash_disclaimer_text_vertical_margin"
+            tools:context="org.jorge.lolin1.frags.SplashDisclaimerTextFragment">
+	<TextView
+		android:id="@+id/fragment_splash_disclaimer_text_view"
+		style="@style/SplashDisclaimerTextStyle"
+		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:fillViewport="true"
-		android:scrollbarAlwaysDrawHorizontalTrack="true"
-		android:scrollbarAlwaysDrawVerticalTrack="true"
-		android:scrollbars="vertical">
-
-		<TextView
-			android:id="@+id/fragment_splash_disclaimer_text_view"
-			style="@style/SplashDisclaimerTextStyle"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:gravity="center"
-			android:text="@string/legal_jibber_jabber"/>
-
-	</ScrollView>
-
-</LinearLayout>
+		android:gravity="center"
+		android:scrollbars="vertical"/>
+</ScrollView>

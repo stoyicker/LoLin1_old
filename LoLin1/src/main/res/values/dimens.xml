@@ -40,5 +40,5 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="splash_progress_bar_horizontal_margin">20dp</dimen>
 	<dimen name="splash_progress_bar_vertical_margin">30dp</dimen>
 	<dimen name="splash_disclaimer_text_horizontal_margin">10dp</dimen>
-	<dimen name="splash_disclaimer_text_vertical_margin">15dp</dimen>
+	<dimen name="splash_disclaimer_text_vertical_margin">50dp</dimen>
 </resources>

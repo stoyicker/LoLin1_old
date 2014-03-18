@@ -63,17 +63,17 @@ public class SplashDisclaimerTextFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = inflater.inflate(R.layout.fragment_splash_disclaimer_text, container, false);
+        View ret =
+                inflater.inflate(R.layout.fragment_splash_disclaimer_text, container, false);
 
-        ((TextView) ret.findViewById(R.id.fragment_splash_disclaimer_text_view)).setText(
+        TextView tv = ((TextView) ret.findViewById(R.id.fragment_splash_disclaimer_text_view));
+        tv.setText(
                 new StringBuilder(LoLin1Utils
                         .getString(getActivity().getApplicationContext(), "app_name", "Lolin1"))
-                        .append(" ")
-                        .append(LoLin1Utils
-                                .getString(getActivity().getApplicationContext(),
-                                        "legal_jibber_jabber",
-                                        ""))
+                        .append(LoLin1Utils.getString(getActivity().getApplicationContext(),
+                                "legal_jibber_jabber", ""))
         );
+//        tv.setMovementMethod(ScrollingMovementMethod.getInstance());
 
         return ret;
     }

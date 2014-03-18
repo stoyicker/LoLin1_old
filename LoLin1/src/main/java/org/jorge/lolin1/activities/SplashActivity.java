@@ -82,14 +82,15 @@ public class SplashActivity extends Activity {
              */
             @Override
             protected Void doInBackground(Void... params) {
-                for (int i = 0; i < 100; i++) {
+                int iterations = 20;
+                for (int i = 0; i < iterations; i++) {
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(1000);
                     }
                     catch (InterruptedException e) {
                         e.printStackTrace(System.err);
                     }
-                    publishProgress(1);
+                    publishProgress(100 / iterations);
                 }
                 return null;
             }
