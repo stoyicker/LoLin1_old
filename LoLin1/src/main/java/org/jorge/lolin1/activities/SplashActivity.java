@@ -7,13 +7,14 @@ import android.os.Bundle;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.frags.SplashLogFragment;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
 
 public class SplashActivity extends Activity {
 
-    SmoothProgressBar progressBar;
+    private SplashLogFragment LOG_FRAGMENT;
 
     /**
      * Perform initialization of all fragments and loaders.
@@ -24,13 +25,18 @@ public class SplashActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
-        progressBar = (SmoothProgressBar) findViewById(R.id.fragment_splash_progress_bar_view);
-        progressBar.setIndeterminateDrawable(
-                new SmoothProgressDrawable.Builder(getApplicationContext())
-                        .color(getApplicationContext().getResources()
-                                .getColor(R.color.theme_strong_orange))
-                        .interpolator(new AccelerateDecelerateInterpolator()).build()
-        );
+        ((SmoothProgressBar) findViewById(R.id.fragment_splash_progress_bar_view))
+                .setIndeterminateDrawable(
+                        new SmoothProgressDrawable.Builder(getApplicationContext())
+                                .color(getApplicationContext().getResources()
+                                        .getColor(R.color.theme_strong_orange))
+                                .interpolator(new AccelerateDecelerateInterpolator()).build()
+                );
+
+        LOG_FRAGMENT =
+                (SplashLogFragment) getFragmentManager()
+                        .findFragmentById(R.id.fragment_splash_log_text);
+
         simulateProgressBarLoad();
     }
 
@@ -64,6 +70,7 @@ public class SplashActivity extends Activity {
             @Override
             protected void onProgressUpdate(Integer... values) {
                 super.onProgressUpdate(values);
+                LOG_FRAGMENT.appendToSameLine(values[0] + "");
             }
 
             /**
@@ -92,6 +99,13 @@ public class SplashActivity extends Activity {
                     }
                     publishProgress(100 / iterations);
                 }
+                try {
+                    //Sleep a little bit so I can see the result
+                    Thread.sleep(5000);
+                }
+                catch (InterruptedException e) {
+                    e.printStackTrace(System.err);
+                }
                 return null;
             }
         }.execute();
@@ -105,4 +119,4 @@ public class SplashActivity extends Activity {
 
 }
 
-//FUTURE Remove <item name="news_reader" type="layout">@layout/news_double_pane</item><item name="surr_reader" type="layout">@layout/surr_double_pane</item><bool name="feed_has_two_panes">true</bool> from values-land/layouts.xml
+//FUTURE Remove <item name="news_reader" type="layout">@layout/news_double_pane</item><item name="surr_reader" type="layout">@layout/surr_double_pane</item><bool name="feed_has_two_panes">true</bool> from values-land/layouts.xml to not to see the double layout on devices which are not large enough

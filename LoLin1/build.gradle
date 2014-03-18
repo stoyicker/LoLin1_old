@@ -45,4 +45,5 @@ dependencies {
     compile 'com.github.johnkil.android-progressfragment:progressfragment:+'
     compile 'com.android.support:support-v4:+'
     compile 'com.github.castorflex.smoothprogressbar:library:+'
+    compile 'com.github.johnkil.android-robototextview:robototextview:+'
 }

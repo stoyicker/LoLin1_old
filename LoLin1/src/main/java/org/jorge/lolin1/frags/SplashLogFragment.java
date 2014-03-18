@@ -3,13 +3,14 @@ package org.jorge.lolin1.frags;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+
+import com.devspark.robototextview.widget.RobotoTextView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -27,9 +28,20 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 17/03/14.
+ * Created by JorgeAntonio on 18/03/14.
  */
-public class SplashDisclaimerTextFragment extends Fragment {
+public class SplashLogFragment extends Fragment {
+
+    private RobotoTextView logTextView;
+
+    public void appendToSameLine(CharSequence text) {
+        logTextView.append(text);
+    }
+
+    public void appendToNewLine(CharSequence text) {
+        appendToSameLine(new StringBuilder("\n").append(text));
+    }
+
     /**
      * Called to do initial creation of a fragment.  This is called after
      * {@link #onAttach(android.app.Activity)} and before
@@ -64,15 +76,11 @@ public class SplashDisclaimerTextFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View ret =
-                inflater.inflate(R.layout.fragment_splash_disclaimer_text, container, false);
+                inflater.inflate(R.layout.fragment_splash_log_text, container, false);
 
-        TextView tv = ((TextView) ret.findViewById(R.id.fragment_splash_disclaimer_text_view));
-        tv.setText(
-                new StringBuilder(LoLin1Utils
-                        .getString(getActivity().getApplicationContext(), "app_name", "Lolin1"))
-                        .append(LoLin1Utils.getString(getActivity().getApplicationContext(),
-                                "legal_jibber_jabber", ""))
-        );
+        logTextView = ((RobotoTextView) ret.findViewById(R.id.fragment_splash_log_text_view));
+
+        Log.d("NX4", logTextView == null ? "null" : "fine");
 
         return ret;
     }
