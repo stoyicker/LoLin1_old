@@ -1,17 +1,13 @@
 package org.jorge.lolin1.utils;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
-import android.util.DisplayMetrics;
 import android.util.Log;
 
 import org.jorge.lolin1.R;
@@ -42,6 +38,25 @@ import java.util.Locale;
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */
 public abstract class LoLin1Utils {
+
+    public static Boolean setLocale(Context baseContext, String newLocale) {
+        if (!isLocaleSupported(newLocale)) {
+            return Boolean.FALSE;
+        }
+        Locale locale = new Locale(newLocale
+                .substring(0, LoLin1Utils.getInt(baseContext, "locale_length", 2)));
+        Locale.setDefault(locale);
+        Configuration config = baseContext.getResources().getConfiguration();
+        config.locale = locale;
+        baseContext.getResources().updateConfiguration(config,
+                baseContext.getResources().getDisplayMetrics());
+        SharedPreferences.Editor editor =
+                PreferenceManager.getDefaultSharedPreferences(baseContext).edit();
+        editor.putString(getString(baseContext, "pref_title_lang", "error_pref_title_lang"),
+                newLocale);
+        editor.commit();
+        return Boolean.TRUE;
+    }
 
     public static String getRealm(Context context) {
         return PreferenceManager.getDefaultSharedPreferences(context).getString(
@@ -164,14 +179,12 @@ public abstract class LoLin1Utils {
         return ret;
     }
 
-    public static void setLocale(String lang, Activity activity) {
-        Locale myLocale = new Locale(lang.toLowerCase());
-        Resources res = activity.getResources();
-        DisplayMetrics dm = res.getDisplayMetrics();
-        Configuration conf = res.getConfiguration();
-        conf.locale = myLocale;
-        res.updateConfiguration(conf, dm);
-        Intent refresh = new Intent(activity, activity.getClass());
-        activity.startActivity(refresh);
+    public static Boolean setRealm(String newRealm) {
+        if (!isRealmSupported(newRealm)) {
+            return Boolean.FALSE;
+        }
+        //TODO Set the realm
+        //TODO Set the preference
+        return Boolean.TRUE;
     }
 }

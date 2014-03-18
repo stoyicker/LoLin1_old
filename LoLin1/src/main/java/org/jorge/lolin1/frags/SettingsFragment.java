@@ -98,9 +98,10 @@ public class SettingsFragment extends PreferenceFragment {
                         ))
                                 .indexOf(chosenLang);
                 if (langIndex != -1) {
-                    LoLin1Utils.setLocale(
-                            LoLin1Utils.getStringArray(getActivity(), "langs_simplified",
-                                    new String[]{"error"})[langIndex], getActivity()
+                    LoLin1Utils.setLocale(getActivity().getBaseContext(),
+                            LoLin1Utils.getStringArray(getActivity().getApplicationContext(),
+                                    "langs_simplified",
+                                    new String[]{"error"})[langIndex]
                     );
                     ret = Boolean.TRUE;
                 }

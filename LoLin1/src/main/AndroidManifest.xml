@@ -98,6 +98,18 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+		<activity
+			android:name=".activities.ServerAndLanguageChooserActivity"
+			android:label="@string/title_activity_server_and_lang"
+			android:launchMode="singleTop"
+			android:logo="@drawable/icon_app"
+			android:screenOrientation="portrait"
+			android:theme="@android:style/Theme.NoTitleBar">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
 	</application>
 
 </manifest>

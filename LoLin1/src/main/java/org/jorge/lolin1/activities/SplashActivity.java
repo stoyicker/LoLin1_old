@@ -56,7 +56,7 @@ public class SplashActivity extends Activity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
-//                launchNewsReader();
+                launchNewsReader();
             }
 
             /**
