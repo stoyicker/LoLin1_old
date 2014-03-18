@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -61,6 +63,18 @@ public class SplashDisclaimerTextFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_splash_disclaimer_text, container, false);
+        View ret = inflater.inflate(R.layout.fragment_splash_disclaimer_text, container, false);
+
+        ((TextView) ret.findViewById(R.id.fragment_splash_disclaimer_text_view)).setText(
+                new StringBuilder(LoLin1Utils
+                        .getString(getActivity().getApplicationContext(), "app_name", "Lolin1"))
+                        .append(" ")
+                        .append(LoLin1Utils
+                                .getString(getActivity().getApplicationContext(),
+                                        "legal_jibber_jabber",
+                                        ""))
+        );
+
+        return ret;
     }
 }

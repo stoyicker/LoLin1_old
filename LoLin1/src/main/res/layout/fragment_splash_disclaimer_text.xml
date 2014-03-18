@@ -28,11 +28,24 @@ Created by JorgeAntonio on 17/03/14.
               android:paddingRight="@dimen/splash_disclaimer_text_horizontal_margin"
               android:paddingTop="@dimen/splash_disclaimer_text_vertical_margin"
               tools:context="org.jorge.lolin1.frags.SplashDisclaimerTextFragment">
-	<TextView
-		android:id="@+id/fragment_splash_disclaimer_text_view"
-		style="@style/SplashDisclaimerTextStyle"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:gravity="center"
-		android:text="@string/legal_jibber_jabber"/>
+
+	<ScrollView
+		android:id="@+id/fragment_splash_disclaimer_scroll_view"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:fillViewport="true"
+		android:scrollbarAlwaysDrawHorizontalTrack="true"
+		android:scrollbarAlwaysDrawVerticalTrack="true"
+		android:scrollbars="vertical">
+
+		<TextView
+			android:id="@+id/fragment_splash_disclaimer_text_view"
+			style="@style/SplashDisclaimerTextStyle"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:gravity="center"
+			android:text="@string/legal_jibber_jabber"/>
+
+	</ScrollView>
+
 </LinearLayout>

@@ -129,9 +129,9 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="loading">Loading...</string>
 	<string name="title_activity_splash">SplashActivity</string>
 	<string name="splash_image_content_description">Splash image</string>
-	<string name="legal_jibber_jabber">This application isn’t endorsed by Riot Games and
-		doesn’t reflect the views or opinions of Riot Games or anyone officially involved in
-		producing or managing League of Legends. League of Legends and Riot Games are trademarks or
-		registered trademarks of Riot Games, Inc. League of Legends © Riot Games, Inc.
+	<string name="legal_jibber_jabber">isn’t endorsed by Riot Games and doesn’t reflect the views or
+		opinions of Riot Games or anyone officially involved in producing or managing League of
+		Legends. League of Legends and Riot Games are trademarks or registered trademarks of Riot
+		Games, Inc. League of Legends © Riot Games, Inc.
 	</string>
 </resources>
