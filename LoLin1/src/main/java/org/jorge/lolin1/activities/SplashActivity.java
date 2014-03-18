@@ -126,7 +126,7 @@ public class SplashActivity extends Activity {
     }
 
     private void launchNewsReader() {
-        final Intent newsIntent = new Intent(this, NewsReaderActivity.class);
+        final Intent newsIntent = new Intent(getApplicationContext(), NewsReaderActivity.class);
         finish();
         startActivity(newsIntent);
     }

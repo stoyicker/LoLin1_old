@@ -18,6 +18,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.lang.reflect.Field;
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
@@ -41,6 +42,31 @@ import java.util.Locale;
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */
 public abstract class LoLin1Utils {
+
+    public static String getRealm(Context context) {
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(
+                LoLin1Utils.getString(context, "pref_title_server", "League of Legends server"),
+                "null").toLowerCase();
+    }
+
+    public static String getLocale(Context context) {
+        String ret;
+        try {
+            ret = LoLin1Utils.getStringArray(context, "langs_simplified", null)[
+                    Arrays.asList(LoLin1Utils.getStringArray(context, "langs", null)).indexOf(
+                            PreferenceManager.getDefaultSharedPreferences(context).getString(
+                                    LoLin1Utils
+                                            .getString(context, "pref_title_lang", "Language"),
+                                    "null"
+                            )
+                    )];
+        }
+        catch (NullPointerException ex) {
+            ret = "null";
+        }
+
+        return ret;
+    }
 
     public static String[] getStringArray(Context context, String variableName,
                                           String[] defaultRet) {

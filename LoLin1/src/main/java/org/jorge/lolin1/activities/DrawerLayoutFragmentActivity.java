@@ -73,7 +73,8 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         Boolean ret = Boolean.TRUE;
         switch (item.getItemId()) {
             case R.id.action_settings:
-                startActivity(new Intent(this, SettingsPreferenceActivity.class));
+                startActivity(
+                        new Intent(getApplicationContext(), SettingsPreferenceActivity.class));
                 break;
             default: //Up button
                 ret = super.onOptionsItemSelected(item);
@@ -123,7 +124,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
             default:
                 Log.wtf("NX4", "Should never happen - Selected index - " + position);
         }
-        startActivity(new Intent(this, target));
+        startActivity(new Intent(getApplicationContext(), target));
     }
 
     @Override

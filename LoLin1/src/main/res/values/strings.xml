@@ -35,16 +35,16 @@ Created by JorgeAntonio on 02/01/14.
 		connection
 	</string>
 	<string name="db_name" tools:ignore="UnusedResources">LoLin1_DB</string>
-	<string name="lang_pt_simplified">PT</string>
-	<string name="lang_en_simplified">EN</string>
-	<string name="lang_tr_simplified">TR</string>
-	<string name="lang_el_simplified">GR</string>
-	<string name="lang_pl_simplified">PL</string>
-	<string name="lang_fr_simplified">FR</string>
-	<string name="lang_es_simplified">ES</string>
-	<string name="lang_de_simplified">DE</string>
-	<string name="lang_ro_simplified">RO</string>
-	<string name="lang_it_simplified">IT</string>
+	<string name="lang_pt_simplified">pt_PT</string>
+	<string name="lang_en_simplified">en_US</string>
+	<string name="lang_tr_simplified">tr_TR</string>
+	<string name="lang_el_simplified">el_GR</string>
+	<string name="lang_pl_simplified">pl_PL</string>
+	<string name="lang_fr_simplified">fr_FR</string>
+	<string name="lang_es_simplified">es_ES</string>
+	<string name="lang_de_simplified">de_DE</string>
+	<string name="lang_ro_simplified">ro_RO</string>
+	<string name="lang_it_simplified">it_IT</string>
 	<string name="lang_pt">Português</string>
 	<string name="lang_en">English</string>
 	<string name="lang_tr">Türkçe</string>
@@ -73,11 +73,11 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_summary_data_off">Forbid the app from working with the data connection
 	</string>
 	<string name="pref_title_server">League of Legends server</string>
-	<string name="server_na">NA</string>
-	<string name="server_euw">EUW</string>
-	<string name="server_eune">EUNE</string>
-	<string name="server_br">BR</string>
-	<string name="server_tr">TR</string>
+	<string name="server_na">na</string>
+	<string name="server_euw">euw</string>
+	<string name="server_eune">eune</string>
+	<string name="server_br">br</string>
+	<string name="server_tr">tr</string>
 	<string name="pref_title_lang">Language</string>
 	<string name="pref_cat_jun">JUNGLE TIMERS</string>
 	<string name="pref_title_timers_reset">Confirm timers reset</string>

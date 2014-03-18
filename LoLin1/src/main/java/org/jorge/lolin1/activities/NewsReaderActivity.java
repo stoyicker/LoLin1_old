@@ -99,7 +99,7 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
             }
         }
         else {
-            Intent singleViewIntent = new Intent(this, WebViewerActivity.class);
+            Intent singleViewIntent = new Intent(getApplicationContext(), WebViewerActivity.class);
             singleViewIntent.putExtra("index", index);
             startActivity(singleViewIntent);
         }

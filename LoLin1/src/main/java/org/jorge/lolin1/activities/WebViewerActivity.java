@@ -58,7 +58,8 @@ public class WebViewerActivity extends FragmentActivity {
             default:
                 Log.wtf("ERROR",
                         "Should never happen - NewsReaderActivity.getLastSelectedNavDavIndex() is " +
-                                DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex());
+                                DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex()
+                );
         }
 
         getSupportFragmentManager().beginTransaction()
@@ -66,7 +67,9 @@ public class WebViewerActivity extends FragmentActivity {
                         webViewerFragment = new WebViewerFragment(
                                 elements.isEmpty() ? null :
                                         elements.get(getIntent().getExtras().getInt("index", 0))
-                                                .getLink()))
+                                                .getLink()
+                        )
+                )
                 .addToBackStack("").commit();
 
         getSupportFragmentManager().executePendingTransactions();
@@ -91,7 +94,8 @@ public class WebViewerActivity extends FragmentActivity {
                 finish();
                 return true;
             case R.id.action_settings:
-                startActivity(new Intent(this, SettingsPreferenceActivity.class));
+                startActivity(
+                        new Intent(getApplicationContext(), SettingsPreferenceActivity.class));
             default:
                 return super.onOptionsItemSelected(item);
         }

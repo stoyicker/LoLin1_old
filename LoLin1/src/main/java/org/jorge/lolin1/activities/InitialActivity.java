@@ -2,15 +2,14 @@ package org.jorge.lolin1.activities;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.champs.ChampionManager;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.utils.LoLin1Utils;
+
+import java.util.Arrays;
 
 /**
  * This file is part of LoLin1.
@@ -39,44 +38,19 @@ public class InitialActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SQLiteDAO.setup(getApplicationContext());
-        PreferenceManager.setDefaultValues(this, R.xml.settings, Boolean.FALSE);
-        SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(this);
-        if (preferences.getBoolean(
-                LoLin1Utils.getString(this, "pref_first_run", "pref_first_run"),
-                Boolean.FALSE)) {//FUTURE Change this to Boolean.TRUE to see the first-time stuff happen
-            final Intent firstTimeSetupIntent =
-                    new Intent("org.jorge.lolin1.activities.SERVERANDLANGCHOOSERACTIVITY");
-            startActivity(firstTimeSetupIntent);
-            SharedPreferences.Editor firstRunEditor = preferences.edit();
-            firstRunEditor.putBoolean(
-                    LoLin1Utils.getString(this, "pref_first_run", "pref_first_run"),
-                    Boolean.FALSE);
-            firstRunEditor.apply();
+        PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.FALSE);
+        if (!Arrays.asList(LoLin1Utils.getStringArray(getApplicationContext(),
+                "servers", null))
+                .contains(LoLin1Utils.getRealm(getApplicationContext())) ||
+                !Arrays.asList(LoLin1Utils.getStringArray(getApplicationContext(),
+                        "langs_simplified", null))
+                        .contains(LoLin1Utils.getLocale(
+                                getApplicationContext()))) {//FUTURE Change this to Boolean.TRUE to see the first-time stuff happen
+            final Intent serverAndLanguageChooserIntent =
+                    new Intent(getApplicationContext(), ServerAndLanguageChooserActivity.class);
+            startActivity(serverAndLanguageChooserIntent);
         }
-        new AsyncTask<Void, Void, Void>() {
-            /**
-             * Override this method to perform a computation on a background thread. The
-             * specified parameters are the parameters passed to {@link #execute}
-             * by the caller of this task.
-             * <p/>
-             * This method can call {@link #publishProgress} to publish updates
-             * on the UI thread.
-             *
-             * @param params The parameters of the task.
-             * @return A result, defined by the subclass of this task.
-             * @see #onPreExecute()
-             * @see #onPostExecute
-             * @see #publishProgress
-             */
-            @Override
-            protected Void doInBackground(Void... params) {
-                ChampionManager.setContext(InitialActivity.this.getApplicationContext());
-                ChampionManager.readInfo();
-                return null;
-            }
-        }.execute();
-        final Intent newsIntent = new Intent(this, SplashActivity.class);
+        final Intent newsIntent = new Intent(getApplicationContext(), SplashActivity.class);
         finish();
         startActivity(newsIntent);
     }
