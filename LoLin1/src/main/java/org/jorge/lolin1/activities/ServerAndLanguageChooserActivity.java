@@ -81,7 +81,7 @@ public class ServerAndLanguageChooserActivity extends Activity
 
     public void showFeedbackToast() {
         final String msg =
-                LoLin1Utils.getString(getApplicationContext(), "configuration_saved",
+                LoLin1Utils.getString(getApplicationContext(), "initial_configuration_saved",
                         "SETTINGS_SAVED_DEFAULT");
         runOnUiThread(new Runnable() {
             @Override
