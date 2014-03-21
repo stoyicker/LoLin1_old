@@ -2,7 +2,6 @@ package org.jorge.lolin1.frags;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.content.Context;
 import android.util.Xml;
 import android.view.MotionEvent;
 import android.view.View;
@@ -49,30 +48,27 @@ public class LanguageListFragment extends Fragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            reloadLanguages();
+            reloadLanguages(mCallback.onCurrentlySelectedRealmRequest());
         }
     }
 
-    private void reloadLanguages() {
+    private void reloadLanguages(String newSelectedRealm) {
         ViewGroup viewAsViewGroup = (ViewGroup) getView();
         viewAsViewGroup.removeAllViews();
         views.clear();
         String realm_composite =
-                new StringBuilder(LoLin1Utils.getString(getActivity().getApplicationContext(),
-                        "realm_to_language_list_prefix", "lang_"))
-                        .append(
-                                mCallback.onCurrentlySelectedRealmRequest().toLowerCase())
-                        .toString();
+                LoLin1Utils.getString(getActivity().getApplicationContext(),
+                        "realm_to_language_list_prefix", "lang_") +
+                        newSelectedRealm.toLowerCase();
         String[] languages =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(), realm_composite,
                                 new String[]{"NO_LANGUAGE_FOUND"}), languages_simplified =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(),
-                                new StringBuilder(realm_composite).append(LoLin1Utils
+                                realm_composite + LoLin1Utils
                                         .getString(getActivity().getApplicationContext(),
-                                                "language_to_simplified_suffix", "_simplified"))
-                                        .toString(),
+                                                "language_to_simplified_suffix", "_simplified"),
                                 new String[]{"NO_LANGUAGE_FOUND"}
                         );
         int languageCounter = 0;
@@ -84,12 +80,12 @@ public class LanguageListFragment extends Fragment {
                     ) {
                         @Override
                         public boolean onTouchEvent(MotionEvent event) {
-                            mCallback.onLocaleSelected(/*TODO Calculate selected locale*/);
                             for (View x : views)
                                 if (x != this) {
                                     this.setShadowLayer(0, 0, 0, R.color.theme_white);
                                 }
                             this.setShadowLayer(1, 1, 1, R.color.theme_strong_orange);
+                            mCallback.onLocaleSelected((String) this.getTag());
                             return Boolean.TRUE;
                         }
                     };
@@ -115,7 +111,7 @@ public class LanguageListFragment extends Fragment {
 
     public void notifyNewRealmHasBeenSelected(String newSelectedRealm) {
         mCallback.updateLanguageChooserVisibility();
-        reloadLanguages();
+        reloadLanguages(newSelectedRealm);
     }
 
     public interface LanguageListFragmentListener {
@@ -124,17 +120,5 @@ public class LanguageListFragment extends Fragment {
         public String onCurrentlySelectedRealmRequest();
 
         public void updateLanguageChooserVisibility();
-    }
-
-    private class LanguageListControlledView extends View {
-        /**
-         * Simple constructor to use when creating a view from code.
-         *
-         * @param context The Context the view is running in, through which it can
-         *                access the current theme, resources, etc.
-         */
-        public LanguageListControlledView(Context context) {
-            super(context);
-        }
     }
 }
