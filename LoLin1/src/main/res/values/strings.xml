@@ -134,4 +134,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="initial_configuration_saved">Configuration saved. You can change it later.
 		Welcome!
 	</string>
+	<string name="realm_selection_text">Choose a realm:</string>
 </resources>

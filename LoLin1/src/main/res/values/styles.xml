@@ -67,7 +67,7 @@ Created by JorgeAntonio on 02/01/14.
 	</style>
 	<style name="SplashDisclaimerTextStyle">
 		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textSize">@dimen/news_feed_title_size</item>
+		<item name="android:textSize">@dimen/disclaimer_text_size</item>
 		<item name="android:shadowColor">@color/theme_strong_orange</item>
 		<item name="android:shadowDx">1</item>
 		<item name="android:shadowDy">1</item>
@@ -76,5 +76,17 @@ Created by JorgeAntonio on 02/01/14.
 	<style name="LogTextStyle">
 		<item name="android:textColor">@color/theme_black</item>
 		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="ServerAndLanguageChooserUnselectedStyle">
+		<item name="android:textColor">@color/theme_black</item>
+		<item name="android:textStyle">bold</item>
+	</style>
+	<style name="ServerAndLanguageChooserSelectedStyle">
+		<item name="android:textColor">@color/theme_black</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:shadowColor">@color/theme_strong_orange</item>
+		<item name="android:shadowDx">1</item>
+		<item name="android:shadowDy">1</item>
+		<item name="android:shadowRadius">1</item>
 	</style>
 </resources>
