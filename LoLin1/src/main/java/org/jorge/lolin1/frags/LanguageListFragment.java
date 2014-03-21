@@ -12,6 +12,8 @@ import android.widget.TextView;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
+import java.util.ArrayList;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -33,7 +35,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 public class LanguageListFragment extends Fragment {
 
     private LanguageListFragmentListener mCallback;
-    private LanguageListControlledView controlledView;
+    private ArrayList<View> views = new ArrayList<>();
 
     /**
      * Called when the hidden state (as returned by {@link #isHidden()} of
@@ -54,6 +56,7 @@ public class LanguageListFragment extends Fragment {
     private void reloadLanguages() {
         ViewGroup viewAsViewGroup = (ViewGroup) getView();
         viewAsViewGroup.removeAllViews();
+        views.clear();
         String realm_composite =
                 new StringBuilder(LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "realm_to_language_list_prefix", "lang_"))
@@ -82,10 +85,15 @@ public class LanguageListFragment extends Fragment {
                         @Override
                         public boolean onTouchEvent(MotionEvent event) {
                             mCallback.onLocaleSelected(/*TODO Calculate selected locale*/);
-                            /*TODO Highlight this TextView with the ServerAndLanguageChooserUnselectedStyle - http://stackoverflow.com/questions/11723881/android-set-view-style-programatically*/
+                            for (View x : views)
+                                if (x != this) {
+                                    this.setShadowLayer(0, 0, 0, R.color.theme_white);
+                                }
+                            this.setShadowLayer(1, 1, 1, R.color.theme_strong_orange);
                             return Boolean.TRUE;
                         }
                     };
+            views.add(textView);
             textView.setText(language);
             textView.setTag(languages_simplified[languageCounter]);
             viewAsViewGroup.addView(textView);
