@@ -65,4 +65,11 @@ Created by JorgeAntonio on 21/03/2014.
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
 	          tools:layout="@layout/fragment_language_list"/>
+
+	<fragment android:id="@+id/fragment_verification"
+	          android:name="org.jorge.lolin1.frags.VerificationFragment"
+	          android:layout_width="wrap_content"
+	          android:layout_height="wrap_content"
+	          android:layout_gravity="center"
+	          tools:layout="@layout/fragment_verification"/>
 </LinearLayout>

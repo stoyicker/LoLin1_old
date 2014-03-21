@@ -81,11 +81,11 @@ public class ServerAndLanguageChooserActivity extends Activity
 
     @Override
     public void onLocaleSelected(String newLocale) {
-        enableAcceptButton();
+        enableVerification();
     }
 
-    private void enableAcceptButton() {
-        //TODO Enable the button if it's not already enabled
+    private void enableVerification() {
+        //TODO Enable the verification if it's not already enabled
 
         //TODO Move this stuff to the onPressed listener of the button
         LoLin1Utils.setRealm(currentlySelectedRealm);
@@ -94,6 +94,9 @@ public class ServerAndLanguageChooserActivity extends Activity
         finish();
     }
 
+    private void disableVerification() {
+        //TODO Disable the verification
+    }
 
     @Override
     public void updateLanguageChooserVisibility() {
@@ -108,6 +111,7 @@ public class ServerAndLanguageChooserActivity extends Activity
     @Override
     public void onRealmSelected(String newSelectedRealm) {
         currentlySelectedRealm = newSelectedRealm;
+        disableVerification();
         LANGUAGE_CHOOSER_FRAGMENT.notifyNewRealmHasBeenSelected(currentlySelectedRealm);
     }
 
