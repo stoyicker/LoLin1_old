@@ -25,7 +25,7 @@ Created by JorgeAntonio on 21/03/2014.
 	<TextView style="@style/ServerAndLanguageChooserUnselectedStyle"
 	          android:layout_width="match_parent"
 	          android:layout_height="match_parent"
-	          android:text="@string/realm_selection_text"
+	          android:text="@string/language_selection_text"
 	          android:textStyle="normal"
 		/>
 </LinearLayout>

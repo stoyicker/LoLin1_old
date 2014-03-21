@@ -135,4 +135,5 @@ Created by JorgeAntonio on 02/01/14.
 		Welcome!
 	</string>
 	<string name="realm_selection_text">Choose a realm:</string>
+	<string name="language_selection_text">Choose a language:</string>
 </resources>

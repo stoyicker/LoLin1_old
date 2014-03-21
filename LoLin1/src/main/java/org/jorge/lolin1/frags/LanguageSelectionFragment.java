@@ -21,28 +21,31 @@ import android.app.Fragment;
  * <p/>
  * Created by JorgeAntonio on 18/03/14.
  */
-public class LanguageChooserFragment extends Fragment {
+public class LanguageSelectionFragment extends Fragment {
 
-    private LanguageChooserFragmentListener mCallback;
+    private LanguageSelectionFragmentListener mCallback;
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
         try {
-            mCallback = (LanguageChooserFragmentListener) activity;
+            mCallback = (LanguageSelectionFragmentListener) activity;
         }
         catch (ClassCastException e) {
             throw new ClassCastException(
-                    "Activity must implement LanguageChooserFragmentListener.");
+                    "Activity must implement LanguageSelectionFragmentListener.");
         }
     }
 
     public void notifyNewRealmHasBeenSelected(String newSelectedRealm) {
+        mCallback.updateLanguageChooserVisibility();
         //TODO notifyNewRealmHasBeenSelected
     }
 
-    public interface LanguageChooserFragmentListener {
+    public interface LanguageSelectionFragmentListener {
         public void onLocaleSelected(String newLocale);
+
+        public void updateLanguageChooserVisibility();
     }
 
 }

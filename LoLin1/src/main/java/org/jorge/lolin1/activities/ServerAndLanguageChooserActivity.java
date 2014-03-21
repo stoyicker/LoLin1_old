@@ -1,11 +1,13 @@
 package org.jorge.lolin1.activities;
 
 import android.app.Activity;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.widget.Toast;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.frags.LanguageChooserFragment;
+import org.jorge.lolin1.frags.LanguageSelectionFragment;
 import org.jorge.lolin1.frags.RealmChooserFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
@@ -29,9 +31,9 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  */
 public class ServerAndLanguageChooserActivity extends Activity
         implements RealmChooserFragment.RealmChooserFragmentListener,
-        LanguageChooserFragment.LanguageChooserFragmentListener {
+        LanguageSelectionFragment.LanguageSelectionFragmentListener {
 
-    private LanguageChooserFragment LANGUAGE_CHOOSER_FRAGMENT;
+    private LanguageSelectionFragment LANGUAGE_CHOOSER_FRAGMENT;
     private String currentlySelectedRealm;
 
     /**
@@ -63,14 +65,44 @@ public class ServerAndLanguageChooserActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.server_and_language_chooser);
+
+        FragmentManager fragmentManager = getFragmentManager();
+
+        LANGUAGE_CHOOSER_FRAGMENT =
+                (LanguageSelectionFragment) fragmentManager
+                        .findFragmentById(R.id.fragment_language_selection_text);
+
+        fragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .hide(LANGUAGE_CHOOSER_FRAGMENT).addToBackStack(null).commit();
+
+        fragmentManager.executePendingTransactions();
     }
 
     @Override
     public void onLocaleSelected(String newLocale) {
+        enableAcceptButton();
+    }
+
+    private void enableAcceptButton() {
+        //TODO Enable the button if it's not already enabled
+
+        //TODO Move this stuff to the onPressed listener of the button
         LoLin1Utils.setRealm(currentlySelectedRealm);
         LoLin1Utils.setLocale(getBaseContext(), newLocale);
         showFeedbackToast();
         finish();
+    }
+
+
+    @Override
+    public void updateLanguageChooserVisibility() {
+        if (LANGUAGE_CHOOSER_FRAGMENT.isHidden()) {
+            getFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .show(LANGUAGE_CHOOSER_FRAGMENT).addToBackStack(null).commit();
+            getFragmentManager().executePendingTransactions();
+        }
     }
 
     @Override
