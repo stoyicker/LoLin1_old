@@ -136,4 +136,5 @@ Created by JorgeAntonio on 02/01/14.
 	</string>
 	<string name="realm_selection_text">Choose a realm:</string>
 	<string name="language_selection_text">Choose a language:</string>
+	<string name="realm_to_language_list_prefix">lang_</string>
 </resources>

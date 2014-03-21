@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.frags.LanguageListFragment;
 import org.jorge.lolin1.frags.LanguageSelectionFragment;
 import org.jorge.lolin1.frags.RealmChooserFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -31,9 +32,10 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  */
 public class ServerAndLanguageChooserActivity extends Activity
         implements RealmChooserFragment.RealmChooserFragmentListener,
-        LanguageSelectionFragment.LanguageSelectionFragmentListener {
+        LanguageListFragment.LanguageListFragmentListener {
 
-    private LanguageSelectionFragment LANGUAGE_CHOOSER_FRAGMENT;
+    private LanguageSelectionFragment LANGUAGE_SELECTION_FRAGMENT;
+    private LanguageListFragment LANGUAGE_LIST_FRAGMENT;
     private String currentlySelectedRealm;
 
     /**
@@ -68,13 +70,18 @@ public class ServerAndLanguageChooserActivity extends Activity
 
         FragmentManager fragmentManager = getFragmentManager();
 
-        LANGUAGE_CHOOSER_FRAGMENT =
-                (LanguageSelectionFragment) fragmentManager
-                        .findFragmentById(R.id.fragment_language_selection_text);
+        LANGUAGE_LIST_FRAGMENT =
+                (LanguageListFragment) fragmentManager
+                        .findFragmentById(R.id.fragment_language_list);
+        LANGUAGE_SELECTION_FRAGMENT = (LanguageSelectionFragment) fragmentManager
+                .findFragmentById(R.id.fragment_language_selection_text);
 
         fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_NONE)
-                .hide(LANGUAGE_CHOOSER_FRAGMENT).addToBackStack(null).commit();
+                .hide(LANGUAGE_LIST_FRAGMENT).addToBackStack(null).commit();
+        fragmentManager.beginTransaction()
+                .setTransition(FragmentTransaction.TRANSIT_NONE)
+                .hide(LANGUAGE_SELECTION_FRAGMENT).addToBackStack(null).commit();
 
         fragmentManager.executePendingTransactions();
     }
@@ -82,6 +89,11 @@ public class ServerAndLanguageChooserActivity extends Activity
     @Override
     public void onLocaleSelected(String newLocale) {
         enableVerification();
+    }
+
+    @Override
+    public String onCurrentlySelectedRealmRequest() {
+        return currentlySelectedRealm;
     }
 
     private void enableVerification() {
@@ -100,10 +112,13 @@ public class ServerAndLanguageChooserActivity extends Activity
 
     @Override
     public void updateLanguageChooserVisibility() {
-        if (LANGUAGE_CHOOSER_FRAGMENT.isHidden()) {
+        if (LANGUAGE_LIST_FRAGMENT.isHidden()) {
             getFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .show(LANGUAGE_CHOOSER_FRAGMENT).addToBackStack(null).commit();
+                    .show(LANGUAGE_LIST_FRAGMENT).addToBackStack(null).commit();
+            getFragmentManager().beginTransaction()
+                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                    .show(LANGUAGE_SELECTION_FRAGMENT).addToBackStack(null).commit();
             getFragmentManager().executePendingTransactions();
         }
     }
@@ -112,7 +127,7 @@ public class ServerAndLanguageChooserActivity extends Activity
     public void onRealmSelected(String newSelectedRealm) {
         currentlySelectedRealm = newSelectedRealm;
         disableVerification();
-        LANGUAGE_CHOOSER_FRAGMENT.notifyNewRealmHasBeenSelected(currentlySelectedRealm);
+        LANGUAGE_LIST_FRAGMENT.notifyNewRealmHasBeenSelected(currentlySelectedRealm);
     }
 
     public void showFeedbackToast() {

@@ -45,4 +45,6 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="splash_log_vertical_margin">10dp</dimen>
 	<dimen name="splash_log_horizontal_margin">10dp</dimen>
 	<dimen name="splash_log_text_height">100dp</dimen>
+	<dimen name="server_and_language_text_views_vertical_margin">10dp</dimen>
+	<dimen name="server_and_language_text_views_horizontal_margin">15dp</dimen>
 </resources>

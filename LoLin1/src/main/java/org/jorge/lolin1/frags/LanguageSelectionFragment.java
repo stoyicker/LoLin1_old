@@ -1,6 +1,5 @@
 package org.jorge.lolin1.frags;
 
-import android.app.Activity;
 import android.app.Fragment;
 
 /**
@@ -22,30 +21,5 @@ import android.app.Fragment;
  * Created by JorgeAntonio on 18/03/14.
  */
 public class LanguageSelectionFragment extends Fragment {
-
-    private LanguageSelectionFragmentListener mCallback;
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        try {
-            mCallback = (LanguageSelectionFragmentListener) activity;
-        }
-        catch (ClassCastException e) {
-            throw new ClassCastException(
-                    "Activity must implement LanguageSelectionFragmentListener.");
-        }
-    }
-
-    public void notifyNewRealmHasBeenSelected(String newSelectedRealm) {
-        mCallback.updateLanguageChooserVisibility();
-        //TODO notifyNewRealmHasBeenSelected
-    }
-
-    public interface LanguageSelectionFragmentListener {
-        public void onLocaleSelected(String newLocale);
-
-        public void updateLanguageChooserVisibility();
-    }
 
 }
