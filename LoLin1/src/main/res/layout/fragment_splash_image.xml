@@ -27,7 +27,7 @@ Created by JorgeAntonio on 25/01/14.
               android:paddingLeft="@dimen/splash_image_horizontal_margin"
               android:paddingRight="@dimen/splash_image_horizontal_margin"
               android:paddingTop="@dimen/splash_image_vertical_margin"
-              tools:context="org.jorge.lolin1.frags.SplashImageFragment">
+              tools:context="org.jorge.lolin1.ui.frags.SplashImageFragment">
 	<ImageView android:id="@+id/fragment_splash_image_view"
 	           android:layout_width="match_parent"
 	           android:layout_height="match_parent"

@@ -28,31 +28,31 @@ Created by JorgeAntonio on 21/03/2014.
 	android:paddingLeft="@dimen/activity_horizontal_margin"
 	android:paddingRight="@dimen/activity_horizontal_margin"
 	android:paddingTop="@dimen/activity_vertical_margin"
-	tools:context="org.jorge.lolin1.activities.ServerAndLanguageChooserActivity">
+	tools:context="org.jorge.lolin1.ui.activities.ServerAndLanguageChooserActivity">
 
 	<fragment android:id="@+id/fragment_splash_image"
-	          android:name="org.jorge.lolin1.frags.SplashImageFragment"
+	          android:name="org.jorge.lolin1.ui.frags.SplashImageFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
 	          tools:layout="@layout/fragment_splash_image"/>
 
 	<fragment android:id="@+id/fragment_realm_selection_text"
-	          android:name="org.jorge.lolin1.frags.RealmSelectionFragment"
+	          android:name="org.jorge.lolin1.ui.frags.RealmSelectionFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
 	          tools:layout="@layout/fragment_realm_selection_text"/>
 
 	<fragment android:id="@+id/fragment_realm_list"
-	          android:name="org.jorge.lolin1.frags.RealmListFragment"
+	          android:name="org.jorge.lolin1.ui.frags.RealmListFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
 	          tools:layout="@layout/fragment_realm_list"/>
 
 	<fragment android:id="@+id/fragment_language_selection_text"
-	          android:name="org.jorge.lolin1.frags.LanguageSelectionFragment"
+	          android:name="org.jorge.lolin1.ui.frags.LanguageSelectionFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
@@ -60,14 +60,14 @@ Created by JorgeAntonio on 21/03/2014.
 	          tools:layout="@layout/fragment_language_selection_text"/>
 
 	<fragment android:id="@+id/fragment_language_list"
-	          android:name="org.jorge.lolin1.frags.LanguageListFragment"
+	          android:name="org.jorge.lolin1.ui.frags.LanguageListFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
 	          tools:layout="@layout/fragment_language_list"/>
 
 	<fragment android:id="@+id/fragment_verification"
-	          android:name="org.jorge.lolin1.frags.VerificationFragment"
+	          android:name="org.jorge.lolin1.ui.frags.VerificationFragment"
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"

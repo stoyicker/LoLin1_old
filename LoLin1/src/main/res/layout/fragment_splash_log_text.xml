@@ -27,7 +27,7 @@ Created by JorgeAntonio on 18/03/2014.
             android:paddingLeft="@dimen/splash_log_horizontal_margin"
             android:paddingRight="@dimen/splash_log_horizontal_margin"
             android:paddingTop="@dimen/splash_log_vertical_margin"
-            tools:context="org.jorge.lolin1.frags.SplashLogFragment">
+            tools:context="org.jorge.lolin1.ui.frags.SplashLogFragment">
 	<com.devspark.robototextview.widget.RobotoTextView
 		android:id="@+id/fragment_splash_log_text_view"
 		style="@style/LogTextStyle"

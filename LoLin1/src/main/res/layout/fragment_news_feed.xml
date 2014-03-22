@@ -28,7 +28,7 @@ Created by JorgeAntonio on 02/01/14.
 	android:layout_marginTop="@dimen/activity_vertical_margin"
 	android:background="@color/theme_black"
 	android:orientation="vertical"
-	tools:context="org.jorge.lolin1.frags.NewsListFragment">
+	tools:context="org.jorge.lolin1.ui.frags.NewsListFragment">
 
 	<ListView
 		android:id="@id/android:list"

@@ -11,8 +11,8 @@ import android.graphics.BitmapFactory;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.feeds.news.NewsEntry;
-import org.jorge.lolin1.feeds.surr.SurrEntry;
+import org.jorge.lolin1.func.feeds.news.NewsEntry;
+import org.jorge.lolin1.func.feeds.surr.SurrEntry;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.ByteArrayOutputStream;

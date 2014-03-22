@@ -27,7 +27,7 @@ Created by JorgeAntonio on 17/03/14.
             android:paddingLeft="@dimen/splash_disclaimer_text_horizontal_margin"
             android:paddingRight="@dimen/splash_disclaimer_text_horizontal_margin"
             android:paddingTop="@dimen/splash_disclaimer_text_vertical_margin"
-            tools:context="org.jorge.lolin1.frags.SplashDisclaimerTextFragment">
+            tools:context="org.jorge.lolin1.ui.frags.SplashDisclaimerTextFragment">
 	<TextView
 		android:id="@+id/fragment_splash_disclaimer_text_view"
 		style="@style/SplashDisclaimerTextStyle"

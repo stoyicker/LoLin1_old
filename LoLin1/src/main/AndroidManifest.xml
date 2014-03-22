@@ -30,7 +30,7 @@ Created by JorgeAntonio on 02/01/14.
 		android:logo="@drawable/icon_section1"
 		android:theme="@style/AppTheme">
 		<activity
-			android:name="org.jorge.lolin1.activities.InitialActivity"
+			android:name=".ui.activities.InitialActivity"
 			android:configChanges="orientation|screenSize|keyboardHidden"
 			android:label="@string/app_name"
 			android:launchMode="singleTop"
@@ -41,7 +41,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.jorge.lolin1.activities.SettingsPreferenceActivity"
+			android:name=".ui.activities.SettingsPreferenceActivity"
 			android:configChanges="keyboardHidden"
 			android:label="@string/title_activity_settings"
 			android:launchMode="singleTop"
@@ -52,7 +52,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.jorge.lolin1.activities.NewsReaderActivity"
+			android:name=".ui.activities.NewsReaderActivity"
 			android:configChanges="keyboardHidden|orientation|screenSize"
 			android:label="@string/title_section1"
 			android:launchMode="singleTop"
@@ -64,7 +64,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.jorge.lolin1.activities.SurrReaderActivity"
+			android:name=".ui.activities.SurrReaderActivity"
 			android:configChanges="keyboardHidden|orientation|screenSize"
 			android:label="@string/title_section6"
 			android:launchMode="singleTop"
@@ -75,7 +75,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name="org.jorge.lolin1.activities.WebViewerActivity"
+			android:name=".ui.activities.WebViewerActivity"
 			android:configChanges="keyboardHidden|orientation|screenSize"
 			android:label="@string/title_activity_web_viewer"
 			android:launchMode="singleTop"
@@ -87,7 +87,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".activities.SplashActivity"
+			android:name=".ui.activities.SplashActivity"
 			android:label="@string/title_activity_splash"
 			android:launchMode="singleTop"
 			android:logo="@drawable/icon_app"
@@ -99,7 +99,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".activities.ServerAndLanguageChooserActivity"
+			android:name=".ui.activities.ServerAndLanguageChooserActivity"
 			android:label="@string/title_activity_server_and_lang"
 			android:launchMode="singleTop"
 			android:logo="@drawable/icon_app"

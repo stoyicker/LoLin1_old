@@ -6,9 +6,9 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Xml;
 
-import org.jorge.lolin1.feeds.IFeedHandler;
-import org.jorge.lolin1.feeds.news.NewsEntry;
-import org.jorge.lolin1.feeds.news.NewsFeedHandler;
+import org.jorge.lolin1.func.feeds.IFeedHandler;
+import org.jorge.lolin1.func.feeds.news.NewsEntry;
+import org.jorge.lolin1.func.feeds.news.NewsFeedHandler;
 import org.jorge.lolin1.utils.LoLin1Utils;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
@@ -92,7 +92,8 @@ public class NewsFeedProvider {
         String langSimplified = LoLin1Utils.getStringArray(context, "langs_simplified",
                 new String[]{"en"})[new ArrayList<>(
                 Arrays.asList(
-                        LoLin1Utils.getStringArray(context, "langs", new String[]{"english"})))
+                        LoLin1Utils.getStringArray(context, "langs", new String[]{"english"}))
+        )
                 .indexOf(lang)], LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX =
                 ".xml";
         String srcString =

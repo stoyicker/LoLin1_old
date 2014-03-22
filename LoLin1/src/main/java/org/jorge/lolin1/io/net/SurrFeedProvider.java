@@ -4,9 +4,9 @@ import android.content.Context;
 import android.util.Log;
 import android.util.Xml;
 
-import org.jorge.lolin1.feeds.IFeedHandler;
-import org.jorge.lolin1.feeds.surr.SurrEntry;
-import org.jorge.lolin1.feeds.surr.SurrFeedHandler;
+import org.jorge.lolin1.func.feeds.IFeedHandler;
+import org.jorge.lolin1.func.feeds.surr.SurrEntry;
+import org.jorge.lolin1.func.feeds.surr.SurrFeedHandler;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.utils.ISO8601Time;
 import org.jorge.lolin1.utils.LoLin1Utils;

@@ -28,31 +28,31 @@ Created by JorgeAntonio on 02/01/14.
 	android:paddingLeft="@dimen/activity_horizontal_margin"
 	android:paddingRight="@dimen/activity_horizontal_margin"
 	android:paddingTop="@dimen/activity_vertical_margin"
-	tools:context="org.jorge.lolin1.activities.SplashActivity">
+	tools:context="org.jorge.lolin1.ui.activities.SplashActivity">
 
 
 	<fragment android:id="@+id/fragment_splash_image"
-	          android:name="org.jorge.lolin1.frags.SplashImageFragment"
+	          android:name="org.jorge.lolin1.ui.frags.SplashImageFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
 	          tools:layout="@layout/fragment_splash_image"/>
 
 	<fragment android:id="@+id/fragment_splash_log_text"
-	          android:name="org.jorge.lolin1.frags.SplashLogFragment"
+	          android:name="org.jorge.lolin1.ui.frags.SplashLogFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="@dimen/splash_log_text_height"
 	          android:layout_gravity="center"
 	          tools:layout="@layout/fragment_splash_log_text"/>
 
 	<fragment android:id="@+id/fragment_splash_progress_bar"
-	          android:name="org.jorge.lolin1.frags.SplashProgressBarFragment"
+	          android:name="org.jorge.lolin1.ui.frags.SplashProgressBarFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          tools:layout="@layout/fragment_splash_progress_bar"/>
 
 	<fragment android:id="@+id/fragment_splash_disclaimer_text"
-	          android:name="org.jorge.lolin1.frags.SplashDisclaimerTextFragment"
+	          android:name="org.jorge.lolin1.ui.frags.SplashDisclaimerTextFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="match_parent"
 	          android:paddingBottom="@dimen/activity_vertical_margin"
