@@ -2,8 +2,8 @@ package org.jorge.lolin1.ui.frags;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -64,29 +64,30 @@ public class RealmListFragment extends Fragment {
 
         String[] realms =
                 LoLin1Utils
-                        .getStringArray(getActivity().getApplicationContext(), "servers",
-                                null);
+                        .getStringArray(getActivity().getApplicationContext(), "servers", null);
 
         int realmCounter = 0;
         for (String realm : realms) {
             final TextView textView =
-                    new TextView(getActivity().getApplicationContext(),
-                            Xml.asAttributeSet(getResources().getXml(
-                                    R.xml.server_and_language_text_views_attribute_set))
-                    ) {
+                    new TextView(getActivity().getApplicationContext()) {
                         @Override
                         public boolean onTouchEvent(MotionEvent event) {
                             for (TextView x : views)
                                 if (x != this) {
                                     x.setShadowLayer(0, 0, 0, R.color.theme_white);
+                                    x.setTypeface(null, Typeface.NORMAL);
                                 }
-                            this.setShadowLayer(1, 1, 1, R.color.theme_strong_orange);
+                            this.setTypeface(null, Typeface.BOLD);
+                            this.setShadowLayer(3, 3, 3, R.color.theme_strong_orange);
                             mCallback.onRealmSelected((String) this.getTag());
                             return Boolean.TRUE;
                         }
                     };
             views.add(textView);
             textView.setText(realm.toUpperCase());
+            textView.setTextSize(LoLin1Utils
+                    .getInt(getActivity().getApplicationContext(), "server_chooser_text_size", 25));
+            textView.setTextColor(getResources().getColor(R.color.theme_black));
             textView.setTag(realms[realmCounter].toLowerCase());
             viewAsViewGroup.addView(textView);
             realmCounter++;

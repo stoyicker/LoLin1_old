@@ -2,12 +2,13 @@ package org.jorge.lolin1.ui.frags;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
@@ -82,7 +83,7 @@ public class LanguageListFragment extends Fragment {
     }
 
     private void reloadLanguages(String newSelectedRealm) {
-        ViewGroup viewAsViewGroup = (ViewGroup) getView();
+        LinearLayout viewAsViewGroup = (LinearLayout) getView();
         viewAsViewGroup.removeAllViews();
         views.clear();
         String realm_composite =
@@ -103,23 +104,26 @@ public class LanguageListFragment extends Fragment {
         int languageCounter = 0;
         for (String language : languages) {
             final TextView textView =
-                    new TextView(getActivity().getApplicationContext(),
-                            Xml.asAttributeSet(getResources().getXml(
-                                    R.xml.server_and_language_text_views_attribute_set))
-                    ) {
+                    new TextView(getActivity().getApplicationContext()) {
                         @Override
                         public boolean onTouchEvent(MotionEvent event) {
                             for (TextView x : views)
                                 if (x != this) {
                                     x.setShadowLayer(0, 0, 0, R.color.theme_white);
+                                    x.setTypeface(null, Typeface.NORMAL);
                                 }
-                            this.setShadowLayer(1, 1, 1, R.color.theme_strong_orange);
+                            this.setTypeface(null, Typeface.BOLD);
+                            this.setShadowLayer(3, 3, 3, R.color.theme_strong_orange);
                             mCallback.onLocaleSelected((String) this.getTag());
                             return Boolean.TRUE;
                         }
                     };
             views.add(textView);
             textView.setText(language);
+            textView.setTextColor(getResources().getColor(R.color.theme_black));
+            textView.setTextSize(LoLin1Utils
+                    .getInt(getActivity().getApplicationContext(), "language_chooser_text_size",
+                            20));
             textView.setTag(languages_simplified[languageCounter]);
             viewAsViewGroup.addView(textView);
             languageCounter++;

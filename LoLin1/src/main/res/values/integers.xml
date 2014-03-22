@@ -20,4 +20,6 @@ Created by JorgeAntonio on 10/01/14.
 <resources>
 	<integer name="feed_refresh_distance_percentage">40</integer>
 	<integer name="locale_length">2</integer>
+	<integer name="server_chooser_text_size">25</integer>
+	<integer name="language_chooser_text_size">20</integer>
 </resources>

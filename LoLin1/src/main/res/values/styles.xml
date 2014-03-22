@@ -81,12 +81,4 @@ Created by JorgeAntonio on 02/01/14.
 		<item name="android:textColor">@color/theme_black</item>
 		<item name="android:textStyle">bold</item>
 	</style>
-	<style name="ServerAndLanguageChooserSelectedStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:shadowColor">@color/theme_strong_orange</item>
-		<item name="android:shadowDx">1</item>
-		<item name="android:shadowDy">1</item>
-		<item name="android:shadowRadius">1</item>
-	</style>
 </resources>

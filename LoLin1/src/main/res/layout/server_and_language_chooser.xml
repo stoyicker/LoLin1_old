@@ -42,7 +42,6 @@ Created by JorgeAntonio on 21/03/2014.
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
-	          android:paddingBottom="@dimen/server_and_language_bottom_padding"
 	          tools:layout="@layout/fragment_realm_list"/>
 
 	<fragment android:id="@+id/fragment_language_list"
@@ -50,7 +49,6 @@ Created by JorgeAntonio on 21/03/2014.
 	          android:layout_width="match_parent"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
-	          android:paddingBottom="@dimen/server_and_language_bottom_padding"
 	          tools:layout="@layout/fragment_language_list"/>
 
 	<fragment android:id="@+id/fragment_verification"
@@ -58,6 +56,5 @@ Created by JorgeAntonio on 21/03/2014.
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
 	          android:layout_gravity="center"
-	          android:paddingBottom="@dimen/server_and_language_bottom_padding"
 	          tools:layout="@layout/fragment_verification"/>
 </LinearLayout>
