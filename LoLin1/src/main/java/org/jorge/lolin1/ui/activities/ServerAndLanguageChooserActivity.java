@@ -9,6 +9,7 @@ import android.widget.Toast;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.frags.LanguageListFragment;
 import org.jorge.lolin1.ui.frags.RealmListFragment;
+import org.jorge.lolin1.ui.frags.VerificationFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
@@ -31,9 +32,11 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  */
 public class ServerAndLanguageChooserActivity extends Activity
         implements RealmListFragment.RealmListFragmentListener,
-        LanguageListFragment.LanguageListFragmentListener {
+        LanguageListFragment.LanguageListFragmentListener,
+        VerificationFragment.VerificationFragmentListener {
 
     private LanguageListFragment LANGUAGE_LIST_FRAGMENT;
+    private VerificationFragment VERIFICATION_FRAGMENT;
     private String currentlySelectedRealm, currentlySelectedLocale;
 
     /**
@@ -77,6 +80,9 @@ public class ServerAndLanguageChooserActivity extends Activity
                 .hide(LANGUAGE_LIST_FRAGMENT).addToBackStack(null).commit();
 
         fragmentManager.executePendingTransactions();
+
+        VERIFICATION_FRAGMENT = (VerificationFragment) fragmentManager
+                .findFragmentById(R.id.fragment_verification);
     }
 
     @Override
@@ -91,17 +97,12 @@ public class ServerAndLanguageChooserActivity extends Activity
     }
 
     private void enableVerification() {
-        //TODO Enable the verification if it's not already enabled
+        VERIFICATION_FRAGMENT.setButton(Boolean.TRUE);
 
-        //TODO Move this stuff to the onPressed listener of the button
-        LoLin1Utils.setRealm(currentlySelectedRealm);
-        LoLin1Utils.setLocale(getBaseContext(), currentlySelectedLocale);
-        showFeedbackToast();
-        finish();
     }
 
     private void disableVerification() {
-        //TODO Disable the verification
+        VERIFICATION_FRAGMENT.setButton(Boolean.FALSE);
     }
 
     @Override
@@ -132,5 +133,13 @@ public class ServerAndLanguageChooserActivity extends Activity
                         Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onVerificationFired() {
+        LoLin1Utils.setRealm(getBaseContext(), currentlySelectedRealm);
+        LoLin1Utils.setLocale(getBaseContext(), currentlySelectedLocale);
+        showFeedbackToast();
+        finish();
     }
 }

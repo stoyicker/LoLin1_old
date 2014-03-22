@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
@@ -46,6 +47,7 @@ public class InitialActivity extends Activity {
                         "langs_simplified", null))
                         .contains(LoLin1Utils.getLocale(
                                 getApplicationContext()))) {
+            Log.d("NX4", "hey");
             final Intent serverAndLanguageChooserIntent =
                     new Intent(getApplicationContext(), ServerAndLanguageChooserActivity.class);
             startActivity(serverAndLanguageChooserIntent);
