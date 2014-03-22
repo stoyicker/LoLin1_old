@@ -180,7 +180,7 @@ public abstract class LoLin1Utils {
     }
 
     public static Boolean setRealm(Context baseContext, String newRealm) {
-        if (!isRealmSupported(newRealm.toLowerCase())) {
+        if (!isRealmSupported(baseContext, newRealm.toLowerCase())) {
             return Boolean.FALSE;
         }
 
@@ -196,8 +196,13 @@ public abstract class LoLin1Utils {
         return Boolean.TRUE;
     }
 
-    private static Boolean isRealmSupported(String realm) {
-        //TODO
+    private static Boolean isRealmSupported(Context context, String realm) {
+        String[] realms =
+                LoLin1Utils
+                        .getStringArray(context, "servers",
+                                null);
+
+        return Arrays.asList(realms).contains(realm);
     }
 
     private static Boolean isLocaleSupported(String locale) {
