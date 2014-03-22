@@ -3,6 +3,7 @@ package org.jorge.lolin1.ui.frags;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,7 +55,7 @@ public class VerificationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = super.onCreateView(inflater, container, savedInstanceState);
+        View ret = inflater.inflate(R.layout.fragment_verification, container, Boolean.FALSE);
 
         imageButton = (ImageButton) ret.findViewById(R.id.verification_button);
 
@@ -62,6 +63,8 @@ public class VerificationFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mCallback.onVerificationFired();
+                PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                        .edit().putBoolean("initial_setup_done", Boolean.TRUE).commit();
             }
         });
 

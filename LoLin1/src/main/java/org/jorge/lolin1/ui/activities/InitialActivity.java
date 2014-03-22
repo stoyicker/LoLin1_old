@@ -2,15 +2,12 @@ package org.jorge.lolin1.ui.activities;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
-import org.jorge.lolin1.utils.LoLin1Utils;
-
-import java.util.Arrays;
 
 /**
  * This file is part of LoLin1.
@@ -40,20 +37,17 @@ public class InitialActivity extends Activity {
         super.onCreate(savedInstanceState);
         SQLiteDAO.setup(getApplicationContext());
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.FALSE);
-        if (!Arrays.asList(LoLin1Utils.getStringArray(getApplicationContext(),
-                "servers", null))
-                .contains(LoLin1Utils.getRealm(getApplicationContext())) ||
-                !Arrays.asList(LoLin1Utils.getStringArray(getApplicationContext(),
-                        "langs_simplified", null))
-                        .contains(LoLin1Utils.getLocale(
-                                getApplicationContext()))) {
-            Log.d("NX4", "hey");
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        if (!preferences.getBoolean("initial_setup_done", Boolean.FALSE)) {
             final Intent serverAndLanguageChooserIntent =
                     new Intent(getApplicationContext(), ServerAndLanguageChooserActivity.class);
             startActivity(serverAndLanguageChooserIntent);
         }
-        final Intent newsIntent = new Intent(getApplicationContext(), SplashActivity.class);
-        finish();
-        startActivity(newsIntent);
+        else {
+            final Intent splashIntent = new Intent(getApplicationContext(), SplashActivity.class);
+            finish();
+            startActivity(splashIntent);
+        }
     }
 }

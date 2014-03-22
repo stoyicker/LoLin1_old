@@ -131,11 +131,6 @@ Created by JorgeAntonio on 02/01/14.
 		of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League
 		of Legends © Riot Games, Inc.
 	</string>
-	<string name="initial_configuration_saved">Configuration saved. You can change it later.
-		Welcome!
-	</string>
-	<string name="realm_selection_text">Choose a realm:</string>
-	<string name="language_selection_text">Choose a language:</string>
 	<string name="realm_to_language_list_prefix">lang_</string>
 	<string name="language_to_simplified_suffix">_simplified</string>
 	<string name="confirm">Confirm</string>

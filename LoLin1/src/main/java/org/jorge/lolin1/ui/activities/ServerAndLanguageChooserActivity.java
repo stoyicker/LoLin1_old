@@ -3,8 +3,8 @@ package org.jorge.lolin1.ui.activities;
 import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Toast;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.frags.LanguageListFragment;
@@ -98,7 +98,6 @@ public class ServerAndLanguageChooserActivity extends Activity
 
     private void enableVerification() {
         VERIFICATION_FRAGMENT.setButton(Boolean.TRUE);
-
     }
 
     private void disableVerification() {
@@ -122,24 +121,12 @@ public class ServerAndLanguageChooserActivity extends Activity
         LANGUAGE_LIST_FRAGMENT.notifyNewRealmHasBeenSelected(currentlySelectedRealm);
     }
 
-    public void showFeedbackToast() {
-        final String msg =
-                LoLin1Utils.getString(getApplicationContext(), "initial_configuration_saved",
-                        "SETTINGS_SAVED_DEFAULT");
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(getApplicationContext(), msg,
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
     @Override
     public void onVerificationFired() {
         LoLin1Utils.setRealm(getBaseContext(), currentlySelectedRealm);
         LoLin1Utils.setLocale(getBaseContext(), currentlySelectedLocale);
-        showFeedbackToast();
+        final Intent splashIntent = new Intent(getApplicationContext(), SplashActivity.class);
         finish();
+        startActivity(splashIntent);
     }
 }

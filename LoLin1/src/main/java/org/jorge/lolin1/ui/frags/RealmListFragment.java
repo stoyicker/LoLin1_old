@@ -59,7 +59,7 @@ public class RealmListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = super.onCreateView(inflater, container, savedInstanceState);
+        View ret = inflater.inflate(R.layout.fragment_realm_list, container, Boolean.FALSE);
         ViewGroup viewAsViewGroup = (ViewGroup) ret;
 
         String[] realms =
@@ -76,9 +76,9 @@ public class RealmListFragment extends Fragment {
                     ) {
                         @Override
                         public boolean onTouchEvent(MotionEvent event) {
-                            for (View x : views)
+                            for (TextView x : views)
                                 if (x != this) {
-                                    this.setShadowLayer(0, 0, 0, R.color.theme_white);
+                                    x.setShadowLayer(0, 0, 0, R.color.theme_white);
                                 }
                             this.setShadowLayer(1, 1, 1, R.color.theme_strong_orange);
                             mCallback.onRealmSelected((String) this.getTag());

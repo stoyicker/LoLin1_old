@@ -17,13 +17,11 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by JorgeAntonio on 22/03/2014.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-	<ImageButton android:id="@+id/verification_button"
-	             android:layout_width="wrap_content"
-	             android:layout_height="wrap_content"
-	             android:background="@null"
-	             android:contentDescription="@string/confirm"
-	             android:src="@drawable/icon_button_ahead_selector"/>
-</LinearLayout>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+	<item android:drawable="@drawable/icon_button_ahead_disabled"
+	      android:state_enabled="false"/>
+	<item android:drawable="@drawable/icon_button_ahead_enabled"
+	      android:state_enabled="true"/>
+	<item android:drawable="@drawable/icon_button_ahead_pressed"
+	      android:state_pressed="true"/>
+</selector>
