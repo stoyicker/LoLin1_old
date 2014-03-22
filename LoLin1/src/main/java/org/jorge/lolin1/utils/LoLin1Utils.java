@@ -195,4 +195,12 @@ public abstract class LoLin1Utils {
 
         return Boolean.TRUE;
     }
+
+    private static Boolean isRealmSupported(String realm) {
+        //TODO
+    }
+
+    private static Boolean isLocaleSupported(String locale) {
+        //TODO
+    }
 }
