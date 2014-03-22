@@ -40,7 +40,7 @@ import java.util.Locale;
 public abstract class LoLin1Utils {
 
     public static Boolean setLocale(Context baseContext, String newLocale) {
-        if (!isLocaleSupported(newLocale)) {
+        if (!isLocaleSupported(baseContext, newLocale)) {
             return Boolean.FALSE;
         }
         Locale locale = new Locale(newLocale
@@ -205,7 +205,11 @@ public abstract class LoLin1Utils {
         return Arrays.asList(realms).contains(realm);
     }
 
-    private static Boolean isLocaleSupported(String locale) {
-        //TODO
+    private static Boolean isLocaleSupported(Context context, String locale) {
+        String[] locales =
+                LoLin1Utils
+                        .getStringArray(context, "langs_simplified", null);
+
+        return Arrays.asList(locales).contains(locale);
     }
 }
