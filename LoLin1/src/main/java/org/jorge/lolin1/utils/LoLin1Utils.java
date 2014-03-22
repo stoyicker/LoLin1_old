@@ -212,4 +212,9 @@ public abstract class LoLin1Utils {
 
         return Arrays.asList(locales).contains(locale);
     }
+
+    public static int pixelsAsDp(Context context, int sizeInPx) {
+        float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (sizeInPx * scale + 0.5f);
+    }
 }

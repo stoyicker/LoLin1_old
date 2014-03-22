@@ -119,6 +119,16 @@ public class LanguageListFragment extends Fragment {
                         }
                     };
             views.add(textView);
+            int verticalPadding = LoLin1Utils.getInt(getActivity().getApplicationContext(),
+                    "server_and_language_text_views_vertical_margin", 10), horizontalPadding =
+                    LoLin1Utils.getInt(getActivity().getApplicationContext(),
+                            "server_and_language_text_views_horizontal_margin", 15);
+            verticalPadding =
+                    LoLin1Utils.pixelsAsDp(getActivity().getApplicationContext(), verticalPadding);
+            horizontalPadding = LoLin1Utils
+                    .pixelsAsDp(getActivity().getApplicationContext(), horizontalPadding);
+            textView.setPadding(horizontalPadding, verticalPadding, horizontalPadding,
+                    verticalPadding);
             textView.setText(language);
             textView.setTextColor(getResources().getColor(R.color.theme_black));
             textView.setTextSize(LoLin1Utils
