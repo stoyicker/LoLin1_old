@@ -34,7 +34,7 @@ import java.util.ArrayList;
 public class LanguageListFragment extends Fragment {
 
     private LanguageListFragmentListener mCallback;
-    private ArrayList<View> views = new ArrayList<>();
+    private ArrayList<TextView> views = new ArrayList<>();
 
     /**
      * Called when the hidden state (as returned by {@link #isHidden()} of
@@ -63,7 +63,7 @@ public class LanguageListFragment extends Fragment {
         String[] languages =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(), realm_composite,
-                                new String[]{"NO_LANGUAGE_FOUND"}), languages_simplified =
+                                new String[]{"NO_LANGUAGES_FOUND"}), languages_simplified =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(),
                                 realm_composite + LoLin1Utils
@@ -73,7 +73,7 @@ public class LanguageListFragment extends Fragment {
                         );
         int languageCounter = 0;
         for (String language : languages) {
-            TextView textView =
+            final TextView textView =
                     new TextView(getActivity().getApplicationContext(),
                             Xml.asAttributeSet(getResources().getXml(
                                     R.xml.server_and_language_text_views_attribute_set))

@@ -8,8 +8,7 @@ import android.widget.Toast;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.frags.LanguageListFragment;
-import org.jorge.lolin1.ui.frags.LanguageSelectionFragment;
-import org.jorge.lolin1.ui.frags.RealmChooserFragment;
+import org.jorge.lolin1.ui.frags.RealmListFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
@@ -31,10 +30,9 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * Created by JorgeAntonio on 18/03/14.
  */
 public class ServerAndLanguageChooserActivity extends Activity
-        implements RealmChooserFragment.RealmChooserFragmentListener,
+        implements RealmListFragment.RealmListFragmentListener,
         LanguageListFragment.LanguageListFragmentListener {
 
-    private LanguageSelectionFragment LANGUAGE_SELECTION_FRAGMENT;
     private LanguageListFragment LANGUAGE_LIST_FRAGMENT;
     private String currentlySelectedRealm, currentlySelectedLocale;
 
@@ -73,15 +71,10 @@ public class ServerAndLanguageChooserActivity extends Activity
         LANGUAGE_LIST_FRAGMENT =
                 (LanguageListFragment) fragmentManager
                         .findFragmentById(R.id.fragment_language_list);
-        LANGUAGE_SELECTION_FRAGMENT = (LanguageSelectionFragment) fragmentManager
-                .findFragmentById(R.id.fragment_language_selection_text);
 
         fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_NONE)
                 .hide(LANGUAGE_LIST_FRAGMENT).addToBackStack(null).commit();
-        fragmentManager.beginTransaction()
-                .setTransition(FragmentTransaction.TRANSIT_NONE)
-                .hide(LANGUAGE_SELECTION_FRAGMENT).addToBackStack(null).commit();
 
         fragmentManager.executePendingTransactions();
     }
@@ -117,9 +110,6 @@ public class ServerAndLanguageChooserActivity extends Activity
             getFragmentManager().beginTransaction()
                     .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
                     .show(LANGUAGE_LIST_FRAGMENT).addToBackStack(null).commit();
-            getFragmentManager().beginTransaction()
-                    .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-                    .show(LANGUAGE_SELECTION_FRAGMENT).addToBackStack(null).commit();
             getFragmentManager().executePendingTransactions();
         }
     }
