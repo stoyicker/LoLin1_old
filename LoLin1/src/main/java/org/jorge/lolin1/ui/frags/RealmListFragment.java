@@ -34,7 +34,7 @@ import java.util.ArrayList;
  * Created by JorgeAntonio on 22/03/2014.
  */
 public class RealmListFragment extends Fragment {
-    //TODO
+
     private RealmListFragmentListener mCallback;
     private ArrayList<TextView> views = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class RealmListFragment extends Fragment {
         String[] realms =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(), "servers",
-                                new String[]{"NO_REALMS_FOUND"});
+                                null);
 
         int realmCounter = 0;
         for (String realm : realms) {
@@ -87,7 +87,7 @@ public class RealmListFragment extends Fragment {
                     };
             views.add(textView);
             textView.setText(realm.toUpperCase());
-            textView.setTag(((String) realms[realmCounter]).toLowerCase());
+            textView.setTag(realms[realmCounter].toLowerCase());
             viewAsViewGroup.addView(textView);
             realmCounter++;
         }

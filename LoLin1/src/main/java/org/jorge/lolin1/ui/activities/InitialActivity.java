@@ -45,7 +45,7 @@ public class InitialActivity extends Activity {
                 !Arrays.asList(LoLin1Utils.getStringArray(getApplicationContext(),
                         "langs_simplified", null))
                         .contains(LoLin1Utils.getLocale(
-                                getApplicationContext()))) {//FUTURE Change this to Boolean.TRUE to see the first-time stuff happen
+                                getApplicationContext()))) {
             final Intent serverAndLanguageChooserIntent =
                     new Intent(getApplicationContext(), ServerAndLanguageChooserActivity.class);
             startActivity(serverAndLanguageChooserIntent);

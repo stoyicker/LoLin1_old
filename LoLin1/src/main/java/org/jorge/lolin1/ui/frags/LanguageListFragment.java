@@ -63,13 +63,13 @@ public class LanguageListFragment extends Fragment {
         String[] languages =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(), realm_composite,
-                                new String[]{"NO_LANGUAGES_FOUND"}), languages_simplified =
+                                null), languages_simplified =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(),
                                 realm_composite + LoLin1Utils
                                         .getString(getActivity().getApplicationContext(),
                                                 "language_to_simplified_suffix", "_simplified"),
-                                new String[]{"NO_LANGUAGE_FOUND"}
+                                null
                         );
         int languageCounter = 0;
         for (String language : languages) {

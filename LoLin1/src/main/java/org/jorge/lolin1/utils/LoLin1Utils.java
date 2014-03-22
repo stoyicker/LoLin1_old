@@ -179,12 +179,20 @@ public abstract class LoLin1Utils {
         return ret;
     }
 
-    public static Boolean setRealm(String newRealm) {
-        if (!isRealmSupported(newRealm)) {
+    public static Boolean setRealm(Context baseContext, String newRealm) {
+        if (!isRealmSupported(newRealm.toLowerCase())) {
             return Boolean.FALSE;
         }
-        //TODO Set the realm
-        //TODO Set the preference
+
+        SharedPreferences.Editor editor =
+                PreferenceManager.getDefaultSharedPreferences(baseContext).edit();
+
+        editor.putString(
+                LoLin1Utils.getString(baseContext, "pref_title_server", "League of Legends server"),
+                newRealm.toLowerCase());
+
+        editor.commit();
+
         return Boolean.TRUE;
     }
 }
