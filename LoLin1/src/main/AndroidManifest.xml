@@ -34,8 +34,9 @@ Created by JorgeAntonio on 02/01/14.
 			android:configChanges="orientation|screenSize|keyboardHidden"
 			android:label="@string/app_name"
 			android:launchMode="singleTop"
-			android:logo="@drawable/icon_app">
-			<intent-filter>
+			android:logo="@drawable/icon_app"
+			android:theme="@android:style/Theme.Translucent.NoTitleBar">
+		<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
