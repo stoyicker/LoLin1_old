@@ -55,7 +55,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:adjustViewBounds="true"
-			android:contentDescription="@string/error_no_internet"
+			android:contentDescription="@string/error_on_connection"
 			android:scaleType="centerInside"
 			android:src="@drawable/nothing_to_do_here"/>
 	</LinearLayout>
