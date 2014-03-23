@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 
 /**
@@ -85,19 +84,14 @@ public class NewsFeedProvider {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String server = preferences
                 .getString(LoLin1Utils.getString(context, "pref_title_server", "pref_title_server"),
-                        "euw"), lang = preferences
-                .getString(LoLin1Utils.getString(context, "pref_title_lang", "pref_title_lang"),
-                        "en");
+                        "euw");
 
-        String langSimplified = LoLin1Utils.getStringArray(context, "langs_simplified",
-                new String[]{"en"})[new ArrayList<>(
-                Arrays.asList(
-                        LoLin1Utils.getStringArray(context, "langs", new String[]{"english"}))
-        )
-                .indexOf(lang)], LOLNEWS_PREFIX = "http://feed43.com/lolnews", LOLNEWS_SUFFIX =
+        String langSimplified = LoLin1Utils.getLocale(context), LOLNEWS_PREFIX =
+                "http://feed43.com/lolnews", LOLNEWS_SUFFIX =
                 ".xml";
         String srcString =
-                (LOLNEWS_PREFIX + "_" + server + "_" + langSimplified + LOLNEWS_SUFFIX)
+                (LOLNEWS_PREFIX + "_" + server + "_" + langSimplified.substring(0, 2) +
+                        LOLNEWS_SUFFIX)
                         .toLowerCase();
         URL source = new URL(srcString);
         URLConnection urlConnection = source.openConnection();

@@ -83,6 +83,10 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
     public int getCount() {
         String tableName = SQLiteDAO.getNewsTableName();
 
+        if (shownNews.isEmpty()) {
+            return 0;
+        }
+
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
         return currTable.size();

@@ -47,9 +47,13 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 public class NewsListFragment extends ListFragment implements OnRefreshListener {
 
     private static PullToRefreshLayout mPullToRefreshLayout;
-    private NewsFragmentArrayAdapter listAdapter;
+    private static NewsFragmentArrayAdapter listAdapter;
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
+
+    public static void requestNewsToBeUpdated() {
+        listAdapter.updateShownNews();
+    }
 
     /**
      * Called to do initial creation of a fragment.  This is called after

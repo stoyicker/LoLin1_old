@@ -2,13 +2,11 @@ package org.jorge.lolin1.io.db;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.feeds.news.NewsEntry;
@@ -73,36 +71,15 @@ public class SQLiteDAO extends SQLiteOpenHelper {
     }
 
     public static String getNewsTableName() {
-        String prefix =
+        final String prefix =
                 LoLin1Utils
                         .getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
                         .replaceAll(SQLiteDAO.LOLNEWS_FEED_HOST, "")
                         .replaceAll(SQLiteDAO.LOLNEWS_FEED_EXTENSION, "")
                         .replaceAll("_(.*)", "") + "_";
-        String ret, server, lang, langSimplified;
-        final String ERROR = "PREF_NOT_FOUND", defaultTableName = "EUW_EN", defaultLanguage =
-                "ENGLISH";
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
-        server =
-                preferences.getString(LoLin1Utils.getString(mContext, "pref_title_server", "nvm"),
-                        ERROR);
-        lang = preferences
-                .getString(LoLin1Utils.getString(mContext, "pref_title_lang", "nvm"), ERROR);
 
-        if (server.contentEquals(ERROR) || lang.contentEquals(ERROR)) {
-            ret = prefix + defaultTableName;
-        }
-        else {
-            langSimplified = LoLin1Utils.getStringArray(mContext, "langs_simplified",
-                    new String[]{defaultLanguage})[new ArrayList<>(
-                    Arrays.asList(LoLin1Utils.getStringArray(mContext, "langs",
-                            new String[]{defaultLanguage}))
-            )
-                    .indexOf(lang)];
-            ret = prefix + server + "_" + langSimplified;
-        }
-
-        return ret.toUpperCase();
+        return prefix.toUpperCase() + LoLin1Utils.getRealm(mContext).toUpperCase() + "_" +
+                LoLin1Utils.getLocale(mContext).toUpperCase();
     }
 
     public static Bitmap getNewsArticleBitmap(Context context, byte[] blob,
@@ -376,12 +353,12 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                         .replaceAll(LOLNEWS_FEED_HOST, "").replaceAll(LOLNEWS_FEED_EXTENSION, "")
                         .replaceAll("_(.*)", "") + "_";
 
-        for (String x : servers) {
+        for (String server : servers) {
             langsInThisServer = new ArrayList<>();
-            for (String y : LoLin1Utils
-                    .getStringArray(mContext, "lang_" + x.toLowerCase() + "_simplified",
+            for (String locale : LoLin1Utils
+                    .getStringArray(mContext, "lang_" + server.toLowerCase() + "_simplified",
                             new String[]{""})) {
-                langsInThisServer.add((prefix + x + "_" + y).toUpperCase());
+                langsInThisServer.add((prefix + server + "_" + locale).toUpperCase());
             }
             tableNames.addAll(langsInThisServer);
         }

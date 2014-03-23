@@ -44,7 +44,7 @@ public abstract class LoLin1Utils {
             return Boolean.FALSE;
         }
         Locale locale = new Locale(newLocale
-                .substring(0, LoLin1Utils.getInt(baseContext, "locale_length", 2)));
+                .substring(0, LoLin1Utils.getInt(baseContext, "locale_length", 4)));
         Locale.setDefault(locale);
         Configuration config = baseContext.getResources().getConfiguration();
         config.locale = locale;
@@ -52,8 +52,7 @@ public abstract class LoLin1Utils {
                 baseContext.getResources().getDisplayMetrics());
         SharedPreferences.Editor editor =
                 PreferenceManager.getDefaultSharedPreferences(baseContext).edit();
-        editor.putString(getString(baseContext, "pref_title_lang", "error_pref_title_lang"),
-                newLocale);
+        editor.putString("pref_title_locale", newLocale);
         editor.commit();
         return Boolean.TRUE;
     }
@@ -67,17 +66,11 @@ public abstract class LoLin1Utils {
     public static String getLocale(Context context) {
         String ret;
         try {
-            ret = LoLin1Utils.getStringArray(context, "langs_simplified", null)[
-                    Arrays.asList(LoLin1Utils.getStringArray(context, "langs", null)).indexOf(
-                            PreferenceManager.getDefaultSharedPreferences(context).getString(
-                                    LoLin1Utils
-                                            .getString(context, "pref_title_lang", "Language"),
-                                    "null"
-                            )
-                    )];
+            ret = PreferenceManager.getDefaultSharedPreferences(context)
+                    .getString("pref_title_locale", null);
         }
         catch (NullPointerException ex) {
-            ret = "null";
+            ret = null;
         }
 
         return ret;

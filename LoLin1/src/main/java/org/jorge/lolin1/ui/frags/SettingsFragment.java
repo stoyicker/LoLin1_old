@@ -7,6 +7,7 @@ import android.preference.Preference;
 import android.preference.PreferenceFragment;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
@@ -53,9 +54,6 @@ public class SettingsFragment extends PreferenceFragment {
                 final String chosenServer = (String) newValue;
                 String[] targetArray;
 
-                targetArray = LoLin1Utils
-                        .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
-
                 LoLin1Utils.setRealm(context, chosenServer.toLowerCase());
                 LoLin1Utils.setLocale(context, LoLin1Utils.getStringArray(context,
                         LoLin1Utils.getString(context,
@@ -65,8 +63,14 @@ public class SettingsFragment extends PreferenceFragment {
                                         "language_to_simplified_suffix", null), null
                 )[0]);
 
+                targetArray = LoLin1Utils
+                        .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
+
+                langPreference.setEntries(targetArray);
                 langPreference.setEntryValues(targetArray);
                 langPreference.setValue(langPreference.getEntries()[0].toString());
+
+                NewsListFragment.requestNewsToBeUpdated();
 
                 return Boolean.TRUE;
             }
@@ -92,6 +96,13 @@ public class SettingsFragment extends PreferenceFragment {
                     );
                     ret = Boolean.TRUE;
                 }
+
+                NewsListFragment.requestNewsToBeUpdated();
+
+                getActivity().recreate();
+
+                LoLin1DebugUtils.showTrace("NX4", new Exception());
+
                 return ret;
             }
         });

@@ -103,7 +103,7 @@ public class SplashActivity extends Activity {
              */
             @Override
             protected Void doInBackground(Void... params) {
-                int iterations = 20;
+                int iterations = 10;
                 for (int i = 0; i < iterations; i++) {
                     try {
                         Thread.sleep(1000);
