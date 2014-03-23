@@ -51,7 +51,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
 
-    public static void requestNewsToBeUpdated() {
+    public static void requestNewsToBeSwapped() {
         listAdapter.updateShownNews();
     }
 

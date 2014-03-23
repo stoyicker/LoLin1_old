@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
@@ -54,23 +54,28 @@ public class SettingsFragment extends PreferenceFragment {
                 final String chosenServer = (String) newValue;
                 String[] targetArray;
 
-                LoLin1Utils.setRealm(context, chosenServer.toLowerCase());
-                LoLin1Utils.setLocale(context, LoLin1Utils.getStringArray(context,
-                        LoLin1Utils.getString(context,
-                                "realm_to_language_list_prefix", null) +
-                                chosenServer.toLowerCase() +
-                                LoLin1Utils.getString(context,
-                                        "language_to_simplified_suffix", null), null
-                )[0]);
+                if (!PreferenceManager.getDefaultSharedPreferences(context)
+                        .getString("pref_title_server", "dummy_helper")
+                        .contentEquals(chosenServer.toUpperCase())) {
+                    LoLin1Utils.setRealm(context, chosenServer.toLowerCase());
+                    LoLin1Utils.setLocale(context, LoLin1Utils.getStringArray(context,
+                            LoLin1Utils.getString(context,
+                                    "realm_to_language_list_prefix", null) +
+                                    chosenServer.toLowerCase() +
+                                    LoLin1Utils.getString(context,
+                                            "language_to_simplified_suffix", null), null
+                    )[0]);
+                    NewsListFragment.requestNewsToBeSwapped();
 
-                targetArray = LoLin1Utils
-                        .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
+                    targetArray = LoLin1Utils
+                            .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
 
-                langPreference.setEntries(targetArray);
-                langPreference.setEntryValues(targetArray);
-                langPreference.setValue(langPreference.getEntries()[0].toString());
+                    langPreference.setEntries(targetArray);
+                    langPreference.setEntryValues(targetArray);
+                    langPreference.setValue(langPreference.getEntries()[0].toString());
 
-                NewsListFragment.requestNewsToBeUpdated();
+                    getActivity().recreate();
+                }
 
                 return Boolean.TRUE;
             }
@@ -82,26 +87,23 @@ public class SettingsFragment extends PreferenceFragment {
         langPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
-                Boolean ret = Boolean.FALSE;
-                String chosenLang = (String) newValue;
+                Boolean ret = Boolean.TRUE;
+                String chosenLang = (String) newValue, currentLocale =
+                        LoLin1Utils.getLocale(getActivity().getApplicationContext()), newAsLocale;
                 int langIndex =
                         new ArrayList<>(Arrays.asList(
                                 LoLin1Utils.getStringArray(getActivity(), "langs", null)))
                                 .indexOf(chosenLang);
-                if (langIndex != -1) {
-                    LoLin1Utils.setLocale(getActivity().getBaseContext(),
-                            LoLin1Utils.getStringArray(getActivity().getApplicationContext(),
-                                    "langs_simplified",
-                                    null)[langIndex]
-                    );
-                    ret = Boolean.TRUE;
+                if (langIndex != -1 &&
+                        !currentLocale.contentEquals((newAsLocale =
+                                LoLin1Utils.getStringArray(getActivity().getApplicationContext(),
+                                        "langs_simplified",
+                                        null)[langIndex]
+                        ))) {
+                    LoLin1Utils.setLocale(getActivity().getApplicationContext(), newAsLocale);
+                    NewsListFragment.requestNewsToBeSwapped();
+                    getActivity().recreate();
                 }
-
-                NewsListFragment.requestNewsToBeUpdated();
-
-                getActivity().recreate();
-
-                LoLin1DebugUtils.showTrace("NX4", new Exception());
 
                 return ret;
             }
