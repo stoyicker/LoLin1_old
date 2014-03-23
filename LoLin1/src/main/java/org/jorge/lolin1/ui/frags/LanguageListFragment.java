@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.LoLin1Utils;
+import org.jorge.lolin1.utils.custom.FlowLayout;
 
 import java.util.ArrayList;
 
@@ -83,7 +83,7 @@ public class LanguageListFragment extends Fragment {
     }
 
     private void reloadLanguages(String newSelectedRealm) {
-        LinearLayout viewAsViewGroup = (LinearLayout) getView();
+        FlowLayout viewAsViewGroup = (FlowLayout) getView();
         viewAsViewGroup.removeAllViews();
         views.clear();
         String realm_composite =
@@ -118,6 +118,7 @@ public class LanguageListFragment extends Fragment {
                             return Boolean.TRUE;
                         }
                     };
+            //TODO , but they don't fall to the next line if they don't fit in the current one AND the color of the shadow of the selected one is still black.
             views.add(textView);
             int verticalPadding = LoLin1Utils.getInt(getActivity().getApplicationContext(),
                     "server_and_language_text_views_vertical_margin", 10), horizontalPadding =

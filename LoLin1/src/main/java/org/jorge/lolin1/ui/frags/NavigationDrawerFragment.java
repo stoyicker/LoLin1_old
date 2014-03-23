@@ -18,9 +18,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.custom.NavigationDrawerArrayAdapter;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
+import org.jorge.lolin1.utils.custom.NavigationDrawerArrayAdapter;
 
 /**
  * This file is part of LoLin1.

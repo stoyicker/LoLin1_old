@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.custom.SurrFragmentArrayAdapter;
-import org.jorge.lolin1.func.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.func.feeds.surr.SurrEntry;
 import org.jorge.lolin1.io.net.SurrFeedProvider;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
+import org.jorge.lolin1.utils.custom.SurrFragmentArrayAdapter;
+import org.jorge.lolin1.utils.custom.TranslatableHeaderTransformer;
 
 import java.util.Arrays;
 
