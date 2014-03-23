@@ -40,41 +40,31 @@ public class SettingsFragment extends PreferenceFragment {
 
         final ListPreference serverPreference = (ListPreference) findPreference(
                 LoLin1Utils.getString(getActivity().getApplicationContext(), "pref_title_server",
-                        "error")
+                        null)
         );
         serverPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 final ListPreference langPreference = (ListPreference) findPreference(
                         LoLin1Utils.getString(getActivity(), "pref_title_lang",
-                                "error")
+                                null)
                 );
                 final Context context = getActivity();
                 final String chosenServer = (String) newValue;
-                int targetArray = -1;
+                String[] targetArray;
 
-                if (chosenServer
-                        .contentEquals(LoLin1Utils.getString(context, "server_na", "error"))) {
-                    targetArray = R.array.lang_na;
-                }
-                else if (chosenServer
-                        .contentEquals(LoLin1Utils.getString(context, "server_euw", "error"))) {
-                    targetArray = R.array.lang_euw;
-                }
-                else if (chosenServer
-                        .contentEquals(LoLin1Utils.getString(context, "server_eune", "error"))) {
-                    targetArray = R.array.lang_eune;
-                }
-                else if (chosenServer
-                        .contentEquals(LoLin1Utils.getString(context, "server_br", "error"))) {
-                    targetArray = R.array.lang_br;
-                }
-                else if (chosenServer
-                        .contentEquals(LoLin1Utils.getString(context, "server_tr", "error"))) {
-                    targetArray = R.array.lang_tr;
-                }
+                targetArray = LoLin1Utils
+                        .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
 
-                langPreference.setEntries(targetArray);
+                LoLin1Utils.setRealm(context, chosenServer.toLowerCase());
+                LoLin1Utils.setLocale(context, LoLin1Utils.getStringArray(context,
+                        LoLin1Utils.getString(context,
+                                "realm_to_language_list_prefix", null) +
+                                chosenServer.toLowerCase() +
+                                LoLin1Utils.getString(context,
+                                        "language_to_simplified_suffix", null), null
+                )[0]);
+
                 langPreference.setEntryValues(targetArray);
                 langPreference.setValue(langPreference.getEntries()[0].toString());
 
@@ -83,8 +73,7 @@ public class SettingsFragment extends PreferenceFragment {
         });
 
         final ListPreference langPreference = (ListPreference) findPreference(
-                LoLin1Utils.getString(getActivity(), "pref_title_lang",
-                        "error")
+                LoLin1Utils.getString(getActivity(), "pref_title_lang", null)
         );
         langPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
             @Override
@@ -93,15 +82,13 @@ public class SettingsFragment extends PreferenceFragment {
                 String chosenLang = (String) newValue;
                 int langIndex =
                         new ArrayList<>(Arrays.asList(
-                                LoLin1Utils.getStringArray(getActivity(), "langs",
-                                        new String[]{"error"})
-                        ))
+                                LoLin1Utils.getStringArray(getActivity(), "langs", null)))
                                 .indexOf(chosenLang);
                 if (langIndex != -1) {
                     LoLin1Utils.setLocale(getActivity().getBaseContext(),
                             LoLin1Utils.getStringArray(getActivity().getApplicationContext(),
                                     "langs_simplified",
-                                    new String[]{"error"})[langIndex]
+                                    null)[langIndex]
                     );
                     ret = Boolean.TRUE;
                 }

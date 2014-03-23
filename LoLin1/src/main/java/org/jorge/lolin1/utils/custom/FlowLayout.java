@@ -10,26 +10,34 @@ import android.view.ViewGroup;
 
 import org.jorge.lolin1.R;
 
+/**
+ * Copyright (c) 2011, Artem Votincev (apmem.org)
+ * http://www.apache.org/licenses/LICENSE-2.0.txt
+ */
 public class FlowLayout extends ViewGroup {
     public static final int HORIZONTAL = 0;
+    @SuppressWarnings("unused")
     public static final int VERTICAL = 1;
     private int horizontalSpacing = 0;
     private int verticalSpacing = 0;
     private int orientation = 0;
     private boolean debugDraw = false;
 
+    @SuppressWarnings("unused")
     public FlowLayout(Context context) {
         super(context);
 
         this.readStyleParameters(context, null);
     }
 
+    @SuppressWarnings("unused")
     public FlowLayout(Context context, AttributeSet attributeSet) {
         super(context, attributeSet);
 
         this.readStyleParameters(context, attributeSet);
     }
 
+    @SuppressWarnings("unused")
     public FlowLayout(Context context, AttributeSet attributeSet, int defStyle) {
         super(context, attributeSet, defStyle);
 
