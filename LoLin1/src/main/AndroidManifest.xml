@@ -59,7 +59,6 @@ Created by JorgeAntonio on 02/01/14.
 			android:logo="@drawable/icon_section1">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
-
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
@@ -82,7 +81,6 @@ Created by JorgeAntonio on 02/01/14.
 			android:logo="@drawable/icon_section1">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
-
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>

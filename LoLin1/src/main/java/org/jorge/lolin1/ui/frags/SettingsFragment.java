@@ -8,6 +8,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
@@ -55,7 +56,7 @@ public class SettingsFragment extends PreferenceFragment {
                 String[] targetArray;
 
                 if (!PreferenceManager.getDefaultSharedPreferences(context)
-                        .getString("pref_title_server", "dummy_helper")
+                        .getString("pref_title_server", "dummy_helper").toUpperCase()
                         .contentEquals(chosenServer.toUpperCase())) {
                     LoLin1Utils.setRealm(context, chosenServer.toLowerCase());
                     LoLin1Utils.setLocale(context, LoLin1Utils.getStringArray(context,
@@ -70,11 +71,14 @@ public class SettingsFragment extends PreferenceFragment {
                     targetArray = LoLin1Utils
                             .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
 
+                    LoLin1DebugUtils.logArray("NX4", "targetArray", targetArray);
+
                     langPreference.setEntries(targetArray);
                     langPreference.setEntryValues(targetArray);
-                    langPreference.setValue(langPreference.getEntries()[0].toString());
+                    langPreference.setValue(targetArray[0]);
 
-                    getActivity().recreate();
+                    getActivity().finish();
+                    startActivity(getActivity().getIntent());
                 }
 
                 return Boolean.TRUE;
@@ -95,11 +99,11 @@ public class SettingsFragment extends PreferenceFragment {
                                 LoLin1Utils.getStringArray(getActivity(), "langs", null)))
                                 .indexOf(chosenLang);
                 if (langIndex != -1 &&
-                        !currentLocale.contentEquals((newAsLocale =
+                        !currentLocale.toUpperCase().contentEquals((newAsLocale =
                                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(),
                                         "langs_simplified",
                                         null)[langIndex]
-                        ))) {
+                        ).toUpperCase())) {
                     LoLin1Utils.setLocale(getActivity().getApplicationContext(), newAsLocale);
                     NewsListFragment.requestNewsToBeSwapped();
                     getActivity().recreate();
