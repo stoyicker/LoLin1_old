@@ -45,4 +45,9 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="splash_log_vertical_margin">10dp</dimen>
 	<dimen name="splash_log_horizontal_margin">10dp</dimen>
 	<dimen name="splash_log_text_height">100dp</dimen>
+	<dimen name="server_and_language_chooser_image_bottom_margin">40dp</dimen>
+	<dimen name="server_and_language_lang_list_height">170dp</dimen>
+	<dimen name="server_and_language_chooser_lang_list_bottom_margin">20dp</dimen>
+	<dimen name="server_and_language_chooser_realm_list_bottom_margin">10dp</dimen>
+	<dimen name="server_and_language_chooser_verification_bottom_margin">20dp</dimen>
 </resources>

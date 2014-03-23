@@ -8,11 +8,11 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.LoLin1Utils;
-import org.jorge.lolin1.utils.custom.FlowLayout;
 
 import java.util.ArrayList;
 
@@ -83,7 +83,8 @@ public class LanguageListFragment extends Fragment {
     }
 
     private void reloadLanguages(String newSelectedRealm) {
-        FlowLayout viewAsViewGroup = (FlowLayout) getView();
+        LinearLayout viewAsViewGroup =
+                (LinearLayout) getView().findViewById(R.id.language_list_container);
         viewAsViewGroup.removeAllViews();
         views.clear();
         String realm_composite =
@@ -136,8 +137,11 @@ public class LanguageListFragment extends Fragment {
                     .getInt(getActivity().getApplicationContext(), "language_chooser_text_size",
                             20));
             textView.setTag(languages_simplified[languageCounter]);
-            viewAsViewGroup.addView(textView);
             languageCounter++;
+            viewAsViewGroup.addView(textView,
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT)
+            );
         }
     }
 

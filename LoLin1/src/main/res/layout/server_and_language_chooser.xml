@@ -17,44 +17,54 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by JorgeAntonio on 21/03/2014.
 -->
-<LinearLayout
+<RelativeLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:background="@color/theme_white"
-	android:orientation="vertical"
-	android:paddingBottom="@dimen/activity_vertical_margin"
-	android:paddingLeft="@dimen/activity_horizontal_margin"
-	android:paddingRight="@dimen/activity_horizontal_margin"
-	android:paddingTop="@dimen/activity_vertical_margin"
 	tools:context="org.jorge.lolin1.ui.activities.ServerAndLanguageChooserActivity">
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"
+		android:paddingBottom="@dimen/activity_vertical_margin"
+		android:paddingLeft="@dimen/activity_horizontal_margin"
+		android:paddingRight="@dimen/activity_horizontal_margin"
+		android:paddingTop="@dimen/activity_vertical_margin">
 
-	<fragment android:id="@+id/fragment_splash_image"
-	          android:name="org.jorge.lolin1.ui.frags.SplashImageFragment"
-	          android:layout_width="match_parent"
-	          android:layout_height="wrap_content"
-	          android:layout_gravity="center"
-	          tools:layout="@layout/fragment_splash_image"/>
+		<fragment android:id="@+id/fragment_splash_image"
+		          android:name="org.jorge.lolin1.ui.frags.SplashImageFragment"
+		          android:layout_width="match_parent"
+		          android:layout_height="wrap_content"
+		          android:layout_gravity="center"
+		          android:layout_marginBottom="@dimen/server_and_language_chooser_image_bottom_margin"
+		          tools:layout="@layout/fragment_splash_image"/>
 
-	<fragment android:id="@+id/fragment_realm_list"
-	          android:name="org.jorge.lolin1.ui.frags.RealmListFragment"
-	          android:layout_width="match_parent"
-	          android:layout_height="wrap_content"
-	          android:layout_gravity="center"
-	          tools:layout="@layout/fragment_realm_list"/>
+		<fragment android:id="@+id/fragment_realm_list"
+		          android:name="org.jorge.lolin1.ui.frags.RealmListFragment"
+		          android:layout_width="match_parent"
+		          android:layout_height="wrap_content"
+		          android:layout_gravity="center"
+		          android:layout_marginBottom="@dimen/server_and_language_chooser_realm_list_bottom_margin"
+		          tools:layout="@layout/fragment_realm_list"/>
 
-	<fragment android:id="@+id/fragment_language_list"
-	          android:name="org.jorge.lolin1.ui.frags.LanguageListFragment"
-	          android:layout_width="match_parent"
-	          android:layout_height="wrap_content"
-	          android:layout_gravity="center"
-	          tools:layout="@layout/fragment_language_list"/>
+		<fragment android:id="@+id/fragment_language_list"
+		          android:name="org.jorge.lolin1.ui.frags.LanguageListFragment"
+		          android:layout_width="match_parent"
+		          android:layout_height="@dimen/server_and_language_lang_list_height"
+		          android:layout_gravity="center"
+		          android:layout_marginBottom="@dimen/server_and_language_chooser_lang_list_bottom_margin"
+		          tools:layout="@layout/fragment_language_list"/>
+	</LinearLayout>
 
 	<fragment android:id="@+id/fragment_verification"
 	          android:name="org.jorge.lolin1.ui.frags.VerificationFragment"
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
+	          android:layout_alignParentBottom="true"
+	          android:layout_centerInParent="true"
 	          android:layout_gravity="center"
+	          android:layout_marginBottom="@dimen/server_and_language_chooser_verification_bottom_margin"
 	          tools:layout="@layout/fragment_verification"/>
-</LinearLayout>
+</RelativeLayout>

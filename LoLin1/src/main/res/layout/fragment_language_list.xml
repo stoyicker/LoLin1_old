@@ -17,8 +17,16 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by JorgeAntonio on 21/03/2014.
 -->
-<org.jorge.lolin1.utils.custom.FlowLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                          android:layout_width="match_parent"
-                                          android:layout_height="match_parent"
-                                          android:orientation="horizontal">
-</org.jorge.lolin1.utils.custom.FlowLayout>
+<ScrollView
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:fadeScrollbars="false">
+	<LinearLayout
+		android:id="@+id/language_list_container"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center"
+		android:orientation="vertical">
+	</LinearLayout>
+</ScrollView>
