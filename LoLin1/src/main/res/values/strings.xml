@@ -141,4 +141,12 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="provider_application_error_identifier">Application Error</string>
 	<string name="provider_application_maintenance_identifier">Application Offline for Maintenance
 	</string>
+	<string name="delay_update_dialog_title">Delay update?</string>
+	<string name="delay_update_dialog_content">There is a content update available, but your device
+		active connection is not Wi-Fi. Do you wish to delay the update?
+	</string>
+	<string name="delay_update_dialog_positive_button">Yes, prompt me next time</string>
+	<string name="delay_update_dialog_negative_button">No (might impact your Internet quota)
+	</string>
+	<string name="update_delayed"><![CDATA[ ]]>Update delayed.</string>
 </resources>

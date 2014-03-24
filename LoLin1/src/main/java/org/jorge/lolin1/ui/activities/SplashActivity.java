@@ -1,7 +1,10 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -136,56 +139,115 @@ public class SplashActivity extends Activity {
     }
 
     private void runUpdate() {
-        String[] dataProviders =
+        final String[] dataProviders =
                 LoLin1Utils
                         .getStringArray(getApplicationContext(), "data_providers",
                                 null);
 
         if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            int firstIndex = new Random().nextInt(dataProviders.length), index = firstIndex;
-            Boolean upServerFound = Boolean.FALSE;
-            String target;
-            InputStream getContentInputStream = null;
-            do {
-                try {
-                    target = dataProviders[index];
-                    getContentInputStream = HttpServiceProvider.performGetRequest(target);
-                    String content = LoLin1Utils.inputStreamAsString(getContentInputStream);
-                    if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
-                            "provider_application_error_identifier", null)) &&
-                            !content.contains(
-                                    LoLin1Utils.getString(getApplicationContext(),
-                                            "provider_application_maintenance_identifier", null)
-                            )) {
-                        upServerFound = Boolean.TRUE;
-                    }
-                }
-                catch (IOException | URISyntaxException e) {
-                    e.printStackTrace(System.err);
-                }
-                if (!upServerFound) {
-                    index++;
-                    if (index >= dataProviders.length) {
-                        index = 0;
-                    }
-                    if (index == firstIndex) {
-                        LOG_FRAGMENT.appendToNewLine(
-                                LoLin1Utils.getString(getApplicationContext(),
-                                        "no_providers_up", null)
-                        );
-                        return;
-                    }
-                }
-            }
-            while (!upServerFound);
-            LOG_FRAGMENT.appendToNewLine(
-                    LoLin1Utils.inputStreamAsString(getContentInputStream));
+            connectToOneOf(dataProviders);
+            evaluateDownloadCondition();
         }
         else {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "no_connection_on_splash",
                             null));
         }
+    }
+
+    private void evaluateDownloadCondition() {
+        if (((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE))
+                .getNetworkInfo(ConnectivityManager.TYPE_WIFI)
+                .isConnectedOrConnecting()) {//FUTURE This has to be changed from TYPE_WIFI to TYPE_MOBILE
+            final AlertDialog.Builder alertDialogBuilder =
+                    new AlertDialog.Builder(SplashActivity.this, AlertDialog.THEME_HOLO_DARK);
+            final CountDownLatch alertDialogLatch = new CountDownLatch(1);
+
+            alertDialogBuilder.setTitle(
+                    LoLin1Utils.getString(getApplicationContext(), "delay_update_dialog_title",
+                            null)
+            );
+
+            alertDialogBuilder.setMessage(LoLin1Utils
+                    .getString(getApplicationContext(), "delay_update_dialog_content",
+                            null))
+                    .setPositiveButton(LoLin1Utils.getString(getApplicationContext(),
+                            "delay_update_dialog_positive_button",
+                            null), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            LOG_FRAGMENT.appendToNewLine(
+                                    LoLin1Utils.getString(getApplicationContext(),
+                                            "update_delayed", null)
+                            );
+                            alertDialogLatch.countDown();
+                        }
+                    })
+                    .setNegativeButton(LoLin1Utils.getString(getApplicationContext(),
+                            "delay_update_dialog_negative_button",
+                            null), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            runDownload();/*TODO This has to be an AsyncTask
+                                    *with the outer method having a latch that makes sure
+                                    *that the operation is finished, therefore showing the
+                                    *splash screen in the meantime*/
+                            alertDialogLatch.countDown();
+                        }
+                    });
+
+            SplashActivity.this.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    alertDialogBuilder.show();
+                }
+            });
+            try {
+                alertDialogLatch.await();
+            }
+            catch (InterruptedException e) {
+                e.printStackTrace(System.err);
+            }
+        }
+    }
+
+    private void connectToOneOf(String[] dataProviders) {
+        int firstIndex = new Random().nextInt(dataProviders.length), index = firstIndex;
+        Boolean upServerFound = Boolean.FALSE;
+        String target;
+        InputStream getContentInputStream = null;
+        do {
+            try {
+                target = dataProviders[index];
+                getContentInputStream = HttpServiceProvider.performGetRequest(target);
+                String content = LoLin1Utils.inputStreamAsString(getContentInputStream);
+                if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
+                        "provider_application_error_identifier", null)) &&
+                        !content.contains(
+                                LoLin1Utils.getString(getApplicationContext(),
+                                        "provider_application_maintenance_identifier", null)
+                        )) {
+                    upServerFound = Boolean.TRUE;
+                }
+            }
+            catch (IOException | URISyntaxException e) {
+                e.printStackTrace(System.err);
+            }
+            if (!upServerFound) {
+                index++;
+                if (index >= dataProviders.length) {
+                    index = 0;
+                }
+                if (index == firstIndex) {
+                    LOG_FRAGMENT.appendToNewLine(
+                            LoLin1Utils.getString(getApplicationContext(),
+                                    "no_providers_up", null)
+                    );
+                    return;
+                }
+            }
+        }
+        while (!upServerFound);
     }
 
     private void launchNewsReader() {
