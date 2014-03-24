@@ -7,7 +7,15 @@ import android.os.Bundle;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.io.net.HttpServiceProvider;
 import org.jorge.lolin1.ui.frags.SplashLogFragment;
+import org.jorge.lolin1.utils.LoLin1Utils;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URISyntaxException;
+import java.util.Random;
+import java.util.concurrent.CountDownLatch;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
@@ -37,10 +45,10 @@ public class SplashActivity extends Activity {
                 (SplashLogFragment) getFragmentManager()
                         .findFragmentById(R.id.fragment_splash_log_text);
 
-        simulateProgressBarLoad();
+        load();
     }
 
-    private void simulateProgressBarLoad() {
+    private void load() {
         new AsyncTask<Void, Integer, Void>() {
             /**
              * <p>Runs on the UI thread after {@link #doInBackground}. The
@@ -60,34 +68,6 @@ public class SplashActivity extends Activity {
             }
 
             /**
-             * Runs on the UI thread after {@link #publishProgress} is invoked.
-             * The specified values are the values passed to {@link #publishProgress}.
-             *
-             * @param values The values indicating progress.
-             * @see #publishProgress
-             * @see #doInBackground
-             */
-            @Override
-            protected void onProgressUpdate(Integer... values) {
-                super.onProgressUpdate(values);
-                LOG_FRAGMENT.appendToSameLine(
-                        values[0] + "" + values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0] + values[0] + values[0] + values[0] + values[0] +
-                                values[0]
-                );
-            }
-
-            /**
              * Override this method to perform a computation on a background thread. The
              * specified parameters are the parameters passed to {@link #execute}
              * by the caller of this task.
@@ -103,26 +83,109 @@ public class SplashActivity extends Activity {
              */
             @Override
             protected Void doInBackground(Void... params) {
-                int iterations = 10;
-                for (int i = 0; i < iterations; i++) {
-                    try {
-                        Thread.sleep(1000);
+                final CountDownLatch countDownLatch = new CountDownLatch(2);
+
+                Runnable workerThread = new Runnable() {
+                    /**
+                     * Calls the <code>run()</code> method of the Runnable object the receiver
+                     * holds. If no Runnable is set, does nothing.
+                     *
+                     * @see Thread#start
+                     */
+                    @Override
+                    public void run() {
+                        runUpdate();
+                        countDownLatch.countDown();
                     }
-                    catch (InterruptedException e) {
-                        e.printStackTrace(System.err);
+                };
+
+                Runnable delayerThread = new Runnable() {
+                    /**
+                     * Calls the <code>run()</code> method of the Runnable object the receiver
+                     * holds. If no Runnable is set, does nothing.
+                     *
+                     * @see Thread#start
+                     */
+                    @Override
+                    public void run() {
+                        try {
+                            Thread.sleep(LoLin1Utils
+                                    .getInt(getApplicationContext(),
+                                            "minimum_splash_showtime_mills", 0));
+                            countDownLatch.countDown();
+                        }
+                        catch (InterruptedException e) {
+                            e.printStackTrace(System.err);
+                        }
                     }
-                    publishProgress(i);
-                }
+                };
+
+                workerThread.run();
+                delayerThread.run();
+
                 try {
-                    //Sleep a little bit so I can see the result
-                    Thread.sleep(5000);
+                    countDownLatch.await();
                 }
                 catch (InterruptedException e) {
                     e.printStackTrace(System.err);
                 }
+
                 return null;
             }
         }.execute();
+    }
+
+    private void runUpdate() {
+        String[] dataProviders =
+                LoLin1Utils
+                        .getStringArray(getApplicationContext(), "data_providers",
+                                null);
+
+        if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
+            int firstIndex = new Random().nextInt(dataProviders.length), index = firstIndex;
+            Boolean upServerFound = Boolean.FALSE;
+            String target;
+            InputStream getContentInputStream = null;
+            do {
+                try {
+                    target = dataProviders[index];
+                    getContentInputStream = HttpServiceProvider.performGetRequest(target);
+                    String content = LoLin1Utils.inputStreamAsString(getContentInputStream);
+                    if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
+                            "provider_application_error_identifier", null)) &&
+                            !content.contains(
+                                    LoLin1Utils.getString(getApplicationContext(),
+                                            "provider_application_maintenance_identifier", null)
+                            )) {
+                        upServerFound = Boolean.TRUE;
+                    }
+                }
+                catch (IOException | URISyntaxException e) {
+                    e.printStackTrace(System.err);
+                }
+                if (!upServerFound) {
+                    index++;
+                    if (index >= dataProviders.length) {
+                        index = 0;
+                    }
+                    if (index == firstIndex) {
+                        LOG_FRAGMENT.appendToNewLine(
+                                LoLin1Utils.getString(getApplicationContext(),
+                                        "no_providers_up", null)
+                        );
+                        return;
+                    }
+                }
+            }
+            while (!upServerFound);
+            LOG_FRAGMENT.appendToNewLine(
+                    LoLin1Utils.inputStreamAsString(getContentInputStream));
+        }
+        else {
+            LOG_FRAGMENT.appendToNewLine(LoLin1Utils
+                    .getString(getApplicationContext(), "no_connection_on_splash",
+                            null));
+        }
     }
 
     private void launchNewsReader() {

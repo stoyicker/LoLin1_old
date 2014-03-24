@@ -119,4 +119,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string-array name="main_fragments_tags">
 		<item>@string/tag_fragment_news</item>
 	</string-array>
+	<string-array name="data_providers">
+		<item>http://lolin1-data-provider-eu1.herokuapp.com</item>
+	</string-array>
 </resources>

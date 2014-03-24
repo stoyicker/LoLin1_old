@@ -1,10 +1,12 @@
 package org.jorge.lolin1.io.net;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.util.Xml;
+import android.widget.Toast;
 
 import org.jorge.lolin1.func.feeds.IFeedHandler;
 import org.jorge.lolin1.func.feeds.news.NewsEntry;
@@ -14,6 +16,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 
 import java.io.BufferedInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
@@ -80,7 +83,7 @@ public class NewsFeedProvider {
      */
     private ArrayList<String> retrieveFeed() throws IOException {
         ArrayList<NewsEntry> items = null;
-        BufferedInputStream in;
+        BufferedInputStream in = null;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String server = preferences
                 .getString(LoLin1Utils.getString(context, "pref_title_server", "pref_title_server"),
@@ -96,7 +99,19 @@ public class NewsFeedProvider {
         URL source = new URL(srcString);
         URLConnection urlConnection = source.openConnection();
         urlConnection.connect();
-        in = new BufferedInputStream(urlConnection.getInputStream());
+        try {
+            in = new BufferedInputStream(urlConnection.getInputStream());
+        }
+        catch (FileNotFoundException ex) {
+            final String msg = LoLin1Utils.getString(context, "error_no_connection", null);
+            ((Activity) context).runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, msg,
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
 
         XmlPullParser parser = Xml.newPullParser();
         try {

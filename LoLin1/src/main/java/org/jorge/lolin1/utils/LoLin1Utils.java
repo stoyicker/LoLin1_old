@@ -13,6 +13,8 @@ import android.util.Log;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Locale;
@@ -209,5 +211,18 @@ public abstract class LoLin1Utils {
     public static int pixelsAsDp(Context context, int sizeInPx) {
         float scale = context.getResources().getDisplayMetrics().density;
         return (int) (sizeInPx * scale + 0.5f);
+    }
+
+    public static String inputStreamAsString(InputStream is) {
+        java.util.Scanner s = new java.util.Scanner(is);
+        String ret = null;
+        try {
+            ret = s.useDelimiter("\\A").hasNext() ? s.next() : "";
+            is.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace(System.err);
+        }
+        return ret;
     }
 }
