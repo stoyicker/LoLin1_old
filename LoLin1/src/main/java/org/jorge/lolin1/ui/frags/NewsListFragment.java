@@ -48,11 +48,26 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
 
     private static PullToRefreshLayout mPullToRefreshLayout;
     private static NewsFragmentArrayAdapter listAdapter;
+    private static NewsListFragment instance;
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
 
-    public static void requestNewsToBeSwapped() {
+    public NewsListFragment() {
+        if (instance == null) {
+            instance = this;
+        }
+    }
+
+    public static NewsListFragment pseudoCreateNewsListFragment() {
+        if (instance == null) {
+            instance = new NewsListFragment();
+        }
+        return instance;
+    }
+
+    public void requestNewsToBeSwapped() {
         listAdapter.updateShownNews();
+        getView().invalidate();
     }
 
     /**

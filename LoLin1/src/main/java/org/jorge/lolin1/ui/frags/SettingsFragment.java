@@ -8,7 +8,6 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
@@ -66,12 +65,10 @@ public class SettingsFragment extends PreferenceFragment {
                                     LoLin1Utils.getString(context,
                                             "language_to_simplified_suffix", null), null
                     )[0]);
-                    NewsListFragment.requestNewsToBeSwapped();
+                    NewsListFragment.pseudoCreateNewsListFragment().requestNewsToBeSwapped();
 
                     targetArray = LoLin1Utils
                             .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
-
-                    LoLin1DebugUtils.logArray("NX4", "targetArray", targetArray);
 
                     langPreference.setEntries(targetArray);
                     langPreference.setEntryValues(targetArray);
@@ -105,7 +102,7 @@ public class SettingsFragment extends PreferenceFragment {
                                         null)[langIndex]
                         ).toUpperCase())) {
                     LoLin1Utils.setLocale(getActivity().getApplicationContext(), newAsLocale);
-                    NewsListFragment.requestNewsToBeSwapped();
+                    NewsListFragment.pseudoCreateNewsListFragment().requestNewsToBeSwapped();
                     getActivity().recreate();
                 }
 
