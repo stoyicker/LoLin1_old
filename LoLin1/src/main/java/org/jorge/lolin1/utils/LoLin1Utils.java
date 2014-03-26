@@ -13,6 +13,7 @@ import android.util.Log;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -40,6 +41,21 @@ import java.util.Locale;
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */
 public abstract class LoLin1Utils {
+
+    public static Boolean recursiveDelete(File dir) {
+        if (dir != null && dir.isDirectory()) {
+            String[] children = dir.list();
+            for (int i = 0; i < children.length; i++) {
+                Boolean success = recursiveDelete(new File(dir, children[i]));
+                if (!success) {
+                    return false;
+                }
+            }
+        }
+
+        // The directory is now empty so recursiveDelete it
+        return dir.delete();
+    }
 
     public static Boolean setLocale(Context baseContext, String newLocale) {
         if (!isLocaleSupported(baseContext, newLocale)) {

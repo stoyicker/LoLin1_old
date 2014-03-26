@@ -8,6 +8,9 @@ import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
+import org.jorge.lolin1.utils.LoLin1Utils;
+
+import java.io.File;
 
 /**
  * This file is part of LoLin1.
@@ -27,7 +30,7 @@ import org.jorge.lolin1.io.db.SQLiteDAO;
  * <p/>
  * Created by JorgeAntonio on 07/01/14.
  */
-public class InitialActivity extends Activity {
+public final class InitialActivity extends Activity {
 
     /**
      * Called when the activity is first created.
@@ -36,6 +39,7 @@ public class InitialActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         SQLiteDAO.setup(getApplicationContext());
+        flushCacheIfNecessary();
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.FALSE);
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -48,6 +52,14 @@ public class InitialActivity extends Activity {
             final Intent splashIntent = new Intent(getApplicationContext(), SplashActivity.class);
             finish();
             startActivity(splashIntent);
+        }
+    }
+
+    private void flushCacheIfNecessary() {
+        File cacheDir;
+        int CACHE_SIZE_LIMIT_BYTES = 1048576;
+        if ((cacheDir = getApplicationContext().getCacheDir()).length() > CACHE_SIZE_LIMIT_BYTES) {
+            LoLin1Utils.recursiveDelete(cacheDir);
         }
     }
 }
