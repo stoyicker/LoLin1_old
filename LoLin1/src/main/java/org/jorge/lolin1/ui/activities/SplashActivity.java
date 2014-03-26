@@ -4,15 +4,20 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.net.HttpServiceProvider;
 import org.jorge.lolin1.ui.frags.SplashLogFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -25,6 +30,8 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
 
 public class SplashActivity extends Activity {
 
+    private final int NONE_YET = 0, ALLOW = 1, DISALLOW = 2;
+    private int dataAllowance = NONE_YET;
     private SplashLogFragment LOG_FRAGMENT;
 
     /**
@@ -144,135 +151,197 @@ public class SplashActivity extends Activity {
                         .getStringArray(getApplicationContext(), "data_providers",
                                 null);
 
+        Log.d("NX4", "Begin runUpdate");
+
         if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            if (connectToOneOf(dataProviders)) {
-                startProcedure();
+            String target;
+            Log.d("NX4", "runUpdate - internet available");
+            if (!(target = connectToOneOf(dataProviders)).contentEquals("null")) {
+                Log.d("NX4", "runUpdate - up server found - " + target);
+                startProcedure(target);
             }
         }
         else {
+            Log.d("NX4", "runUpdate - no up server found");
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "no_connection_on_splash",
                             null));
         }
+        Log.d("NX4", "End runUpdate");
     }
 
-    private void evaluateDownloadCondition() {
+    private void askIfOnMobileConnectionAndRunDownload(final String server, final String realm,
+                                                       final String[] localesInThisRealm,
+                                                       final String newVersion) {
+        final CountDownLatch alertDialogLatch = new CountDownLatch(1);
+
         if (((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE))
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
                 .isConnectedOrConnecting()) {
-            final AlertDialog.Builder alertDialogBuilder =
-                    new AlertDialog.Builder(SplashActivity.this, AlertDialog.THEME_HOLO_DARK);
-            final CountDownLatch alertDialogLatch = new CountDownLatch(1);
+            switch (dataAllowance) {
+                case NONE_YET:
+                    final AlertDialog.Builder alertDialogBuilder =
+                            new AlertDialog.Builder(SplashActivity.this,
+                                    AlertDialog.THEME_HOLO_DARK);
 
-            alertDialogBuilder.setTitle(
-                    LoLin1Utils.getString(getApplicationContext(), "delay_update_dialog_title",
-                            null)
-            );
+                    alertDialogBuilder.setTitle(
+                            LoLin1Utils
+                                    .getString(getApplicationContext(), "delay_update_dialog_title",
+                                            null)
+                    );
 
-            alertDialogBuilder.setMessage(LoLin1Utils
-                    .getString(getApplicationContext(), "delay_update_dialog_content",
-                            null))
-                    .setPositiveButton(LoLin1Utils.getString(getApplicationContext(),
-                            "delay_update_dialog_positive_button",
-                            null), new DialogInterface.OnClickListener() {
+                    alertDialogBuilder.setMessage(LoLin1Utils
+                            .getString(getApplicationContext(), "delay_update_dialog_content",
+                                    null))
+                            .setPositiveButton(LoLin1Utils.getString(getApplicationContext(),
+                                    "delay_update_dialog_positive_button",
+                                    null), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    LOG_FRAGMENT.appendToSameLine(
+                                            LoLin1Utils.getString(getApplicationContext(),
+                                                    "update_delayed", null)
+                                    );
+                                    dataAllowance = DISALLOW;
+                                    alertDialogLatch.countDown();
+                                }
+                            })
+                            .setNegativeButton(LoLin1Utils.getString(getApplicationContext(),
+                                    "delay_update_dialog_negative_button",
+                                    null), new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if (runUpdate(server, realm, localesInThisRealm)) {
+                                        PreferenceManager
+                                                .getDefaultSharedPreferences(
+                                                        getApplicationContext()).edit()
+                                                .putString("pref_version_" + realm, newVersion)
+                                                .commit();
+                                    }
+                                    dataAllowance = ALLOW;
+                                    alertDialogLatch.countDown();
+                                }
+                            });
+
+                    SplashActivity.this.runOnUiThread(new Runnable() {
                         @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            LOG_FRAGMENT.appendToNewLine(
-                                    LoLin1Utils.getString(getApplicationContext(),
-                                            "update_delayed", null)
-                            );
-                            alertDialogLatch.countDown();
-                        }
-                    })
-                    .setNegativeButton(LoLin1Utils.getString(getApplicationContext(),
-                            "delay_update_dialog_negative_button",
-                            null), new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            runDownload();/*TODO This has to be an AsyncTask
-                                    *with the outer method having a latch that makes sure
-                                    *that the operation is finished, therefore showing the
-                                    *splash screen in the meantime*/
-                            alertDialogLatch.countDown();
+                        public void run() {
+                            alertDialogBuilder.show();
                         }
                     });
+                    try {
+                        alertDialogLatch.await();
+                    }
+                    catch (InterruptedException e) {
+                        e.printStackTrace(System.err);
+                    }
 
-            SplashActivity.this.runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    alertDialogBuilder.show();
-                }
-            });
-            try {
-                alertDialogLatch.await();
+
+                    break;
+                case ALLOW:
+                    if (runUpdate(server, realm, localesInThisRealm)) {
+                        PreferenceManager
+                                .getDefaultSharedPreferences(
+                                        getApplicationContext()).edit()
+                                .putString("pref_version_" + realm, newVersion)
+                                .commit();
+                    }
+                    alertDialogLatch.countDown();
+                    break;
+                case DISALLOW:
+                    LOG_FRAGMENT.appendToSameLine(
+                            LoLin1Utils.getString(getApplicationContext(),
+                                    "update_delayed", null)
+                    );
+                    alertDialogLatch.countDown();
+                    break;
             }
-            catch (InterruptedException e) {
-                e.printStackTrace(System.err);
+        }
+        else {
+            if (runUpdate(server, realm, localesInThisRealm)) {
+                PreferenceManager
+                        .getDefaultSharedPreferences(
+                                getApplicationContext()).edit()
+                        .putString("pref_version_" + realm, newVersion)
+                        .commit();
             }
         }
     }
 
-    private void runDownload() {
-        //TODO Well...run the download
+    /**
+     * The success of the update for all locales in this realm.
+     *
+     * @param server
+     * @param realm
+     * @param localesInThisRealm
+     * @return
+     */
+    private Boolean runUpdate(String server, String realm, String[] localesInThisRealm) {
+        /*TODO Well...run the download in the current thread
+        *with the outer method having a latch that makes sure
+        *that the operation is finished, therefore showing the
+        *splash screen in the meantime*/
+        return Boolean.TRUE;
     }
 
-    private void startProcedure() {
+    private void startProcedure(String server) {
         final CountDownLatch networkOperationsLatch = new CountDownLatch(1);
 
-        new AsyncTask<Void, Void, Void>() {
-            /**
-             * Override this method to perform a computation on a background thread. The
-             * specified parameters are the parameters passed to {@link #execute}
-             * by the caller of this task.
-             * <p/>
-             * This method can call {@link #publishProgress} to publish updates
-             * on the UI thread.
-             *
-             * @param params The parameters of the task.
-             * @return A result, defined by the subclass of this task.
-             * @see #onPreExecute()
-             * @see #onPostExecute
-             * @see #publishProgress
-             */
-            @Override
-            protected Void doInBackground(Void... params) {
-                String[] realms =
-                        LoLin1Utils.getStringArray(getApplicationContext(), "servers", null);
-                for (String realm : realms) {
-                    String[] localesInThisRealm =
-                            LoLin1Utils.getStringArray(getApplicationContext(),
-                                    LoLin1Utils.getString(getApplicationContext(),
-                                            "realm_to_language_list_prefix", null) +
-                                            realm.toLowerCase() +
-                                            LoLin1Utils.getString(getApplicationContext(),
-                                                    "language_to_simplified_suffix", null), null
-                            );
-                    for (String locale : localesInThisRealm)
-                        LOG_FRAGMENT.appendToNewLine(LoLin1Utils
-                                .getString(getApplicationContext(), "pre_version_check", null) +
-                                realm.toLowerCase() + "." + locale + "...");
-                    //TODO Actually check the version:if(version is different){evaluateDownload();}
-                }
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
-                return null;
+        String[] realms =
+                LoLin1Utils.getStringArray(getApplicationContext(), "servers", null);
+        for (String realm : realms) {
+            LOG_FRAGMENT.appendToNewLine(LoLin1Utils
+                            .getString(getApplicationContext(), "update_pre_version_check", null) +
+                            " " +
+                            realm.toLowerCase() + "..."
+            );
+            String newVersion;
+            JSONObject newVersionAsJSON;
+            try {
+                newVersion = LoLin1Utils.inputStreamAsString(
+                        HttpServiceProvider.performVersionRequest(server, realm));
             }
+            catch (IOException | URISyntaxException e) {
+                LOG_FRAGMENT.appendToSameLine(LoLin1Utils
+                        .getString(getApplicationContext(), "update_fatal_error",
+                                null));
+                return;
+            }
+            catch (HttpServiceProvider.ServerIsCheckingException e) {
+                LOG_FRAGMENT.appendToSameLine(LoLin1Utils
+                        .getString(getApplicationContext(), "update_server_is_updating",
+                                null));
+                return;
+            }
+            try {
+                newVersionAsJSON = new JSONObject(newVersion);
+                newVersion = newVersionAsJSON.getString("version");
+            }
+            catch (JSONException e) {
+                e.printStackTrace(System.err);
+            }
+            if (!newVersion.contentEquals(preferences.getString("pref_version_" + realm, ""))) {
+                LOG_FRAGMENT.appendToSameLine(LoLin1Utils
+                        .getString(getApplicationContext(), "update_new_version_found", null));
+                String[] localesInThisRealm =
+                        LoLin1Utils.getStringArray(getApplicationContext(), LoLin1Utils.getString(
+                                getApplicationContext(), "realm_to_language_list_prefix",
+                                null) + realm.toLowerCase() +
+                                LoLin1Utils.getString(getApplicationContext(),
+                                        "language_to_simplified_suffix", null), null);
+                askIfOnMobileConnectionAndRunDownload(server, realm, localesInThisRealm,
+                        newVersion);
+            }
+            else {
+                LOG_FRAGMENT.appendToSameLine(LoLin1Utils
+                        .getString(getApplicationContext(), "update_no_new_version", null));
+            }
+            networkOperationsLatch.countDown();
+        }
 
-            /**
-             * <p>Runs on the UI thread after {@link #doInBackground}. The
-             * specified result is the value returned by {@link #doInBackground}.</p>
-             * <p/>
-             * <p>This method won't be invoked if the task was cancelled.</p>
-             *
-             * @param aVoid The result of the operation computed by {@link #doInBackground}.
-             * @see #onPreExecute
-             * @see #doInBackground
-             * @see #onCancelled(Object)
-             */
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                networkOperationsLatch.countDown();
-            }
-        }.execute();
 
         try {
             networkOperationsLatch.await();
@@ -282,10 +351,10 @@ public class SplashActivity extends Activity {
         }
     }
 
-    private Boolean connectToOneOf(String[] dataProviders) {
+    private String connectToOneOf(String[] dataProviders) {
         int firstIndex = new Random().nextInt(dataProviders.length), index = firstIndex;
         Boolean upServerFound = Boolean.FALSE;
-        String target;
+        String target = "null";
         InputStream getContentInputStream;
         do {
             try {
@@ -317,13 +386,13 @@ public class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(),
                                     "no_providers_up", null)
                     );
-                    return Boolean.FALSE;
+                    return "null";
                 }
             }
         }
         while (!upServerFound);
 
-        return Boolean.TRUE;
+        return target;
     }
 
     private void launchNewsReader() {
@@ -331,7 +400,6 @@ public class SplashActivity extends Activity {
         finish();
         startActivity(newsIntent);
     }
-
 }
 
 //FUTURE Remove <item name="news_reader" type="layout">@layout/news_double_pane</item><item name="surr_reader" type="layout">@layout/surr_double_pane</item><bool name="feed_has_two_panes">true</bool> from values-land/layouts.xml to not to see the double layout on devices which are not large enough

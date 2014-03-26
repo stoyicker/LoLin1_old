@@ -30,6 +30,8 @@ import java.net.URISyntaxException;
  */
 public abstract class HttpServiceProvider {
 
+    private static final String VERSION_SERVICE_LOCATION = "/services/champions/version/";
+
     public static InputStream performGetRequest(String uri)
             throws IOException, URISyntaxException, ServerIsCheckingException {
         HttpResponse response;
@@ -44,7 +46,11 @@ public abstract class HttpServiceProvider {
         else {
             return response.getEntity().getContent();
         }
+    }
 
+    public static InputStream performVersionRequest(String serverUri, String realm)
+            throws IOException, URISyntaxException, ServerIsCheckingException {
+        return performGetRequest(serverUri + VERSION_SERVICE_LOCATION + realm.toLowerCase());
     }
 
     public static class ServerIsCheckingException extends Exception {

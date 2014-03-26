@@ -148,6 +148,11 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="delay_update_dialog_positive_button">Yes, prompt me next time</string>
 	<string name="delay_update_dialog_negative_button">No (might impact your Internet quota)
 	</string>
-	<string name="update_delayed"><![CDATA[ ]]>Update delayed.</string>
-	<string name="pre_version_check">Querying for<![CDATA[ ]]></string>
+	<string name="update_delayed"><![CDATA[ ]]>update delayed.</string>
+	<string name="update_pre_version_check">Querying<![CDATA[ ]]></string>
+	<string name="update_server_is_updating">server is checking for contents, update aborted.
+	</string>
+	<string name="update_fatal_error">an error occurred, update aborted.</string>
+	<string name="update_new_version_found">new version found!</string>
+	<string name="update_no_new_version">already at latest version.</string>
 </resources>
