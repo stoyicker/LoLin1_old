@@ -145,8 +145,9 @@ public class SplashActivity extends Activity {
                                 null);
 
         if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            connectToOneOf(dataProviders);
-            evaluateDownloadCondition();
+            if (connectToOneOf(dataProviders)) {
+                evaluateDownloadCondition();
+            }
         }
         else {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
@@ -157,8 +158,8 @@ public class SplashActivity extends Activity {
 
     private void evaluateDownloadCondition() {
         if (((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE))
-                .getNetworkInfo(ConnectivityManager.TYPE_WIFI)
-                .isConnectedOrConnecting()) {//FUTURE This has to be changed from TYPE_WIFI to TYPE_MOBILE
+                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
+                .isConnectedOrConnecting()) {
             final AlertDialog.Builder alertDialogBuilder =
                     new AlertDialog.Builder(SplashActivity.this, AlertDialog.THEME_HOLO_DARK);
             final CountDownLatch alertDialogLatch = new CountDownLatch(1);
@@ -211,11 +212,77 @@ public class SplashActivity extends Activity {
         }
     }
 
-    private void connectToOneOf(String[] dataProviders) {
+    private void runDownload() {
+        final CountDownLatch networkOperationsLatch = new CountDownLatch(1);
+
+        new AsyncTask<Void, Void, Void>() {
+            /**
+             * Override this method to perform a computation on a background thread. The
+             * specified parameters are the parameters passed to {@link #execute}
+             * by the caller of this task.
+             * <p/>
+             * This method can call {@link #publishProgress} to publish updates
+             * on the UI thread.
+             *
+             * @param params The parameters of the task.
+             * @return A result, defined by the subclass of this task.
+             * @see #onPreExecute()
+             * @see #onPostExecute
+             * @see #publishProgress
+             */
+            @Override
+            protected Void doInBackground(Void... params) {
+                String[] realms =
+                        LoLin1Utils.getStringArray(getApplicationContext(), "servers", null);
+                for (String realm : realms) {
+                    String[] localesInThisRealm =
+                            LoLin1Utils.getStringArray(getApplicationContext(),
+                                    LoLin1Utils.getString(getApplicationContext(),
+                                            "realm_to_language_list_prefix", null) +
+                                            realm.toLowerCase() +
+                                            LoLin1Utils.getString(getApplicationContext(),
+                                                    "language_to_simplified_suffix", null), null
+                            );
+                    for (String locale : localesInThisRealm)
+                        LOG_FRAGMENT.appendToNewLine(LoLin1Utils
+                                .getString(getApplicationContext(), "pre_version_check", null) +
+                                realm.toLowerCase() + "." + locale + "...");
+                    //TODO Actually check the version
+                }
+
+                return null;
+            }
+
+            /**
+             * <p>Runs on the UI thread after {@link #doInBackground}. The
+             * specified result is the value returned by {@link #doInBackground}.</p>
+             * <p/>
+             * <p>This method won't be invoked if the task was cancelled.</p>
+             *
+             * @param aVoid The result of the operation computed by {@link #doInBackground}.
+             * @see #onPreExecute
+             * @see #doInBackground
+             * @see #onCancelled(Object)
+             */
+            @Override
+            protected void onPostExecute(Void aVoid) {
+                networkOperationsLatch.countDown();
+            }
+        }.execute();
+
+        try {
+            networkOperationsLatch.await();
+        }
+        catch (InterruptedException e) {
+            e.printStackTrace(System.err);
+        }
+    }
+
+    private Boolean connectToOneOf(String[] dataProviders) {
         int firstIndex = new Random().nextInt(dataProviders.length), index = firstIndex;
         Boolean upServerFound = Boolean.FALSE;
         String target;
-        InputStream getContentInputStream = null;
+        InputStream getContentInputStream;
         do {
             try {
                 target = dataProviders[index];
@@ -233,6 +300,9 @@ public class SplashActivity extends Activity {
             catch (IOException | URISyntaxException e) {
                 e.printStackTrace(System.err);
             }
+            catch (HttpServiceProvider.ServerIsCheckingException e) {
+                //TODO Server is busy checking for updates, so rotate
+            }
             if (!upServerFound) {
                 index++;
                 if (index >= dataProviders.length) {
@@ -243,11 +313,13 @@ public class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(),
                                     "no_providers_up", null)
                     );
-                    return;
+                    return Boolean.FALSE;
                 }
             }
         }
         while (!upServerFound);
+
+        return Boolean.TRUE;
     }
 
     private void launchNewsReader() {

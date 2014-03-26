@@ -30,15 +30,23 @@ import java.net.URISyntaxException;
  */
 public abstract class HttpServiceProvider {
 
-    public static InputStream performGetRequest(String uri) throws IOException, URISyntaxException {
+    public static InputStream performGetRequest(String uri)
+            throws IOException, URISyntaxException, ServerIsCheckingException {
         HttpResponse response;
 
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet();
         request.setURI(new URI(uri));
         response = client.execute(request);
+        if (response.getStatusLine().getStatusCode() == 409) {
+            throw new ServerIsCheckingException();
+        }
+        else {
+            return response.getEntity().getContent();
+        }
 
-        return response.getEntity().getContent();
+    }
 
+    public static class ServerIsCheckingException extends Exception {
     }
 }
