@@ -146,7 +146,7 @@ public class SplashActivity extends Activity {
 
         if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
             if (connectToOneOf(dataProviders)) {
-                evaluateDownloadCondition();
+                startProcedure();
             }
         }
         else {
@@ -213,6 +213,10 @@ public class SplashActivity extends Activity {
     }
 
     private void runDownload() {
+        //TODO Well...run the download
+    }
+
+    private void startProcedure() {
         final CountDownLatch networkOperationsLatch = new CountDownLatch(1);
 
         new AsyncTask<Void, Void, Void>() {
@@ -247,7 +251,7 @@ public class SplashActivity extends Activity {
                         LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                                 .getString(getApplicationContext(), "pre_version_check", null) +
                                 realm.toLowerCase() + "." + locale + "...");
-                    //TODO Actually check the version
+                    //TODO Actually check the version:if(version is different){evaluateDownload();}
                 }
 
                 return null;
@@ -301,7 +305,7 @@ public class SplashActivity extends Activity {
                 e.printStackTrace(System.err);
             }
             catch (HttpServiceProvider.ServerIsCheckingException e) {
-                //TODO Server is busy checking for updates, so rotate
+                //Server is busy checking for updates, so do nothing, simply rotate
             }
             if (!upServerFound) {
                 index++;
