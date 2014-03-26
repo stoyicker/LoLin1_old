@@ -33,7 +33,6 @@ Created by JorgeAntonio on 18/03/2014.
 		style="@style/LogTextStyle"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
-		android:gravity="center"
-		android:scrollbars="vertical"
-		android:textAlignment="textStart"/>
+		android:gravity="start"
+		android:scrollbars="vertical"/>
 </ScrollView>
