@@ -45,15 +45,14 @@ public abstract class LoLin1Utils {
     public static Boolean recursiveDelete(File dir) {
         if (dir != null && dir.isDirectory()) {
             String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                Boolean success = recursiveDelete(new File(dir, children[i]));
+            for (String aChildren : children) {
+                Boolean success = recursiveDelete(new File(dir, aChildren));
                 if (!success) {
                     return false;
                 }
             }
         }
 
-        // The directory is now empty so recursiveDelete it
         return dir.delete();
     }
 

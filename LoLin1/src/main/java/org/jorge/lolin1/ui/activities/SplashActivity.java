@@ -9,7 +9,6 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.jorge.lolin1.R;
@@ -19,6 +18,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
@@ -151,23 +151,17 @@ public class SplashActivity extends Activity {
                         .getStringArray(getApplicationContext(), "data_providers",
                                 null);
 
-        Log.d("NX4", "Begin runUpdate");
-
         if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
             String target;
-            Log.d("NX4", "runUpdate - internet available");
             if (!(target = connectToOneOf(dataProviders)).contentEquals("null")) {
-                Log.d("NX4", "runUpdate - up server found - " + target);
                 startProcedure(target);
             }
         }
         else {
-            Log.d("NX4", "runUpdate - no up server found");
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "no_connection_on_splash",
                             null));
         }
-        Log.d("NX4", "End runUpdate");
     }
 
     private void askIfOnMobileConnectionAndRunDownload(final String server, final String realm,
@@ -211,7 +205,7 @@ public class SplashActivity extends Activity {
                                     null), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (runUpdate(server, realm, localesInThisRealm)) {
+                                    if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
                                         PreferenceManager
                                                 .getDefaultSharedPreferences(
                                                         getApplicationContext()).edit()
@@ -239,7 +233,7 @@ public class SplashActivity extends Activity {
 
                     break;
                 case ALLOW:
-                    if (runUpdate(server, realm, localesInThisRealm)) {
+                    if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
                         PreferenceManager
                                 .getDefaultSharedPreferences(
                                         getApplicationContext()).edit()
@@ -258,7 +252,7 @@ public class SplashActivity extends Activity {
             }
         }
         else {
-            if (runUpdate(server, realm, localesInThisRealm)) {
+            if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
                 PreferenceManager
                         .getDefaultSharedPreferences(
                                 getApplicationContext()).edit()
@@ -276,11 +270,41 @@ public class SplashActivity extends Activity {
      * @param localesInThisRealm
      * @return
      */
-    private Boolean runUpdate(String server, String realm, String[] localesInThisRealm) {
-        /*TODO Well...run the download in the current thread
-        *with the outer method having a latch that makes sure
-        *that the operation is finished, therefore showing the
-        *splash screen in the meantime*/
+    private Boolean runUpdate(String server, String realm, String[] localesInThisRealm,
+                              String newVersion) {
+        LOG_FRAGMENT.appendToNewLine(LoLin1Utils
+                .getString(getApplicationContext(), "update_allocating_file_structure", null) +
+                " " + realm);
+        File root = getApplicationContext().getExternalFilesDir(
+                LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
+        File previouslyAttemptedUpdateFolder = new File(root + "/" + realm + "-" + newVersion);
+        if (previouslyAttemptedUpdateFolder.exists() &&
+                !LoLin1Utils.recursiveDelete(previouslyAttemptedUpdateFolder)) {
+            LOG_FRAGMENT.appendToSameLine(
+                    LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+            return Boolean.FALSE;
+        }
+        for (String locale : localesInThisRealm) {
+            String bustString =
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
+                            "/" + "bust" + "/", splashString =
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
+                            "/" + "splash" + "/", spellString =
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
+                            "/" + "spell" + "/", passiveString =
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
+                            "/" + "passive" + "/";
+            File bust = new File(bustString), splash = new File(splashString), spell =
+                    new File(spellString), passive = new File(passiveString);
+            if (!bust.mkdirs() || !splash.mkdirs() || !spell.mkdirs() || !passive.mkdirs()) {
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                return Boolean.FALSE;
+            }
+        }
+        LOG_FRAGMENT.appendToSameLine(
+                LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
+        //TODO Run the update in the current thread
         return Boolean.TRUE;
     }
 

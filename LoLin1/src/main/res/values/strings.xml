@@ -153,6 +153,10 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="update_server_is_updating">server is checking for contents, update aborted.
 	</string>
 	<string name="update_fatal_error">an error occurred, update aborted.</string>
-	<string name="update_new_version_found">new version found!</string>
-	<string name="update_no_new_version">already at latest version.</string>
+	<string name="update_new_version_found">…new version found!</string>
+	<string name="update_no_new_version">…already at latest version.</string>
+	<string name="content_folder_name">content</string>
+	<string name="update_allocating_file_structure">Allocating file structure for
+		<![CDATA[ ]]></string>
+	<string name="update_task_finished">…done.</string>
 </resources>
