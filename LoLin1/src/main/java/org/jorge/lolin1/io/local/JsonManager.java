@@ -1,5 +1,10 @@
 package org.jorge.lolin1.io.local;
 
+import android.util.Log;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -19,4 +24,20 @@ package org.jorge.lolin1.io.local;
  * Created by JorgeAntonio on 29/03/2014.
  */
 public abstract class JsonManager {
+
+    public static String getStringAttribute(String response, String attributeName) {
+        JSONObject responseAsObject;
+        try {
+            responseAsObject = new JSONObject(response);
+            return responseAsObject.getString(attributeName);
+        }
+        catch (JSONException e) {
+            Log.e("debug", e.getClass().getName(), e);
+            return null;
+        }
+    }
+
+    public static boolean getResponseStatus(String response) {
+        return getStringAttribute(response, "status").contentEquals("ok");
+    }
 }

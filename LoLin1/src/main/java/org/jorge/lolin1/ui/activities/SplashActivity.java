@@ -14,6 +14,7 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.local.FileManager;
+import org.jorge.lolin1.io.local.JsonManager;
 import org.jorge.lolin1.io.net.HttpServiceProvider;
 import org.jorge.lolin1.ui.frags.SplashLogFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -340,7 +341,18 @@ public class SplashActivity extends Activity {
                                 .getString(getApplicationContext(), "progress_character", null)
                 );
                 try {
-                    cdn = HttpServiceProvider.performCdnRequest(server, realm);
+                    String cdnResponse = HttpServiceProvider.performCdnRequest(server, realm);
+                    if (JsonManager.getResponseStatus(cdnResponse)) {
+                        cdn = JsonManager.getStringAttribute(cdnResponse,
+                                LoLin1Utils.getString(getApplicationContext(), "cdn_key", null));
+                    }
+                    else {
+                        LOG_FRAGMENT.appendToSameLine(
+                                LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
+                                        null)
+                        );
+                        return Boolean.FALSE;
+                    }
                 }
                 catch (HttpServiceProvider.ServerIsCheckingException | URISyntaxException | IOException e) {
                     LOG_FRAGMENT.appendToSameLine(
@@ -350,11 +362,11 @@ public class SplashActivity extends Activity {
                     return Boolean.FALSE;
                 }
                 LOG_FRAGMENT.appendToSameLine(
-                        LoLin1Utils
-                                .getString(getApplicationContext(), "update_task_finished", null)
+                        LoLin1Utils.getString(
+                                getApplicationContext(), "update_task_finished", null)
                 );
             }
-            //TODO Continue here
+            //TODO Continue here - IMPORTANT, IF THE COUNT OF CHAMPIONS IS ZERO, STANDARD ERROR AND RETURN FALSE COMBO (the server was updating)
         }
         return Boolean.TRUE;
     }
