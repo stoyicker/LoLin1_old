@@ -14,7 +14,6 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -56,40 +55,31 @@ public abstract class LoLin1Utils {
     public static Boolean writeInputStreamToFile(InputStream inputStream, File target) {
         OutputStream outputStream = null;
         try {
+            if (!target.exists()) {
+                if (!target.createNewFile()) {
+                    inputStream.close();
+                    return Boolean.FALSE;
+                }
+            }
             outputStream = new FileOutputStream(target);
-        }
-        catch (FileNotFoundException e) {
-            return Boolean.FALSE;
-        }
-        finally {
-            try {
-                inputStream.close();
-            }
-            catch (IOException e) {
-                Log.wtf("NX4", "Should never happen!");
-                e.printStackTrace(System.err);
-            }
-        }
-        int read;
-        byte[] bytes = new byte[1024];
+            int read;
+            byte[] bytes = new byte[1024];
 
-        try {
             while ((read = inputStream.read(bytes)) != -1) {
                 outputStream.write(bytes, 0, read);
             }
         }
-        catch (IOException e) {
-            e.printStackTrace(System.err);
+        catch (IOException ex) {
+            Log.wtf("NX4", "Should never happen", ex);
             return Boolean.FALSE;
         }
         finally {
             try {
-                outputStream.close();
                 inputStream.close();
+                outputStream.close();
             }
-            catch (IOException e) {
-                Log.wtf("NX4", "Should never happen!");
-                e.printStackTrace(System.err);
+            catch (IOException ex) {
+                Log.wtf("NX4", "Should never happen", ex);
             }
         }
         return Boolean.TRUE;
@@ -198,12 +188,14 @@ public abstract class LoLin1Utils {
         ConnectivityManager connectivityManager =
                 (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo wifiNetworkInfo =
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI), dataNetworkInfo =
-                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+                connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI),
+                dataNetworkInfo =
+                        connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
         Boolean isWifiConnected =
                 (wifiNetworkInfo == null) ? Boolean.FALSE : wifiNetworkInfo.isConnected(),
                 isDataConnected =
-                        (dataNetworkInfo == null) ? Boolean.FALSE : dataNetworkInfo.isConnected();
+                        (dataNetworkInfo == null) ? Boolean.FALSE :
+                                dataNetworkInfo.isConnected();
         ret = isWifiConnected || (preferences
                 .getBoolean(getString(context, "pref_title_data", "pref_title_data"),
                         Boolean.FALSE) && isDataConnected);
@@ -215,8 +207,10 @@ public abstract class LoLin1Utils {
         SQLiteDatabase db = SQLiteDAO.getSingleton().getReadableDatabase();
 
         Cursor cursor = db.rawQuery(
-                "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName + "'",
-                null);
+                "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName +
+                        "'",
+                null
+        );
         if (cursor != null) {
             if (cursor.getCount() > 0) {
                 cursor.close();
@@ -251,8 +245,10 @@ public abstract class LoLin1Utils {
                 PreferenceManager.getDefaultSharedPreferences(baseContext).edit();
 
         editor.putString(
-                LoLin1Utils.getString(baseContext, "pref_title_server", "League of Legends server"),
-                newRealm.toLowerCase());
+                LoLin1Utils.getString(baseContext, "pref_title_server",
+                        "League of Legends server"),
+                newRealm.toLowerCase()
+        );
 
         editor.commit();
 

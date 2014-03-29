@@ -69,9 +69,9 @@ public class SplashDisclaimerTextFragment extends Fragment {
         TextView tv = ((TextView) ret.findViewById(R.id.fragment_splash_disclaimer_text_view));
         tv.setText(
                 new StringBuilder(LoLin1Utils
-                        .getString(getActivity().getApplicationContext(), "app_name", "Lolin1"))
+                        .getString(getActivity().getApplicationContext(), "app_name", null))
                         .append(LoLin1Utils.getString(getActivity().getApplicationContext(),
-                                "legal_jibber_jabber", ""))
+                                "legal_jibber_jabber", null)) + " "
         );
 
         return ret;

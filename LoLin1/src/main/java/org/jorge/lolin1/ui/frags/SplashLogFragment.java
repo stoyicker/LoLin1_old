@@ -3,6 +3,7 @@ package org.jorge.lolin1.ui.frags;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class SplashLogFragment extends Fragment {
     private ScrollView logScrollView;
 
     public void appendToSameLine(final CharSequence text) {
+        Log.d("LOG_FRAGMENT", "" + text);
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {

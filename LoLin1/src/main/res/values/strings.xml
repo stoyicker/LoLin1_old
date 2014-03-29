@@ -126,7 +126,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="title_activity_splash">@string/app_name</string>
 	<string name="splash_image_content_description">Splash image</string>
 	<string name="legal_jibber_jabber">
-		<![CDATA[ ]]>isn\'t endorsed by Riot Games and doesn\'t reflect the views or opinions of
+		isn\'t endorsed by Riot Games and doesn\'t reflect the views or opinions of
 		Riot Games or anyone officially involved in producing or managing League of Legends. League
 		of Legends and Riot Games are trademarks or registered trademarks of Riot Games, Inc. League
 		of Legends © Riot Games, Inc.
@@ -148,15 +148,18 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="delay_update_dialog_positive_button">Yes, prompt me next time</string>
 	<string name="delay_update_dialog_negative_button">No (might impact your Internet quota)
 	</string>
-	<string name="update_delayed"><![CDATA[ ]]>update delayed.</string>
-	<string name="update_pre_version_check">Querying<![CDATA[ ]]></string>
+	<string name="update_delayed">update delayed.</string>
+	<string name="update_pre_version_check">Querying</string>
+	<string name="progress_character">…</string>
 	<string name="update_server_is_updating">server is checking for contents, update aborted.
 	</string>
 	<string name="update_fatal_error">an error occurred, update aborted.</string>
-	<string name="update_new_version_found">…new version found!</string>
-	<string name="update_no_new_version">…already at latest version.</string>
+	<string name="update_new_version_found">new version found!</string>
+	<string name="update_no_new_version">already at latest version.</string>
 	<string name="content_folder_name">content</string>
-	<string name="update_allocating_file_structure">Allocating file structure for
-		<![CDATA[ ]]></string>
-	<string name="update_task_finished">…done.</string>
+	<string name="update_allocating_file_structure">Allocating file structure for</string>
+	<string name="update_task_finished">done.</string>
+	<string name="service_list">/services/champion/list/</string>
+	<string name="list_file_name">data.json</string>
+	<string name="list_download">Downloading champion information for</string>
 </resources>

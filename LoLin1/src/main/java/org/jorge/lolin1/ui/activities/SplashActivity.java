@@ -273,8 +273,10 @@ public class SplashActivity extends Activity {
     private Boolean runUpdate(String server, String realm, String[] localesInThisRealm,
                               String newVersion) {
         LOG_FRAGMENT.appendToNewLine(LoLin1Utils
-                .getString(getApplicationContext(), "update_allocating_file_structure", null) +
-                " " + realm);
+                        .getString(getApplicationContext(), "update_allocating_file_structure",
+                                null) + " " + realm +
+                        LoLin1Utils.getString(getApplicationContext(), "progress_character", null)
+        );
         File root = getApplicationContext().getExternalFilesDir(
                 LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
         File previouslyAttemptedUpdateFolder = new File(root + "/" + realm + "-" + newVersion);
@@ -301,9 +303,38 @@ public class SplashActivity extends Activity {
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
             }
+            LOG_FRAGMENT.appendToSameLine(
+                    LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
+            LOG_FRAGMENT.appendToNewLine(
+                    LoLin1Utils.getString(getApplicationContext(), "list_download", null) + " " +
+                            realm + "." + locale + LoLin1Utils
+                            .getString(getApplicationContext(), "progress_character", null)
+            );
+            InputStream dataStream;
+            try {
+                dataStream = HttpServiceProvider.performGetRequest(
+                        server + LoLin1Utils
+                                .getString(getApplicationContext(), "service_list", null) + realm +
+                                "/" + locale
+                );
+            }
+            catch (IOException | URISyntaxException | HttpServiceProvider.ServerIsCheckingException e) {
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                return Boolean.FALSE;
+            }
+            if (!LoLin1Utils.writeInputStreamToFile(dataStream, new File(
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                            LoLin1Utils
+                                    .getString(getApplicationContext(), "list_file_name", null)
+            ))) {
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                return Boolean.FALSE;
+            }
+            LOG_FRAGMENT.appendToSameLine(
+                    LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         }
-        LOG_FRAGMENT.appendToSameLine(
-                LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         //TODO Run the update in the current thread
         return Boolean.TRUE;
     }
@@ -318,10 +349,9 @@ public class SplashActivity extends Activity {
                 LoLin1Utils.getStringArray(getApplicationContext(), "servers", null);
         for (String realm : realms) {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
-                            .getString(getApplicationContext(), "update_pre_version_check", null) +
-                            " " +
-                            realm.toLowerCase() + "..."
-            );
+                    .getString(getApplicationContext(), "update_pre_version_check", null) +
+                    " " + realm.toLowerCase() +
+                    LoLin1Utils.getString(getApplicationContext(), "progress_character", null));
             String newVersion;
             JSONObject newVersionAsJSON;
             try {
