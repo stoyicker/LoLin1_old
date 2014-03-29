@@ -74,8 +74,10 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
     private void restoreState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             int index = savedInstanceState.getInt("index", 0);
-            NEWS_FRAGMENT.setSelection(index);
-            onNewsArticleSelected(index);
+            if (index != -1) {
+                NEWS_FRAGMENT.setSelection(index);
+                onNewsArticleSelected(index);
+            }
         }
     }
 

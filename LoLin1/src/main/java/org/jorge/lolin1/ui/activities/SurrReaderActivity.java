@@ -74,8 +74,10 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
     private void restoreState(Bundle savedInstanceState) {
         if (savedInstanceState != null) {
             int index = savedInstanceState.getInt("index", 0);
-            SURR_FRAGMENT.setSelection(index);
-            onSurrArticleSelected(index);
+            if (index != -1) {
+                SURR_FRAGMENT.setSelection(index);
+                onSurrArticleSelected(index);
+            }
         }
     }
 

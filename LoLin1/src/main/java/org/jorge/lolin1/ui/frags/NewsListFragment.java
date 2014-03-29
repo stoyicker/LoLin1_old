@@ -224,6 +224,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
              */
             @Override
             protected void onPostExecute(Void aVoid) {
+                getView().invalidate();
                 mPullToRefreshLayout.setRefreshComplete();
             }
 
