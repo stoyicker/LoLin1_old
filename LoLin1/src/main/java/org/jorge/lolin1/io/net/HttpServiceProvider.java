@@ -30,7 +30,8 @@ import java.net.URISyntaxException;
  */
 public abstract class HttpServiceProvider {
 
-    private static final String VERSION_SERVICE_LOCATION = "/services/champions/version/";
+    private static final String VERSION_SERVICE_LOCATION = "/services/champions/version/",
+            LIST_SERVICE_LOCATION = "/services/champions/list/";
 
     public static InputStream performGetRequest(String uri)
             throws IOException, URISyntaxException, ServerIsCheckingException {
@@ -51,6 +52,12 @@ public abstract class HttpServiceProvider {
     public static InputStream performVersionRequest(String serverUri, String realm)
             throws IOException, URISyntaxException, ServerIsCheckingException {
         return performGetRequest(serverUri + VERSION_SERVICE_LOCATION + realm.toLowerCase());
+    }
+
+    public static InputStream performListRequest(String serverUri, String realm, String locale)
+            throws ServerIsCheckingException, IOException, URISyntaxException {
+        return performGetRequest(
+                serverUri + LIST_SERVICE_LOCATION + realm.toLowerCase() + "/" + locale);
     }
 
     public static class ServerIsCheckingException extends Exception {

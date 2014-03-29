@@ -312,11 +312,7 @@ public class SplashActivity extends Activity {
             );
             InputStream dataStream;
             try {
-                dataStream = HttpServiceProvider.performGetRequest(
-                        server + LoLin1Utils
-                                .getString(getApplicationContext(), "service_list", null) + realm +
-                                "/" + locale
-                );
+                dataStream = HttpServiceProvider.performListRequest(server, realm, locale);
             }
             catch (IOException | URISyntaxException | HttpServiceProvider.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(
