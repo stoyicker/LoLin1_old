@@ -9,9 +9,11 @@ import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.io.net.HttpServiceProvider;
 import org.jorge.lolin1.ui.frags.SplashLogFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -125,7 +127,7 @@ public class SplashActivity extends Activity {
                             countDownLatch.countDown();
                         }
                         catch (InterruptedException e) {
-                            e.printStackTrace(System.err);
+                            Log.e("debug", e.getClass().getName(), e);
                         }
                     }
                 };
@@ -137,7 +139,7 @@ public class SplashActivity extends Activity {
                     countDownLatch.await();
                 }
                 catch (InterruptedException e) {
-                    e.printStackTrace(System.err);
+                    Log.e("debug", e.getClass().getName(), e);
                 }
 
                 return null;
@@ -227,7 +229,7 @@ public class SplashActivity extends Activity {
                         alertDialogLatch.await();
                     }
                     catch (InterruptedException e) {
-                        e.printStackTrace(System.err);
+                        Log.e("debug", e.getClass().getName(), e);
                     }
 
 
@@ -272,6 +274,7 @@ public class SplashActivity extends Activity {
      */
     private Boolean runUpdate(String server, String realm, String[] localesInThisRealm,
                               String newVersion) {
+        String cdn = null;
         LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_allocating_file_structure",
                                 null) + " " + realm +
@@ -281,11 +284,13 @@ public class SplashActivity extends Activity {
                 LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
         File previouslyAttemptedUpdateFolder = new File(root + "/" + realm + "-" + newVersion);
         if (previouslyAttemptedUpdateFolder.exists() &&
-                !LoLin1Utils.recursiveDelete(previouslyAttemptedUpdateFolder)) {
+                !FileManager.recursiveDelete(previouslyAttemptedUpdateFolder)) {
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
             return Boolean.FALSE;
         }
+        LOG_FRAGMENT.appendToSameLine(
+                LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         for (String locale : localesInThisRealm) {
             String bustString =
                     root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
@@ -303,8 +308,6 @@ public class SplashActivity extends Activity {
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
             }
-            LOG_FRAGMENT.appendToSameLine(
-                    LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
             LOG_FRAGMENT.appendToNewLine(
                     LoLin1Utils.getString(getApplicationContext(), "list_download", null) + " " +
                             realm + "." + locale + LoLin1Utils
@@ -319,7 +322,7 @@ public class SplashActivity extends Activity {
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
             }
-            if (!LoLin1Utils.writeInputStreamToFile(dataStream, new File(
+            if (!FileManager.writeInputStreamToFile(dataStream, new File(
                     root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
                             LoLin1Utils
                                     .getString(getApplicationContext(), "list_file_name", null)
@@ -330,8 +333,29 @@ public class SplashActivity extends Activity {
             }
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
+            if (cdn == null) {
+                LOG_FRAGMENT.appendToNewLine(
+                        LoLin1Utils.getString(getApplicationContext(), "cdn_download", null) + " " +
+                                realm + LoLin1Utils
+                                .getString(getApplicationContext(), "progress_character", null)
+                );
+                try {
+                    cdn = HttpServiceProvider.performCdnRequest(server, realm);
+                }
+                catch (HttpServiceProvider.ServerIsCheckingException | URISyntaxException | IOException e) {
+                    LOG_FRAGMENT.appendToSameLine(
+                            LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
+                                    null)
+                    );
+                    return Boolean.FALSE;
+                }
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils
+                                .getString(getApplicationContext(), "update_task_finished", null)
+                );
+            }
+            //TODO Continue here
         }
-        //TODO Run the update in the current thread
         return Boolean.TRUE;
     }
 
@@ -371,7 +395,7 @@ public class SplashActivity extends Activity {
                 newVersion = newVersionAsJSON.getString("version");
             }
             catch (JSONException e) {
-                e.printStackTrace(System.err);
+                Log.e("debug", e.getClass().getName(), e);
             }
             if (!newVersion.contentEquals(preferences.getString("pref_version_" + realm, ""))) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
@@ -392,12 +416,11 @@ public class SplashActivity extends Activity {
             networkOperationsLatch.countDown();
         }
 
-
         try {
             networkOperationsLatch.await();
         }
         catch (InterruptedException e) {
-            e.printStackTrace(System.err);
+            Log.e("debug", e.getClass().getName(), e);
         }
     }
 
@@ -421,10 +444,10 @@ public class SplashActivity extends Activity {
                 }
             }
             catch (IOException | URISyntaxException e) {
-                e.printStackTrace(System.err);
+                Log.e("debug", e.getClass().getName(), e);
             }
             catch (HttpServiceProvider.ServerIsCheckingException e) {
-                //Server is busy checking for updates, so do nothing, simply rotate
+                //Server is busy checking for updates, so look for a new one
             }
             if (!upServerFound) {
                 index++;

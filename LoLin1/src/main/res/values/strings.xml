@@ -162,4 +162,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="service_list">/services/champion/list/</string>
 	<string name="list_file_name">data.json</string>
 	<string name="list_download">Downloading champion information for</string>
+	<string name="cdn_download">Retrieving CDN for</string>
 </resources>

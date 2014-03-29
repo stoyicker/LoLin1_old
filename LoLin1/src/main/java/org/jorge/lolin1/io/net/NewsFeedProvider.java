@@ -68,7 +68,7 @@ public class NewsFeedProvider {
             }
         }
         catch (IOException e) {
-            e.printStackTrace(System.err);
+            Log.e("debug", e.getClass().getName(), e);
             Log.wtf("ERROR", "Should never happen", e);
             handler.onNoInternetConnection();
         }

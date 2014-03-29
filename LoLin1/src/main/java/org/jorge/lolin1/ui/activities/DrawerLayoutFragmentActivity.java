@@ -122,7 +122,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                 target = SurrReaderActivity.class;
                 break;
             default:
-                Log.wtf("NX4", "Should never happen - Selected index - " + position);
+                Log.wtf("debug", "Should never happen - Selected index - " + position);
         }
         startActivity(new Intent(getApplicationContext(), target));
     }

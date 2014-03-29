@@ -13,11 +13,8 @@ import android.util.Log;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Locale;
@@ -43,61 +40,6 @@ import java.util.Locale;
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */
 public abstract class LoLin1Utils {
-
-    /**
-     * Writes a {@link java.io.InputStream} object to a file.
-     * The {@link java.io.InputStream} is closed after the operation independently of its success.
-     *
-     * @param inputStream
-     * @param target
-     * @return {@link java.lang.Boolean} The success of the operation.
-     */
-    public static Boolean writeInputStreamToFile(InputStream inputStream, File target) {
-        OutputStream outputStream = null;
-        try {
-            if (!target.exists()) {
-                if (!target.createNewFile()) {
-                    inputStream.close();
-                    return Boolean.FALSE;
-                }
-            }
-            outputStream = new FileOutputStream(target);
-            int read;
-            byte[] bytes = new byte[1024];
-
-            while ((read = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, read);
-            }
-        }
-        catch (IOException ex) {
-            Log.wtf("NX4", "Should never happen", ex);
-            return Boolean.FALSE;
-        }
-        finally {
-            try {
-                inputStream.close();
-                outputStream.close();
-            }
-            catch (IOException ex) {
-                Log.wtf("NX4", "Should never happen", ex);
-            }
-        }
-        return Boolean.TRUE;
-    }
-
-    public static Boolean recursiveDelete(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (String aChildren : children) {
-                Boolean success = recursiveDelete(new File(dir, aChildren));
-                if (!success) {
-                    return false;
-                }
-            }
-        }
-
-        return dir.delete();
-    }
 
     public static Boolean setLocale(Context baseContext, String newLocale) {
         if (!isLocaleSupported(baseContext, newLocale)) {
@@ -285,7 +227,7 @@ public abstract class LoLin1Utils {
             is.close();
         }
         catch (IOException e) {
-            e.printStackTrace(System.err);
+            Log.e("debug", e.getClass().getName(), e);
         }
         return ret;
     }

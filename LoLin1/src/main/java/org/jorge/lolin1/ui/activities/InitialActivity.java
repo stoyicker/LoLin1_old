@@ -8,7 +8,7 @@ import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
-import org.jorge.lolin1.utils.LoLin1Utils;
+import org.jorge.lolin1.io.local.FileManager;
 
 import java.io.File;
 
@@ -59,7 +59,7 @@ public final class InitialActivity extends Activity {
         File cacheDir;
         int CACHE_SIZE_LIMIT_BYTES = 1048576;
         if ((cacheDir = getApplicationContext().getCacheDir()).length() > CACHE_SIZE_LIMIT_BYTES) {
-            LoLin1Utils.recursiveDelete(cacheDir);
+            FileManager.recursiveDelete(cacheDir);
         }
     }
 }

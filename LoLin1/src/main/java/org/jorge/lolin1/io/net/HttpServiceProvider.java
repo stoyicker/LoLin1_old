@@ -4,6 +4,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,7 +32,8 @@ import java.net.URISyntaxException;
 public abstract class HttpServiceProvider {
 
     private static final String VERSION_SERVICE_LOCATION = "/services/champions/version/",
-            LIST_SERVICE_LOCATION = "/services/champions/list/";
+            LIST_SERVICE_LOCATION = "/services/champions/list/", CDN_SERVICE_LOCATION =
+            "/services/champions/cdn/";
 
     public static InputStream performGetRequest(String uri)
             throws IOException, URISyntaxException, ServerIsCheckingException {
@@ -58,6 +60,12 @@ public abstract class HttpServiceProvider {
             throws ServerIsCheckingException, IOException, URISyntaxException {
         return performGetRequest(
                 serverUri + LIST_SERVICE_LOCATION + realm.toLowerCase() + "/" + locale);
+    }
+
+    public static String performCdnRequest(String serverUri, String realm)
+            throws ServerIsCheckingException, IOException, URISyntaxException {
+        return LoLin1Utils.inputStreamAsString(performGetRequest(
+                serverUri + CDN_SERVICE_LOCATION + realm.toLowerCase()));
     }
 
     public static class ServerIsCheckingException extends Exception {
