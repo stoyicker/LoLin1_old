@@ -14,8 +14,11 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.Locale;
@@ -41,6 +44,56 @@ import java.util.Locale;
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */
 public abstract class LoLin1Utils {
+
+    /**
+     * Writes a {@link java.io.InputStream} object to a file.
+     * The {@link java.io.InputStream} is closed after the operation independently of its success.
+     *
+     * @param inputStream
+     * @param target
+     * @return {@link java.lang.Boolean} The success of the operation.
+     */
+    public static Boolean writeInputStreamToFile(InputStream inputStream, File target) {
+        OutputStream outputStream = null;
+        try {
+            outputStream = new FileOutputStream(target);
+        }
+        catch (FileNotFoundException e) {
+            return Boolean.FALSE;
+        }
+        finally {
+            try {
+                inputStream.close();
+            }
+            catch (IOException e) {
+                Log.wtf("NX4", "Should never happen!");
+                e.printStackTrace(System.err);
+            }
+        }
+        int read;
+        byte[] bytes = new byte[1024];
+
+        try {
+            while ((read = inputStream.read(bytes)) != -1) {
+                outputStream.write(bytes, 0, read);
+            }
+        }
+        catch (IOException e) {
+            e.printStackTrace(System.err);
+            return Boolean.FALSE;
+        }
+        finally {
+            try {
+                outputStream.close();
+                inputStream.close();
+            }
+            catch (IOException e) {
+                Log.wtf("NX4", "Should never happen!");
+                e.printStackTrace(System.err);
+            }
+        }
+        return Boolean.TRUE;
+    }
 
     public static Boolean recursiveDelete(File dir) {
         if (dir != null && dir.isDirectory()) {
