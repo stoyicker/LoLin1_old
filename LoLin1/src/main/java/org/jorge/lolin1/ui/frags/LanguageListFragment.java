@@ -119,7 +119,6 @@ public class LanguageListFragment extends Fragment {
                             return Boolean.TRUE;
                         }
                     };
-            //TODO , but they don't fall to the next line if they don't fit in the current one AND the color of the shadow of the selected one is still black.
             views.add(textView);
             int verticalPadding = LoLin1Utils.getInt(getActivity().getApplicationContext(),
                     "server_and_language_text_views_vertical_margin", 10), horizontalPadding =

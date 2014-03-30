@@ -72,7 +72,7 @@ public class SettingsFragment extends PreferenceFragment {
                     langPreference.setEntries(targetArray);
                     langPreference.setEntryValues(targetArray);
                     langPreference.setValue(targetArray[0]);
-                    getActivity().recreate();
+                    LoLin1Utils.restartApp(getActivity());
                 }
 
                 return Boolean.TRUE;
@@ -99,7 +99,7 @@ public class SettingsFragment extends PreferenceFragment {
                                         null)[langIndex]
                         ).toUpperCase())) {
                     LoLin1Utils.setLocale(getActivity().getApplicationContext(), newAsLocale);
-                    getActivity().recreate();
+                    LoLin1Utils.restartApp(getActivity());
                 }
 
                 return ret;

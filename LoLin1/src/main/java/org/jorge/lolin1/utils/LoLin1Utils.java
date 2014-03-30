@@ -1,6 +1,8 @@
 package org.jorge.lolin1.utils;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.database.Cursor;
@@ -40,6 +42,13 @@ import java.util.Locale;
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */
 public abstract class LoLin1Utils {
+
+    public static void restartApp(Activity activity) {
+        Intent i = activity.getBaseContext().getPackageManager()
+                .getLaunchIntentForPackage(activity.getBaseContext().getPackageName());
+        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        activity.startActivity(i);
+    }
 
     public static Boolean setLocale(Context baseContext, String newLocale) {
         if (!isLocaleSupported(baseContext, newLocale)) {

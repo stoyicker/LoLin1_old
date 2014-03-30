@@ -89,7 +89,12 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
 
         ArrayList<NewsEntry> currTable = shownNews.get(tableName);
 
-        return currTable.size();
+        if (currTable != null) {
+            return currTable.size();
+        }
+        else {
+            return 0;
+        }
     }
 
     @Override
