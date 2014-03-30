@@ -65,7 +65,6 @@ public class SettingsFragment extends PreferenceFragment {
                                     LoLin1Utils.getString(context,
                                             "language_to_simplified_suffix", null), null
                     )[0]);
-                    NewsListFragment.pseudoCreateNewsListFragment().requestNewsToBeSwapped();
 
                     targetArray = LoLin1Utils
                             .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
@@ -102,7 +101,6 @@ public class SettingsFragment extends PreferenceFragment {
                                         null)[langIndex]
                         ).toUpperCase())) {
                     LoLin1Utils.setLocale(getActivity().getApplicationContext(), newAsLocale);
-                    NewsListFragment.pseudoCreateNewsListFragment().requestNewsToBeSwapped();
                     getActivity().recreate();
                 }
 

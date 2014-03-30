@@ -47,28 +47,9 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 public class NewsListFragment extends ListFragment implements OnRefreshListener {
 
     private static PullToRefreshLayout mPullToRefreshLayout;
-    private static NewsFragmentArrayAdapter listAdapter;
-    private static NewsListFragment instance;
+    private NewsFragmentArrayAdapter listAdapter;
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
-
-    public NewsListFragment() {
-        if (instance == null) {
-            instance = this;
-        }
-    }
-
-    public static NewsListFragment pseudoCreateNewsListFragment() {
-        if (instance == null) {
-            instance = new NewsListFragment();
-        }
-        return instance;
-    }
-
-    public void requestNewsToBeSwapped() {
-        listAdapter.updateShownNews();
-        getView().invalidate();
-    }
 
     /**
      * Called to do initial creation of a fragment.  This is called after
@@ -130,11 +111,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = inflater.inflate(R.layout.fragment_news_feed, container, false);
-
-        listAdapter.updateShownNews();
-
-        return ret;
+        return inflater.inflate(R.layout.fragment_news_feed, container, false);
     }
 
     /**
@@ -205,9 +182,8 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
              */
             @Override
             protected Void doInBackground(Void... params) {
-                if (newsFeedProvider.requestFeedRefresh()) {
-                    listAdapter.updateShownNews();
-                }
+                newsFeedProvider.requestFeedRefresh();
+                listAdapter.updateShownNews();
                 return null;
             }
 
@@ -224,7 +200,6 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
              */
             @Override
             protected void onPostExecute(Void aVoid) {
-                getView().invalidate();
                 mPullToRefreshLayout.setRefreshComplete();
             }
 

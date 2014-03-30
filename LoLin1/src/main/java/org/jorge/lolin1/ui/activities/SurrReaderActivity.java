@@ -65,7 +65,7 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
             restoreState(savedInstanceState);
         }
         else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("lastSelectedSurrIndex", -1)) != -1 &&
+                .getInt("lastSelectedSurrIndex", 0)) != -1 &&
                 getResources().getBoolean(R.bool.feed_has_two_panes)) {
             onSurrArticleSelected(index);
         }
@@ -84,7 +84,7 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt("index", PreferenceManager.getDefaultSharedPreferences(this).getInt(
-                "lastSelectedSurrIndex", -1));
+                "lastSelectedSurrIndex", 0));
         super.onSaveInstanceState(outState);
     }
 

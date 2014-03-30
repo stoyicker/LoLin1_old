@@ -56,12 +56,11 @@ public class NewsFeedProvider {
         this.handler = new NewsFeedHandler(context);
     }
 
-    public Boolean requestFeedRefresh() {
-        Boolean ret = Boolean.FALSE;
+    public void requestFeedRefresh() {
         try {
             if (LoLin1Utils.isInternetReachable(context)) {
                 ArrayList<String> retrievedFeed = retrieveFeed();
-                ret = handler.onFeedUpdated(retrievedFeed);
+                handler.onFeedUpdated(retrievedFeed);
             }
             else {
                 handler.onNoInternetConnection();
@@ -72,7 +71,6 @@ public class NewsFeedProvider {
             Log.wtf("ERROR", "Should never happen", e);
             handler.onNoInternetConnection();
         }
-        return ret;
     }
 
     /**
@@ -112,7 +110,6 @@ public class NewsFeedProvider {
                 }
             });
         }
-
         XmlPullParser parser = Xml.newPullParser();
         try {
             parser.setFeature(XmlPullParser.FEATURE_PROCESS_NAMESPACES, Boolean.FALSE);

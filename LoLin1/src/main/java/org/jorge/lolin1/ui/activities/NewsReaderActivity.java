@@ -64,11 +64,10 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
             restoreState(savedInstanceState);
         }
         else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("lastSelectedNewsIndex", -1)) != -1 &&
+                .getInt("lastSelectedNewsIndex", 0)) != -1 &&
                 getResources().getBoolean(R.bool.feed_has_two_panes)) {
             onNewsArticleSelected(index);
         }
-
     }
 
     private void restoreState(Bundle savedInstanceState) {
@@ -84,7 +83,7 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt("index", PreferenceManager.getDefaultSharedPreferences(this).getInt(
-                "lastSelectedNewsIndex", -1));
+                "lastSelectedNewsIndex", 0));
         super.onSaveInstanceState(outState);
     }
 

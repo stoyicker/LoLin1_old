@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
 import android.text.Html;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,6 +54,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
     }
 
     public void updateShownNews() {
+        Log.d("debug", "HOLA");
         String tableName = SQLiteDAO.getNewsTableName();
         //If this table has ever been shown, just update it. Otherwise, add all the new elements.
         if (shownNews.containsKey(tableName)) {

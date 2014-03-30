@@ -367,20 +367,21 @@ public class SQLiteDAO extends SQLiteOpenHelper {
         for (String tableName : tableNames) {
             sqLiteDatabase.execSQL(("CREATE TABLE IF NOT EXISTS " + tableName + " ( " +
                     NEWS_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
-                    NEWS_KEY_TITLE + " TEXT NOT NULL ON CONFLICT FAIL, " +
+                    NEWS_KEY_TITLE + " TEXT NOT NULL ON CONFLICT IGNORE, " +
                     NEWS_KEY_BLOB + " BLOB, " +
-                    NEWS_KEY_URL + " TEXT NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT IGNORE, " +
+                    NEWS_KEY_URL + " TEXT NOT NULL ON CONFLICT IGNORE UNIQUE ON CONFLICT IGNORE, " +
                     NEWS_KEY_DESC + " TEXT, " +
-                    NEWS_KEY_IMG_URL + " TEXT NOT NULL ON CONFLICT FAIL " +
+                    NEWS_KEY_IMG_URL + " TEXT NOT NULL ON CONFLICT IGNORE " +
                     ")").toUpperCase());
         }
 
         sqLiteDatabase.execSQL(("CREATE TABLE IF NOT EXISTS " + SURR_TABLE_NAME + " ( " +
                 SURR_KEY_ID + " INTEGER PRIMARY KEY ASC AUTOINCREMENT, " +
-                SURR_KEY_TITLE + " TEXT UNIQUE NOT NULL ON CONFLICT FAIL, " +
-                SURR_KEY_PUBLISHED + " TEXT NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, " +
+                SURR_KEY_TITLE + " TEXT UNIQUE NOT NULL ON CONFLICT IGNORE, " +
+                SURR_KEY_PUBLISHED +
+                " TEXT NOT NULL ON CONFLICT IGNORE UNIQUE ON CONFLICT IGNORE, " +
                 SURR_KEY_UPDATED + " TEXT, " +
-                SURR_KEY_LINK + " TEXT NOT NULL ON CONFLICT FAIL UNIQUE ON CONFLICT FAIL, " +
+                SURR_KEY_LINK + " TEXT NOT NULL ON CONFLICT IGNORE UNIQUE ON CONFLICT IGNORE, " +
                 SURR_KEY_READ + " BOOLEAN NOT NULL " +
                 ")").toUpperCase());
 
