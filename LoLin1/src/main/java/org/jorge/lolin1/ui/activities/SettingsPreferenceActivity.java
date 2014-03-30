@@ -46,7 +46,6 @@ public class SettingsPreferenceActivity extends PreferenceActivity {
         getFragmentManager().beginTransaction().replace(android.R.id.content,
                 new SettingsFragment(),
                 LoLin1Utils.getString(this, "title_activity_settings", "Settings"))
-                .addToBackStack("")
                 .commit();
     }
 
