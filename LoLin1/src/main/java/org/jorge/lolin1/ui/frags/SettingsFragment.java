@@ -72,9 +72,7 @@ public class SettingsFragment extends PreferenceFragment {
                     langPreference.setEntries(targetArray);
                     langPreference.setEntryValues(targetArray);
                     langPreference.setValue(targetArray[0]);
-
-                    getActivity().finish();
-                    startActivity(getActivity().getIntent());
+                    getActivity().recreate();
                 }
 
                 return Boolean.TRUE;

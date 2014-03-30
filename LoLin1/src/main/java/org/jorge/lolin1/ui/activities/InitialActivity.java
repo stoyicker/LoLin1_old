@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.io.local.FileManager;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.File;
 
@@ -43,6 +44,8 @@ public final class InitialActivity extends Activity {
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.FALSE);
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        LoLin1Utils
+                .setLocale(getApplicationContext(), LoLin1Utils.getLocale(getApplicationContext()));
         if (!preferences.getBoolean("initial_setup_done", Boolean.FALSE)) {
             final Intent serverAndLanguageChooserIntent =
                     new Intent(getApplicationContext(), ServerAndLanguageChooserActivity.class);
