@@ -409,7 +409,8 @@ public class SplashActivity extends Activity {
             catch (JSONException e) {
                 Log.e("debug", e.getClass().getName(), e);
             }
-            if (!newVersion.contentEquals(preferences.getString("pref_version_" + realm, ""))) {
+            if (Integer.parseInt(newVersion.replaceAll("[\\D]", "")) < Integer.parseInt(
+                    preferences.getString("pref_version_" + realm, "0").replaceAll("[\\D]", ""))) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_new_version_found", null));
                 String[] localesInThisRealm =
