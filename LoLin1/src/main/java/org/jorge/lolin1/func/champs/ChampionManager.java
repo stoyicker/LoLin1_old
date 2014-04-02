@@ -1,14 +1,14 @@
 package org.jorge.lolin1.func.champs;
 
-import android.content.Context;
-import android.preference.PreferenceManager;
+import android.util.Log;
 
-import org.jorge.lolin1.utils.LoLin1Utils;
+import org.jorge.lolin1.func.champs.models.Champion;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.util.ArrayDeque;
+import java.util.Collection;
 
 /**
  * This file is part of LoLin1.
@@ -30,34 +30,52 @@ import java.util.LinkedList;
  */
 public final class ChampionManager {
 
-    private static final LinkedList<Champion> champs = new LinkedList<>();
-    private static final String champsFileName = "champs_", champsFileExtension = ".json";
-    private static Context context;
+    private Collection<Champion> champs;
+    private static ChampionManager instance;
 
-    public static void setContext(Context context) {
-        ChampionManager.context = context;
+    private ChampionManager() {
     }
 
-    public static void readInfo() {
-        LinkedList<JSONObject> stats = readStats();
-        final String[] langs_simplified = LoLin1Utils.getStringArray(context, "langs_simplified",
-                new String[]{"en"}), langs = LoLin1Utils.getStringArray(context, "langs",
-                new String[]{"error"});
-        final String selectedLang =
-                PreferenceManager.getDefaultSharedPreferences(context).getString(
-                        LoLin1Utils.getString(context, "pref_title_lang", "Language"), "English");
-        final String fileName =
-                champsFileName + langs_simplified[new ArrayList<>(
-                        Arrays.asList(langs))
-                        .indexOf(selectedLang)].toLowerCase() +
-                        champsFileExtension;
-        //TODO Parse champions
-        //TODO Set stats to each champions
+    public static ChampionManager getInstance() {
+        if (instance == null) {
+            instance = new ChampionManager();
+        }
+        return instance;
     }
 
-    private static LinkedList<JSONObject> readStats() {
-        final LinkedList<JSONObject> ret = new LinkedList<>();
-        //TODO Read champ_stats.json into ret
+    public Collection<Champion> buildChampions(String list) {
+        ArrayDeque<Champion> ret = new ArrayDeque<>();
+        JSONArray rawChamps = null;
+        try {
+            rawChamps = new JSONArray(list);
+        }
+        catch (JSONException e) {
+            Log.wtf("debug", e.getClass().getName(), e);
+        }
+        assert rawChamps != null;
+        int length = rawChamps.length();
+        for (int i = 0; i < length; i++) {
+            JSONObject currentRawChamp = null;
+            try {
+                currentRawChamp = rawChamps.getJSONObject(i);
+            }
+            catch (JSONException e) {
+                Log.wtf("debug", e.getClass().getName(), e);
+            }
+            Champion currentChampion = new Champion(currentRawChamp);
+            ret.add(currentChampion);
+        }
         return ret;
+    }
+
+    public void resetChampions() {
+        champs.clear();
+    }
+
+    public void addChampion(Champion newChamp) {
+        if (champs == null) {
+            champs = new ArrayDeque<>();
+        }
+        champs.add(newChamp);
     }
 }

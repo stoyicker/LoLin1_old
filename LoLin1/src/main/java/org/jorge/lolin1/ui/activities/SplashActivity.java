@@ -13,6 +13,8 @@ import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.champs.ChampionManager;
+import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.io.local.JsonManager;
 import org.jorge.lolin1.io.net.HttpServiceProvider;
@@ -25,6 +27,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
+import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 
@@ -128,7 +131,7 @@ public class SplashActivity extends Activity {
                             countDownLatch.countDown();
                         }
                         catch (InterruptedException e) {
-                            Log.e("debug", e.getClass().getName(), e);
+                            Log.wtf("debug", e.getClass().getName(), e);
                         }
                     }
                 };
@@ -140,7 +143,7 @@ public class SplashActivity extends Activity {
                     countDownLatch.await();
                 }
                 catch (InterruptedException e) {
-                    Log.e("debug", e.getClass().getName(), e);
+                    Log.wtf("debug", e.getClass().getName(), e);
                 }
 
                 return null;
@@ -230,7 +233,7 @@ public class SplashActivity extends Activity {
                         alertDialogLatch.await();
                     }
                     catch (InterruptedException e) {
-                        Log.e("debug", e.getClass().getName(), e);
+                        Log.wtf("debug", e.getClass().getName(), e);
                     }
 
 
@@ -294,13 +297,21 @@ public class SplashActivity extends Activity {
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         for (String locale : localesInThisRealm) {
             String bustString =
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                            LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
+                                    null) +
                             "/" + "bust" + "/", splashString =
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                            LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
+                                    null) +
                             "/" + "splash" + "/", spellString =
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                            LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
+                                    null) +
                             "/" + "spell" + "/", passiveString =
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" + "image" +
+                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                            LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
+                                    null) +
                             "/" + "passive" + "/";
             File bust = new File(bustString), splash = new File(splashString), spell =
                     new File(spellString), passive = new File(passiveString);
@@ -317,17 +328,25 @@ public class SplashActivity extends Activity {
             InputStream dataStream;
             try {
                 dataStream = HttpServiceProvider.performListRequest(server, realm, locale);
+                if (!JsonManager.getResponseStatus(LoLin1Utils.inputStreamAsString(dataStream))) {
+                    LOG_FRAGMENT.appendToSameLine(
+                            LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
+                                    null)
+                    );
+                    return Boolean.FALSE;
+                }
             }
             catch (IOException | URISyntaxException | HttpServiceProvider.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
             }
-            if (!FileManager.writeInputStreamToFile(dataStream, new File(
+            File dataFile = new File(
                     root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
                             LoLin1Utils
                                     .getString(getApplicationContext(), "list_file_name", null)
-            ))) {
+            );
+            if (!FileManager.writeInputStreamToFile(dataStream, dataFile)) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
@@ -366,8 +385,27 @@ public class SplashActivity extends Activity {
                                 getApplicationContext(), "update_task_finished", null)
                 );
             }
-            //TODO Continue here - IMPORTANT, IF THE COUNT OF CHAMPIONS IS ZERO, STANDARD ERROR AND RETURN FALSE COMBO (the server was updating)
+            LOG_FRAGMENT.appendToNewLine(
+                    LoLin1Utils.getString(getApplicationContext(), "update_assets_download", null) +
+                            " " +
+                            realm + "." + locale + LoLin1Utils
+                            .getString(getApplicationContext(), "progress_character", null)
+            );
+            Collection<Champion> champs = ChampionManager.getInstance().buildChampions(JsonManager
+                    .getStringAttribute(FileManager.readFile(dataFile), LoLin1Utils
+                            .getString(getApplicationContext(), "champion_list_key", null)));
+            if (champs.isEmpty()) {
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                return Boolean.FALSE;
+            }
+            for (Champion champion : champs) {
+                //TODO Continue here - the names of the File objects are bust, splash, spell and passive
+            }
+            LOG_FRAGMENT.appendToSameLine(
+                    LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         }
+        //TODO After completing the update, set the champions to the ones corresponding to the locale, if possible
         return Boolean.TRUE;
     }
 
@@ -433,7 +471,7 @@ public class SplashActivity extends Activity {
             networkOperationsLatch.await();
         }
         catch (InterruptedException e) {
-            Log.e("debug", e.getClass().getName(), e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
     }
 
@@ -457,7 +495,7 @@ public class SplashActivity extends Activity {
                 }
             }
             catch (IOException | URISyntaxException e) {
-                Log.e("debug", e.getClass().getName(), e);
+                Log.wtf("debug", e.getClass().getName(), e);
             }
             catch (HttpServiceProvider.ServerIsCheckingException e) {
                 //Server is busy checking for updates, so look for a new one
