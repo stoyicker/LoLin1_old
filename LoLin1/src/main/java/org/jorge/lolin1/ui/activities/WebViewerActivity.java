@@ -56,7 +56,7 @@ public class WebViewerActivity extends FragmentActivity {
                 elements.addAll(SQLiteDAO.getSingleton().getSurrs());
                 break;
             default:
-                Log.wtf("ERROR",
+                Log.wtf("debug",
                         "Should never happen - NewsReaderActivity.getLastSelectedNavDavIndex() is " +
                                 DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex()
                 );

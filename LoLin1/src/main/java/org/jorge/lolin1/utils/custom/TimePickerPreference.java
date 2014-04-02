@@ -32,6 +32,7 @@ public class TimePickerPreference extends DialogPreference
 
     private static final String SANITY_EXPRESSION = "[0-5]*[0-9]:[0-5]*[0-9]";
     private static final Integer ERROR_CODE = -1;
+    private static final Integer COUNTER_AMOUNT = 3;
     private static Integer TYPE_COUNTER = 0;
     private String defaultTime;
 
@@ -39,7 +40,7 @@ public class TimePickerPreference extends DialogPreference
         super(context, attrs);
         setPersistent(Boolean.TRUE);
         String instanceType;
-        switch (TYPE_COUNTER % 3) {
+        switch (TYPE_COUNTER % COUNTER_AMOUNT) {
             case 0:
                 instanceType = "baron";
                 break;
@@ -50,7 +51,7 @@ public class TimePickerPreference extends DialogPreference
                 instanceType = "buff";
                 break;
             default:
-                Log.e("TYPE COUNTER", "" + TYPE_COUNTER);
+                Log.wtf("TYPE COUNTER", "" + TYPE_COUNTER);
                 instanceType = "ERROR";
         }
         defaultTime =

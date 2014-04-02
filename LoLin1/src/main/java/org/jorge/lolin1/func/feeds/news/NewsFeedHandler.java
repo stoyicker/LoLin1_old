@@ -74,7 +74,7 @@ public class NewsFeedHandler implements IFeedHandler {
                                 .getInputStream());
             }
             catch (IOException e) {
-                Log.w("ERROR", "Should never happen!", e);
+                Log.w("debug", e.getClass().getName(), e);
             }
 
             ByteArrayOutputStream blob = new ByteArrayOutputStream();

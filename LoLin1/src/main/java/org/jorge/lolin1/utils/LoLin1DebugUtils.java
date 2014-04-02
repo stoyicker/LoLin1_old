@@ -72,7 +72,7 @@ public abstract class LoLin1DebugUtils {
             outputStreamWriter.close();
         }
         catch (IOException e) {
-            Log.e("Exception", "File write failed: " + e.toString());
+            Log.wtf("Exception", "File write failed: " + e.toString());
         }
     }
 

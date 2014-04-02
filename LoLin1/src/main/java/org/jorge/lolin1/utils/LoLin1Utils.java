@@ -15,6 +15,7 @@ import android.util.Log;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
+import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -97,7 +98,7 @@ public abstract class LoLin1Utils {
             ret = context.getResources().getStringArray(resourceId);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e("ERROR", "Exception", e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
 
         return ret;
@@ -112,7 +113,7 @@ public abstract class LoLin1Utils {
             ret = context.getString(resourceId);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e("ERROR", "Exception", e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
 
         return ret;
@@ -126,7 +127,7 @@ public abstract class LoLin1Utils {
             ret = resourceField.getInt(resourceField);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e("ERROR", "Exception", e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
 
         return ret;
@@ -181,7 +182,7 @@ public abstract class LoLin1Utils {
             ret = context.getResources().getInteger(resourceId);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.e("ERROR", "Exception", e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
 
         return ret;
@@ -229,14 +230,15 @@ public abstract class LoLin1Utils {
     }
 
     public static String inputStreamAsString(InputStream is) {
-        java.util.Scanner s = new java.util.Scanner(is);
+        BufferedInputStream bis = new BufferedInputStream(is);
+        java.util.Scanner s = new java.util.Scanner(bis);
         String ret = null;
         try {
             ret = s.useDelimiter("\\A").hasNext() ? s.next() : "";
-            is.close();
+            bis.close();
         }
         catch (IOException e) {
-            Log.e("debug", e.getClass().getName(), e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
         return ret;
     }

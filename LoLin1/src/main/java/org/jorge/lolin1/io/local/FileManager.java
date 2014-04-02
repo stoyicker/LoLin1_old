@@ -2,8 +2,10 @@ package org.jorge.lolin1.io.local;
 
 import android.util.Log;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -31,8 +33,8 @@ public abstract class FileManager {
      * Writes a {@link java.io.InputStream} object to a file.
      * The {@link java.io.InputStream} is closed after the operation independently of its success.
      *
-     * @param inputStream
-     * @param target
+     * @param inputStream {@link java.io.InputStream} The stream to read data from.
+     * @param target      {@link File} The file to write to.
      * @return {@link Boolean} The success of the operation.
      */
     public static Boolean writeInputStreamToFile(InputStream inputStream, File target) {
@@ -80,5 +82,22 @@ public abstract class FileManager {
         }
 
         return dir.delete();
+    }
+
+    public static String readFile(File fileToRead) {
+        StringBuilder ret = new StringBuilder();
+        String line;
+
+        try {
+            BufferedReader br = new BufferedReader(new FileReader(fileToRead));
+            while ((line = br.readLine()) != null) {
+                ret.append(line);
+            }
+        }
+        catch (IOException e) {
+            Log.wtf("debug", e.getClass().getName(), e);
+        }
+
+        return ret.toString();
     }
 }

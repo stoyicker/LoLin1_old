@@ -35,7 +35,7 @@ public final class ISO8601Time {
             value = PATTERN.parse(source);
         }
         catch (ParseException e) {
-            Log.wtf("ERROR", "Should never happen", e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
     }
 
@@ -45,7 +45,7 @@ public final class ISO8601Time {
             target = PATTERN.parse(comparisonTarget);
         }
         catch (ParseException e) {
-            Log.wtf("ERROR", "Should never happen", e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
 
         return value.after(target);

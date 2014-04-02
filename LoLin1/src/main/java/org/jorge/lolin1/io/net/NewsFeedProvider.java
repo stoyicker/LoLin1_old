@@ -67,8 +67,7 @@ public class NewsFeedProvider {
             }
         }
         catch (IOException e) {
-            Log.e("debug", e.getClass().getName(), e);
-            Log.wtf("ERROR", "Should never happen", e);
+            Log.wtf("debug", e.getClass().getName(), e);
             handler.onNoInternetConnection();
         }
     }
@@ -118,7 +117,7 @@ public class NewsFeedProvider {
             items = readFeed(parser);
         }
         catch (XmlPullParserException e) {
-            Log.wtf("ERROR", "XML discarded", e);
+            Log.wtf("debug", e.getClass().getName(), e);
         }
 
         ArrayList<String> ret = new ArrayList<>();

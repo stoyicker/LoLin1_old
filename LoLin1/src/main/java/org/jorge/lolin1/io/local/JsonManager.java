@@ -32,7 +32,7 @@ public abstract class JsonManager {
             return responseAsObject.getString(attributeName);
         }
         catch (JSONException e) {
-            Log.e("debug", e.getClass().getName(), e);
+            Log.wtf("debug", e.getClass().getName(), e);
             return null;
         }
     }
