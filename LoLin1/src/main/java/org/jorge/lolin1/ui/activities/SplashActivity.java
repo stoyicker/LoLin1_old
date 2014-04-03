@@ -391,8 +391,14 @@ public class SplashActivity extends Activity {
                             realm + "." + locale + LoLin1Utils
                             .getString(getApplicationContext(), "progress_character", null)
             );
+            String alreadyReadFile = FileManager.readFile(dataFile);
+            if (!JsonManager.getResponseStatus(alreadyReadFile)) {
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                return Boolean.FALSE;
+            }
             Collection<Champion> champs = ChampionManager.getInstance().buildChampions(JsonManager
-                    .getStringAttribute(FileManager.readFile(dataFile), LoLin1Utils
+                    .getStringAttribute(alreadyReadFile, LoLin1Utils
                             .getString(getApplicationContext(), "champion_list_key", null)));
             if (champs.isEmpty()) {
                 LOG_FRAGMENT.appendToSameLine(

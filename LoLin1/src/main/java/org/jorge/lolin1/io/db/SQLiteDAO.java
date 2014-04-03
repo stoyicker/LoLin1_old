@@ -55,6 +55,24 @@ public class SQLiteDAO extends SQLiteOpenHelper {
         super(_context, LoLin1Utils.getString(_context, "db_name", "LoLin1_DB"), null, 1);
     }
 
+    public static boolean tableExists(String tableName) {
+        SQLiteDatabase db = SQLiteDAO.getSingleton().getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(
+                "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName +
+                        "'",
+                null
+        );
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.close();
+                return true;
+            }
+            cursor.close();
+        }
+        return false;
+    }
+
     public static void setup(Context _context) {
         if (singleton == null) {
             singleton = new SQLiteDAO(_context);

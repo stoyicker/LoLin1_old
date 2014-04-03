@@ -65,6 +65,7 @@ public abstract class FileManager {
             }
             catch (IOException ex) {
                 Log.wtf("debug", ex.getClass().getName(), ex);
+                return Boolean.FALSE;
             }
         }
         return Boolean.TRUE;

@@ -5,17 +5,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.io.db.SQLiteDAO;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
@@ -155,24 +151,6 @@ public abstract class LoLin1Utils {
         return ret;
     }
 
-    public static boolean tableExists(String tableName) {
-        SQLiteDatabase db = SQLiteDAO.getSingleton().getReadableDatabase();
-
-        Cursor cursor = db.rawQuery(
-                "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName +
-                        "'",
-                null
-        );
-        if (cursor != null) {
-            if (cursor.getCount() > 0) {
-                cursor.close();
-                return true;
-            }
-            cursor.close();
-        }
-        return false;
-    }
-
     public static int getInt(Context context, String variableName, int defaultRet) {
         int ret = defaultRet;
 
@@ -229,17 +207,11 @@ public abstract class LoLin1Utils {
         return (int) (sizeInPx * scale + 0.5f);
     }
 
-    public static String inputStreamAsString(InputStream is) {
-        BufferedInputStream bis = new BufferedInputStream(is);
-        java.util.Scanner s = new java.util.Scanner(bis);
-        String ret = null;
-        try {
-            ret = s.useDelimiter("\\A").hasNext() ? s.next() : "";
-            bis.close();
-        }
-        catch (IOException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
-        }
+    public static String inputStreamAsString(InputStream is) throws IOException {
+        java.util.Scanner s = new java.util.Scanner(is);
+        String ret;
+        ret = s.useDelimiter("\\A").hasNext() ? s.next() : "";
+        is.close();
         return ret;
     }
 }
