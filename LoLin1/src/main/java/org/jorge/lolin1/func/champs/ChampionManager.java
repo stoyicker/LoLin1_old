@@ -55,7 +55,7 @@ public final class ChampionManager {
         assert rawChamps != null;
         int length = rawChamps.length();
         for (int i = 0; i < length; i++) {
-            JSONObject currentRawChamp = null;
+            JSONObject currentRawChamp;
             try {
                 currentRawChamp = rawChamps.getJSONObject(i);
                 Champion currentChampion = new Champion(currentRawChamp);
