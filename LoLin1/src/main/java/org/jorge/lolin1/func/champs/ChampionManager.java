@@ -58,12 +58,12 @@ public final class ChampionManager {
             JSONObject currentRawChamp = null;
             try {
                 currentRawChamp = rawChamps.getJSONObject(i);
+                Champion currentChampion = new Champion(currentRawChamp);
+                ret.add(currentChampion);
             }
             catch (JSONException e) {
                 Log.wtf("debug", e.getClass().getName(), e);
             }
-            Champion currentChampion = new Champion(currentRawChamp);
-            ret.add(currentChampion);
         }
         return ret;
     }

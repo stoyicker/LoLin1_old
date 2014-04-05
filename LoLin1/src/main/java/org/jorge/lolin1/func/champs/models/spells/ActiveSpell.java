@@ -17,7 +17,6 @@
 package org.jorge.lolin1.func.champs.models.spells;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class ActiveSpell extends PassiveSpell {
 
@@ -27,14 +26,12 @@ public class ActiveSpell extends PassiveSpell {
      */
     private final String cooldownBurn, rangeBurn, costBurn;
 
-    protected ActiveSpell(JSONObject contentDescriptor) throws JSONException {
-        super(contentDescriptor.getString("name"), contentDescriptor.getString("detail"),
-                contentDescriptor.getString(
-                        "imageName")
-        );
-        this.cooldownBurn = contentDescriptor.getString("cooldownBurn");
-        this.rangeBurn = contentDescriptor.getString("rangeBurn");
-        this.costBurn = contentDescriptor.getString("costBurn");
+    protected ActiveSpell(String name, String detail, String imageName, String cooldownBurn,
+                          String rangeBurn, String costBurn) throws JSONException {
+        super(name, detail, imageName);
+        this.cooldownBurn = cooldownBurn;
+        this.rangeBurn = rangeBurn;
+        this.costBurn = costBurn;
     }
 
     protected final String getRangeBurn() {
