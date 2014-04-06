@@ -6,10 +6,15 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 
 /**
  * This file is part of LoLin1.
@@ -29,11 +34,18 @@ import java.net.URISyntaxException;
  * <p/>
  * Created by JorgeAntonio on 24/03/2014.
  */
-public abstract class HttpServiceProvider {
+public abstract class CommunicationProvider {
 
     private static final String VERSION_SERVICE_LOCATION = "/services/champions/version/",
             LIST_SERVICE_LOCATION = "/services/champions/list/", CDN_SERVICE_LOCATION =
             "/services/champions/cdn/";
+
+    public static void downloadFile(String whereToDownload, File whereToSaveIt) throws IOException {
+        URL website = new URL(whereToDownload);
+        ReadableByteChannel rbc = Channels.newChannel(website.openStream());
+        FileOutputStream fos = new FileOutputStream(whereToSaveIt);
+        fos.getChannel().transferFrom(rbc, 0, Long.MAX_VALUE);
+    }
 
     public static InputStream performGetRequest(String uri)
             throws IOException, URISyntaxException, ServerIsCheckingException {
