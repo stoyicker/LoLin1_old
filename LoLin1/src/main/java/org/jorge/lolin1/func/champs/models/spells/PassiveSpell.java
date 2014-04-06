@@ -28,7 +28,7 @@ public class PassiveSpell {
         this.imageName = _imageName;
     }
 
-    protected final String getImageName() {
+    public final String getImageName() {
         return this.imageName;
     }
 

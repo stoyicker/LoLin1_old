@@ -1,0 +1,197 @@
+/**
+ * This file is part of lolin1-data-provider.
+
+ lolin1-data-provider is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License as published by
+ the Free Software Foundation, either version 3 of the License, or
+ (at your option) any later version.
+
+ lolin1-data-provider is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with lolin1-data-provider.  If not, see <http://www.gnu.org/licenses/>.
+ */
+package org.jorge.lolin1.func.champs.models;
+
+import android.util.Log;
+
+import org.jorge.lolin1.func.champs.models.spells.AbstractSpellFactory;
+import org.jorge.lolin1.func.champs.models.spells.ActiveSpell;
+import org.jorge.lolin1.func.champs.models.spells.PassiveSpell;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Field;
+
+public class Champion {
+
+    @SuppressWarnings("unused")
+    private String key, name, title, attackRange, mpPerLevel, mp, attackDamage,
+            hp, hpPerLevel, attackDamagePerLevel, armor, mpRegenPerLevel,
+            hpRegen, critPerLevel, spellBlockPerLevel, mpRegen,
+            attackSpeedPerLevel, spellBlock, moveSpeed, attackSpeedOffset,
+            crit, hpRegenPerLevel, armorPerLevel, lore, imageName;
+    private final String[] tags;
+    private final ActiveSpell[] spells;
+    private final PassiveSpell passive;
+    private String[] skins;
+
+    public Champion(JSONObject descriptor) throws JSONException {
+        Field[] fields = Champion.class.getDeclaredFields();
+        for (Field x : fields) {
+            x.setAccessible(Boolean.TRUE);
+            if (x.getType() == String.class) {
+                try {
+                    x.set(this, descriptor.getString(x.getName().toLowerCase()));
+                }
+                catch (IllegalAccessException | JSONException e) {
+                    Log.wtf("debug", e.getClass().getName(), e);
+                }
+            }
+            x.setAccessible(Boolean.FALSE);
+        }
+        passive = AbstractSpellFactory.createPassiveSpell(descriptor.getJSONObject("passive"));
+        JSONArray activeSpellsDescriptor = descriptor.getJSONArray("spells");
+        int size = activeSpellsDescriptor.length();
+        spells = new ActiveSpell[size];
+        for (int i = 0; i < size; i++)
+            spells[i] =
+                    AbstractSpellFactory.createActiveSpell(activeSpellsDescriptor.getJSONObject(i));
+        JSONArray tagsDescriptor = descriptor.getJSONArray("tags");
+        size = tagsDescriptor.length();
+        this.tags = new String[size];
+        for (int i = 0; i < size; i++)
+            this.tags[i] = tagsDescriptor.getString(i);
+        JSONArray skinsDescriptor = descriptor.getJSONArray("skins");
+        size = skinsDescriptor.length();
+        this.skins = new String[size];
+        for (int i = 0; i < size; i++)
+            this.skins[i] = skinsDescriptor.getString(i);
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public String getAttackRange() {
+        return attackRange;
+    }
+
+    public String getMpPerLevel() {
+        return mpPerLevel;
+    }
+
+    public String getMp() {
+        return mp;
+    }
+
+    public String getAttackDamage() {
+        return attackDamage;
+    }
+
+    public String getHp() {
+        return hp;
+    }
+
+    public String getHpPerLevel() {
+        return hpPerLevel;
+    }
+
+    public String getAttackDamagePerLevel() {
+        return attackDamagePerLevel;
+    }
+
+    public String getArmor() {
+        return armor;
+    }
+
+    public String getMpRegenPerLevel() {
+        return mpRegenPerLevel;
+    }
+
+    public String getHpRegen() {
+        return hpRegen;
+    }
+
+    public String getCritPerLevel() {
+        return critPerLevel;
+    }
+
+    public String getSpellBlockPerLevel() {
+        return spellBlockPerLevel;
+    }
+
+    public String getMpRegen() {
+        return mpRegen;
+    }
+
+    public String getAttackSpeedPerLevel() {
+        return attackSpeedPerLevel;
+    }
+
+    public String getSpellBlock() {
+        return spellBlock;
+    }
+
+    public String getMoveSpeed() {
+        return moveSpeed;
+    }
+
+    public String getAttackSpeedOffset() {
+        return attackSpeedOffset;
+    }
+
+    public String getCrit() {
+        return crit;
+    }
+
+    public String getHpRegenPerLevel() {
+        return hpRegenPerLevel;
+    }
+
+    public String getArmorPerLevel() {
+        return armorPerLevel;
+    }
+
+    public String getLore() {
+        return lore;
+    }
+
+    public String[] getTags() {
+        return tags;
+    }
+
+    public String[] getSkins() {
+        return skins;
+    }
+
+    public String getImageName() {
+        return this.imageName;
+    }
+
+    public String getPassiveImageName() {
+        return this.passive.getImageName();
+    }
+
+    public String[] getSpellImageNames() {
+        String[] ret = new String[this.spells.length];
+
+        for (int i = 0; i < ret.length; i++) {
+            ret[i] = this.spells[i].getImageName();
+        }
+
+        return ret;
+    }
+}
