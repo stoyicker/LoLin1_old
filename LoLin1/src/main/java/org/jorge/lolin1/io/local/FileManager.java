@@ -1,14 +1,8 @@
 package org.jorge.lolin1.io.local;
 
-import android.util.Log;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 /**
  * This file is part of LoLin1.
@@ -29,47 +23,6 @@ import java.io.OutputStream;
  * Created by JorgeAntonio on 29/03/2014.
  */
 public abstract class FileManager {
-    /**
-     * Writes a {@link java.io.InputStream} object to a file.
-     * The {@link java.io.InputStream} is closed after the operation independently of its success.
-     *
-     * @param inputStream {@link java.io.InputStream} The stream to read data from.
-     * @param target      {@link File} The file to write to.
-     * @return {@link Boolean} The success of the operation.
-     */
-    public static Boolean writeInputStreamToFile(InputStream inputStream, File target) {
-        OutputStream outputStream = null;
-        try {
-            if (!target.exists()) {
-                if (!target.createNewFile()) {
-                    inputStream.close();
-                    return Boolean.FALSE;
-                }
-            }
-            outputStream = new FileOutputStream(target);
-            int read;
-            byte[] bytes = new byte[1024];
-
-            while ((read = inputStream.read(bytes)) != -1) {
-                outputStream.write(bytes, 0, read);
-            }
-        }
-        catch (IOException ex) {
-            Log.wtf("debug", ex.getClass().getName(), ex);
-            return Boolean.FALSE;
-        }
-        finally {
-            try {
-                inputStream.close();
-                outputStream.close();
-            }
-            catch (IOException ex) {
-                Log.wtf("debug", ex.getClass().getName(), ex);
-                return Boolean.FALSE;
-            }
-        }
-        return Boolean.TRUE;
-    }
 
     public static Boolean recursiveDelete(File dir) {
         if (dir != null && dir.isDirectory()) {
@@ -85,20 +38,15 @@ public abstract class FileManager {
         return dir.delete();
     }
 
-    public static String readFile(File fileToRead) {
-        StringBuilder ret = new StringBuilder();
-        String line;
+    public static void writeStringToFile(String string, File file)
+            throws IOException {
 
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileToRead));
-            while ((line = br.readLine()) != null) {
-                ret.append(line);
-            }
-        }
-        catch (IOException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+        if (!file.exists()) {
+            file.createNewFile();
         }
 
-        return ret.toString();
+        FileOutputStream outputStream = new FileOutputStream(file);
+        outputStream.write(string.getBytes("UTF-8"));
+        outputStream.close();
     }
 }

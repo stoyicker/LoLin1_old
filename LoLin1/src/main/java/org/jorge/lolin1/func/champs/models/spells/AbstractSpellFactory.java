@@ -78,8 +78,7 @@ public abstract class AbstractSpellFactory {
             Log.wtf("debug", e.getClass().getName(), e);
         }
         try {
-            imageName = ((JSONObject) contentDescriptor.get("imageName"))
-                    .getString("full");
+            imageName = contentDescriptor.getString("imageName");
         }
         catch (JSONException e) {
             imageName = AbstractSpellFactory.DUMMY_ERROR_MESSAGE;

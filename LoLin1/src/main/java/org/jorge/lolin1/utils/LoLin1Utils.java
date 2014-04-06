@@ -211,7 +211,6 @@ public abstract class LoLin1Utils {
         java.util.Scanner s = new java.util.Scanner(is);
         String ret;
         ret = s.useDelimiter("\\A").hasNext() ? s.next() : "";
-        is.close();
         return ret;
     }
 }

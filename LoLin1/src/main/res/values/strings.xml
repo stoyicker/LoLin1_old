@@ -164,7 +164,9 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="list_download">Downloading champion information for</string>
 	<string name="cdn_download">Retrieving CDN for</string>
 	<string name="cdn_key">version</string>
-	<string name="update_assets_download">Downloading assets for</string>
-	<string name="list">champion_list_key</string>
+	<string name="update_realm_data_download">Downloading data for</string>
+	<string name="champion_list_key">list</string>
 	<string name="champion_image_folder">image</string>
+	<string name="update_images_download">Downloading images for</string>
+	<string name="bust_remote_folder">champion</string>
 </resources>

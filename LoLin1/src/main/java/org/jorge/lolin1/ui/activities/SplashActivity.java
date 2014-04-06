@@ -17,7 +17,7 @@ import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.io.local.JsonManager;
-import org.jorge.lolin1.io.net.HttpServiceProvider;
+import org.jorge.lolin1.io.net.HTTPServicesProvider;
 import org.jorge.lolin1.ui.frags.SplashLogFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 import org.json.JSONException;
@@ -40,11 +40,6 @@ public class SplashActivity extends Activity {
     private int dataAllowance = NONE_YET;
     private SplashLogFragment LOG_FRAGMENT;
 
-    /**
-     * Perform initialization of all fragments and loaders.
-     *
-     * @param savedInstanceState
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -268,14 +263,6 @@ public class SplashActivity extends Activity {
         }
     }
 
-    /**
-     * The success of the update for all locales in this realm.
-     *
-     * @param server
-     * @param realm
-     * @param localesInThisRealm
-     * @return
-     */
     private Boolean runUpdate(String server, String realm, String[] localesInThisRealm,
                               String newVersion) {
         String cdn = null;
@@ -286,6 +273,7 @@ public class SplashActivity extends Activity {
         );
         File root = getApplicationContext().getExternalFilesDir(
                 LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
+        Log.d("debug", "The dir is " + root.getAbsolutePath());
         File previouslyAttemptedUpdateFolder = new File(root + "/" + realm + "-" + newVersion);
         if (previouslyAttemptedUpdateFolder.exists() &&
                 !FileManager.recursiveDelete(previouslyAttemptedUpdateFolder)) {
@@ -326,9 +314,13 @@ public class SplashActivity extends Activity {
                             .getString(getApplicationContext(), "progress_character", null)
             );
             InputStream dataStream;
+            String dataStreamAsString;
             try {
-                dataStream = HttpServiceProvider.performListRequest(server, realm, locale);
-                if (!JsonManager.getResponseStatus(LoLin1Utils.inputStreamAsString(dataStream))) {
+                dataStream = HTTPServicesProvider.performListRequest(server, realm, locale);
+                Log.d("debug", "Stream size: " + dataStream.available());
+                dataStreamAsString = LoLin1Utils.inputStreamAsString(dataStream);
+                Log.d("debug", "String length: " + dataStreamAsString.length());
+                if (!JsonManager.getResponseStatus(dataStreamAsString)) {
                     LOG_FRAGMENT.appendToSameLine(
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                     null)
@@ -336,7 +328,7 @@ public class SplashActivity extends Activity {
                     return Boolean.FALSE;
                 }
             }
-            catch (IOException | URISyntaxException | HttpServiceProvider.ServerIsCheckingException e) {
+            catch (IOException | URISyntaxException | HTTPServicesProvider.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
@@ -346,7 +338,11 @@ public class SplashActivity extends Activity {
                             LoLin1Utils
                                     .getString(getApplicationContext(), "list_file_name", null)
             );
-            if (!FileManager.writeInputStreamToFile(dataStream, dataFile)) {
+            try {
+                FileManager
+                        .writeStringToFile(dataStreamAsString, dataFile);
+            }
+            catch (IOException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
@@ -360,7 +356,7 @@ public class SplashActivity extends Activity {
                                 .getString(getApplicationContext(), "progress_character", null)
                 );
                 try {
-                    String cdnResponse = HttpServiceProvider.performCdnRequest(server, realm);
+                    String cdnResponse = HTTPServicesProvider.performCdnRequest(server, realm);
                     if (JsonManager.getResponseStatus(cdnResponse)) {
                         cdn = JsonManager.getStringAttribute(cdnResponse,
                                 LoLin1Utils.getString(getApplicationContext(), "cdn_key", null));
@@ -373,7 +369,7 @@ public class SplashActivity extends Activity {
                         return Boolean.FALSE;
                     }
                 }
-                catch (HttpServiceProvider.ServerIsCheckingException | URISyntaxException | IOException e) {
+                catch (HTTPServicesProvider.ServerIsCheckingException | URISyntaxException | IOException e) {
                     LOG_FRAGMENT.appendToSameLine(
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                     null)
@@ -386,19 +382,14 @@ public class SplashActivity extends Activity {
                 );
             }
             LOG_FRAGMENT.appendToNewLine(
-                    LoLin1Utils.getString(getApplicationContext(), "update_assets_download", null) +
+                    LoLin1Utils.getString(getApplicationContext(), "update_realm_data_download",
+                            null) +
                             " " +
                             realm + "." + locale + LoLin1Utils
                             .getString(getApplicationContext(), "progress_character", null)
             );
-            String alreadyReadFile = FileManager.readFile(dataFile);
-            if (!JsonManager.getResponseStatus(alreadyReadFile)) {
-                LOG_FRAGMENT.appendToSameLine(
-                        LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
-                return Boolean.FALSE;
-            }
             Collection<Champion> champs = ChampionManager.getInstance().buildChampions(JsonManager
-                    .getStringAttribute(alreadyReadFile, LoLin1Utils
+                    .getStringAttribute(dataStreamAsString, LoLin1Utils
                             .getString(getApplicationContext(), "champion_list_key", null)));
             if (champs.isEmpty()) {
                 LOG_FRAGMENT.appendToSameLine(
@@ -406,7 +397,38 @@ public class SplashActivity extends Activity {
                 return Boolean.FALSE;
             }
             for (Champion champion : champs) {
-                //TODO Continue here - the names of the File objects are bust, splash, spell and passive
+                String bustImageName = champion.getImageName(), passiveImageName =
+                        champion.getPassiveImageName(), simplifiedName =
+                        champion.getSimplifiedName();
+                String[] skins = champion.getSkins(), spellImageNames =
+                        champion.getSpellImageNames();
+                try {
+                    LOG_FRAGMENT.appendToNewLine(
+                            LoLin1Utils.getString(getApplicationContext(), "update_images_download",
+                                    null) + " " + realm + "." + locale + "." + champion.getName() +
+                                    LoLin1Utils.getString(getApplicationContext(),
+                                            "progress_character", null)
+                    );
+                    HTTPServicesProvider.downloadFile(
+                            cdn + "/" + newVersion + "/" + "img" + "/" + LoLin1Utils
+                                    .getString(getApplicationContext(), "bust_remote_folder",
+                                            null) + "/" + bustImageName,
+                            new File(bustString + bustImageName)
+                    );
+                    //TODO Continue here downloading the passive, the skins and the spells
+                }
+                catch (IOException e) {
+                    Log.wtf("debug", e.getClass().getName(), e);
+                    LOG_FRAGMENT.appendToSameLine(
+                            LoLin1Utils
+                                    .getString(getApplicationContext(), "update_fatal_error", null)
+                    );
+                    return Boolean.FALSE;
+                }
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(
+                                getApplicationContext(), "update_task_finished", null)
+                );
             }
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
@@ -432,7 +454,7 @@ public class SplashActivity extends Activity {
             JSONObject newVersionAsJSON;
             try {
                 newVersion = LoLin1Utils.inputStreamAsString(
-                        HttpServiceProvider.performVersionRequest(server, realm));
+                        HTTPServicesProvider.performVersionRequest(server, realm));
             }
             catch (IOException | URISyntaxException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
@@ -440,7 +462,7 @@ public class SplashActivity extends Activity {
                                 null));
                 return;
             }
-            catch (HttpServiceProvider.ServerIsCheckingException e) {
+            catch (HTTPServicesProvider.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_server_is_updating",
                                 null));
@@ -453,7 +475,7 @@ public class SplashActivity extends Activity {
             catch (JSONException e) {
                 Log.e("debug", e.getClass().getName(), e);
             }
-            if (Integer.parseInt(newVersion.replaceAll("[\\D]", "")) < Integer.parseInt(
+            if (Integer.parseInt(newVersion.replaceAll("[\\D]", "")) > Integer.parseInt(
                     preferences.getString("pref_version_" + realm, "0").replaceAll("[\\D]", ""))) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_new_version_found", null));
@@ -489,7 +511,7 @@ public class SplashActivity extends Activity {
         do {
             try {
                 target = dataProviders[index];
-                getContentInputStream = HttpServiceProvider.performGetRequest(target);
+                getContentInputStream = HTTPServicesProvider.performGetRequest(target);
                 String content = LoLin1Utils.inputStreamAsString(getContentInputStream);
                 if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
                         "provider_application_error_identifier", null)) &&
@@ -503,7 +525,7 @@ public class SplashActivity extends Activity {
             catch (IOException | URISyntaxException e) {
                 Log.wtf("debug", e.getClass().getName(), e);
             }
-            catch (HttpServiceProvider.ServerIsCheckingException e) {
+            catch (HTTPServicesProvider.ServerIsCheckingException e) {
                 //Server is busy checking for updates, so look for a new one
             }
             if (!upServerFound) {

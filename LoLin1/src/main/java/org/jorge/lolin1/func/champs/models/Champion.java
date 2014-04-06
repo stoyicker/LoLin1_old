@@ -29,12 +29,11 @@ import java.lang.reflect.Field;
 
 public class Champion {
 
-    @SuppressWarnings("unused")
-    private String key, name, title, attackRange, mpPerLevel, mp, attackDamage,
-            hp, hpPerLevel, attackDamagePerLevel, armor, mpRegenPerLevel,
-            hpRegen, critPerLevel, spellBlockPerLevel, mpRegen,
-            attackSpeedPerLevel, spellBlock, moveSpeed, attackSpeedOffset,
-            crit, hpRegenPerLevel, armorPerLevel, lore, imageName;
+    private String key, name, title, attackrange, mpperlevel, mp, attackdamage,
+            hp, hpperlevel, attackdamageperlevel, armor, mpregenperlevel,
+            hpregen, critperlevel, spellblockperlevel, mpregen,
+            attackspeedperlevel, spellblock, movespeed, attackspeedoffset,
+            crit, hpregenperlevel, armorperlevel, lore, imageName;
     private final String[] tags;
     private final ActiveSpell[] spells;
     private final PassiveSpell passive;
@@ -46,7 +45,7 @@ public class Champion {
             x.setAccessible(Boolean.TRUE);
             if (x.getType() == String.class) {
                 try {
-                    x.set(this, descriptor.getString(x.getName().toLowerCase()));
+                    x.set(this, descriptor.getString(x.getName()));
                 }
                 catch (IllegalAccessException | JSONException e) {
                     Log.wtf("debug", e.getClass().getName(), e);
@@ -85,90 +84,6 @@ public class Champion {
         return title;
     }
 
-    public String getAttackRange() {
-        return attackRange;
-    }
-
-    public String getMpPerLevel() {
-        return mpPerLevel;
-    }
-
-    public String getMp() {
-        return mp;
-    }
-
-    public String getAttackDamage() {
-        return attackDamage;
-    }
-
-    public String getHp() {
-        return hp;
-    }
-
-    public String getHpPerLevel() {
-        return hpPerLevel;
-    }
-
-    public String getAttackDamagePerLevel() {
-        return attackDamagePerLevel;
-    }
-
-    public String getArmor() {
-        return armor;
-    }
-
-    public String getMpRegenPerLevel() {
-        return mpRegenPerLevel;
-    }
-
-    public String getHpRegen() {
-        return hpRegen;
-    }
-
-    public String getCritPerLevel() {
-        return critPerLevel;
-    }
-
-    public String getSpellBlockPerLevel() {
-        return spellBlockPerLevel;
-    }
-
-    public String getMpRegen() {
-        return mpRegen;
-    }
-
-    public String getAttackSpeedPerLevel() {
-        return attackSpeedPerLevel;
-    }
-
-    public String getSpellBlock() {
-        return spellBlock;
-    }
-
-    public String getMoveSpeed() {
-        return moveSpeed;
-    }
-
-    public String getAttackSpeedOffset() {
-        return attackSpeedOffset;
-    }
-
-    public String getCrit() {
-        return crit;
-    }
-
-    public String getHpRegenPerLevel() {
-        return hpRegenPerLevel;
-    }
-
-    public String getArmorPerLevel() {
-        return armorPerLevel;
-    }
-
-    public String getLore() {
-        return lore;
-    }
-
     public String[] getTags() {
         return tags;
     }
@@ -193,5 +108,10 @@ public class Champion {
         }
 
         return ret;
+    }
+
+    public String getSimplifiedName() {
+        String imageName = getImageName();
+        return imageName.substring(0, imageName.indexOf("."));
     }
 }
