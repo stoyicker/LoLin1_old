@@ -207,11 +207,8 @@ public class SplashActivity extends Activity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
-                                        PreferenceManager
-                                                .getDefaultSharedPreferences(
-                                                        getApplicationContext()).edit()
-                                                .putString("pref_version_" + realm, newVersion)
-                                                .commit();
+                                        SplashActivity.this.performPostUpdateOperations(realm,
+                                                newVersion);
                                     }
                                     dataAllowance = ALLOW;
                                     alertDialogLatch.countDown();
@@ -235,11 +232,7 @@ public class SplashActivity extends Activity {
                     break;
                 case ALLOW:
                     if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
-                        PreferenceManager
-                                .getDefaultSharedPreferences(
-                                        getApplicationContext()).edit()
-                                .putString("pref_version_" + realm, newVersion)
-                                .commit();
+                        performPostUpdateOperations(realm, newVersion);
                     }
                     alertDialogLatch.countDown();
                     break;
@@ -254,13 +247,27 @@ public class SplashActivity extends Activity {
         }
         else {
             if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
-                PreferenceManager
-                        .getDefaultSharedPreferences(
-                                getApplicationContext()).edit()
-                        .putString("pref_version_" + realm, newVersion)
-                        .commit();
+                performPostUpdateOperations(realm, newVersion);
             }
         }
+    }
+
+    private void performPostUpdateOperations(String realm, String newVersion) {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        String currentVersion = preferences.getString("pref_version_" + realm, "0");
+        File root = getApplicationContext().getExternalFilesDir(
+                LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
+        File lastVersionFolder = new File(root + "/" + realm + "-" + currentVersion);
+        if (lastVersionFolder.exists()) {
+            FileManager.recursiveDelete(lastVersionFolder);
+        }
+        PreferenceManager
+                .getDefaultSharedPreferences(
+                        getApplicationContext()).edit()
+                .putString("pref_version_" + realm, newVersion)
+                .commit();
+        //TODO Assign the champions
     }
 
     private Boolean runUpdate(String server, String realm, String[] localesInThisRealm,
@@ -273,7 +280,6 @@ public class SplashActivity extends Activity {
         );
         File root = getApplicationContext().getExternalFilesDir(
                 LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
-        Log.d("debug", "The dir is " + root.getAbsolutePath());
         File previouslyAttemptedUpdateFolder = new File(root + "/" + realm + "-" + newVersion);
         if (previouslyAttemptedUpdateFolder.exists() &&
                 !FileManager.recursiveDelete(previouslyAttemptedUpdateFolder)) {
@@ -317,9 +323,7 @@ public class SplashActivity extends Activity {
             String dataStreamAsString;
             try {
                 dataStream = HTTPServicesProvider.performListRequest(server, realm, locale);
-                Log.d("debug", "Stream size: " + dataStream.available());
                 dataStreamAsString = LoLin1Utils.inputStreamAsString(dataStream);
-                Log.d("debug", "String length: " + dataStreamAsString.length());
                 if (!JsonManager.getResponseStatus(dataStreamAsString)) {
                     LOG_FRAGMENT.appendToSameLine(
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
@@ -403,19 +407,19 @@ public class SplashActivity extends Activity {
                 String[] skins = champion.getSkins(), spellImageNames =
                         champion.getSpellImageNames();
                 try {
-                    LOG_FRAGMENT.appendToNewLine(
-                            LoLin1Utils.getString(getApplicationContext(), "update_images_download",
-                                    null) + " " + realm + "." + locale + "." + champion.getName() +
-                                    LoLin1Utils.getString(getApplicationContext(),
-                                            "progress_character", null)
-                    );
                     HTTPServicesProvider.downloadFile(
                             cdn + "/" + newVersion + "/" + "img" + "/" + LoLin1Utils
                                     .getString(getApplicationContext(), "bust_remote_folder",
                                             null) + "/" + bustImageName,
                             new File(bustString + bustImageName)
                     );
-                    //TODO Continue here downloading the passive, the skins and the spells
+                    HTTPServicesProvider.downloadFile(
+                            cdn + "/" + newVersion + "/" + "img" + "/" + LoLin1Utils
+                                    .getString(getApplicationContext(), "passive_remote_folder",
+                                            null) + "/" + passiveImageName,
+                            new File(passiveString + passiveImageName)
+                    );
+                    //TODO Continue here downloading the spells
                 }
                 catch (IOException e) {
                     Log.wtf("debug", e.getClass().getName(), e);
@@ -425,15 +429,10 @@ public class SplashActivity extends Activity {
                     );
                     return Boolean.FALSE;
                 }
-                LOG_FRAGMENT.appendToSameLine(
-                        LoLin1Utils.getString(
-                                getApplicationContext(), "update_task_finished", null)
-                );
             }
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         }
-        //TODO After completing the update, set the champions to the ones corresponding to the locale, if possible
         return Boolean.TRUE;
     }
 
