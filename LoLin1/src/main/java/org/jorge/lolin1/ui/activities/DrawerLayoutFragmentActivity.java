@@ -47,21 +47,6 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         return navigatedItemsStack.get(0);
     }
 
-    /**
-     * Called when activity start-up is complete (after {@link #onStart}
-     * and {@link #onRestoreInstanceState} have been called).  Applications will
-     * generally not implement this method; it is intended for system
-     * classes to do final initialization after application code has run.
-     * <p/>
-     * <p><em>Derived classes must call through to the super class's
-     * implementation of this method.  If they do not, an exception will be
-     * thrown.</em></p>
-     *
-     * @param savedInstanceState If the activity is being re-initialized after
-     *                           previously being shut down then this Bundle contains the data it most
-     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
-     * @see #onCreate
-     */
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
