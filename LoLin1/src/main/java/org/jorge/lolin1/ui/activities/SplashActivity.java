@@ -19,6 +19,7 @@ import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.io.local.JsonManager;
 import org.jorge.lolin1.io.net.HTTPServicesProvider;
 import org.jorge.lolin1.ui.frags.SplashLogFragment;
+import org.jorge.lolin1.utils.BoxedBoolean;
 import org.jorge.lolin1.utils.LoLin1Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,6 +31,9 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
@@ -271,7 +275,7 @@ public class SplashActivity extends Activity {
     }
 
     private Boolean runUpdate(String server, String realm, String[] localesInThisRealm,
-                              String newVersion) {
+                              final String newVersion) {
         String cdn = null;
         LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_allocating_file_structure",
@@ -290,7 +294,7 @@ public class SplashActivity extends Activity {
         LOG_FRAGMENT.appendToSameLine(
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         for (String locale : localesInThisRealm) {
-            String bustString =
+            final String bustString =
                     root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
                             LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
                                     null) +
@@ -400,39 +404,89 @@ public class SplashActivity extends Activity {
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
             }
+            final String finalCdn = cdn;
+            final BoxedBoolean currentStatus = new BoxedBoolean(Boolean.TRUE);
+            ExecutorService downloadExecutor = Executors.newCachedThreadPool();
             for (Champion champion : champs) {
-                String bustImageName = champion.getImageName(), passiveImageName =
+                if (!currentStatus.getValue()) {
+                    LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
+                            getApplicationContext(), "update_fatal_error", null));
+                    return Boolean.FALSE;
+                }
+                final String bustImageName = champion.getImageName(), passiveImageName =
                         champion.getPassiveImageName(), simplifiedName =
                         champion.getSimplifiedName();
                 String[] skins = champion.getSkins(), spellImageNames =
                         champion.getSpellImageNames();
-                try {
-                    HTTPServicesProvider.downloadFile(
-                            cdn + "/" + newVersion + "/" + "img" + "/" + LoLin1Utils
-                                    .getString(getApplicationContext(), "bust_remote_folder",
-                                            null) + "/" + bustImageName,
-                            new File(bustString + bustImageName)
-                    );
-                    HTTPServicesProvider.downloadFile(
-                            cdn + "/" + newVersion + "/" + "img" + "/" + LoLin1Utils
-                                    .getString(getApplicationContext(), "passive_remote_folder",
-                                            null) + "/" + passiveImageName,
-                            new File(passiveString + passiveImageName)
-                    );
-                    //TODO Continue here downloading the spells
-                }
-                catch (IOException e) {
-                    Log.wtf("debug", e.getClass().getName(), e);
-                    LOG_FRAGMENT.appendToSameLine(
-                            LoLin1Utils
-                                    .getString(getApplicationContext(), "update_fatal_error", null)
-                    );
-                    return Boolean.FALSE;
-                }
+                AsyncTask<Void, Void, Boolean> bustDownloadTask =
+                        new AsyncTask<Void, Void, Boolean>() {
+                            @Override
+                            protected Boolean doInBackground(Void... params) {
+                                try {
+                                    HTTPServicesProvider.downloadFile(
+                                            finalCdn + "/" + newVersion + "/" + "img" + "/" +
+                                                    LoLin1Utils
+                                                            .getString(getApplicationContext(),
+                                                                    "bust_remote_folder",
+                                                                    null) + "/" + bustImageName,
+                                            new File(bustString + bustImageName)
+                                    );
+                                }
+                                catch (IOException e) {
+                                    Log.wtf("debug", e.getClass().getName(), e);
+                                    return Boolean.FALSE;
+                                }
+                                return Boolean.TRUE;
+                            }
+
+                            @Override
+                            protected void onPostExecute(Boolean returnedBoolean) {
+                                currentStatus.setValue(currentStatus.getValue() && returnedBoolean);
+                            }
+                        }, passiveDownloadTask =
+                        new AsyncTask<Void, Void, Boolean>() {
+                            @Override
+                            protected Boolean doInBackground(Void... params) {
+                                try {
+                                    HTTPServicesProvider.downloadFile(
+                                            finalCdn + "/" + newVersion + "/" + "img" + "/" +
+                                                    LoLin1Utils
+                                                            .getString(getApplicationContext(),
+                                                                    "passive_remote_folder",
+                                                                    null) + "/" + passiveImageName,
+                                            new File(passiveString + passiveImageName)
+                                    );
+                                }
+                                catch (IOException e) {
+                                    Log.wtf("debug", e.getClass().getName(), e);
+                                    return Boolean.FALSE;
+                                }
+                                return Boolean.TRUE;
+                            }
+
+                            @Override
+                            protected void onPostExecute(Boolean returnedBoolean) {
+                                currentStatus.setValue(currentStatus.getValue() && returnedBoolean);
+                            }
+                        };
+                //TODO Continue here downloading the spells
+                bustDownloadTask.executeOnExecutor(downloadExecutor);
+                passiveDownloadTask.executeOnExecutor(downloadExecutor);
+            }
+            downloadExecutor.shutdown();
+            try {
+                downloadExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+            }
+            catch (InterruptedException e) {
+                Log.wtf("debug", e.getClass().getName(), e);
+                LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
+                        getApplicationContext(), "update_fatal_error", null));
+                return Boolean.FALSE;
             }
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         }
+
         return Boolean.TRUE;
     }
 
