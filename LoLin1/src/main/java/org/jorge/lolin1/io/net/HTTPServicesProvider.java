@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.net.URLDecoder;
 
 /**
  * This file is part of LoLin1.
@@ -44,7 +45,7 @@ public abstract class HTTPServicesProvider {
         FileOutputStream fileOutputStream = null;
         try {
             bufferedInputStream = new BufferedInputStream(
-                    new URL(whatToDownload.replaceAll(" ", "%20")).openStream());
+                    new URL(URLDecoder.decode(whatToDownload, "UTF-8")).openStream());
             fileOutputStream = new FileOutputStream(whereToSaveIt);
 
             final byte data[] = new byte[1024];
@@ -69,7 +70,7 @@ public abstract class HTTPServicesProvider {
 
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet();
-        request.setURI(new URI(uri));
+        request.setURI(new URI(URLDecoder.decode(uri, "UTF-8")));
         response = client.execute(request);
         if (response.getStatusLine().getStatusCode() == 409) {
             throw new ServerIsCheckingException();

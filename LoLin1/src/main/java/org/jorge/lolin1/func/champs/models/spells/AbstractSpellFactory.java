@@ -52,7 +52,7 @@ public abstract class AbstractSpellFactory {
             Log.wtf("debug", e.getClass().getName(), e);
         }
 
-        return new PassiveSpell(name, imageName, detail);
+        return new PassiveSpell(name, detail, imageName);
     }
 
     public static ActiveSpell createActiveSpell(JSONObject contentDescriptor) throws JSONException {
