@@ -45,7 +45,9 @@ public abstract class HTTPServicesProvider {
         FileOutputStream fileOutputStream = null;
         try {
             bufferedInputStream = new BufferedInputStream(
-                    new URL(URLDecoder.decode(whatToDownload, "UTF-8")).openStream());
+                    new URL(URLDecoder.decode(whatToDownload, "UTF-8").replaceAll(" ", "%20"))
+                            .openStream()
+            );
             fileOutputStream = new FileOutputStream(whereToSaveIt);
 
             final byte data[] = new byte[1024];
@@ -70,7 +72,7 @@ public abstract class HTTPServicesProvider {
 
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet();
-        request.setURI(new URI(URLDecoder.decode(uri, "UTF-8")));
+        request.setURI(new URI(uri));
         response = client.execute(request);
         if (response.getStatusLine().getStatusCode() == 409) {
             throw new ServerIsCheckingException();

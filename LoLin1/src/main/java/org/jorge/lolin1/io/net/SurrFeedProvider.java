@@ -17,6 +17,7 @@ import java.io.BufferedInputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -81,7 +82,7 @@ public class SurrFeedProvider {
         ArrayList<SurrEntry> items = null;
         BufferedInputStream in;
         String SURRENDERAT20_URL = "http://feeds.feedburner.com/surrenderat20/CqWw?format=xml";
-        URL source = new URL(SURRENDERAT20_URL);
+        URL source = new URL(URLDecoder.decode(SURRENDERAT20_URL, "UTF-8").replace(" ", "%20"));
         URLConnection urlConnection = source.openConnection();
         urlConnection.connect();
         in = new BufferedInputStream(urlConnection.getInputStream());

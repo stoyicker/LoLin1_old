@@ -20,6 +20,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -93,7 +94,7 @@ public class NewsFeedProvider {
                 (LOLNEWS_PREFIX + "_" + server + "_" + langSimplified.substring(0, 2) +
                         LOLNEWS_SUFFIX)
                         .toLowerCase();
-        URL source = new URL(srcString);
+        URL source = new URL(URLDecoder.decode(srcString, "UTF-8").replaceAll(" ", "%20"));
         URLConnection urlConnection = source.openConnection();
         urlConnection.connect();
         try {

@@ -97,7 +97,6 @@ public class Champion {
     }
 
     public String getPassiveImageName() {
-        Log.d("debug", "Passive imageName for " + getName() + ": " + this.passive.getImageName());
         return this.passive.getImageName();
     }
 
