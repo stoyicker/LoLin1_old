@@ -43,7 +43,8 @@ public abstract class HTTPServicesProvider {
         BufferedInputStream bufferedInputStream = null;
         FileOutputStream fileOutputStream = null;
         try {
-            bufferedInputStream = new BufferedInputStream(new URL(whatToDownload).openStream());
+            bufferedInputStream = new BufferedInputStream(
+                    new URL(whatToDownload.replaceAll(" ", "%20")).openStream());
             fileOutputStream = new FileOutputStream(whereToSaveIt);
 
             final byte data[] = new byte[1024];
