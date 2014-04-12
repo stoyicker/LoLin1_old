@@ -26,7 +26,8 @@ Created by JorgeAntonio on 17/03/14.
               android:paddingLeft="@dimen/splash_progress_bar_horizontal_margin"
               android:paddingRight="@dimen/splash_progress_bar_horizontal_margin"
               android:paddingTop="@dimen/splash_progress_bar_vertical_margin"
-              tools:context="org.jorge.lolin1.ui.frags.SplashProgressBarFragment">
+              tools:context="org.jorge.lolin1.ui.frags.SplashProgressBarFragment"
+	>
 	<fr.castorflex.android.smoothprogressbar.SmoothProgressBar
 		android:id="@+id/fragment_splash_progress_bar_view"
 		style="@style/SmoothProgressBar"
