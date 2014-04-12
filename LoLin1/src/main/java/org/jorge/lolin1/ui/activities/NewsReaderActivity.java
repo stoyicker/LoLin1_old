@@ -58,14 +58,12 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
 
         isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
                 WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;
-
         int index;
         if (!wasSavedInstanceStateNull) {
             restoreState(savedInstanceState);
         }
         else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("lastSelectedNewsIndex", 0)) != -1 &&
-                getResources().getBoolean(R.bool.feed_has_two_panes)) {
+                .getInt("lastSelectedNewsIndex", 0)) != -1 && isDualPane) {
             onNewsArticleSelected(index);
         }
     }

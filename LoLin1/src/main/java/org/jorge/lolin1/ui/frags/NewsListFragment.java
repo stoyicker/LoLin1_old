@@ -51,20 +51,6 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
 
-    /**
-     * Called to do initial creation of a fragment.  This is called after
-     * {@link #onAttach(android.app.Activity)} and before
-     * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
-     * <p/>
-     * <p>Note that this can be called while the fragment's activity is
-     * still in the process of being created.  As such, you can not rely
-     * on things like the activity's content view hierarchy being initialized
-     * at this point.  If you want to do work once the activity itself is
-     * created, see {@link #onActivityCreated(android.os.Bundle)}.
-     *
-     * @param savedInstanceState If the fragment is being re-created from
-     *                           a previous saved state, this is the state.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,15 +100,11 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
         return inflater.inflate(R.layout.fragment_news_feed, container, false);
     }
 
-    /**
-     * Attach to list view once the view hierarchy has been created.
-     *
-     * @param view
-     * @param savedInstanceState
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        listAdapter.updateShownNews();
 
         // This is the View which is created by ListFragment
         ViewGroup viewGroup = (ViewGroup) view;
@@ -166,20 +148,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onRefreshStarted(View view) {
         new AsyncTask<Void, Void, Void>() {
-            /**
-             * Override this method to perform a computation on a background thread. The
-             * specified parameters are the parameters passed to {@link #execute}
-             * by the caller of this task.
-             * <p/>
-             * This method can call {@link #publishProgress} to publish updates
-             * on the UI thread.
-             *
-             * @param params The parameters of the task.
-             * @return A result, defined by the subclass of this task.
-             * @see #onPreExecute()
-             * @see #onPostExecute
-             * @see #publishProgress
-             */
+
             @Override
             protected Void doInBackground(Void... params) {
                 newsFeedProvider.requestFeedRefresh();
@@ -187,34 +156,11 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
                 return null;
             }
 
-            /**
-             * <p>Runs on the UI thread after {@link #doInBackground}. The
-             * specified result is the value returned by {@link #doInBackground}.</p>
-             * <p/>
-             * <p>This method won't be invoked if the task was cancelled.</p>
-             *
-             * @param aVoid The result of the operation computed by {@link #doInBackground}.
-             * @see #onPreExecute
-             * @see #doInBackground
-             * @see #onCancelled(Object)
-             */
             @Override
             protected void onPostExecute(Void aVoid) {
                 mPullToRefreshLayout.setRefreshComplete();
             }
 
-            /**
-             * <p>Applications should preferably override {@link #onCancelled(Object)}.
-             * This method is invoked by the default implementation of
-             * {@link #onCancelled(Object)}.</p>
-             * <p/>
-             * <p>Runs on the UI thread after {@link #cancel(boolean)} is invoked and
-             * {@link #doInBackground(Object[])} has finished.</p>
-             *
-             * @see #onCancelled(Object)
-             * @see #cancel(boolean)
-             * @see #isCancelled()
-             */
             @Override
             protected void onCancelled() {
                 mPullToRefreshLayout.setRefreshComplete();

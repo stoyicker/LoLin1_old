@@ -65,8 +65,7 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
             restoreState(savedInstanceState);
         }
         else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("lastSelectedSurrIndex", 0)) != -1 &&
-                getResources().getBoolean(R.bool.feed_has_two_panes)) {
+                .getInt("lastSelectedSurrIndex", 0)) != -1 && isDualPane) {
             onSurrArticleSelected(index);
         }
     }

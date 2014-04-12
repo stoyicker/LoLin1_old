@@ -52,20 +52,6 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     private SurrFeedProvider surrFeedProvider;
     private SurrListFragmentListener mCallback;
 
-    /**
-     * Called to do initial creation of a fragment.  This is called after
-     * {@link #onAttach(android.app.Activity)} and before
-     * {@link #onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)}.
-     * <p/>
-     * <p>Note that this can be called while the fragment's activity is
-     * still in the process of being created.  As such, you can not rely
-     * on things like the activity's content view hierarchy being initialized
-     * at this point.  If you want to do work once the activity itself is
-     * created, see {@link #onActivityCreated(android.os.Bundle)}.
-     *
-     * @param savedInstanceState If the fragment is being re-created from
-     *                           a previous saved state, this is the state.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,24 +105,6 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
         }
     }
 
-    /**
-     * Provide default implementation to return a simple list view.  Subclasses
-     * can override to replace with their own layout.  If doing so, the
-     * returned view hierarchy <em>must</em> have a ListView whose id
-     * is {@link android.R.id#list android.R.id.list} and can optionally
-     * have a sibling view id {@link android.R.id#empty android.R.id.empty}
-     * that is to be shown when the list is empty.
-     * <p/>
-     * <p>If you are overriding this method with your own custom content,
-     * consider including the standard layout {@link android.R.layout#list_content}
-     * in your layout file, so that you continue to retain all of the standard
-     * behavior of ListFragment. In particular, this is currently the only
-     * way to have the built-in indeterminant progress state be shown.
-     *
-     * @param inflater
-     * @param container
-     * @param savedInstanceState
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -147,15 +115,12 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
         return ret;
     }
 
-    /**
-     * Attach to list view once the view hierarchy has been created.
-     *
-     * @param view
-     * @param savedInstanceState
-     */
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+
+        listAdapter.updateShownSurrs();
 
         // This is the View which is created by ListFragment
         ViewGroup viewGroup = (ViewGroup) view;
