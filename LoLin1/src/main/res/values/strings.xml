@@ -170,4 +170,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="bust_remote_folder">champion</string>
 	<string name="passive_remote_folder">passive</string>
 	<string name="splash_progress_bar_speed">0.1f</string>
+	<string name="spell_remote_folder">spell</string>
+	<string name="splash_remote_folder">splash</string>
+	<string name="splash_image_extension">jpg</string>
 </resources>

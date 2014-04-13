@@ -53,7 +53,9 @@ public class SplashActivity extends Activity {
                         new SmoothProgressDrawable.Builder(getApplicationContext())
                                 .color(getApplicationContext().getResources()
                                         .getColor(R.color.theme_strong_orange))
-                                .interpolator(new AccelerateDecelerateInterpolator()).speed(Float.parseFloat(LoLin1Utils.getString(getApplicationContext(),"splash_progress_bar_speed",null)))
+                                .interpolator(new AccelerateDecelerateInterpolator()).speed(Float
+                                .parseFloat(LoLin1Utils.getString(getApplicationContext(),
+                                        "splash_progress_bar_speed", null)))
                                 .sectionsCount(LoLin1Utils.getInt(getApplicationContext(),
                                         "splash_progress_bar_sections", -1))
                                 .build()
@@ -250,7 +252,7 @@ public class SplashActivity extends Activity {
                         getApplicationContext()).edit()
                 .putString("pref_version_" + realm, newVersion)
                 .commit();
-        //TODO Assign the champions
+        //TODO Assign the champions (when they are built for the selected realm+locale, so that other fails don't forbid you from seeing them
     }
 
     private Boolean runUpdate(String server, String realm, String[] localesInThisRealm,
@@ -385,7 +387,7 @@ public class SplashActivity extends Activity {
             }
             final String finalCdn = cdn;
             final BoxedBoolean currentStatus = new BoxedBoolean(Boolean.TRUE);
-            ExecutorService downloadExecutor = Executors.newCachedThreadPool();
+            ExecutorService downloadExecutor = Executors.newFixedThreadPool(10);
             for (Champion champion : champs) {
                 if (!currentStatus.getValue()) {
                     LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
@@ -395,7 +397,7 @@ public class SplashActivity extends Activity {
                 final String bustImageName = champion.getImageName(), passiveImageName =
                         champion.getPassiveImageName(), simplifiedName =
                         champion.getSimplifiedName();
-                String[] skins = champion.getSkins(), spellImageNames =
+                final String[] skinNames = champion.getSkinNames(), spellImageNames =
                         champion.getSpellImageNames();
                 AsyncTask<Void, Void, Boolean> bustDownloadTask =
                         new AsyncTask<Void, Void, Boolean>() {
@@ -448,7 +450,67 @@ public class SplashActivity extends Activity {
                                 currentStatus.setValue(currentStatus.getValue() && returnedBoolean);
                             }
                         };
-                //TODO Continue here downloading the spells
+                for (final String spellName : spellImageNames) {
+                    new AsyncTask<Void, Void, Boolean>() {
+                        @Override
+                        protected Boolean doInBackground(Void... params) {
+                            try {
+                                HTTPServicesProvider.downloadFile(
+                                        finalCdn + "/" + newVersion + "/" + "img" + "/" +
+                                                LoLin1Utils
+                                                        .getString(getApplicationContext(),
+                                                                "spell_remote_folder",
+                                                                null) + "/" + spellName,
+                                        new File(spellString + spellName)
+                                );
+                            }
+                            catch (IOException e) {
+                                Log.wtf("debug", e.getClass().getName(), e);
+                                return Boolean.FALSE;
+                            }
+                            return Boolean.TRUE;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Boolean returnedBoolean) {
+                            currentStatus.setValue(currentStatus.getValue() && returnedBoolean);
+                        }
+                    }.executeOnExecutor(downloadExecutor);
+                }
+                for (int i = 0; i < skinNames.length; i++) {
+
+                    new AsyncTask<Integer, Void, Boolean>() {
+                        @Override
+                        protected Boolean doInBackground(Integer... params) {
+                            try {
+                                HTTPServicesProvider.downloadFile(
+                                        finalCdn + "/" + "/" + "img" + "/" + "champion" + "/" +
+                                                LoLin1Utils
+                                                        .getString(getApplicationContext(),
+                                                                "splash_remote_folder",
+                                                                null) + "/" + simplifiedName + "_" +
+                                                params[0] + "." + LoLin1Utils
+                                                .getString(getApplicationContext(),
+                                                        "splash_image_extension", null),
+                                        new File(splashString + simplifiedName + "_" +
+                                                params[0] + "." + LoLin1Utils
+                                                .getString(getApplicationContext(),
+                                                        "splash_image_extension", null))
+                                );
+                            }
+                            catch (IOException e) {
+                                Log.wtf("debug", e.getClass().getName(), e);
+                                return Boolean.FALSE;
+                            }
+                            return Boolean.TRUE;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Boolean returnedBoolean) {
+                            currentStatus.setValue(currentStatus.getValue() && returnedBoolean);
+                        }
+                    }.executeOnExecutor(downloadExecutor, i);
+                }
                 bustDownloadTask.executeOnExecutor(downloadExecutor);
                 passiveDownloadTask.executeOnExecutor(downloadExecutor);
             }

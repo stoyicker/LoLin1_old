@@ -88,7 +88,7 @@ public class Champion {
         return tags;
     }
 
-    public String[] getSkins() {
+    public String[] getSkinNames() {
         return skins;
     }
 
