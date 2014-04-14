@@ -2,6 +2,7 @@ package org.jorge.lolin1.io.local;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -48,5 +49,22 @@ public abstract class FileManager {
         FileOutputStream outputStream = new FileOutputStream(file);
         outputStream.write(string.getBytes("UTF-8"));
         outputStream.close();
+    }
+
+    public static String readFileAsString(File target)
+            throws IOException {
+
+        char[] buff = new char[1024];
+        StringBuilder builder = new StringBuilder();
+
+        FileReader reader = new FileReader(target);
+
+        while (reader.read(buff) != -1) {
+            builder.append(buff);
+        }
+
+        reader.close();
+
+        return builder.toString();
     }
 }

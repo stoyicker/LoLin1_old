@@ -74,6 +74,8 @@ public class SplashActivity extends Activity {
             @Override
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
+                ChampionManager.getInstance()
+                        .setChamps(SplashActivity.this.getApplicationContext());
                 launchNewsReader();
             }
 
@@ -140,7 +142,7 @@ public class SplashActivity extends Activity {
         if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
             String target;
             if (!(target = connectToOneOf(dataProviders)).contentEquals("null")) {
-                startProcedure(target);
+                proceedWithUpdate(target);
             }
         }
         else {
@@ -191,7 +193,8 @@ public class SplashActivity extends Activity {
                                     null), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
+                                    if (runInitProcedure(server, realm, localesInThisRealm,
+                                            newVersion)) {
                                         SplashActivity.this.performPostUpdateOperations(realm,
                                                 newVersion);
                                     }
@@ -216,7 +219,7 @@ public class SplashActivity extends Activity {
 
                     break;
                 case ALLOW:
-                    if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
+                    if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
                         performPostUpdateOperations(realm, newVersion);
                     }
                     alertDialogLatch.countDown();
@@ -231,7 +234,7 @@ public class SplashActivity extends Activity {
             }
         }
         else {
-            if (runUpdate(server, realm, localesInThisRealm, newVersion)) {
+            if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
                 performPostUpdateOperations(realm, newVersion);
             }
         }
@@ -252,11 +255,10 @@ public class SplashActivity extends Activity {
                         getApplicationContext()).edit()
                 .putString("pref_version_" + realm, newVersion)
                 .commit();
-        //TODO Assign the champions (when they are built for the selected realm+locale, so that other fails don't forbid you from seeing them
     }
 
-    private Boolean runUpdate(String server, String realm, String[] localesInThisRealm,
-                              final String newVersion) {
+    private Boolean runInitProcedure(String server, String realm, String[] localesInThisRealm,
+                                     final String newVersion) {
         String cdn = null;
         LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_allocating_file_structure",
@@ -531,7 +533,7 @@ public class SplashActivity extends Activity {
         return Boolean.TRUE;
     }
 
-    private void startProcedure(String server) {
+    private void proceedWithUpdate(String server) {
         final CountDownLatch networkOperationsLatch = new CountDownLatch(1);
 
         SharedPreferences preferences =

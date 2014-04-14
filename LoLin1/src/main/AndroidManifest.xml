@@ -67,7 +67,7 @@ Created by JorgeAntonio on 02/01/14.
 		<activity
 			android:name=".ui.activities.SurrReaderActivity"
 			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:label="@string/title_section6"
+			android:label="@string/title_section4"
 			android:launchMode="singleTop"
 			android:logo="@drawable/icon_section4">
 			<intent-filter>

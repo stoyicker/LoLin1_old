@@ -24,8 +24,6 @@ Created by JorgeAntonio on 02/01/14.
 		<item>@string/title_section3</item>
 		<item>@string/title_section4</item>
 		<item>@string/title_section5</item>
-		<item>@string/title_section6</item>
-		<item>@string/title_section7</item>
 	</string-array>
 	<string-array name="news_feed_urls">
 		<item>@string/news_euw_en</item>
