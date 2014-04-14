@@ -52,8 +52,6 @@ public final class ChampionManager {
 
     public void setChamps(Context context) {
         String realm = LoLin1Utils.getRealm(context), locale = LoLin1Utils.getLocale(context);
-        Log.d("debug", "Realm is: " + realm);
-        Log.d("debug", "Locale is: " + locale);
         File targetFile = new File(context.getExternalFilesDir(
                 LoLin1Utils.getString(context, "content_folder_name", null)) + "/" + realm + "-" +
                 PreferenceManager.getDefaultSharedPreferences(context)

@@ -24,6 +24,12 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent">
 	<fragment
+		android:id="@+id/champion_list_search"
+		android:name="org.jorge.lolin1.ui.frags.ExpandableSearchFragment"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		/>
+	<fragment
 		android:id="@+id/navigation_drawer"
 		android:name="org.jorge.lolin1.ui.frags.NavigationDrawerFragment"
 		android:layout_width="@dimen/navigation_drawer_width"

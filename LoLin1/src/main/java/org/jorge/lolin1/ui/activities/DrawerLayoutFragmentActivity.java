@@ -40,8 +40,8 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
 
     private static final ArrayList<Integer> navigatedItemsStack =
             new ArrayList<>();
-    public static final String ACTION_BAR_MENU_LAYOUT = "MENU_LAYOUT";
     public static final String ACTIVITY_LAYOUT = "LAYOUT";
+    public static final String ACTION_BAR_MENU_LAYOUT = "ACTION_BAR_MENU_LAYOUT";
     private DrawerLayout drawerLayout;
     private CharSequence mTitle;
 

@@ -198,7 +198,8 @@ public class NavigationDrawerFragment extends Fragment {
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         int request = getActivity().getIntent()
                 .getIntExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT, -1),
-                menuToInflate = request == -1 ? R.menu.menu_default : request;
+                menuToInflate = request == -1 ? R.menu.menu_default : R.menu.menu_champion_list;
+
         inflater.inflate(menuToInflate, menu);
         if (mDrawerLayout != null) {
             if (isDrawerOpen()) {

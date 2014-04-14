@@ -1,9 +1,14 @@
 package org.jorge.lolin1.ui.activities;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
 
 /**
  * This file is part of LoLin1.
@@ -23,7 +28,10 @@ import org.jorge.lolin1.R;
  * <p/>
  * Created by JorgeAntonio on 14/04/2014.
  */
-public class ChampionListActivity extends DrawerLayoutFragmentActivity {
+public class ChampionListActivity extends DrawerLayoutFragmentActivity implements
+        ExpandableSearchFragment.ExpandableSearchListener {
+
+    private ExpandableSearchFragment SEARCH_FRAGMENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,16 +46,33 @@ public class ChampionListActivity extends DrawerLayoutFragmentActivity {
     }
 
     @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        View ret = super.onCreateView(name, context, attrs);
+
+        SEARCH_FRAGMENT =
+                (ExpandableSearchFragment) getFragmentManager()
+                        .findFragmentById(R.id.champion_list_search);
+
+        return ret;
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Boolean ret = Boolean.TRUE;
         switch (item.getItemId()) {
-            case R.id.action_search:
-
+            case R.id.action_champion_search:
+                SEARCH_FRAGMENT.toggleVisibility();
                 break;
             default: //Up or Settings buttons
                 ret = super.onOptionsItemSelected(item);
         }
         super.restoreActionBar();
         return ret;
+    }
+
+    @Override
+    public void onNewQuery(String query) {
+        Log.d("debug", "Query is: " + query); //TODO Filter the list
+        SEARCH_FRAGMENT.toggleVisibility();
     }
 }

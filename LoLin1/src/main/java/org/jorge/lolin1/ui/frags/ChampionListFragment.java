@@ -1,5 +1,14 @@
 package org.jorge.lolin1.ui.frags;
 
+import android.app.Activity;
+import android.app.ListFragment;
+
+import org.jorge.lolin1.ui.activities.ChampionListActivity;
+import org.jorge.lolin1.utils.LoLin1Utils;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -18,30 +27,21 @@ package org.jorge.lolin1.ui.frags;
  * <p/>
  * Created by JorgeAntonio on 15/01/14.
  */
-
-import android.app.Activity;
-import android.app.ListFragment;
-import android.content.Context;
-
-@SuppressWarnings("UnusedDeclaration") //TODO Remove this
 public class ChampionListFragment extends ListFragment {
-
-    public ChampionListFragment(Context context) {
-        // Required empty public constructor
-    }
 
     @Override
     public void onAttach(Activity activity) {
-//        super.onAttach(activity);
-//
-//        ((ChampionListActivity) activity).onSectionAttached(
-//                new ArrayList<>(
-//                        Arrays.asList(
-//                                LoLin1Utils.getStringArray(
-//                                        getActivity(),
-//                                        "navigation_drawer_items", new String[]{""})
-//                        )
-//                ).indexOf(LoLin1Utils.getString(getActivity(), "title_section5",
-//                        "Champions")));
+        super.onAttach(activity);
+
+        ((ChampionListActivity) activity).onSectionAttached(
+                new ArrayList<>(
+                        Arrays.asList(
+                                LoLin1Utils.getStringArray(
+                                        getActivity(),
+                                        "navigation_drawer_items", new String[]{""})
+                        )
+                ).indexOf(LoLin1Utils.getString(getActivity(), "title_section3",
+                        "Champions"))
+        );
     }
 }

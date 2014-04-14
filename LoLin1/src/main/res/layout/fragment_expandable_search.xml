@@ -18,17 +18,17 @@
 ~ <p/>
 ~ Created by JorgeAntonio on 14/4/2014.
 -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-	<item
-		android:id="@+id/action_settings"
-		android:icon="@drawable/icon_settings"
-		android:orderInCategory="100"
-		android:showAsAction="ifRoom"
-		android:title="@string/action_settings"/>
-	<item
-		android:id="@+id/action_champion_search"
-		android:icon="@drawable/icon_search"
-		android:orderInCategory="1"
-		android:title="@string/action_champion_list_search"
-		android:showAsAction="ifRoom"/>
-</menu>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+	<EditText
+		android:id="@+id/query_field"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:padding="@dimen/expandable_search_fragment_padding"
+		android:hint="@string/champion_search_hint"
+		android:inputType="textAutoComplete"
+		style="@style/LogTextStyle"
+		android:layout_gravity="center"/>
+</LinearLayout>
