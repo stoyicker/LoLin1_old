@@ -103,7 +103,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
             case 0:
                 target = NewsReaderActivity.class;
                 break;
-            case 5:
+            case 3:
                 target = SurrReaderActivity.class;
                 break;
             default:

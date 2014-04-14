@@ -22,11 +22,9 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="app_name">LoLin1</string>
 	<string name="title_section1">Home</string>
 	<string name="title_section2">Jungle Timers</string>
-	<string name="title_section3">Masteries</string>
-	<string name="title_section4">Runes</string>
-	<string name="title_section5">Champions</string>
-	<string name="title_section6">Surrender@20</string>
-	<string name="title_section7">Chat</string>
+	<string name="title_section3">Champions</string>
+	<string name="title_section4">Surrender@20</string>
+	<string name="title_section5">Chat</string>
 	<string name="navigation_drawer_open">Open navigation drawer</string>
 	<string name="navigation_drawer_close">Close navigation drawer</string>
 	<string name="action_settings">Settings</string>

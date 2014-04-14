@@ -69,7 +69,7 @@ Created by JorgeAntonio on 02/01/14.
 			android:configChanges="keyboardHidden|orientation|screenSize"
 			android:label="@string/title_section6"
 			android:launchMode="singleTop"
-			android:logo="@drawable/icon_section6">
+			android:logo="@drawable/icon_section4">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW"/>
 				<category android:name="android.intent.category.DEFAULT"/>
