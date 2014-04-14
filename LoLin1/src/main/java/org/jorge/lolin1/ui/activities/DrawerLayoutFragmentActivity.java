@@ -40,6 +40,8 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
 
     private static final ArrayList<Integer> navigatedItemsStack =
             new ArrayList<>();
+    public static final String ACTION_BAR_MENU_LAYOUT = "MENU_LAYOUT";
+    public static final String ACTIVITY_LAYOUT = "LAYOUT";
     private DrawerLayout drawerLayout;
     private CharSequence mTitle;
 
@@ -68,7 +70,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         return ret;
     }
 
-    private void restoreActionBar() {
+    protected void restoreActionBar() {
         ActionBar actionBar = getActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(Boolean.TRUE);
@@ -82,11 +84,6 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         recreate();
     }
 
-    /**
-     * Called when an item in the navigation drawer is selected.
-     *
-     * @param position
-     */
     @Override
     public void onNavigationDrawerItemSelected(int position) {
         if (position == getLastSelectedNavDavIndex()) {
@@ -102,6 +99,9 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         switch (position) {
             case 0:
                 target = NewsReaderActivity.class;
+                break;
+            case 2:
+                target = ChampionListActivity.class;
                 break;
             case 3:
                 target = SurrReaderActivity.class;
@@ -136,7 +136,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(savedInstanceState.getInt("layout"));
+        setContentView(savedInstanceState.getInt(ACTIVITY_LAYOUT));
 
         if (navigatedItemsStack.isEmpty()) {
             navigatedItemsStack.add(0);

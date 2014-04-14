@@ -171,4 +171,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="spell_remote_folder">spell</string>
 	<string name="splash_remote_folder">splash</string>
 	<string name="splash_image_extension">jpg</string>
+	<string name="action_search">Search</string>
 </resources>

@@ -650,4 +650,4 @@ public class SplashActivity extends Activity {
     }
 }
 
-//FUTURE Remove <item name="news_reader" type="layout">@layout/news_double_pane</item><item name="surr_reader" type="layout">@layout/surr_double_pane</item><bool name="feed_has_two_panes">true</bool> from values-land/layouts.xml to not to see the double layout on devices which are not large enough
+//FUTURE Remove <item name="news_reader" type="layout">@layout/activity_news_double_pane</item><item name="surr_reader" type="layout">@layout/activity_surr_double_pane</item><bool name="feed_has_two_panes">true</bool> from values-land/layouts.xml to not to see the double layout on devices which are not large enough

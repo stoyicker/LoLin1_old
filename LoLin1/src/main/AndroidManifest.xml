@@ -64,6 +64,15 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".ui.activities.ChampionListActivity"
+		          android:label="@string/title_section3"
+		          android:launchMode="singleTop"
+		          android:logo="@drawable/icon_section3">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
 		<activity
 			android:name=".ui.activities.SurrReaderActivity"
 			android:configChanges="keyboardHidden|orientation|screenSize"

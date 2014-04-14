@@ -43,7 +43,8 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
         if (wasSavedInstanceStateNull) {
             savedInstanceState = new Bundle();
         }
-        savedInstanceState.putInt("layout", R.layout.news_reader);
+        savedInstanceState
+                .putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT, R.layout.activity_news_reader);
 
         super.onCreate(savedInstanceState);
 

@@ -163,7 +163,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
                                 LoLin1Utils.getStringArray(getActivity(), "navigation_drawer_items",
                                         new String[]{""})
                         )
-                                .indexOf(LoLin1Utils.getString(getActivity(), "title_section6",
+                                .indexOf(LoLin1Utils.getString(getActivity(), "title_section4",
                                         "Surrender@20"))
                 );
     }

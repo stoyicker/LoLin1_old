@@ -44,6 +44,7 @@ dependencies {
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.github.johnkil.android-progressfragment:progressfragment:+'
     compile 'com.android.support:support-v4:+'
+    compile 'com.android.support:appcompat-v7:+'
     compile 'com.github.castorflex.smoothprogressbar:library:+'
     compile 'com.github.johnkil.android-robototextview:robototextview:+'
 }

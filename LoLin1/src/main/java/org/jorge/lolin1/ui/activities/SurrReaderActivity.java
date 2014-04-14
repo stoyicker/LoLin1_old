@@ -44,7 +44,8 @@ public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
             savedInstanceState = new Bundle();
         }
 
-        savedInstanceState.putInt("layout", R.layout.surr_reader);
+        savedInstanceState
+                .putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT, R.layout.activity_surr_reader);
 
         super.onCreate(savedInstanceState);
 
