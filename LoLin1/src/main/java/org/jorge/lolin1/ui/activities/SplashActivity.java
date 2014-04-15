@@ -268,6 +268,10 @@ public class SplashActivity extends Activity {
                 .commit();
     }
 
+    @Override
+    public void onBackPressed() {
+    }
+
     private Boolean runInitProcedure(String server, String realm, String[] localesInThisRealm,
                                      final String newVersion) {
         String cdn = null;

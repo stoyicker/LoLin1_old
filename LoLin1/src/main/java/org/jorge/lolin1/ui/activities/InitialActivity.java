@@ -65,4 +65,8 @@ public final class InitialActivity extends Activity {
             FileManager.recursiveDelete(cacheDir);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+    }
 }
