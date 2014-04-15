@@ -66,6 +66,7 @@ public class WebViewerFragment extends ProgressFragment {
         mWebView = (WebView) ret.findViewById(R.id.web_view);
         mWebView.setVisibility(View.VISIBLE);
         mWebView.setWebViewClient(new InnerWebViewClient());
+        mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mIsWebViewAvailable = Boolean.TRUE;
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(Boolean.TRUE);

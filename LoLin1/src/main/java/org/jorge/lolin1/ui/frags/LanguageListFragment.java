@@ -133,8 +133,9 @@ public class LanguageListFragment extends Fragment {
             textView.setText(language);
             textView.setTextColor(getResources().getColor(R.color.theme_black));
             textView.setTextSize(LoLin1Utils
-                    .getInt(getActivity().getApplicationContext(), "language_chooser_text_size",
-                            20));
+                    .getInt(getActivity().getApplicationContext(),
+                            "language_chooser_text_size",
+                            -1));
             textView.setTag(languages_simplified[languageCounter]);
             languageCounter++;
             viewAsViewGroup.addView(textView,

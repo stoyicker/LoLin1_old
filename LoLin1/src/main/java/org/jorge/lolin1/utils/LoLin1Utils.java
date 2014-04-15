@@ -217,8 +217,8 @@ public abstract class LoLin1Utils {
         return ret;
     }
 
-    public static void slideViewUp(Context ctx, View v) {
-        Animation a = AnimationUtils.loadAnimation(ctx, R.anim.slide_up);
+    public static void slideViewUp(Context context, View v) {
+        Animation a = AnimationUtils.loadAnimation(context, R.anim.slide_up);
         if (a != null) {
             a.reset();
             if (v != null) {
@@ -228,8 +228,8 @@ public abstract class LoLin1Utils {
         }
     }
 
-    public static void slideViewDown(Context ctx, View v) {
-        Animation a = AnimationUtils.loadAnimation(ctx, R.anim.slide_down);
+    public static void slideViewDown(Context context, View v) {
+        Animation a = AnimationUtils.loadAnimation(context, R.anim.slide_down);
         if (a != null) {
             a.reset();
             if (v != null) {

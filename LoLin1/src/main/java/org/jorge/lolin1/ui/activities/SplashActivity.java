@@ -47,7 +47,7 @@ public class SplashActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.splash);
+        setContentView(R.layout.activity_splash);
         ((SmoothProgressBar) findViewById(R.id.fragment_splash_progress_bar_view))
                 .setIndeterminateDrawable(
                         new SmoothProgressDrawable.Builder(getApplicationContext())
@@ -193,13 +193,24 @@ public class SplashActivity extends Activity {
                                     null), new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
-                                    if (runInitProcedure(server, realm, localesInThisRealm,
-                                            newVersion)) {
-                                        SplashActivity.this.performPostUpdateOperations(realm,
-                                                newVersion);
-                                    }
-                                    dataAllowance = ALLOW;
-                                    alertDialogLatch.countDown();
+                                    new AsyncTask<Void, Void, Void>() {
+                                        @Override
+                                        protected Void doInBackground(Void... params) {
+                                            if (runInitProcedure(server, realm, localesInThisRealm,
+                                                    newVersion)) {
+                                                SplashActivity.this
+                                                        .performPostUpdateOperations(realm,
+                                                                newVersion);
+                                            }
+                                            return null;
+                                        }
+
+                                        @Override
+                                        protected void onPostExecute(Void aVoid) {
+                                            dataAllowance = ALLOW;
+                                            alertDialogLatch.countDown();
+                                        }
+                                    };
                                 }
                             });
 

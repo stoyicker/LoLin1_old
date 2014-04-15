@@ -67,7 +67,7 @@ public class ServerAndLanguageChooserActivity extends Activity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.server_and_language_chooser);
+        setContentView(R.layout.activity_server_and_language_chooser);
 
         FragmentManager fragmentManager = getFragmentManager();
 

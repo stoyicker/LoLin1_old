@@ -2,12 +2,12 @@ package org.jorge.lolin1.ui.frags;
 
 import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import org.jorge.lolin1.R;
@@ -16,6 +16,8 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * This file is part of LoLin1.
@@ -40,6 +42,8 @@ public class ExpandableSearchFragment extends Fragment {
     private ExpandableSearchListener mCallback;
     private EditText queryField;
     private String lastQuery = "";
+    private Timer filterUpdateTimer;
+    private final int FILTER_UPDATE_DELAY_MILLIS = 0, FILTER_UPDATE_INTERVAL_MILLIS = 1000;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,26 +59,27 @@ public class ExpandableSearchFragment extends Fragment {
 
         queryField.setVisibility(View.GONE);
 
-        queryField.addTextChangedListener(new TextWatcher() {
+        setTimer();
+    }
+
+    private void setTimer() {
+        filterUpdateTimer = new Timer();
+        filterUpdateTimer.scheduleAtFixedRate(new TimerTask() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String newQuery;
-                if (!lastQuery.contentEquals((newQuery = s.toString()))) {
-                    mCallback.onNewQuery(newQuery);
-                    lastQuery = newQuery;
+            public void run() {
+                String thisQuery;
+                if (!(thisQuery = queryField.getText().toString()).contentEquals(lastQuery) &&
+                        queryField.isShown()) {
+                    lastQuery = thisQuery;
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mCallback.onNewQuery(lastQuery);
+                        }
+                    });
                 }
             }
-        });
+        }, FILTER_UPDATE_DELAY_MILLIS, FILTER_UPDATE_INTERVAL_MILLIS);
     }
 
     @Override
@@ -103,15 +108,24 @@ public class ExpandableSearchFragment extends Fragment {
 
     public void toggleVisibility() {
         if (queryField.isShown()) {
+            filterUpdateTimer.cancel();
             LoLin1Utils.slideViewUp(getActivity().getApplicationContext(), queryField);
             queryField.setVisibility(View.GONE);
-            queryField.setText("");
+            ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE))
+                    .hideSoftInputFromWindow(queryField.getWindowToken(), 0);
+            queryField.clearFocus();
             queryField.setEnabled(Boolean.FALSE);
         }
         else {
+            setTimer();
             LoLin1Utils.slideViewDown(getActivity().getApplicationContext(), queryField);
             queryField.setEnabled(Boolean.TRUE);
             queryField.setVisibility(View.VISIBLE);
+            queryField.requestFocus();
+            ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
+                    Context.INPUT_METHOD_SERVICE))
+                    .showSoftInput(queryField, InputMethodManager.SHOW_FORCED);
         }
     }
 
