@@ -210,7 +210,7 @@ public class SplashActivity extends Activity {
                                             dataAllowance = ALLOW;
                                             alertDialogLatch.countDown();
                                         }
-                                    };
+                                    }.execute();
                                 }
                             });
 
@@ -309,6 +309,7 @@ public class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
                                     null) +
                             "/" + "passive" + "/";
+            Log.d("debug", "FLAG3");
             File bust = new File(bustString), splash = new File(splashString), spell =
                     new File(spellString), passive = new File(passiveString);
             if (!bust.mkdirs() || !splash.mkdirs() || !spell.mkdirs() || !passive.mkdirs()) {

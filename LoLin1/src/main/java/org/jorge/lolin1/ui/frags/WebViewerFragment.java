@@ -66,7 +66,6 @@ public class WebViewerFragment extends ProgressFragment {
         mWebView = (WebView) ret.findViewById(R.id.web_view);
         mWebView.setVisibility(View.VISIBLE);
         mWebView.setWebViewClient(new InnerWebViewClient());
-        mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
         mIsWebViewAvailable = Boolean.TRUE;
         WebSettings settings = mWebView.getSettings();
         settings.setJavaScriptEnabled(Boolean.TRUE);
@@ -108,10 +107,6 @@ public class WebViewerFragment extends ProgressFragment {
             getWebView().loadUrl(mUrl = url);
         }
     }
-
-    /**
-     * Called when the fragment is visible to the user and actively running. Resumes the WebView.
-     */
     @Override
     public void onPause() {
         super.onPause();
@@ -120,9 +115,6 @@ public class WebViewerFragment extends ProgressFragment {
         }
     }
 
-    /**
-     * Called when the fragment is no longer resumed. Pauses the WebView.
-     */
     @Override
     public void onResume() {
         if (mWebView != null) {
@@ -131,10 +123,6 @@ public class WebViewerFragment extends ProgressFragment {
         super.onResume();
     }
 
-    /**
-     * Called when the WebView has been detached from the fragment.
-     * The WebView is no longer available after this time.
-     */
     @Override
     public void onDestroyView() {
         mIsWebViewAvailable = false;
@@ -144,9 +132,6 @@ public class WebViewerFragment extends ProgressFragment {
         super.onDestroyView();
     }
 
-    /**
-     * Gets the WebView.
-     */
     public WebView getWebView() {
         return mIsWebViewAvailable ? mWebView : null;
     }
