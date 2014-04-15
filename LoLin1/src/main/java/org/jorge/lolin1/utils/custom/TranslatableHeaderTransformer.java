@@ -270,7 +270,7 @@ public class TranslatableHeaderTransformer extends HeaderTransformer {
                 uk.co.senab.actionbarpulltorefresh.library.R.styleable.PullToRefreshHeader_ptrHeaderBackground)
                 : getActionBarBackground(activity);
         if (bg != null) {
-            mHeaderTextView.setBackground(bg);
+            mHeaderTextView.setBackgroundDrawable(bg);
 
             // If we have an opaque background we can remove the background from the content layout
             if (mContentLayout != null && bg.getOpacity() == PixelFormat.OPAQUE) {
