@@ -68,10 +68,10 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
 
-        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
+//        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
             PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
                     .putInt("lastSelectedSurrIndex", position).commit();
-        }
+//        }
 
         getListView().setItemChecked(position, Boolean.TRUE);
         final SurrEntry selectedEntry = listAdapter.getItem(position);

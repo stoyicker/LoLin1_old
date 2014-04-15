@@ -46,6 +46,7 @@ public final class InitialActivity extends Activity {
                 PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         LoLin1Utils
                 .setLocale(getApplicationContext(), LoLin1Utils.getLocale(getApplicationContext()));
+        preferences.edit().putInt("lastSelectedNewsIndex", 0).commit();
         if (!preferences.getBoolean("initial_setup_done", Boolean.FALSE)) {
             final Intent serverAndLanguageChooserIntent =
                     new Intent(getApplicationContext(), ServerAndLanguageChooserActivity.class);

@@ -44,12 +44,13 @@ public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
             savedInstanceState = new Bundle();
         }
         savedInstanceState
-                .putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT, R.layout.activity_news_reader);
+                .putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
+                        R.layout.activity_news_reader);
 
         super.onCreate(savedInstanceState);
 
         NEWS_FRAGMENT =
-                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_list);
+                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
         WEB_FRAGMENT =
                 (WebViewerFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.fragment_web_viewer);

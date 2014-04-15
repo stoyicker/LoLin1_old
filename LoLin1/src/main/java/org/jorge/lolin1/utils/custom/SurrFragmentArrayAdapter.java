@@ -2,7 +2,6 @@ package org.jorge.lolin1.utils.custom;
 
 import android.app.Activity;
 import android.content.Context;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,15 +50,14 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
     }
 
     public void updateShownSurrs() {
-
-        int howManyIHave = this.getCount();
-        final ArrayList<SurrEntry> newSurrs =
-                SQLiteDAO.getSingleton().getNewSurrs(howManyIHave);
-        Collections.reverse(newSurrs);
+        final ArrayList<SurrEntry> allSurrs =
+                SQLiteDAO.getSingleton().getSurrs();
+        Collections.reverse(allSurrs);
         ((Activity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                for (SurrEntry x : newSurrs) {
+                clear();
+                for (SurrEntry x : allSurrs) {
                     insert(x, 0);
                 }
                 SurrFragmentArrayAdapter.this.notifyDataSetChanged();
@@ -88,20 +86,19 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
 
         SurrEntry thisArticle = getItem(position);
 
-        if (position == PreferenceManager.getDefaultSharedPreferences(mContext).getInt(
-                "lastSelectedSurrIndex", -1) &&
-                mContext.getResources().getBoolean(R.bool.feed_has_two_panes)) {
-            convertView.setBackgroundResource(R.color.theme_black);
-        }
-        else {
-            convertView.setBackgroundResource(R.color.theme_surr_grey);
-        }
+//        if (position == PreferenceManager.getDefaultSharedPreferences(mContext).getInt(
+//                "lastSelectedSurrIndex", -1) &&
+//                mContext.getResources().getBoolean(R.bool.feed_has_two_panes)) {
+//            convertView.setBackgroundResource(R.color.theme_black);
+//        }
 
         if (!thisArticle.hasBeenRead()) {
+            convertView.setBackgroundResource(R.color.theme_black);
             viewHolder.getItemWithNewContentImageView().setVisibility(View.VISIBLE);
             viewHolder.getItemWithNewContentImageView().startAnimation(unreadContentAnimation);
         }
         else {
+            convertView.setBackgroundResource(R.color.theme_surr_grey);
             viewHolder.getItemWithNewContentImageView().setVisibility(View.INVISIBLE);
             unreadContentAnimation.cancel();
             unreadContentAnimation.reset();

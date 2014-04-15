@@ -130,9 +130,8 @@ public class SQLiteDAO extends SQLiteOpenHelper {
         return ret;
     }
 
-
-    public final ArrayList<SurrEntry> getNewSurrs(int alreadyShown) {
-        return getFilteredSurrs(SURR_KEY_ID + " > " + alreadyShown);
+    public final ArrayList<SurrEntry> getSurrs() {
+        return getFilteredSurrs(null);
     }
 
     public int markSurrAsRead(String link) {
@@ -149,10 +148,6 @@ public class SQLiteDAO extends SQLiteOpenHelper {
         db.endTransaction();
 
         return ret;
-    }
-
-    public ArrayList<SurrEntry> getSurrs() {
-        return getFilteredSurrs(null);
     }
 
     public SurrEntry getSurrByLink(String surrLink) {

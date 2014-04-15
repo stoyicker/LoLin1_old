@@ -23,7 +23,7 @@
 	android:layout_height="match_parent"
 	tools:context="org.jorge.lolin1.ui.activities.SurrReaderActivity">
 
-	<fragment android:id="@+id/fragment_list"
+	<fragment android:id="@+id/fragment_surr_list"
 	          android:name="org.jorge.lolin1.ui.frags.SurrListFragment"
 	          android:layout_width="match_parent"
 	          android:layout_height="match_parent"
