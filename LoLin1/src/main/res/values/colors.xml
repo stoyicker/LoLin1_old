@@ -24,4 +24,5 @@ Created by JorgeAntonio on 21/01/14.
 	<color name="theme_black">#000000</color>
 	<color name="theme_white">#FFFFFF</color>
 	<color name="theme_surr_grey">#444444</color>
+	<color name="theme_sea_blue">#4EACBA</color>
 </resources>

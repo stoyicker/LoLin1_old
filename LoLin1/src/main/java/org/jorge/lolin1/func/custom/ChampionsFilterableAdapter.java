@@ -7,7 +7,7 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
@@ -38,14 +38,15 @@ import java.util.List;
  * <p/>
  * Created by JorgeAntonio on 16/04/2014.
  */
-public class ChampionsFilterableAdapter extends ArrayAdapter<Champion> implements Filterable {
+public class ChampionsFilterableAdapter extends BaseAdapter implements Filterable {
 
     private static final int LIST_ITEM_LAYOUT = R.layout.list_item_champions;
+    private final List<Champion> data = new ArrayList<>();
     private final Activity mActivity;
 
     public ChampionsFilterableAdapter(Activity activity) {
-        super(activity.getApplicationContext(), LIST_ITEM_LAYOUT);
         mActivity = activity;
+        data.addAll(ChampionManager.getInstance().getChampions());
     }
 
     @Override
@@ -72,12 +73,27 @@ public class ChampionsFilterableAdapter extends ArrayAdapter<Champion> implement
 
             @Override
             protected void publishResults(CharSequence constraint, FilterResults results) {
-                ChampionsFilterableAdapter.this.clear();
-                ChampionsFilterableAdapter.this.addAll(
+                ChampionsFilterableAdapter.this.data.clear();
+                ChampionsFilterableAdapter.this.data.addAll(
                         (java.util.Collection<? extends Champion>) results.values);
                 notifyDataSetChanged();
             }
         };
+    }
+
+    @Override
+    public int getCount() {
+        return data.size();
+    }
+
+    @Override
+    public Champion getItem(int position) {
+        return data.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
@@ -102,7 +118,7 @@ public class ChampionsFilterableAdapter extends ArrayAdapter<Champion> implement
             @Override
             protected Void doInBackground(final Object... params) {
                 final Bitmap bmp =
-                        ChampionManager.getInstance().getImageByChampionIndex((Integer) params[2],
+                        ChampionManager.getInstance().getImageByChampionIndex((Integer) params[1],
                                 ChampionManager.ImageType.BUST,
                                 mActivity.getApplicationContext());
                 mActivity.runOnUiThread(new Runnable() {

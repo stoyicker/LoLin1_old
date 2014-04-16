@@ -52,5 +52,7 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="server_and_language_chooser_verification_bottom_margin">20dp</dimen>
 	<dimen name="verification_padding">5dp</dimen>
 	<dimen name="expandable_search_fragment_padding">7dp</dimen>
-	<dimen name="champion_list_bust_image_padding">4dp</dimen>
+	<dimen name="champion_list_bust_image_padding">2dp</dimen>
+	<dimen name="champion_grid_horizontal_spacing">3dp</dimen>
+	<dimen name="champion_grid_vertical_spacing">3dp</dimen>
 </resources>

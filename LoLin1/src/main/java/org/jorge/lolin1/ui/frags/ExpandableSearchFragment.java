@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,7 +130,6 @@ public class ExpandableSearchFragment extends Fragment {
     public void toggleVisibility() {
         if (queryField.isShown()) {
             cancelTimer();
-            LoLin1Utils.slideViewUp(getActivity().getApplicationContext(), queryField);
             queryField.setVisibility(View.GONE);
             ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
                     Context.INPUT_METHOD_SERVICE))
@@ -141,7 +139,6 @@ public class ExpandableSearchFragment extends Fragment {
         }
         else {
             setTimer();
-            LoLin1Utils.slideViewDown(getActivity().getApplicationContext(), queryField);
             queryField.setEnabled(Boolean.TRUE);
             queryField.setVisibility(View.VISIBLE);
             queryField.requestFocus();
@@ -153,41 +150,35 @@ public class ExpandableSearchFragment extends Fragment {
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
-        Log.d("debug", "oAC");
         super.onActivityCreated(savedInstanceState);
         Boolean wasShown;
-        if (savedInstanceState != null) {
-            Log.d("debug", "savedInstanceState is not null");
-        }
         if (savedInstanceState != null &&
                 (wasShown = savedInstanceState.getBoolean(WAS_SHOWN)) != null) {
-            Log.d("debug", "savedInstanceState is not null && wasShown was found as " + wasShown);
             if (!wasShown) {
                 cancelTimer();
-                LoLin1Utils.slideViewUp(getActivity().getApplicationContext(), queryField);
                 queryField.setVisibility(View.GONE);
                 ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
                         Context.INPUT_METHOD_SERVICE))
                         .hideSoftInputFromWindow(queryField.getWindowToken(), 0);
                 queryField.clearFocus();
                 queryField.setEnabled(Boolean.FALSE);
+                getView().setVisibility(View.VISIBLE);
             }
             else {
                 setTimer();
-                LoLin1Utils.slideViewDown(getActivity().getApplicationContext(), queryField);
                 queryField.setEnabled(Boolean.TRUE);
                 queryField.setVisibility(View.VISIBLE);
                 queryField.requestFocus();
                 ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
                         Context.INPUT_METHOD_SERVICE))
                         .showSoftInput(queryField, InputMethodManager.SHOW_FORCED);
+                getView().setVisibility(View.VISIBLE);
             }
         }
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        Log.d("debug", "oSIS");
         if (outState == null) {
             outState = new Bundle();
         }

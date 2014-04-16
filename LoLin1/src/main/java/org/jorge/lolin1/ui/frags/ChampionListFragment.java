@@ -1,13 +1,19 @@
 package org.jorge.lolin1.ui.frags;
 
 import android.app.Activity;
-import android.app.ListFragment;
+import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.twotoasters.jazzylistview.JazzyGridView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.champs.ChampionManager;
+import org.jorge.lolin1.func.custom.ChampionsFilterableAdapter;
 import org.jorge.lolin1.ui.activities.ChampionListActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
@@ -32,9 +38,16 @@ import java.util.Arrays;
  * <p/>
  * Created by JorgeAntonio on 15/01/14.
  */
-public class ChampionListFragment extends ListFragment {
+public class ChampionListFragment extends Fragment {
 
     private ChampionSelectionListener mCallback;
+    private JazzyGridView mGridView;
+    private ChampionsFilterableAdapter listAdapter;
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -48,6 +61,8 @@ public class ChampionListFragment extends ListFragment {
                     + " must implement ChampionSelectionListener");
         }
 
+        listAdapter = new ChampionsFilterableAdapter(activity);
+
         ((ChampionListActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(
@@ -60,13 +75,36 @@ public class ChampionListFragment extends ListFragment {
         );
     }
 
-//    @Override
-//    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-//                             Bundle savedInstanceState) {
-//        return inflater.inflate(R.layout.fragment_champion_list, container, false);
-//    }
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View ret = inflater.inflate(R.layout.fragment_champion_list, container, false);
+
+        mGridView = (JazzyGridView) ret.findViewById(android.R.id.list);
+
+        mGridView.setChoiceMode(
+                ListView.CHOICE_MODE_SINGLE);
+
+        mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mCallback.onChampionSelected(position);
+            }
+        });
+
+        mGridView.setAdapter(listAdapter);
+
+        mGridView.setColumnWidth(ChampionManager.getInstance().getImageByChampionIndex(0,
+                ChampionManager.ImageType.BUST, getActivity().getApplicationContext()).getWidth());
+
+        return ret;
+    }
+
+    public void applyFilter(CharSequence constraint) {
+        listAdapter.getFilter().filter(constraint);
+    }
 
     public interface ChampionSelectionListener {
-        public void onChampionSelected(String simplifiedName);
+        public void onChampionSelected(int index);
     }
 }

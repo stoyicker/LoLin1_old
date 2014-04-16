@@ -8,6 +8,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.champs.ChampionManager;
+import org.jorge.lolin1.ui.frags.ChampionListFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
 
 /**
@@ -29,9 +31,11 @@ import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
  * Created by JorgeAntonio on 14/04/2014.
  */
 public class ChampionListActivity extends DrawerLayoutFragmentActivity implements
-        ExpandableSearchFragment.ExpandableSearchListener {
+        ExpandableSearchFragment.ExpandableSearchListener,
+        ChampionListFragment.ChampionSelectionListener {
 
     private ExpandableSearchFragment SEARCH_FRAGMENT;
+    private ChampionListFragment CHAMPION_LIST_FRAGMENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +57,9 @@ public class ChampionListActivity extends DrawerLayoutFragmentActivity implement
                 (ExpandableSearchFragment) getFragmentManager()
                         .findFragmentById(R.id.champion_list_search);
 
+        CHAMPION_LIST_FRAGMENT = (ChampionListFragment) getFragmentManager()
+                .findFragmentById(R.id.champion_list_grid);
+
         return ret;
     }
 
@@ -73,5 +80,12 @@ public class ChampionListActivity extends DrawerLayoutFragmentActivity implement
     @Override
     public void onNewQuery(String query) {
         Log.d("debug", "Query is: " + query); //TODO Filter the list
+        CHAMPION_LIST_FRAGMENT.applyFilter(query);
+    }
+
+    @Override
+    public void onChampionSelected(int index) {
+        Log.d("debug", "Champion selected is " + ChampionManager.getInstance()
+                .getNameByChampionIndex(index)); //TODO Show the champion stuff
     }
 }

@@ -47,6 +47,10 @@ public final class ChampionManager {
     private final CacheableBitmapLoader bitmapLoader = new CacheableBitmapLoader();
     private static ChampionManager instance;
 
+    public String getNameByChampionIndex(int index) {
+        return champions.get(index).getName();
+    }
+
     public enum ImageType {
         BUST, SPELL, PASSIVE, SPLASH
     }
