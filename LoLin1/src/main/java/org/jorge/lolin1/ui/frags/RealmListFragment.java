@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.graphics.Typeface;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -100,7 +99,6 @@ public class RealmListFragment extends Fragment {
             textSize = LoLin1Utils
                     .getInt(getActivity().getApplicationContext(), "server_chooser_text_size",
                             -1);
-            Log.d("debug", "textSize: " + textSize);
             textView.setTextSize(textSize);
             textView.setTextColor(getResources().getColor(R.color.theme_black));
             textView.setTag(realms[realmCounter].toLowerCase());

@@ -92,7 +92,7 @@ public class Champion {
         return skins;
     }
 
-    public String getImageName() {
+    public String getBustImageName() {
         return this.imageName;
     }
 
@@ -111,7 +111,64 @@ public class Champion {
     }
 
     public String getSimplifiedName() {
-        String imageName = getImageName();
+        String imageName = getBustImageName();
         return imageName.substring(0, imageName.indexOf("."));
+    }
+
+    public Boolean containsText(CharSequence text) {
+        try {
+            Field[] fields = Champion.class.getDeclaredFields();
+            for (Field x : fields) {
+                Class type = x.getType();
+                x.setAccessible(Boolean.TRUE);
+                if (!type.isArray() && type == String.class) {
+                    if (x.get(this).toString().contains(text)) {
+                        x.setAccessible(Boolean.FALSE);
+                        return Boolean.TRUE;
+                    }
+                }
+                else if (type.isArray() && x.getType() == String.class) {
+                    String[] thisStringArray = (String[]) x.get(this);
+                    for (String y : thisStringArray) {
+                        if (y.contains(text)) {
+                            x.setAccessible(Boolean.FALSE);
+                            return Boolean.TRUE;
+                        }
+                    }
+                }
+                else if (type == PassiveSpell.class) {
+                    PassiveSpell thisPassiveSpell = (PassiveSpell) x.get(this);
+                    Field[] passiveSpellFields = PassiveSpell.class.getDeclaredFields();
+                    for (Field y : passiveSpellFields) {
+                        y.setAccessible(Boolean.TRUE);
+                        if (y.get(thisPassiveSpell).toString().contains(text)) {
+                            y.setAccessible(Boolean.FALSE);
+                            x.setAccessible(Boolean.FALSE);
+                            return Boolean.TRUE;
+                        }
+                        y.setAccessible(Boolean.FALSE);
+                    }
+                }
+                else if (type.isArray() && x.getType() == ActiveSpell.class) {
+                    ActiveSpell[] thisActiveSpellArray = (ActiveSpell[]) x.get(this);
+                    for (ActiveSpell eachActiveSpell : thisActiveSpellArray) {
+                        Field[] eachActiveSpellFieldArray = ActiveSpell.class.getDeclaredFields();
+                        for (Field y : eachActiveSpellFieldArray) {
+                            if (y.get(eachActiveSpell).toString().contains(text)) {
+                                y.setAccessible(Boolean.FALSE);
+                                x.setAccessible(Boolean.FALSE);
+                                return Boolean.TRUE;
+                            }
+                            y.setAccessible(Boolean.FALSE);
+                        }
+                    }
+                }
+                x.setAccessible(Boolean.FALSE);
+            }
+        }
+        catch (IllegalAccessException ex) {
+            Log.wtf("debug", ex.getClass().getName(), ex);
+        }
+        return Boolean.FALSE;
     }
 }

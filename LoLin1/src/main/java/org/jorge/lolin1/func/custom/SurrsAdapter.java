@@ -1,4 +1,4 @@
-package org.jorge.lolin1.utils.custom;
+package org.jorge.lolin1.func.custom;
 
 import android.app.Activity;
 import android.content.Context;
@@ -37,13 +37,13 @@ import java.util.Collections;
  * <p/>
  * Created by JorgeAntonio on 25/01/14.
  */
-public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
+public class SurrsAdapter extends ArrayAdapter<SurrEntry> {
 
     private static final int list_item_layout = R.layout.list_item_surr_feed;
     private static Context mContext;
     private final Animation unreadContentAnimation;
 
-    public SurrFragmentArrayAdapter(Context context) {
+    public SurrsAdapter(Context context) {
         super(context, list_item_layout);
         mContext = context;
         unreadContentAnimation = AnimationUtils.loadAnimation(context, R.anim.anim_grow);
@@ -60,7 +60,7 @@ public class SurrFragmentArrayAdapter extends ArrayAdapter<SurrEntry> {
                 for (SurrEntry x : allSurrs) {
                     insert(x, 0);
                 }
-                SurrFragmentArrayAdapter.this.notifyDataSetChanged();
+                SurrsAdapter.this.notifyDataSetChanged();
             }
         });
     }

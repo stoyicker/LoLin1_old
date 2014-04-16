@@ -34,7 +34,7 @@ import java.net.URLDecoder;
  * <p/>
  * Created by JorgeAntonio on 24/03/2014.
  */
-public abstract class HTTPServicesProvider {
+public abstract class HTTPServices {
 
     private static final String VERSION_SERVICE_LOCATION = "/services/champions/version/",
             LIST_SERVICE_LOCATION = "/services/champions/list/", CDN_SERVICE_LOCATION =

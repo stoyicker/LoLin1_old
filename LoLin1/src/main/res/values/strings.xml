@@ -173,4 +173,10 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="splash_image_extension">jpg</string>
 	<string name="action_champion_list_search">Search</string>
 	<string name="champion_search_hint">Search champions</string>
+	<string name="bust_image_folder_name">bust</string>
+	<string name="symbol_path_separator">/</string>
+	<string name="symbol_hyphen">-</string>
+	<string name="splash_image_folder_name">splash</string>
+	<string name="spell_image_folder_name">spell</string>
+	<string name="passive_image_folder_name">passive</string>
 </resources>

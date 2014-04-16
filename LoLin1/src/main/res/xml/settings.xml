@@ -54,17 +54,17 @@
 			android:summary="@string/pref_summary_display"
 			android:title="@string/pref_title_display"
 			/>
-		<org.jorge.lolin1.utils.custom.TimePickerPreference
+		<org.jorge.lolin1.func.custom.TimePickerPreference
 			android:defaultValue="@string/pref_default_baron_respawn"
 			android:key="@string/pref_title_baron_respawn"
 			android:title="@string/pref_title_baron_respawn"
 			/>
-		<org.jorge.lolin1.utils.custom.TimePickerPreference
+		<org.jorge.lolin1.func.custom.TimePickerPreference
 			android:defaultValue="@string/pref_default_dragon_respawn"
 			android:key="@string/pref_title_dragon_respawn"
 			android:title="@string/pref_title_dragon_respawn"
 			/>
-		<org.jorge.lolin1.utils.custom.TimePickerPreference
+		<org.jorge.lolin1.func.custom.TimePickerPreference
 			android:defaultValue="@string/pref_default_buff_respawn"
 			android:key="@string/pref_title_buff_respawn"
 			android:title="@string/pref_title_buff_respawn"

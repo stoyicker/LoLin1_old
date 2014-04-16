@@ -1,4 +1,4 @@
-package org.jorge.lolin1.utils.custom;
+package org.jorge.lolin1.func.custom;
 
 import android.app.Activity;
 import android.content.Context;
@@ -40,14 +40,14 @@ import java.util.HashMap;
  * <p/>
  * Created by JorgeAntonio on 03/01/14.
  */
-public class NewsFragmentArrayAdapter extends BaseAdapter {
+public class NewsAdapter extends BaseAdapter {
 
     private static final int list_item_layout = R.layout.list_item_news_feed;
     private static final HashMap<String, ArrayList<NewsEntry>> shownNews =
             new HashMap<>();
     private static Context mContext;
 
-    public NewsFragmentArrayAdapter(Context context) {
+    public NewsAdapter(Context context) {
         mContext = context;
     }
 
@@ -73,7 +73,7 @@ public class NewsFragmentArrayAdapter extends BaseAdapter {
         ((Activity) mContext).runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                NewsFragmentArrayAdapter.this.notifyDataSetChanged();
+                NewsAdapter.this.notifyDataSetChanged();
             }
         });
     }

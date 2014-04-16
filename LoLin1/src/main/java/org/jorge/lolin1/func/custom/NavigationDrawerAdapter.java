@@ -1,4 +1,4 @@
-package org.jorge.lolin1.utils.custom;
+package org.jorge.lolin1.func.custom;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -29,12 +29,12 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * <p/>
  * Created by JorgeAntonio on 03/01/14.
  */
-public class NavigationDrawerArrayAdapter extends BaseAdapter {
+public class NavigationDrawerAdapter extends BaseAdapter {
 
     private final int mResource = R.layout.list_item_navigation_drawer;
     private Context mContext;
 
-    public NavigationDrawerArrayAdapter(Context context) {
+    public NavigationDrawerAdapter(Context context) {
         this.mContext = context;
     }
 

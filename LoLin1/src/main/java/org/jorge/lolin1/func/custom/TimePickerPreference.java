@@ -1,4 +1,4 @@
-package org.jorge.lolin1.utils.custom;
+package org.jorge.lolin1.func.custom;
 
 import android.content.Context;
 import android.preference.DialogPreference;

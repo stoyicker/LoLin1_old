@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,16 +40,39 @@ import java.util.TimerTask;
  */
 public class ExpandableSearchFragment extends Fragment {
 
+    private static final String WAS_SHOWN = "wasShown";
     private ExpandableSearchListener mCallback;
     private EditText queryField;
     private String lastQuery = "";
     private Timer filterUpdateTimer;
-    private final int FILTER_UPDATE_DELAY_MILLIS = 0, FILTER_UPDATE_INTERVAL_MILLIS = 1000;
+    private static final int DEFAULT_FILTER_UPDATE_DELAY_MILLIS = 0,
+            DEFAULT_FILTER_UPDATE_INTERVAL_MILLIS = 1000;
+    private final int FILTER_UPDATE_DELAY_MILLIS, FILTER_UPDATE_INTERVAL_MILLIS;
+
+    @SuppressWarnings("unused")
+    public ExpandableSearchFragment() {
+        this(-1, -1);
+    }
+
+    public ExpandableSearchFragment(int filterUpdateDelayMillis, int filterUpdateIntervalMillis) {
+        FILTER_UPDATE_DELAY_MILLIS = filterUpdateDelayMillis > 0 ? filterUpdateDelayMillis :
+                DEFAULT_FILTER_UPDATE_DELAY_MILLIS;
+        FILTER_UPDATE_INTERVAL_MILLIS =
+                filterUpdateIntervalMillis > 0 ? filterUpdateIntervalMillis :
+                        DEFAULT_FILTER_UPDATE_INTERVAL_MILLIS;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_expandable_search, container, false);
+        View ret = inflater.inflate(R.layout.fragment_expandable_search, container, false);
+        return ret;
+    }
+
+    private void cancelTimer() {
+        if (filterUpdateTimer != null) {
+            filterUpdateTimer.cancel();
+        }
     }
 
     @Override
@@ -58,8 +82,6 @@ public class ExpandableSearchFragment extends Fragment {
         queryField = (EditText) view.findViewById(R.id.query_field);
 
         queryField.setVisibility(View.GONE);
-
-        setTimer();
     }
 
     private void setTimer() {
@@ -108,7 +130,7 @@ public class ExpandableSearchFragment extends Fragment {
 
     public void toggleVisibility() {
         if (queryField.isShown()) {
-            filterUpdateTimer.cancel();
+            cancelTimer();
             LoLin1Utils.slideViewUp(getActivity().getApplicationContext(), queryField);
             queryField.setVisibility(View.GONE);
             ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
@@ -127,6 +149,50 @@ public class ExpandableSearchFragment extends Fragment {
                     Context.INPUT_METHOD_SERVICE))
                     .showSoftInput(queryField, InputMethodManager.SHOW_FORCED);
         }
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        Log.d("debug", "oAC");
+        super.onActivityCreated(savedInstanceState);
+        Boolean wasShown;
+        if (savedInstanceState != null) {
+            Log.d("debug", "savedInstanceState is not null");
+        }
+        if (savedInstanceState != null &&
+                (wasShown = savedInstanceState.getBoolean(WAS_SHOWN)) != null) {
+            Log.d("debug", "savedInstanceState is not null && wasShown was found as " + wasShown);
+            if (!wasShown) {
+                cancelTimer();
+                LoLin1Utils.slideViewUp(getActivity().getApplicationContext(), queryField);
+                queryField.setVisibility(View.GONE);
+                ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
+                        Context.INPUT_METHOD_SERVICE))
+                        .hideSoftInputFromWindow(queryField.getWindowToken(), 0);
+                queryField.clearFocus();
+                queryField.setEnabled(Boolean.FALSE);
+            }
+            else {
+                setTimer();
+                LoLin1Utils.slideViewDown(getActivity().getApplicationContext(), queryField);
+                queryField.setEnabled(Boolean.TRUE);
+                queryField.setVisibility(View.VISIBLE);
+                queryField.requestFocus();
+                ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
+                        Context.INPUT_METHOD_SERVICE))
+                        .showSoftInput(queryField, InputMethodManager.SHOW_FORCED);
+            }
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        Log.d("debug", "oSIS");
+        if (outState == null) {
+            outState = new Bundle();
+        }
+        outState.putBoolean(WAS_SHOWN, queryField.isShown());
+        super.onSaveInstanceState(outState);
     }
 
     public interface ExpandableSearchListener {

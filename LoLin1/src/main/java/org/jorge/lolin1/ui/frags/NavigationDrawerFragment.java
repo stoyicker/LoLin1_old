@@ -20,7 +20,7 @@ import android.widget.ListView;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
-import org.jorge.lolin1.utils.custom.NavigationDrawerArrayAdapter;
+import org.jorge.lolin1.func.custom.NavigationDrawerAdapter;
 
 /**
  * This file is part of LoLin1.
@@ -81,7 +81,7 @@ public class NavigationDrawerFragment extends Fragment {
             }
         });
         mDrawerListView
-                .setAdapter(new NavigationDrawerArrayAdapter(getActionBar().getThemedContext()));
+                .setAdapter(new NavigationDrawerAdapter(getActionBar().getThemedContext()));
 
         return mDrawerListView;
     }

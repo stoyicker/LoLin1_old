@@ -1,10 +1,12 @@
 package org.jorge.lolin1.func.champs;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
 import org.jorge.lolin1.func.champs.models.Champion;
+import org.jorge.lolin1.io.local.CacheableBitmapLoader;
 import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.io.local.JsonManager;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -14,8 +16,8 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This file is part of LoLin1.
@@ -37,8 +39,17 @@ import java.util.Collection;
  */
 public final class ChampionManager {
 
-    private Collection<Champion> champs;
+    public List<Champion> getChampions() {
+        return champions;
+    }
+
+    private List<Champion> champions;
+    private final CacheableBitmapLoader bitmapLoader = new CacheableBitmapLoader();
     private static ChampionManager instance;
+
+    public enum ImageType {
+        BUST, SPELL, PASSIVE, SPLASH
+    }
 
     private ChampionManager() {
     }
@@ -50,26 +61,33 @@ public final class ChampionManager {
         return instance;
     }
 
-    public void setChamps(Context context) {
-        String realm = LoLin1Utils.getRealm(context), locale = LoLin1Utils.getLocale(context);
+    public void setChampions(Context context) {
+        final String realm = LoLin1Utils.getRealm(context), locale = LoLin1Utils.getLocale(context),
+                pathSeparator = LoLin1Utils.getString(context, "symbol_path_separator",
+                        null);
         File targetFile = new File(context.getExternalFilesDir(
-                LoLin1Utils.getString(context, "content_folder_name", null)) + "/" + realm + "-" +
+                LoLin1Utils.getString(context, "content_folder_name", null)) + pathSeparator +
+                realm +
+                LoLin1Utils.getString(context, "symbol_hyphen",
+                        null) +
                 PreferenceManager.getDefaultSharedPreferences(context)
-                        .getString("pref_version_" + realm, "0") + "/" + locale + "/" +
+                        .getString("pref_version_" + realm, "0") + pathSeparator + locale +
+                pathSeparator +
                 LoLin1Utils.getString(context, "list_file_name", null));
         try {
-            champs = buildChampions(JsonManager
+            champions = buildChampions(JsonManager
                     .getStringAttribute(FileManager.readFileAsString(targetFile), LoLin1Utils
                             .getString(context, "champion_list_key", null)));
         }
         catch (IOException e) {
             Log.wtf("debug", e.getClass().getName(), e);
             //It's fine, nothing will get shown
+            champions = new ArrayList<>();
         }
     }
 
-    public Collection<Champion> buildChampions(String list) {
-        ArrayDeque<Champion> ret = new ArrayDeque<>();
+    public ArrayList<Champion> buildChampions(String list) {
+        ArrayList<Champion> ret = new ArrayList<>();
         JSONArray rawChamps = null;
         try {
             rawChamps = new JSONArray(list);
@@ -91,5 +109,50 @@ public final class ChampionManager {
             }
         }
         return ret;
+    }
+
+    public Bitmap getImageByChampionIndex(int index, ImageType imageType, Context context) {
+        File root = context.getExternalFilesDir(
+                LoLin1Utils.getString(context, "content_folder_name", null));
+        final String realm = LoLin1Utils.getRealm(context), pathSeparator =
+                LoLin1Utils.getString(context, "symbol_path_separator",
+                        null);
+        final StringBuilder absolutePathToBustBuilder =
+                new StringBuilder(root.getPath()).append(pathSeparator).append(realm)
+                        .append(LoLin1Utils.getString(context, "symbol_hyphen",
+                                null))
+                        .append(PreferenceManager.getDefaultSharedPreferences(context).getString(
+                                "pref_version_" + realm, "0")).append(pathSeparator)
+                        .append(LoLin1Utils.getLocale(context)).append(pathSeparator)
+                        .append(LoLin1Utils.getString(context, "champion_image_folder",
+                                null)).append(pathSeparator);
+
+        String imageTypeAsString;
+        switch (imageType) {
+            case BUST:
+                imageTypeAsString = "bust";
+                break;
+            case PASSIVE:
+                imageTypeAsString = "passive";
+                break;
+            case SPELL:
+                imageTypeAsString = "spell";
+                break;
+            case SPLASH:
+                imageTypeAsString = "splash";
+                break;
+            default:
+                Log.wtf("debug",
+                        "Should never happen - Enumeration-type parameter taking a value out of its scope.",
+                        new RuntimeException());
+                return null;
+        }
+
+        absolutePathToBustBuilder
+                .append(LoLin1Utils.getString(context, imageTypeAsString + "_image_folder_name",
+                        null) + pathSeparator +
+                        champions.get(index).getBustImageName());
+
+        return bitmapLoader.getBitmapFromCache(absolutePathToBustBuilder.toString());
     }
 }

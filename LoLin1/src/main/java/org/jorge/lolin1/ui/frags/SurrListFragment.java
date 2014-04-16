@@ -16,8 +16,8 @@ import org.jorge.lolin1.func.feeds.surr.SurrEntry;
 import org.jorge.lolin1.io.net.SurrFeedProvider;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
-import org.jorge.lolin1.utils.custom.SurrFragmentArrayAdapter;
-import org.jorge.lolin1.utils.custom.TranslatableHeaderTransformer;
+import org.jorge.lolin1.func.custom.SurrsAdapter;
+import org.jorge.lolin1.func.custom.TranslatableHeaderTransformer;
 
 import java.util.Arrays;
 
@@ -48,7 +48,7 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 public class SurrListFragment extends ListFragment implements OnRefreshListener {
 
     private static PullToRefreshLayout mPullToRefreshLayout;
-    private SurrFragmentArrayAdapter listAdapter;
+    private SurrsAdapter listAdapter;
     private SurrFeedProvider surrFeedProvider;
     private SurrListFragmentListener mCallback;
 
@@ -56,7 +56,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (listAdapter == null) {
-            listAdapter = new SurrFragmentArrayAdapter(getActivity());
+            listAdapter = new SurrsAdapter(getActivity());
             setListAdapter(listAdapter);
         }
         if (surrFeedProvider == null) {

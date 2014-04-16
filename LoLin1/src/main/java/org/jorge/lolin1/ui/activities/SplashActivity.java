@@ -17,7 +17,7 @@ import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.io.local.JsonManager;
-import org.jorge.lolin1.io.net.HTTPServicesProvider;
+import org.jorge.lolin1.io.net.HTTPServices;
 import org.jorge.lolin1.ui.frags.SplashLogFragment;
 import org.jorge.lolin1.utils.BoxedBoolean;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -75,13 +75,13 @@ public class SplashActivity extends Activity {
             protected void onPostExecute(Void aVoid) {
                 super.onPostExecute(aVoid);
                 ChampionManager.getInstance()
-                        .setChamps(SplashActivity.this.getApplicationContext());
+                        .setChampions(SplashActivity.this.getApplicationContext());
                 launchNewsReader();
             }
 
             @Override
             protected Void doInBackground(Void... params) {
-                final CountDownLatch countDownLatch = new CountDownLatch(2);
+                final CountDownLatch countDownLatch = new CountDownLatch(1);
 
                 Runnable workerThread = new Runnable() {
                     /**
@@ -97,29 +97,7 @@ public class SplashActivity extends Activity {
                     }
                 };
 
-                Runnable delayerThread = new Runnable() {
-                    /**
-                     * Calls the <code>run()</code> method of the Runnable object the receiver
-                     * holds. If no Runnable is set, does nothing.
-                     *
-                     * @see Thread#start
-                     */
-                    @Override
-                    public void run() {
-                        try {
-                            Thread.sleep(LoLin1Utils
-                                    .getInt(getApplicationContext(),
-                                            "minimum_splash_showtime_mills", 0));
-                            countDownLatch.countDown();
-                        }
-                        catch (InterruptedException e) {
-                            Log.wtf("debug", e.getClass().getName(), e);
-                        }
-                    }
-                };
-
                 workerThread.run();
-                delayerThread.run();
 
                 try {
                     countDownLatch.await();
@@ -257,7 +235,12 @@ public class SplashActivity extends Activity {
         String currentVersion = preferences.getString("pref_version_" + realm, "0");
         File root = getApplicationContext().getExternalFilesDir(
                 LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
-        File lastVersionFolder = new File(root + "/" + realm + "-" + currentVersion);
+        File lastVersionFolder =
+                new File(root +
+                        LoLin1Utils.getString(getApplicationContext(), "symbol_path_separator",
+                                null) + realm +
+                        LoLin1Utils.getString(getApplicationContext(), "symbol_hyphen",
+                                null) + currentVersion);
         if (lastVersionFolder.exists()) {
             FileManager.recursiveDelete(lastVersionFolder);
         }
@@ -274,6 +257,10 @@ public class SplashActivity extends Activity {
 
     private Boolean runInitProcedure(String server, String realm, String[] localesInThisRealm,
                                      final String newVersion) {
+        final String symbol_hyphen = LoLin1Utils.getString(getApplicationContext(), "symbol_hyphen",
+                null), pathSeparator =
+                LoLin1Utils.getString(getApplicationContext(), "symbol_path_separator",
+                        null);
         String cdn = null;
         LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_allocating_file_structure",
@@ -282,7 +269,8 @@ public class SplashActivity extends Activity {
         );
         File root = getApplicationContext().getExternalFilesDir(
                 LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
-        File previouslyAttemptedUpdateFolder = new File(root + "/" + realm + "-" + newVersion);
+        File previouslyAttemptedUpdateFolder =
+                new File(root + pathSeparator + realm + "-" + newVersion);
         if (previouslyAttemptedUpdateFolder.exists() &&
                 !FileManager.recursiveDelete(previouslyAttemptedUpdateFolder)) {
             LOG_FRAGMENT.appendToSameLine(
@@ -293,23 +281,34 @@ public class SplashActivity extends Activity {
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         for (String locale : localesInThisRealm) {
             final String bustString =
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                    root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
+                            pathSeparator + locale + pathSeparator +
                             LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
                                     null) +
-                            "/" + "bust" + "/", splashString =
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                            pathSeparator +
+                            LoLin1Utils.getString(getApplicationContext(), "bust_image_folder_name",
+                                    null) + pathSeparator, splashString =
+                    root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
+                            pathSeparator + locale + pathSeparator +
                             LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
                                     null) +
-                            "/" + "splash" + "/", spellString =
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                            pathSeparator + LoLin1Utils.getString(getApplicationContext(),
+                            "splash_image_folder_name",
+                            null) + pathSeparator, spellString =
+                    root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
+                            pathSeparator + locale + pathSeparator +
                             LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
                                     null) +
-                            "/" + "spell" + "/", passiveString =
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                            pathSeparator + LoLin1Utils.getString(getApplicationContext(),
+                            "spell_image_folder_name",
+                            null) + pathSeparator, passiveString =
+                    root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
+                            pathSeparator + locale + pathSeparator +
                             LoLin1Utils.getString(getApplicationContext(), "champion_image_folder",
                                     null) +
-                            "/" + "passive" + "/";
-            Log.d("debug", "FLAG3");
+                            pathSeparator + LoLin1Utils
+                            .getString(getApplicationContext(), "passive_image_folder_name", null) +
+                            pathSeparator;
             File bust = new File(bustString), splash = new File(splashString), spell =
                     new File(spellString), passive = new File(passiveString);
             if (!bust.mkdirs() || !splash.mkdirs() || !spell.mkdirs() || !passive.mkdirs()) {
@@ -325,7 +324,7 @@ public class SplashActivity extends Activity {
             InputStream dataStream;
             String dataStreamAsString;
             try {
-                dataStream = HTTPServicesProvider.performListRequest(server, realm, locale);
+                dataStream = HTTPServices.performListRequest(server, realm, locale);
                 dataStreamAsString = LoLin1Utils.inputStreamAsString(dataStream);
                 if (!JsonManager.getResponseStatus(dataStreamAsString)) {
                     LOG_FRAGMENT.appendToSameLine(
@@ -335,13 +334,14 @@ public class SplashActivity extends Activity {
                     return Boolean.FALSE;
                 }
             }
-            catch (IOException | URISyntaxException | HTTPServicesProvider.ServerIsCheckingException e) {
+            catch (IOException | URISyntaxException | HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
             }
             File dataFile = new File(
-                    root.getPath() + "/" + realm + "-" + newVersion + "/" + locale + "/" +
+                    root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
+                            pathSeparator + locale + pathSeparator +
                             LoLin1Utils
                                     .getString(getApplicationContext(), "list_file_name", null)
             );
@@ -363,7 +363,7 @@ public class SplashActivity extends Activity {
                                 .getString(getApplicationContext(), "progress_character", null)
                 );
                 try {
-                    String cdnResponse = HTTPServicesProvider.performCdnRequest(server, realm);
+                    String cdnResponse = HTTPServices.performCdnRequest(server, realm);
                     if (JsonManager.getResponseStatus(cdnResponse)) {
                         cdn = JsonManager.getStringAttribute(cdnResponse,
                                 LoLin1Utils.getString(getApplicationContext(), "cdn_key", null));
@@ -376,7 +376,7 @@ public class SplashActivity extends Activity {
                         return Boolean.FALSE;
                     }
                 }
-                catch (HTTPServicesProvider.ServerIsCheckingException | URISyntaxException | IOException e) {
+                catch (HTTPServices.ServerIsCheckingException | URISyntaxException | IOException e) {
                     LOG_FRAGMENT.appendToSameLine(
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                     null)
@@ -412,7 +412,7 @@ public class SplashActivity extends Activity {
                             getApplicationContext(), "update_fatal_error", null));
                     return Boolean.FALSE;
                 }
-                final String bustImageName = champion.getImageName(), passiveImageName =
+                final String bustImageName = champion.getBustImageName(), passiveImageName =
                         champion.getPassiveImageName(), simplifiedName =
                         champion.getSimplifiedName();
                 final String[] skinNames = champion.getSkinNames(), spellImageNames =
@@ -422,12 +422,14 @@ public class SplashActivity extends Activity {
                             @Override
                             protected Boolean doInBackground(Void... params) {
                                 try {
-                                    HTTPServicesProvider.downloadFile(
-                                            finalCdn + "/" + newVersion + "/" + "img" + "/" +
+                                    HTTPServices.downloadFile(
+                                            finalCdn + pathSeparator + newVersion + pathSeparator +
+                                                    "img" + pathSeparator +
                                                     LoLin1Utils
                                                             .getString(getApplicationContext(),
                                                                     "bust_remote_folder",
-                                                                    null) + "/" + bustImageName,
+                                                                    null) + pathSeparator +
+                                                    bustImageName,
                                             new File(bustString + bustImageName)
                                     );
                                 }
@@ -447,12 +449,14 @@ public class SplashActivity extends Activity {
                             @Override
                             protected Boolean doInBackground(Void... params) {
                                 try {
-                                    HTTPServicesProvider.downloadFile(
-                                            finalCdn + "/" + newVersion + "/" + "img" + "/" +
+                                    HTTPServices.downloadFile(
+                                            finalCdn + pathSeparator + newVersion + pathSeparator +
+                                                    "img" + pathSeparator +
                                                     LoLin1Utils
                                                             .getString(getApplicationContext(),
                                                                     "passive_remote_folder",
-                                                                    null) + "/" + passiveImageName,
+                                                                    null) + pathSeparator +
+                                                    passiveImageName,
                                             new File(passiveString + passiveImageName)
                                     );
                                 }
@@ -473,12 +477,13 @@ public class SplashActivity extends Activity {
                         @Override
                         protected Boolean doInBackground(Void... params) {
                             try {
-                                HTTPServicesProvider.downloadFile(
-                                        finalCdn + "/" + newVersion + "/" + "img" + "/" +
+                                HTTPServices.downloadFile(
+                                        finalCdn + pathSeparator + newVersion + pathSeparator +
+                                                "img" + pathSeparator +
                                                 LoLin1Utils
                                                         .getString(getApplicationContext(),
                                                                 "spell_remote_folder",
-                                                                null) + "/" + spellName,
+                                                                null) + pathSeparator + spellName,
                                         new File(spellString + spellName)
                                 );
                             }
@@ -501,12 +506,14 @@ public class SplashActivity extends Activity {
                         @Override
                         protected Boolean doInBackground(Integer... params) {
                             try {
-                                HTTPServicesProvider.downloadFile(
-                                        finalCdn + "/" + "/" + "img" + "/" + "champion" + "/" +
+                                HTTPServices.downloadFile(
+                                        finalCdn + pathSeparator + pathSeparator + "img" +
+                                                pathSeparator + "champion" + pathSeparator +
                                                 LoLin1Utils
                                                         .getString(getApplicationContext(),
                                                                 "splash_remote_folder",
-                                                                null) + "/" + simplifiedName + "_" +
+                                                                null) + pathSeparator +
+                                                simplifiedName + "_" +
                                                 params[0] + "." + LoLin1Utils
                                                 .getString(getApplicationContext(),
                                                         "splash_image_extension", null),
@@ -566,7 +573,7 @@ public class SplashActivity extends Activity {
             JSONObject newVersionAsJSON;
             try {
                 newVersion = LoLin1Utils.inputStreamAsString(
-                        HTTPServicesProvider.performVersionRequest(server, realm));
+                        HTTPServices.performVersionRequest(server, realm));
             }
             catch (IOException | URISyntaxException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
@@ -574,7 +581,7 @@ public class SplashActivity extends Activity {
                                 null));
                 return;
             }
-            catch (HTTPServicesProvider.ServerIsCheckingException e) {
+            catch (HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_server_is_updating",
                                 null));
@@ -623,7 +630,7 @@ public class SplashActivity extends Activity {
         do {
             try {
                 target = dataProviders[index];
-                getContentInputStream = HTTPServicesProvider.performGetRequest(target);
+                getContentInputStream = HTTPServices.performGetRequest(target);
                 String content = LoLin1Utils.inputStreamAsString(getContentInputStream);
                 if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
                         "provider_application_error_identifier", null)) &&
@@ -637,7 +644,7 @@ public class SplashActivity extends Activity {
             catch (IOException | URISyntaxException e) {
                 Log.wtf("debug", e.getClass().getName(), e);
             }
-            catch (HTTPServicesProvider.ServerIsCheckingException e) {
+            catch (HTTPServices.ServerIsCheckingException e) {
                 //Server is busy checking for updates, so look for a new one
             }
             if (!upServerFound) {

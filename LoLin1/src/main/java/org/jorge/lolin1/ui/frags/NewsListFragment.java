@@ -15,8 +15,8 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
-import org.jorge.lolin1.utils.custom.NewsFragmentArrayAdapter;
-import org.jorge.lolin1.utils.custom.TranslatableHeaderTransformer;
+import org.jorge.lolin1.func.custom.NewsAdapter;
+import org.jorge.lolin1.func.custom.TranslatableHeaderTransformer;
 
 import java.util.Arrays;
 
@@ -47,7 +47,7 @@ import uk.co.senab.actionbarpulltorefresh.library.viewdelegates.ViewDelegate;
 public class NewsListFragment extends ListFragment implements OnRefreshListener {
 
     private static PullToRefreshLayout mPullToRefreshLayout;
-    private NewsFragmentArrayAdapter listAdapter;
+    private NewsAdapter listAdapter;
     private NewsFeedProvider newsFeedProvider;
     private NewsListFragmentListener mCallback;
 
@@ -56,7 +56,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
         super.onCreate(savedInstanceState);
 
         if (listAdapter == null) {
-            listAdapter = new NewsFragmentArrayAdapter(getActivity());
+            listAdapter = new NewsAdapter(getActivity());
             setListAdapter(listAdapter);
         }
         if (newsFeedProvider == null) {
