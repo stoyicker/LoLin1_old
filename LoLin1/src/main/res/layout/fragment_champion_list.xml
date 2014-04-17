@@ -33,7 +33,7 @@
 		android:numColumns="auto_fit"
 		android:horizontalSpacing="@dimen/champion_grid_horizontal_spacing"
 		android:verticalSpacing="@dimen/champion_grid_vertical_spacing"
-		app:effect="cards"
+		app:effect="grow"
 		app:only_animate_new_items="false"/>
 	<ImageView
 		android:id="@id/android:empty"

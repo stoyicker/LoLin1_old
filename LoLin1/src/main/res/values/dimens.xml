@@ -55,4 +55,8 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="champion_list_bust_image_padding">1dp</dimen>
 	<dimen name="champion_grid_horizontal_spacing">2dp</dimen>
 	<dimen name="champion_grid_vertical_spacing">2dp</dimen>
+	<dimen name="champion_list_overlay_background_height">40dp</dimen>
+	<dimen name="champion_list_title_text_size">10sp</dimen>
+	<dimen name="champion_list_name_text_size">11sp</dimen>
+	<dimen name="champion_list_overlay_text_horizontal_margin">5dp</dimen>
 </resources>

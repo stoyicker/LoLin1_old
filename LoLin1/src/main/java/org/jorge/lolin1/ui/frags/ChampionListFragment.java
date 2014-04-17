@@ -12,6 +12,7 @@ import android.widget.ListView;
 import com.twotoasters.jazzylistview.JazzyGridView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.func.custom.ChampionsFilterableAdapter;
 import org.jorge.lolin1.ui.activities.ChampionListActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -87,7 +88,7 @@ public class ChampionListFragment extends Fragment {
         mGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mCallback.onChampionSelected(position);
+                mCallback.onChampionSelected((Champion) mGridView.getAdapter().getItem(position));
             }
         });
 
@@ -104,6 +105,6 @@ public class ChampionListFragment extends Fragment {
     }
 
     public interface ChampionSelectionListener {
-        public void onChampionSelected(int index);
+        public void onChampionSelected(Champion champion);
     }
 }

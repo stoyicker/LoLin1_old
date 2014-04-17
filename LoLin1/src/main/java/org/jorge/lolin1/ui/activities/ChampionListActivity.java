@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.champs.ChampionManager;
+import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.ui.frags.ChampionListFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
 
@@ -83,8 +83,7 @@ public class ChampionListActivity extends DrawerLayoutFragmentActivity implement
     }
 
     @Override
-    public void onChampionSelected(int index) {
-        Log.d("debug", "Champion selected is " + ChampionManager.getInstance()
-                .getNameByChampionIndex(index)); //TODO Show the champion stuff
+    public void onChampionSelected(Champion champion) {
+        Log.d("debug", "Champion selected is " + champion.getName()); //TODO Show the champion stuff
     }
 }

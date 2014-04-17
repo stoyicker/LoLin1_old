@@ -81,4 +81,24 @@ Created by JorgeAntonio on 02/01/14.
 		<item name="android:textColor">@color/theme_black</item>
 		<item name="android:textStyle">bold</item>
 	</style>
+	<style name="ChampionListTitleStyle">
+		<item name="android:typeface">sans</item>
+		<item name="android:textColor">@color/theme_white</item>
+		<item name="android:gravity">left</item>
+		<item name="android:textSize">@dimen/champion_list_title_text_size</item>
+		<item name="android:shadowColor">@color/theme_black</item>
+		<item name="android:shadowDx">2</item>
+		<item name="android:shadowDy">2</item>
+		<item name="android:shadowRadius">2</item>
+	</style>
+	<style name="ChampionListNameStyle">
+		<item name="android:textColor">@color/theme_white</item>
+		<item name="android:gravity">left</item>
+		<item name="android:textSize">@dimen/champion_list_name_text_size</item>
+		<item name="android:textStyle">bold</item>
+		<item name="android:shadowColor">@color/theme_black</item>
+		<item name="android:shadowDx">2</item>
+		<item name="android:shadowDy">2</item>
+		<item name="android:shadowRadius">2</item>
+	</style>
 </resources>

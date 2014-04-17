@@ -11,6 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.ChampionManager;
@@ -105,6 +106,10 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ViewHolder viewHolder;
+
+        int sideLength = LoLin1Utils
+                .getInt(mActivity.getApplicationContext(), "champion_list_bust_length", -1);
+
         if (convertView == null) {
             convertView =
                     ((LayoutInflater) mActivity.getApplicationContext()
@@ -113,14 +118,13 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
                                     LIST_ITEM_LAYOUT, null);
             viewHolder = new ViewHolder();
             viewHolder.setChampionBust((ImageView) convertView.findViewById(R.id.bust_image));
+            viewHolder.setTitleOverlay((TextView) convertView.findViewById(R.id.overlay_title));
+            viewHolder.setNameOverlay((TextView) convertView.findViewById(R.id.overlay_name));
             convertView.setTag(viewHolder);
         }
         else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        int sideLength = LoLin1Utils
-                .getInt(mActivity.getApplicationContext(), "champion_list_bust_length", -1);
 
         new AsyncTask<Object, Void, Void>() {
 
@@ -134,18 +138,25 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        ((ImageView) params[0]).setImageBitmap(bmp);
+                        ViewHolder viewHolder1 = (ViewHolder) params[0];
+                        (viewHolder1).getChampionBust().setImageBitmap(bmp);
                     }
                 });
                 return null;
             }
-        }.execute(viewHolder.getChampionBust(), position, sideLength);
+        }.execute(viewHolder, position, sideLength);
+
+        viewHolder.getTitleOverlay()
+                .setText(data.get(position).getTitle());
+        viewHolder.getNameOverlay()
+                .setText(data.get(position).getName());
 
         return convertView;
     }
 
     private class ViewHolder {
         private ImageView championBust;
+        private TextView titleOverlay, nameOverlay;
 
         public ImageView getChampionBust() {
             return championBust;
@@ -153,6 +164,22 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
 
         public void setChampionBust(ImageView championBust) {
             this.championBust = championBust;
+        }
+
+        public TextView getTitleOverlay() {
+            return titleOverlay;
+        }
+
+        public void setTitleOverlay(TextView titleOverlay) {
+            this.titleOverlay = titleOverlay;
+        }
+
+        public TextView getNameOverlay() {
+            return nameOverlay;
+        }
+
+        public void setNameOverlay(TextView nameOverlay) {
+            this.nameOverlay = nameOverlay;
         }
     }
 }
