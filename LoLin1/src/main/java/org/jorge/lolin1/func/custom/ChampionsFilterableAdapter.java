@@ -76,7 +76,12 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
                 ChampionsFilterableAdapter.this.data.clear();
                 ChampionsFilterableAdapter.this.data.addAll(
                         (java.util.Collection<? extends Champion>) results.values);
-                notifyDataSetChanged();
+                mActivity.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        ChampionsFilterableAdapter.this.notifyDataSetChanged();
+                    }
+                });
             }
         };
     }
@@ -119,7 +124,7 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
             protected Void doInBackground(final Object... params) {
                 final Bitmap bmp =
                         ChampionManager.getInstance().getImageByChampionIndex((Integer) params[1],
-                                ChampionManager.ImageType.BUST,
+                                ChampionManager.ImageType.BUST, data,
                                 mActivity.getApplicationContext());
                 mActivity.runOnUiThread(new Runnable() {
                     @Override

@@ -95,7 +95,8 @@ public class ChampionListFragment extends Fragment {
         mGridView.setAdapter(listAdapter);
 
         mGridView.setColumnWidth(ChampionManager.getInstance().getImageByChampionIndex(0,
-                ChampionManager.ImageType.BUST, getActivity().getApplicationContext()).getWidth());
+                ChampionManager.ImageType.BUST, null, getActivity().getApplicationContext())
+                .getWidth());
 
         return ret;
     }

@@ -116,13 +116,18 @@ public class Champion {
     }
 
     public Boolean containsText(CharSequence text) {
+        String lowerCaseText = text.toString().toLowerCase();
         try {
             Field[] fields = Champion.class.getDeclaredFields();
             for (Field x : fields) {
                 Class type = x.getType();
                 x.setAccessible(Boolean.TRUE);
+                if (x.getName().contentEquals("lore")) {
+                    //Too generic
+                    continue;
+                }
                 if (!type.isArray() && type == String.class) {
-                    if (x.get(this).toString().contains(text)) {
+                    if (x.get(this).toString().toLowerCase().contains(lowerCaseText)) {
                         x.setAccessible(Boolean.FALSE);
                         return Boolean.TRUE;
                     }
@@ -130,7 +135,7 @@ public class Champion {
                 else if (type.isArray() && x.getType() == String.class) {
                     String[] thisStringArray = (String[]) x.get(this);
                     for (String y : thisStringArray) {
-                        if (y.contains(text)) {
+                        if (y.toLowerCase().contains(lowerCaseText)) {
                             x.setAccessible(Boolean.FALSE);
                             return Boolean.TRUE;
                         }
@@ -141,7 +146,8 @@ public class Champion {
                     Field[] passiveSpellFields = PassiveSpell.class.getDeclaredFields();
                     for (Field y : passiveSpellFields) {
                         y.setAccessible(Boolean.TRUE);
-                        if (y.get(thisPassiveSpell).toString().contains(text)) {
+                        if (y.get(thisPassiveSpell).toString().toLowerCase()
+                                .contains(lowerCaseText)) {
                             y.setAccessible(Boolean.FALSE);
                             x.setAccessible(Boolean.FALSE);
                             return Boolean.TRUE;
@@ -154,7 +160,8 @@ public class Champion {
                     for (ActiveSpell eachActiveSpell : thisActiveSpellArray) {
                         Field[] eachActiveSpellFieldArray = ActiveSpell.class.getDeclaredFields();
                         for (Field y : eachActiveSpellFieldArray) {
-                            if (y.get(eachActiveSpell).toString().contains(text)) {
+                            if (y.get(eachActiveSpell).toString().toLowerCase()
+                                    .contains(lowerCaseText)) {
                                 y.setAccessible(Boolean.FALSE);
                                 x.setAccessible(Boolean.FALSE);
                                 return Boolean.TRUE;

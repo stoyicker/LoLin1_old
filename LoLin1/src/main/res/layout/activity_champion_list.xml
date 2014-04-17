@@ -25,17 +25,16 @@
 	android:layout_height="match_parent">
 	<LinearLayout android:layout_width="match_parent"
 	              android:layout_height="match_parent"
+	              android:background="@color/theme_sea_blue"
 	              android:orientation="vertical">
 		<fragment
 			android:id="@+id/champion_list_search"
-			android:background="@color/theme_white"
 			android:name="org.jorge.lolin1.ui.frags.ExpandableSearchFragment"
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
 			/>
 		<fragment
 			android:id="@+id/champion_list_grid"
-			android:background="@color/theme_sea_blue"
 			android:name="org.jorge.lolin1.ui.frags.ChampionListFragment"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"/>

@@ -26,6 +26,7 @@
 		android:id="@+id/query_field"
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
+		android:background="@color/theme_white"
 		android:padding="@dimen/expandable_search_fragment_padding"
 		android:hint="@string/champion_search_hint"
 		android:inputType="textAutoComplete"

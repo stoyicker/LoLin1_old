@@ -79,7 +79,6 @@ public class ChampionListActivity extends DrawerLayoutFragmentActivity implement
 
     @Override
     public void onNewQuery(String query) {
-        Log.d("debug", "Query is: " + query); //TODO Filter the list
         CHAMPION_LIST_FRAGMENT.applyFilter(query);
     }
 

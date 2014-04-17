@@ -115,7 +115,10 @@ public final class ChampionManager {
         return ret;
     }
 
-    public Bitmap getImageByChampionIndex(int index, ImageType imageType, Context context) {
+    public Bitmap getImageByChampionIndex(int index, ImageType imageType, List<Champion> data,
+                                          Context context) {
+        List<Champion> consideredList = data == null ? champions : data;
+
         File root = context.getExternalFilesDir(
                 LoLin1Utils.getString(context, "content_folder_name", null));
         final String realm = LoLin1Utils.getRealm(context), pathSeparator =
@@ -154,8 +157,8 @@ public final class ChampionManager {
 
         absolutePathToBustBuilder
                 .append(LoLin1Utils.getString(context, imageTypeAsString + "_image_folder_name",
-                        null) + pathSeparator +
-                        champions.get(index).getBustImageName());
+                        null)).append(pathSeparator)
+                .append(consideredList.get(index).getBustImageName());
 
         return bitmapLoader.getBitmapFromCache(absolutePathToBustBuilder.toString());
     }
