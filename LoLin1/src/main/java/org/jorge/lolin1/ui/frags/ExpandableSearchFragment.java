@@ -178,6 +178,14 @@ public class ExpandableSearchFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
+                Context.INPUT_METHOD_SERVICE))
+                .hideSoftInputFromWindow(queryField.getWindowToken(), 0);
+        super.onPause();
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         if (outState == null) {
             outState = new Bundle();
