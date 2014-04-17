@@ -40,7 +40,8 @@ public final class CacheableBitmapLoader {
         this(-1, -1);
     }
 
-    public CacheableBitmapLoader(int hardCacheCapacity, int delayBeforePurgeMillis) {
+    public CacheableBitmapLoader(int hardCacheCapacity,
+                                 int delayBeforePurgeMillis) {
         try {
             Looper.prepare();
         }
@@ -73,27 +74,27 @@ public final class CacheableBitmapLoader {
     private void addBitmapToCache(String absolutePath, Bitmap bitmap) {
         if (bitmap != null) {
             synchronized (sHardBitmapCache) {
-                sHardBitmapCache.put(absolutePath, bitmap);
+                sHardBitmapCache.put(absolutePath + bitmap.getWidth() + bitmap.getHeight(), bitmap);
             }
         }
     }
 
-    public Bitmap getBitmapFromCache(String absolutePath) {
+    public Bitmap getBitmapFromCache(String absolutePath, int width, int height) {
         resetPurgeTimer();
         // First try the hard reference cache
         synchronized (sHardBitmapCache) {
-            final Bitmap bitmap = sHardBitmapCache.get(absolutePath);
+            final Bitmap bitmap = sHardBitmapCache.get(absolutePath + width + height);
             if (bitmap != null) {
                 // Bitmap found in hard cache
                 // Move element to first position, so that it is removed last
-                sHardBitmapCache.remove(absolutePath);
-                sHardBitmapCache.put(absolutePath, bitmap);
+                sHardBitmapCache.remove(absolutePath + width + height);
+                sHardBitmapCache.put(absolutePath + width + height, bitmap);
                 return bitmap;
             }
         }
 
         // Then try the soft reference cache
-        SoftReference<Bitmap> bitmapReference = sSoftBitmapCache.get(absolutePath);
+        SoftReference<Bitmap> bitmapReference = sSoftBitmapCache.get(absolutePath + width + height);
         if (bitmapReference != null) {
             final Bitmap bitmap = bitmapReference.get();
             if (bitmap != null) {
@@ -102,20 +103,22 @@ public final class CacheableBitmapLoader {
             }
             else {
                 // Soft reference has been Garbage Collected
-                sSoftBitmapCache.remove(absolutePath);
+                sSoftBitmapCache.remove(absolutePath + width + height);
             }
         }
 
-        Bitmap bitmap = loadBitmapFromDisk(absolutePath);
+        Bitmap bitmap = loadBitmapFromDisk(absolutePath, width, height);
         addBitmapToCache(absolutePath, bitmap);
         return bitmap;
 
     }
 
-    private Bitmap loadBitmapFromDisk(String absolutePath) {
+    private Bitmap loadBitmapFromDisk(String absolutePath, int width, int height) {
+        Bitmap retAux;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-        return BitmapFactory.decodeFile(absolutePath, options);
+        retAux = BitmapFactory.decodeFile(absolutePath, options);
+        return Bitmap.createScaledBitmap(retAux, width, height, Boolean.TRUE);
     }
 
     private void clearCache() {

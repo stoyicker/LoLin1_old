@@ -12,7 +12,6 @@ import android.widget.ListView;
 import com.twotoasters.jazzylistview.JazzyGridView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.custom.ChampionsFilterableAdapter;
 import org.jorge.lolin1.ui.activities.ChampionListActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -94,9 +93,8 @@ public class ChampionListFragment extends Fragment {
 
         mGridView.setAdapter(listAdapter);
 
-        mGridView.setColumnWidth(ChampionManager.getInstance().getImageByChampionIndex(0,
-                ChampionManager.ImageType.BUST, null, getActivity().getApplicationContext())
-                .getWidth());
+        mGridView.setColumnWidth(LoLin1Utils
+                .getInt(getActivity().getApplicationContext(), "champion_list_bust_length", -1));
 
         return ret;
     }

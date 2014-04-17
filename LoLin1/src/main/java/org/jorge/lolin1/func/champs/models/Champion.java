@@ -115,67 +115,99 @@ public class Champion {
         return imageName.substring(0, imageName.indexOf("."));
     }
 
-    public Boolean containsText(CharSequence text) {
-        String lowerCaseText = text.toString().toLowerCase();
-        try {
-            Field[] fields = Champion.class.getDeclaredFields();
-            for (Field x : fields) {
-                Class type = x.getType();
-                x.setAccessible(Boolean.TRUE);
-                if (x.getName().contentEquals("lore")) {
-                    //Too generic
-                    continue;
-                }
-                if (!type.isArray() && type == String.class) {
-                    if (x.get(this).toString().toLowerCase().contains(lowerCaseText)) {
-                        x.setAccessible(Boolean.FALSE);
-                        return Boolean.TRUE;
-                    }
-                }
-                else if (type.isArray() && x.getType() == String.class) {
-                    String[] thisStringArray = (String[]) x.get(this);
-                    for (String y : thisStringArray) {
-                        if (y.toLowerCase().contains(lowerCaseText)) {
-                            x.setAccessible(Boolean.FALSE);
-                            return Boolean.TRUE;
-                        }
-                    }
-                }
-                else if (type == PassiveSpell.class) {
-                    PassiveSpell thisPassiveSpell = (PassiveSpell) x.get(this);
-                    Field[] passiveSpellFields = PassiveSpell.class.getDeclaredFields();
-                    for (Field y : passiveSpellFields) {
-                        y.setAccessible(Boolean.TRUE);
-                        if (y.get(thisPassiveSpell).toString().toLowerCase()
-                                .contains(lowerCaseText)) {
-                            y.setAccessible(Boolean.FALSE);
-                            x.setAccessible(Boolean.FALSE);
-                            return Boolean.TRUE;
-                        }
-                        y.setAccessible(Boolean.FALSE);
-                    }
-                }
-                else if (type.isArray() && x.getType() == ActiveSpell.class) {
-                    ActiveSpell[] thisActiveSpellArray = (ActiveSpell[]) x.get(this);
-                    for (ActiveSpell eachActiveSpell : thisActiveSpellArray) {
-                        Field[] eachActiveSpellFieldArray = ActiveSpell.class.getDeclaredFields();
-                        for (Field y : eachActiveSpellFieldArray) {
-                            if (y.get(eachActiveSpell).toString().toLowerCase()
-                                    .contains(lowerCaseText)) {
-                                y.setAccessible(Boolean.FALSE);
-                                x.setAccessible(Boolean.FALSE);
-                                return Boolean.TRUE;
-                            }
-                            y.setAccessible(Boolean.FALSE);
-                        }
-                    }
-                }
-                x.setAccessible(Boolean.FALSE);
+    public Boolean matchesFilter(CharSequence filterText) {
+//        String lowerCaseText = text.toString().toLowerCase();
+//        try {
+//            Field[] fields = Champion.class.getDeclaredFields();
+//            for (Field x : fields) {
+//                Class type = x.getType();
+//                x.setAccessible(Boolean.TRUE);
+//                if (x.getName().contentEquals("lore")) {
+//                    //Too generic
+//                    continue;
+//                }
+//                if (!type.isArray() && type == String.class) {
+//                    if (x.get(this).toString().toLowerCase().contains(lowerCaseText)) {
+//                        x.setAccessible(Boolean.FALSE);
+//                        return Boolean.TRUE;
+//                    }
+//                }
+//                else if (type.isArray() && x.getType() == String.class) {
+//                    String[] thisStringArray = (String[]) x.get(this);
+//                    for (String y : thisStringArray) {
+//                        if (y.toLowerCase().contains(lowerCaseText)) {
+//                            x.setAccessible(Boolean.FALSE);
+//                            return Boolean.TRUE;
+//                        }
+//                    }
+//                }
+//                else if (type == PassiveSpell.class) {
+//                    PassiveSpell thisPassiveSpell = (PassiveSpell) x.get(this);
+//                    Field[] passiveSpellFields = PassiveSpell.class.getDeclaredFields();
+//                    for (Field y : passiveSpellFields) {
+//                        y.setAccessible(Boolean.TRUE);
+//                        if (y.get(thisPassiveSpell).toString().toLowerCase()
+//                                .contains(lowerCaseText)) {
+//                            y.setAccessible(Boolean.FALSE);
+//                            x.setAccessible(Boolean.FALSE);
+//                            return Boolean.TRUE;
+//                        }
+//                        y.setAccessible(Boolean.FALSE);
+//                    }
+//                }
+//                else if (type.isArray() && x.getType() == ActiveSpell.class) {
+//                    ActiveSpell[] thisActiveSpellArray = (ActiveSpell[]) x.get(this);
+//                    for (ActiveSpell eachActiveSpell : thisActiveSpellArray) {
+//                        Field[] eachActiveSpellFieldArray = ActiveSpell.class.getDeclaredFields();
+//                        for (Field y : eachActiveSpellFieldArray) {
+//                            if (y.get(eachActiveSpell).toString().toLowerCase()
+//                                    .contains(lowerCaseText)) {
+//                                y.setAccessible(Boolean.FALSE);
+//                                x.setAccessible(Boolean.FALSE);
+//                                return Boolean.TRUE;
+//                            }
+//                            y.setAccessible(Boolean.FALSE);
+//                        }
+//                    }
+//                }
+//                x.setAccessible(Boolean.FALSE);
+//            }
+//        }
+//        catch (IllegalAccessException ex) {
+//            Log.wtf("debug", ex.getClass().getName(), ex);
+//        }
+        String lowerCaseFilterText = filterText.toString().toLowerCase();
+        if (this.getName().toLowerCase().contains(lowerCaseFilterText)) {
+            return Boolean.TRUE;
+        }
+        if (this.getSimplifiedName().toLowerCase().contains(lowerCaseFilterText)) {
+            return Boolean.TRUE;
+        }
+        if (this.getTitle().toLowerCase().contains(lowerCaseFilterText)) {
+            return Boolean.TRUE;
+        }
+        String[] tags = this.getTags();
+        for (String tag : tags)
+            if (tag.toLowerCase().contains(lowerCaseFilterText)) {
+                return Boolean.TRUE;
+            }
+        if (this.getPassive().getName().toLowerCase().contains(lowerCaseFilterText)) {
+            return Boolean.TRUE;
+        }
+        ActiveSpell[] spells = this.getSpells();
+        for (ActiveSpell spell : spells) {
+            if (spell.getName().toLowerCase().contains(lowerCaseFilterText)) {
+                return Boolean.TRUE;
             }
         }
-        catch (IllegalAccessException ex) {
-            Log.wtf("debug", ex.getClass().getName(), ex);
-        }
         return Boolean.FALSE;
+    }
+
+    public PassiveSpell getPassive() {
+        return passive;
+    }
+
+    public ActiveSpell[] getSpells() {
+        return spells;
     }
 }

@@ -25,4 +25,5 @@ Created by JorgeAntonio on 10/01/14.
 	<integer name="language_chooser_text_size">17</integer>
 	<integer name="server_and_language_text_views_vertical_margin">10</integer>
 	<integer name="server_and_language_text_views_horizontal_margin">15</integer>
+	<integer name="champion_list_bust_length">200</integer>
 </resources>

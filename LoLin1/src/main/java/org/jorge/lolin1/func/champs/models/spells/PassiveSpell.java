@@ -36,7 +36,7 @@ public class PassiveSpell {
         return detail;
     }
 
-    protected final String getName() {
+    public final String getName() {
         return name;
     }
 }

@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -62,7 +63,7 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
                 else {
                     List<Champion> validChampions = new ArrayList<>();
                     for (Champion x : allChampions) {
-                        if (x.containsText(constraint)) {
+                        if (x.matchesFilter(constraint)) {
                             validChampions.add(x);
                         }
                     }
@@ -118,13 +119,17 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
+        int sideLength = LoLin1Utils
+                .getInt(mActivity.getApplicationContext(), "champion_list_bust_length", -1);
+
         new AsyncTask<Object, Void, Void>() {
 
             @Override
             protected Void doInBackground(final Object... params) {
                 final Bitmap bmp =
                         ChampionManager.getInstance().getImageByChampionIndex((Integer) params[1],
-                                ChampionManager.ImageType.BUST, data,
+                                ChampionManager.ImageType.BUST, (Integer) params[2],
+                                (Integer) params[2], data,
                                 mActivity.getApplicationContext());
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
@@ -134,7 +139,7 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
                 });
                 return null;
             }
-        }.execute(viewHolder.getChampionBust(), position);
+        }.execute(viewHolder.getChampionBust(), position, sideLength);
 
         return convertView;
     }

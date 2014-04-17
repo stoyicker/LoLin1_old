@@ -115,7 +115,8 @@ public final class ChampionManager {
         return ret;
     }
 
-    public Bitmap getImageByChampionIndex(int index, ImageType imageType, List<Champion> data,
+    public Bitmap getImageByChampionIndex(int index, ImageType imageType, int width, int height,
+                                          List<Champion> data,
                                           Context context) {
         List<Champion> consideredList = data == null ? champions : data;
 
@@ -160,6 +161,7 @@ public final class ChampionManager {
                         null)).append(pathSeparator)
                 .append(consideredList.get(index).getBustImageName());
 
-        return bitmapLoader.getBitmapFromCache(absolutePathToBustBuilder.toString());
+        return bitmapLoader
+                .getBitmapFromCache(absolutePathToBustBuilder.toString(), width, height);
     }
 }
