@@ -16,6 +16,9 @@ import org.jorge.lolin1.ui.frags.NavigationDrawerFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This file is part of LoLin1.
@@ -42,6 +45,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
             new ArrayList<>();
     public static final String ACTIVITY_LAYOUT = "LAYOUT";
     public static final String ACTION_BAR_MENU_LAYOUT = "ACTION_BAR_MENU_LAYOUT";
+    private static final long NEW_ACTIVITY_DELAY = 250;
     private DrawerLayout drawerLayout;
     private CharSequence mTitle;
 
@@ -95,21 +99,42 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
             navigatedItemsStack.add(0, position);
         }
 
-        Class target = null;
+        Runnable task;
         switch (position) {
             case 0:
-                target = NewsReaderActivity.class;
+                task = new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(
+                                new Intent(getApplicationContext(), NewsReaderActivity.class));
+                    }
+                };
                 break;
             case 2:
-                target = ChampionListActivity.class;
+                task = new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(
+                                new Intent(getApplicationContext(), ChampionListActivity.class));
+                    }
+                };
                 break;
             case 3:
-                target = SurrReaderActivity.class;
+                task = new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(
+                                new Intent(getApplicationContext(), SurrReaderActivity.class));
+                    }
+                };
                 break;
             default:
                 Log.wtf("debug", "Should never happen - Selected index - " + position);
+                task = null;
         }
-        startActivity(new Intent(getApplicationContext(), target));
+        ScheduledExecutorService newActivityExecutor =
+                Executors.newSingleThreadScheduledExecutor();
+        newActivityExecutor.schedule(task, NEW_ACTIVITY_DELAY, TimeUnit.MILLISECONDS);
     }
 
     @Override
