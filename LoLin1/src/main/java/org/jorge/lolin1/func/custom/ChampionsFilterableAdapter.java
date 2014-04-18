@@ -64,7 +64,7 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
                 else {
                     List<Champion> validChampions = new ArrayList<>();
                     for (Champion x : allChampions) {
-                        if (x.matchesFilter(constraint)) {
+                        if (x.matchesFilterQuery(constraint)) {
                             validChampions.add(x);
                         }
                     }

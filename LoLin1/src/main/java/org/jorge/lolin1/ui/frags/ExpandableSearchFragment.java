@@ -179,6 +179,9 @@ public class ExpandableSearchFragment extends Fragment {
 
     @Override
     public void onPause() {
+        if (queryField.isShown()) {
+            toggleVisibility();
+        }
         ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
                 Context.INPUT_METHOD_SERVICE))
                 .hideSoftInputFromWindow(queryField.getWindowToken(), 0);

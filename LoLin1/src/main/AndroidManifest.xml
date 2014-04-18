@@ -121,6 +121,16 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+		<activity
+			android:name=".ui.activities.ChampionDetailActivity"
+			android:label="@string/champion_detail_title"
+			android:launchMode="singleTop"
+			android:logo="@drawable/icon_section3">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
 	</application>
 
 </manifest>

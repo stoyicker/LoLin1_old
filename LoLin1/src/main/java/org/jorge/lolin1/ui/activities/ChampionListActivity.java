@@ -1,6 +1,7 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -84,6 +85,10 @@ public class ChampionListActivity extends DrawerLayoutFragmentActivity implement
 
     @Override
     public void onChampionSelected(Champion champion) {
-        Log.d("debug", "Champion selected is " + champion.getName()); //TODO Show the champion stuff
+        Intent championDetailIntent =
+                new Intent(getApplicationContext(), ChampionDetailActivity.class);
+        championDetailIntent.putExtra(ChampionDetailActivity.SELECTED_CHAMPION, champion);
+        startActivity(championDetailIntent);
+        Log.d("debug", "Champion selected (sent) is " + champion.getName());
     }
 }

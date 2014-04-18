@@ -16,6 +16,9 @@
  */
 package org.jorge.lolin1.func.champs.models.spells;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import org.json.JSONException;
 
 public class ActiveSpell extends PassiveSpell {
@@ -24,7 +27,15 @@ public class ActiveSpell extends PassiveSpell {
      * Passive spells are not considered by Riot to have a cooldownBurn nor a
      * rangeBurn.
      */
-    private final String cooldownBurn, rangeBurn, costBurn;
+    private String cooldownBurn, rangeBurn, costBurn;
+
+    public ActiveSpell(Parcel in) {
+        super(in);
+        this.cooldownBurn = in.readString();
+        this.rangeBurn = in.readString();
+        this.costBurn = in.readString();
+
+    }
 
     protected ActiveSpell(String name, String detail, String imageName, String cooldownBurn,
                           String rangeBurn, String costBurn) throws JSONException {
@@ -45,4 +56,27 @@ public class ActiveSpell extends PassiveSpell {
     protected final String getCostBurn() {
         return costBurn;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        super.writeToParcel(dest, flags);
+        dest.writeString(this.getCooldownBurn());
+        dest.writeString(this.getRangeBurn());
+        dest.writeString(this.getCostBurn());
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public ActiveSpell createFromParcel(Parcel in) {
+            return new ActiveSpell(in);
+        }
+
+        public ActiveSpell[] newArray(int size) {
+            return new ActiveSpell[size];
+        }
+    };
 }

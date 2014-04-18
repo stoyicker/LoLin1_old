@@ -180,4 +180,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="spell_image_folder_name">spell</string>
 	<string name="passive_image_folder_name">passive</string>
 	<string name="champion_list_item_content_description">Champion bust</string>
+	<string name="champion_detail_title">Champion detail</string>
 </resources>

@@ -16,6 +16,8 @@
  */
 package org.jorge.lolin1.func.champs.models;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import org.jorge.lolin1.func.champs.models.spells.AbstractSpellFactory;
@@ -27,17 +29,46 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
-public class Champion {
+public class Champion implements Parcelable {
 
     private String key, name, title, attackrange, mpperlevel, mp, attackdamage,
             hp, hpperlevel, attackdamageperlevel, armor, mpregenperlevel,
             hpregen, critperlevel, spellblockperlevel, mpregen,
             attackspeedperlevel, spellblock, movespeed, attackspeedoffset,
             crit, hpregenperlevel, armorperlevel, lore, imageName;
-    private final String[] tags;
-    private final ActiveSpell[] spells;
-    private final PassiveSpell passive;
-    private String[] skins;
+    private String[] tags, skins;
+    private PassiveSpell passive;
+    private ActiveSpell[] spells;
+
+    public Champion(Parcel in) {
+        Field[] declaredFields = Champion.class.getDeclaredFields();
+        try {
+            for (Field x : declaredFields) {
+                Class<?> thisType = x.getType();
+                if (thisType == String.class) {
+                    x.setAccessible(Boolean.TRUE);
+                    if (thisType.isArray()) {
+                        String[] values = null;
+                        in.readStringArray(values);
+                        x.set(this, values);
+                    }
+                    else {
+                        x.set(this, in.readString());
+                    }
+                    x.setAccessible(Boolean.FALSE);
+                }
+            }
+        }
+        catch (IllegalAccessException e) {
+            Log.wtf("debug", e.getClass().getName(), e);
+        }
+        passive = in.readParcelable(PassiveSpell.class.getClassLoader());
+        Parcelable[] parcelableSpells = in.readParcelableArray(ActiveSpell.class.getClassLoader());
+        spells = new ActiveSpell[parcelableSpells.length];
+        for (int i = 0; i < spells.length; i++) {
+            spells[i] = (ActiveSpell) parcelableSpells[i];
+        }
+    }
 
     public Champion(JSONObject descriptor) throws JSONException {
         Field[] fields = Champion.class.getDeclaredFields();
@@ -115,67 +146,7 @@ public class Champion {
         return imageName.substring(0, imageName.indexOf("."));
     }
 
-    public Boolean matchesFilter(CharSequence filterText) {
-//        String lowerCaseText = text.toString().toLowerCase();
-//        try {
-//            Field[] fields = Champion.class.getDeclaredFields();
-//            for (Field x : fields) {
-//                Class type = x.getType();
-//                x.setAccessible(Boolean.TRUE);
-//                if (x.getName().contentEquals("lore")) {
-//                    //Too generic
-//                    continue;
-//                }
-//                if (!type.isArray() && type == String.class) {
-//                    if (x.get(this).toString().toLowerCase().contains(lowerCaseText)) {
-//                        x.setAccessible(Boolean.FALSE);
-//                        return Boolean.TRUE;
-//                    }
-//                }
-//                else if (type.isArray() && x.getType() == String.class) {
-//                    String[] thisStringArray = (String[]) x.get(this);
-//                    for (String y : thisStringArray) {
-//                        if (y.toLowerCase().contains(lowerCaseText)) {
-//                            x.setAccessible(Boolean.FALSE);
-//                            return Boolean.TRUE;
-//                        }
-//                    }
-//                }
-//                else if (type == PassiveSpell.class) {
-//                    PassiveSpell thisPassiveSpell = (PassiveSpell) x.get(this);
-//                    Field[] passiveSpellFields = PassiveSpell.class.getDeclaredFields();
-//                    for (Field y : passiveSpellFields) {
-//                        y.setAccessible(Boolean.TRUE);
-//                        if (y.get(thisPassiveSpell).toString().toLowerCase()
-//                                .contains(lowerCaseText)) {
-//                            y.setAccessible(Boolean.FALSE);
-//                            x.setAccessible(Boolean.FALSE);
-//                            return Boolean.TRUE;
-//                        }
-//                        y.setAccessible(Boolean.FALSE);
-//                    }
-//                }
-//                else if (type.isArray() && x.getType() == ActiveSpell.class) {
-//                    ActiveSpell[] thisActiveSpellArray = (ActiveSpell[]) x.get(this);
-//                    for (ActiveSpell eachActiveSpell : thisActiveSpellArray) {
-//                        Field[] eachActiveSpellFieldArray = ActiveSpell.class.getDeclaredFields();
-//                        for (Field y : eachActiveSpellFieldArray) {
-//                            if (y.get(eachActiveSpell).toString().toLowerCase()
-//                                    .contains(lowerCaseText)) {
-//                                y.setAccessible(Boolean.FALSE);
-//                                x.setAccessible(Boolean.FALSE);
-//                                return Boolean.TRUE;
-//                            }
-//                            y.setAccessible(Boolean.FALSE);
-//                        }
-//                    }
-//                }
-//                x.setAccessible(Boolean.FALSE);
-//            }
-//        }
-//        catch (IllegalAccessException ex) {
-//            Log.wtf("debug", ex.getClass().getName(), ex);
-//        }
+    public Boolean matchesFilterQuery(CharSequence filterText) {
         String lowerCaseFilterText = filterText.toString().toLowerCase();
         if (this.getName().toLowerCase().contains(lowerCaseFilterText)) {
             return Boolean.TRUE;
@@ -210,4 +181,44 @@ public class Champion {
     public ActiveSpell[] getSpells() {
         return spells;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        Field[] declaredFields = Champion.class.getDeclaredFields();
+        try {
+            for (Field x : declaredFields) {
+                Class<?> thisType = x.getType();
+                if (thisType == String.class) {
+                    x.setAccessible(Boolean.TRUE);
+                    if (thisType.isArray()) {
+                        dest.writeStringArray((String[]) x.get(this));
+                    }
+                    else {
+                        dest.writeString(x.get(this).toString());
+                    }
+                    x.setAccessible(Boolean.FALSE);
+                }
+            }
+        }
+        catch (IllegalAccessException e) {
+            Log.wtf("debug", e.getClass().getName(), e);
+        }
+        dest.writeParcelable(this.passive, flags);
+        dest.writeParcelableArray(this.spells, flags);
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public Champion createFromParcel(Parcel in) {
+            return new Champion(in);
+        }
+
+        public Champion[] newArray(int size) {
+            return new Champion[size];
+        }
+    };
 }

@@ -16,16 +16,23 @@
  */
 package org.jorge.lolin1.func.champs.models.spells;
 
-public class PassiveSpell {
+import android.os.Parcel;
+import android.os.Parcelable;
 
-    private final String imageName;
-    private final String detail;
-    private final String name;
+public class PassiveSpell implements Parcelable {
+
+    private String imageName, detail, name;
 
     protected PassiveSpell(String _name, String _detail, String _imageName) {
         this.name = _name;
         this.detail = _detail;
         this.imageName = _imageName;
+    }
+
+    public PassiveSpell(Parcel in) {
+        this.name = in.readString();
+        this.detail = in.readString();
+        this.imageName = in.readString();
     }
 
     public final String getImageName() {
@@ -39,4 +46,26 @@ public class PassiveSpell {
     public final String getName() {
         return name;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.getName());
+        dest.writeString(this.getDetail());
+        dest.writeString(this.getImageName());
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public PassiveSpell createFromParcel(Parcel in) {
+            return new PassiveSpell(in);
+        }
+
+        public PassiveSpell[] newArray(int size) {
+            return new PassiveSpell[size];
+        }
+    };
 }
