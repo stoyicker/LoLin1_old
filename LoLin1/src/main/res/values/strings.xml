@@ -181,4 +181,8 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="passive_image_folder_name">passive</string>
 	<string name="champion_list_item_content_description">Champion bust</string>
 	<string name="champion_detail_title">Champion detail</string>
+	<string name="lore_title">Lore</string>
+	<string name="range_title">Range:</string>
+	<string name="cost_title">Cost:</string>
+	<string name="spell_image_description">Spell image</string>
 </resources>

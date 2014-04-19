@@ -86,8 +86,8 @@ public class ChampionListActivity extends DrawerLayoutFragmentActivity implement
     @Override
     public void onChampionSelected(Champion champion) {
         Intent championDetailIntent =
-                new Intent(getApplicationContext(), ChampionDetailActivity.class);
-        championDetailIntent.putExtra(ChampionDetailActivity.SELECTED_CHAMPION, champion);
+                new Intent(getApplicationContext(), ChampionDetailFragmentActivity.class);
+        championDetailIntent.putExtra(ChampionDetailFragmentActivity.SELECTED_CHAMPION, champion);
         startActivity(championDetailIntent);
         Log.d("debug", "Champion selected (sent) is " + champion.getName());
     }

@@ -221,4 +221,8 @@ public class Champion implements Parcelable {
             return new Champion[size];
         }
     };
+
+    public String getLore() {
+        return lore;
+    }
 }

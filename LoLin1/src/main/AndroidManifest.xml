@@ -122,7 +122,7 @@ Created by JorgeAntonio on 02/01/14.
 			</intent-filter>
 		</activity>
 		<activity
-			android:name=".ui.activities.ChampionDetailActivity"
+			android:name=".ui.activities.ChampionDetailFragmentActivity"
 			android:label="@string/champion_detail_title"
 			android:launchMode="singleTop"
 			android:logo="@drawable/icon_section3">

@@ -46,5 +46,5 @@ dependencies {
     compile 'com.android.support:support-v4:+'
     compile 'com.twotoasters.jazzylistview:library:+'
     compile 'com.github.castorflex.smoothprogressbar:library:+'
-    compile 'com.github.johnkil.android-robototextview:robototextview:+'
+    compile files('lib/jazzyviewpager.jar')
 }
