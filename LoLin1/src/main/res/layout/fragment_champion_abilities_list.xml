@@ -25,5 +25,6 @@
           android:layout_height="match_parent"
           android:divider="@color/theme_white"
           android:dividerHeight="@dimen/champion_divider"
+          android:clickable="false"
           android:requiresFadingEdge="vertical">
 </ListView>

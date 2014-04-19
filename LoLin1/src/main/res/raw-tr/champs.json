@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "titleView":"Darkin Kılıcı",
+         "nameView":"Darkin Kılıcı",
          "tags":[
             "Dövüşçü",
             "Tank"
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "titleView":"Dokuz Kuyruklu Tilki",
+         "nameView":"Dokuz Kuyruklu Tilki",
          "tags":[
             "Büyücü",
             "Suikâstçi"
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "titleView":"Gölgenin Yumruğu",
+         "nameView":"Gölgenin Yumruğu",
          "tags":[
             "Suikâstçi"
          ],
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "titleView":"Minator",
+         "nameView":"Minator",
          "tags":[
             "Tank"
          ],

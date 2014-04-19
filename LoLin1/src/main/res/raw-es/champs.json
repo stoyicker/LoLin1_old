@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "titleView":"la Espada de los Oscuros",
+         "nameView":"la Espada de los Oscuros",
          "tags":[
             "Luchador",
             "Tanque"
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "titleView":"la Mujer Zorro de Nueve Colas",
+         "nameView":"la Mujer Zorro de Nueve Colas",
          "tags":[
             "Mago",
             "Asesino"
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "titleView":"el Puño de la Sombra",
+         "nameView":"el Puño de la Sombra",
          "tags":[
             "Asesino"
          ],
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "titleView":"el Minotauro",
+         "nameView":"el Minotauro",
          "tags":[
             "Tanque"
          ],

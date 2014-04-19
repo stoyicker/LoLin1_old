@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "titleView":"sabia Darkin",
+         "nameView":"sabia Darkin",
          "tags":[
             "Luptätor",
             "Tanc"
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "titleView":"vulpea cu nouă cozi",
+         "nameView":"vulpea cu nouă cozi",
          "tags":[
             "Mag",
             "Asasin"
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "titleView":"tăișul umbrei",
+         "nameView":"tăișul umbrei",
          "tags":[
             "Asasin"
          ],
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "titleView":"minotaurul",
+         "nameView":"minotaurul",
          "tags":[
             "Tanc"
          ],

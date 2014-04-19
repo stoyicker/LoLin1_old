@@ -47,14 +47,6 @@ public final class ChampionManager {
     private final CacheableBitmapLoader bitmapLoader = new CacheableBitmapLoader();
     private static ChampionManager instance;
 
-    public String getNameByChampionIndex(int index) {
-        return champions.get(index).getName();
-    }
-
-    public enum ImageType {
-        BUST, SPELL, PASSIVE, SPLASH
-    }
-
     private ChampionManager() {
     }
 
@@ -115,9 +107,9 @@ public final class ChampionManager {
         return ret;
     }
 
-    public Bitmap getImageByChampionIndex(int index, ImageType imageType, int width, int height,
-                                          List<Champion> data,
-                                          Context context) {
+    public Bitmap getBustImageByChampionIndex(int index, int width, int height,
+                                              List<Champion> data,
+                                              Context context) {
         List<Champion> consideredList = data == null ? champions : data;
 
         File root = context.getExternalFilesDir(
@@ -135,33 +127,39 @@ public final class ChampionManager {
                         .append(LoLin1Utils.getString(context, "champion_image_folder",
                                 null)).append(pathSeparator);
 
-        String imageTypeAsString;
-        switch (imageType) {
-            case BUST:
-                imageTypeAsString = "bust";
-                break;
-            case PASSIVE:
-                imageTypeAsString = "passive";
-                break;
-            case SPELL:
-                imageTypeAsString = "spell";
-                break;
-            case SPLASH:
-                imageTypeAsString = "splash";
-                break;
-            default:
-                Log.wtf("debug",
-                        "Should never happen - Enumeration-type parameter taking a value out of its scope.",
-                        new RuntimeException());
-                return null;
-        }
-
         absolutePathToBustBuilder
-                .append(LoLin1Utils.getString(context, imageTypeAsString + "_image_folder_name",
+                .append(LoLin1Utils.getString(context, "bust_image_folder_name",
                         null)).append(pathSeparator)
                 .append(consideredList.get(index).getBustImageName());
 
         return bitmapLoader
                 .getBitmapFromCache(absolutePathToBustBuilder.toString(), width, height);
+    }
+
+    public Bitmap getPassiveImageByChampion(Champion target, Context context, int width,
+                                            int height) {
+        File root = context.getExternalFilesDir(
+                LoLin1Utils.getString(context, "content_folder_name", null));
+        final String realm = LoLin1Utils.getRealm(context), pathSeparator =
+                LoLin1Utils.getString(context, "symbol_path_separator",
+                        null);
+
+        StringBuilder absolutePathToPassiveBuilder =
+                new StringBuilder(root.getPath()).append(pathSeparator).append(realm)
+                        .append(LoLin1Utils.getString(context, "symbol_hyphen",
+                                null))
+                        .append(PreferenceManager.getDefaultSharedPreferences(context).getString(
+                                "pref_version_" + realm, "0")).append(pathSeparator)
+                        .append(LoLin1Utils.getLocale(context)).append(pathSeparator)
+                        .append(LoLin1Utils.getString(context, "champion_image_folder",
+                                null)).append(pathSeparator);
+
+        absolutePathToPassiveBuilder
+                .append(LoLin1Utils.getString(context, "passive_image_folder_name",
+                        null)).append(pathSeparator)
+                .append(target.getPassive().getImageName());
+
+        return bitmapLoader
+                .getBitmapFromCache(absolutePathToPassiveBuilder.toString(), width, height);
     }
 }

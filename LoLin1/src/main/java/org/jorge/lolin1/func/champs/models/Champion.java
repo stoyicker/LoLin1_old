@@ -127,10 +127,6 @@ public class Champion implements Parcelable {
         return this.imageName;
     }
 
-    public String getPassiveImageName() {
-        return this.passive.getImageName();
-    }
-
     public String[] getSpellImageNames() {
         String[] ret = new String[this.spells.length];
 

@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "titleView":"Épée des Darkin",
+         "nameView":"Épée des Darkin",
          "tags":[
             "Combattant",
             "Tank"
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "titleView":"Renard à neuf queues",
+         "nameView":"Renard à neuf queues",
          "tags":[
             "Mage",
             "Assassin"
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "titleView":"Poing des ombres",
+         "nameView":"Poing des ombres",
          "tags":[
             "Assassin"
          ],
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "titleView":"Minotaure",
+         "nameView":"Minotaure",
          "tags":[
             "Tank"
          ],

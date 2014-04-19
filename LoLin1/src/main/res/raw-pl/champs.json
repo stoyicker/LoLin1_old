@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "titleView":"Ostrze Darkinów",
+         "nameView":"Ostrze Darkinów",
          "tags":[
             "Wojownik"
          ],
@@ -48,7 +48,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "titleView":"Lisica o Dziewięciu Ogonach",
+         "nameView":"Lisica o Dziewięciu Ogonach",
          "tags":[
             "Mag"
          ],
@@ -91,7 +91,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "titleView":"Pięść Cienia",
+         "nameView":"Pięść Cienia",
          "tags":[
             "Zabójca"
          ],
@@ -134,7 +134,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "titleView":"Minotaur",
+         "nameView":"Minotaur",
          "tags":[
             "Obrońca"
          ],

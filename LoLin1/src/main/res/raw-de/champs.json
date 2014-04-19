@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "titleView":"Die Klinge der Düsteren",
+         "nameView":"Die Klinge der Düsteren",
          "tags":[
             "Kämpfer",
             "Tank"
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "titleView":"Die neunschwänzige Füchsin",
+         "nameView":"Die neunschwänzige Füchsin",
          "tags":[
             "Magier",
             "Assassine"
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "titleView":"Die Faust der Schatten",
+         "nameView":"Die Faust der Schatten",
          "tags":[
             "Assassine"
          ],
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "titleView":"Der Minotaurus",
+         "nameView":"Der Minotaurus",
          "tags":[
             "Tank"
          ],

@@ -39,7 +39,7 @@ public class PassiveSpell implements Parcelable {
         return this.imageName;
     }
 
-    protected final String getDetail() {
+    public final String getDetail() {
         return detail;
     }
 

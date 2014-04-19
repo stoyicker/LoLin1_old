@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "titleView":"a Espada Darkin",
+         "nameView":"a Espada Darkin",
          "tags":[
             "Lutador",
             "Tanque"
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "titleView":"a Raposa de Nove Caudas",
+         "nameView":"a Raposa de Nove Caudas",
          "tags":[
             "Mago",
             "Assassino"
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "titleView":"o Punho das Sombras",
+         "nameView":"o Punho das Sombras",
          "tags":[
             "Asesino"
          ],
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "titleView":"o Minotauro",
+         "nameView":"o Minotauro",
          "tags":[
             "Tanque"
          ],

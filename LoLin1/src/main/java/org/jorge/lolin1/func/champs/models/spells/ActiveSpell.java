@@ -45,15 +45,15 @@ public class ActiveSpell extends PassiveSpell {
         this.costBurn = costBurn;
     }
 
-    protected final String getRangeBurn() {
+    public final String getRangeBurn() {
         return rangeBurn;
     }
 
-    protected final String getCooldownBurn() {
+    public final String getCooldownBurn() {
         return cooldownBurn;
     }
 
-    protected final String getCostBurn() {
+    public final String getCostBurn() {
         return costBurn;
     }
 

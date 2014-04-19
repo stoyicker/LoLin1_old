@@ -185,4 +185,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="range_title">Range:</string>
 	<string name="cost_title">Cost:</string>
 	<string name="spell_image_description">Spell image</string>
+	<string name="cooldown_title">Cooldown:</string>
 </resources>

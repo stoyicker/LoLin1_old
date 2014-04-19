@@ -1,5 +1,13 @@
 package org.jorge.lolin1.ui.frags;
 
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ListView;
+
+import org.jorge.lolin1.func.custom.ChampionAbilitiesListAdapter;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -19,6 +27,19 @@ package org.jorge.lolin1.ui.frags;
  * Created by JorgeAntonio on 19/04/2014.
  */
 public class ChampionAbilitiesSupportFragment extends ChampionDetailSupportFragment {
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View view = super.onCreateView(inflater, container, savedInstanceState);
+
+        ListView abilitiesListView = (ListView) view.findViewById(android.R.id.list);
+
+        abilitiesListView
+                .setAdapter(new ChampionAbilitiesListAdapter(getActivity(), getSelectedChampion()));
+
+        return view;
+    }
 }
 
 //TODO (Could be anywhere) When implementing the showCaseView, use the Snipt that you saved to lock the position of the news reader as portrait until an article has been selected

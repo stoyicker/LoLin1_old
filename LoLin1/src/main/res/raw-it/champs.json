@@ -5,7 +5,7 @@
       "Aatrox":{
          "key":"114",
          "name":"Aatrox",
-         "titleView":"a Lama dei Darkin",
+         "nameView":"a Lama dei Darkin",
          "tags":[
             "Combattente",
             "Tank"
@@ -49,7 +49,7 @@
       "Ahri":{
          "key":"90",
          "name":"Ahri",
-         "titleView":"la volpe a nove code",
+         "nameView":"la volpe a nove code",
          "tags":[
             "Mago",
             "Asssassino"
@@ -93,7 +93,7 @@
       "Akali":{
          "key":"55",
          "name":"Akali",
-         "titleView":"il pugno dell'ombra",
+         "nameView":"il pugno dell'ombra",
          "tags":[
             "Assassino"
          ],
@@ -136,7 +136,7 @@
       "Alistar":{
          "key":"12",
          "name":"Alistar",
-         "titleView":"il minotauro",
+         "nameView":"il minotauro",
          "tags":[
             "Tank"
          ],
