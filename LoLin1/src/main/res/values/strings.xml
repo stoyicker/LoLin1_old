@@ -186,4 +186,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="cost_title">Cost:</string>
 	<string name="spell_image_description">Spell image</string>
 	<string name="cooldown_title">Cooldown:</string>
+	<string name="champion_bust_content_description">Champion bust</string>
 </resources>

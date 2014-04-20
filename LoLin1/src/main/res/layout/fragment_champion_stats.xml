@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+~ This file is part of LoLin1.
+~ <p/>
+~ LoLin1 is free software: you can redistribute it and/or modify
+~ it under the terms of the GNU General Public License as published by
+~ the Free Software Foundation, either version 3 of the License, or
+~ (at your option) any later version.
+~ <p/>
+~ LoLin1 is distributed in the hope that it will be useful,
+~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+~ GNU General Public License for more details.
+~ <p/>
+~ You should have received a copy of the GNU General Public License
+~ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
+~ <p/>
+~ Created by JorgeAntonio on 20/4/2014.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content">
+	<LinearLayout android:layout_width="wrap_content"
+	              android:orientation="horizontal"
+	              android:layout_height="wrap_content">
+		<LinearLayout android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:orientation="vertical"
+		              android:layout_gravity="start">
+			<TextView
+				android:id="@+id/champion_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<TextView
+				android:id="@+id/champion_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+		</LinearLayout>
+		<ImageView android:id="@+id/champion_bust"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:layout_gravity="end"
+		           android:contentDescription="@string/champion_bust_content_description"/>
+	</LinearLayout>
+	<ScrollView android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:scrollbarAlwaysDrawHorizontalTrack="true">
+		<LinearLayout android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:orientation="horizontal">
+			<ScrollView android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:scrollbarAlwaysDrawVerticalTrack="true">
+				<LinearLayout android:layout_width="wrap_content"
+				              android:layout_height="wrap_content"
+				              android:orientation="vertical">
+					<TextView android:id="@+id/health_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_health"/>
+					<TextView android:id="@+id/health_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+					<TextView android:id="@+id/resource_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_res"/>
+					<TextView android:id="@+id/resource_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+					<TextView android:id="@+id/ad_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_ad"/>
+					<TextView android:id="@+id/ad_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+					<TextView android:id="@+id/as_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_as"/>
+					<TextView android:id="@+id/as_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+					<TextView android:id="@+id/movspeed_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_movspeed"/>
+					<TextView android:id="@+id/movspeed_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+				</LinearLayout>
+			</ScrollView>
+			<ScrollView android:layout_width="wrap_content"
+			            android:layout_height="wrap_content"
+			            android:scrollbarAlwaysDrawVerticalTrack="true">
+				<LinearLayout android:layout_width="wrap_content"
+				              android:layout_height="wrap_content"
+				              android:orientation="vertical">
+					<TextView android:id="@+id/healthregen_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_healthregen"/>
+					<TextView android:id="@+id/healthregen_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+					<TextView android:id="@+id/resourceregen_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_resregen"/>
+					<TextView android:id="@+id/resourceregen_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+					<TextView android:id="@+id/armor_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_armor"/>
+					<TextView android:id="@+id/armor_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+					<TextView android:id="@+id/mr_title"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:drawableLeft="@drawable/icon_mr"/>
+					<TextView android:id="@+id/mr_contents"
+					          android:layout_width="wrap_content"
+					          android:layout_height="wrap_content"
+					          android:paddingBottom="@dimen/champion_stat_padding_bottom"/>
+				</LinearLayout>
+			</ScrollView>
+		</LinearLayout>
+	</ScrollView>
+</LinearLayout>
