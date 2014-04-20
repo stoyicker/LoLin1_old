@@ -18,24 +18,35 @@
 ~ <p/>
 ~ Created by JorgeAntonio on 19/4/2014.
 -->
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_height="match_parent"
-            android:layout_width="match_parent">
-	<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-	              android:orientation="vertical"
-	              android:layout_width="match_parent"
-	              android:layout_height="match_parent"
-	              android:background="@color/theme_champion_related_background">
-		<fragment
-			android:id="@+id/champion_detail_stats"
-			android:name="org.jorge.lolin1.ui.frags.ChampionStatsSupportFragment"
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			/>
-		<org.jorge.lolin1.func.custom.TransitionViewPager
-			android:id="@+id/champion_detail_pager"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent">
-		</org.jorge.lolin1.func.custom.TransitionViewPager>
-	</LinearLayout>
-</ScrollView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/theme_champion_related_background">
+	<RelativeLayout android:layout_width="match_parent"
+	                android:layout_height="wrap_content">
+		<LinearLayout android:layout_width="wrap_content"
+		              android:layout_height="wrap_content"
+		              android:orientation="vertical"
+		              android:layout_alignParentLeft="true">
+			<TextView
+				android:id="@+id/champion_name"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+			<TextView
+				android:id="@+id/champion_title"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"/>
+		</LinearLayout>
+		<ImageView android:id="@+id/champion_bust"
+		           android:layout_width="wrap_content"
+		           android:layout_height="wrap_content"
+		           android:layout_alignParentRight="true"
+		           android:contentDescription="@string/champion_bust_content_description"/>
+	</RelativeLayout>
+	<org.jorge.lolin1.func.custom.TransitionViewPager
+		android:id="@+id/champion_detail_pager"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+	</org.jorge.lolin1.func.custom.TransitionViewPager>
+</LinearLayout>

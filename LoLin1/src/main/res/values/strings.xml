@@ -195,7 +195,7 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="armor_title_text">Armor:</string>
 	<string name="mr_title_text">Magic Resist:</string>
 	<string name="placeholder">PLACEHOLDER</string>
-	<string name="stat_scaling">(PLACEHOLDER per level)</string>
+	<string name="stat_scaling">(+PLACEHOLDER per level)</string>
 	<string name="resource_energy_title_text">Energy:</string>
 	<string name="resource_mana_title_text">Mana:</string>
 	<string name="resourceregen_energy_title_text">Energy Regen:</string>

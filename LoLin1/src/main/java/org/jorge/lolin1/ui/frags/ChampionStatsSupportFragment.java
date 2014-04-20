@@ -1,18 +1,14 @@
 package org.jorge.lolin1.ui.frags;
 
 import android.app.Activity;
-import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
@@ -48,22 +44,6 @@ public class ChampionStatsSupportFragment extends ChampionDetailSupportFragment 
                              Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
         final Champion selectedChampion = getSelectedChampion();
-        ((TextView) view.findViewById(R.id.champion_name)).setText(selectedChampion.getName());
-        ((TextView) view.findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
-        new AsyncTask<Void, Void, Void>(
-
-        ) {
-            @Override
-            protected Void doInBackground(Void... params) {
-                ((ImageView) view.findViewById(R.id.champion_bust))
-                        .setImageDrawable(
-                                new BitmapDrawable(getResources(), ChampionManager.getInstance()
-                                        .getBustImageByChampion(100, 100, selectedChampion,
-                                                getActivity().getApplicationContext()))
-                        );
-                return null;
-            }
-        }.execute();
 
         final String placeholder = LoLin1Utils.getString(getActivity().getApplicationContext(),
                 "placeholder", null), scalingString =

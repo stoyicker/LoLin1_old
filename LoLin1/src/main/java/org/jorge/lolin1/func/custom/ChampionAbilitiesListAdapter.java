@@ -130,10 +130,21 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
 
             @Override
             protected Void doInBackground(final Object... params) {
-                final Bitmap bmp =
-                        ChampionManager.getInstance().getPassiveImageByChampion(selectedChampion,
-                                mActivity.getApplicationContext(), (Integer) params[1],
-                                (Integer) params[1]);
+                final Bitmap bmp;
+
+                if ((Integer) params[2] == 0) {
+                    bmp =
+                            ChampionManager.getInstance()
+                                    .getPassiveImageByChampion(selectedChampion,
+                                            mActivity.getApplicationContext(), (Integer) params[1],
+                                            (Integer) params[1]);
+                }
+                else {
+                    bmp = ChampionManager.getInstance()
+                            .getSpellImageByChampion(selectedChampion,
+                                    mActivity.getApplicationContext(), (Integer) params[1],
+                                    (Integer) params[1], (Integer) params[2] - 1);
+                }
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -145,7 +156,7 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
                 });
                 return null;
             }
-        }.execute(viewHolder, sideLength);
+        }.execute(viewHolder, sideLength, position);
 
         return convertView;
     }

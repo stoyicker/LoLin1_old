@@ -1,19 +1,24 @@
 package org.jorge.lolin1.ui.activities;
 
+import android.graphics.drawable.BitmapDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.func.custom.TransitionViewPager;
 import org.jorge.lolin1.ui.frags.ChampionAbilitiesSupportFragment;
 import org.jorge.lolin1.ui.frags.ChampionLoreSupportFragment;
+import org.jorge.lolin1.ui.frags.ChampionStatsSupportFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,10 +56,28 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
         setContentView(R.layout.activity_champion_detail);
         getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
         initPager();
+
+        ((TextView) findViewById(R.id.champion_name)).setText(selectedChampion.getName());
+        ((TextView) findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
+        new AsyncTask<Void, Void, Void>(
+
+        ) {
+            @Override
+            protected Void doInBackground(Void... params) {
+                ((ImageView) findViewById(R.id.champion_bust))
+                        .setImageDrawable(
+                                new BitmapDrawable(getResources(), ChampionManager.getInstance()
+                                        .getBustImageByChampion(100, 100, selectedChampion,
+                                                getApplicationContext()))
+                        );
+                return null;
+            }
+        }.execute();
     }
 
     private void initPager() {
         List<Fragment> fragments = new ArrayList<>();
+        fragments.add(new ChampionStatsSupportFragment());
         fragments.add(new ChampionAbilitiesSupportFragment());
         fragments.add(new ChampionLoreSupportFragment());
         viewPager = (TransitionViewPager) findViewById(R.id.champion_detail_pager);

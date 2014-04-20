@@ -31,6 +31,8 @@
 		android:gravity="center"
 		android:stretchMode="columnWidth"
 		android:numColumns="auto_fit"
+		android:paddingTop="@dimen/champion_grid_horizontal_spacing"
+		android:paddingBottom="@dimen/champion_grid_horizontal_spacing"
 		android:horizontalSpacing="@dimen/champion_grid_horizontal_spacing"
 		android:verticalSpacing="@dimen/champion_grid_vertical_spacing"
 		app:effect="grow"

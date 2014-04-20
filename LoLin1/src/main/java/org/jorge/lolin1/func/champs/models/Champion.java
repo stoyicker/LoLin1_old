@@ -39,7 +39,6 @@ public final class Champion implements Parcelable {
     private String[] tags, skins;
     private PassiveSpell passive;
     private ActiveSpell[] spells;
-    private final String MANA_STRING = "mana", ENERGY_STRING = "energy";
 
     public enum ChampionResource {
         NONE, MANA, ENERGY
@@ -62,6 +61,7 @@ public final class Champion implements Parcelable {
     }
 
     public ChampionResource getUsedResource() {
+        final String MANA_STRING = "mana", ENERGY_STRING = "energy";
         int manaCounter = 0, energyCounter = 0;
         for (ActiveSpell x : spells) {
             String lowerCaseCost = x.getCostBurn().toLowerCase();
