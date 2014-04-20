@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -89,6 +88,5 @@ public class ChampionListActivity extends DrawerLayoutFragmentActivity implement
                 new Intent(getApplicationContext(), ChampionDetailFragmentActivity.class);
         championDetailIntent.putExtra(ChampionDetailFragmentActivity.SELECTED_CHAMPION, champion);
         startActivity(championDetailIntent);
-        Log.d("debug", "Champion selected (sent) is " + champion.getName());
     }
 }

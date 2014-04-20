@@ -43,7 +43,7 @@ public abstract class ChampionDetailSupportFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(layout, container);
+        return inflater.inflate(layout, container, false);
     }
 
     protected Champion getSelectedChampion() {

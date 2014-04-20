@@ -47,9 +47,7 @@ public class ChampionStatsSupportFragment extends ChampionDetailSupportFragment 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View view = super.onCreateView(inflater, container, savedInstanceState);
-        Log.d("debug", "is view null? " + (view == null));
         final Champion selectedChampion = getSelectedChampion();
-        Log.d("debug", "is selectedChampion null? " + (selectedChampion == null));
         ((TextView) view.findViewById(R.id.champion_name)).setText(selectedChampion.getName());
         ((TextView) view.findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
         new AsyncTask<Void, Void, Void>(

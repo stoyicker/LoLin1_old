@@ -75,7 +75,6 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
     }
 
     public Champion getSelectedChampion() {
-        Log.d("debug", "Selected champion when called is null? " + (selectedChampion == null));
         return selectedChampion;
     }
 
