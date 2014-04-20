@@ -187,4 +187,17 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="spell_image_description">Spell image</string>
 	<string name="cooldown_title">Cooldown:</string>
 	<string name="champion_bust_content_description">Champion bust</string>
+	<string name="health_title_text">Health:</string>
+	<string name="ad_title_text">Attack Damage:</string>
+	<string name="as_title_text">Attack Speed:</string>
+	<string name="movspeed_title_text">Movement Speed:</string>
+	<string name="healthregen_title_text">Health Regen:</string>
+	<string name="armor_title_text">Armor:</string>
+	<string name="mr_title_text">Magic Resist:</string>
+	<string name="placeholder">PLACEHOLDER</string>
+	<string name="stat_scaling">(PLACEHOLDER per level)</string>
+	<string name="resource_energy_title_text">Energy:</string>
+	<string name="resource_mana_title_text">Mana:</string>
+	<string name="resourceregen_energy_title_text">Energy Regen:</string>
+	<string name="resourceregen_mana_title_text">Mana Regen:</string>
 </resources>

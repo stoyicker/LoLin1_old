@@ -1,11 +1,13 @@
 package org.jorge.lolin1.ui.frags;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.custom.ChampionAbilitiesListAdapter;
 
 /**
@@ -27,6 +29,13 @@ import org.jorge.lolin1.func.custom.ChampionAbilitiesListAdapter;
  * Created by JorgeAntonio on 19/04/2014.
  */
 public class ChampionAbilitiesSupportFragment extends ChampionDetailSupportFragment {
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        setLayout(R.layout.fragment_champion_abilities_list);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -29,7 +29,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 
-public class Champion implements Parcelable {
+public final class Champion implements Parcelable {
 
     private String key, name, title, attackrange, mpperlevel, mp, attackdamage,
             hp, hpperlevel, attackdamageperlevel, armor, mpregenperlevel,
@@ -39,6 +39,106 @@ public class Champion implements Parcelable {
     private String[] tags, skins;
     private PassiveSpell passive;
     private ActiveSpell[] spells;
+    private final String MANA_STRING = "mana", ENERGY_STRING = "energy";
+
+    public enum ChampionResource {
+        NONE, MANA, ENERGY
+    }
+
+    public String getResource() {
+        return mp;
+    }
+
+    public String getResourcePerLevel() {
+        return mpperlevel;
+    }
+
+    public String getResourceRegen() {
+        return mpregen;
+    }
+
+    public String getResourceRegenPerLevel() {
+        return mpregenperlevel;
+    }
+
+    public ChampionResource getUsedResource() {
+        int manaCounter = 0, energyCounter = 0;
+        for (ActiveSpell x : spells) {
+            String lowerCaseCost = x.getCostBurn().toLowerCase();
+            if (lowerCaseCost.contains(MANA_STRING.toLowerCase())) {
+                manaCounter++;
+            }
+            if (lowerCaseCost.contains(ENERGY_STRING.toLowerCase())) {
+                energyCounter++;
+            }
+        }
+        if (manaCounter == 0) {
+            if (energyCounter == 0) {
+                return ChampionResource.NONE;
+            }
+            else {
+                return ChampionResource.ENERGY;
+            }
+        }
+        else {
+            return energyCounter > manaCounter ? ChampionResource.ENERGY : ChampionResource.MANA;
+        }
+    }
+
+    public String getMagicResist() {
+        return spellblock;
+    }
+
+    public String getMagicResistPerLevel() {
+        return spellblockperlevel;
+    }
+
+    public String getAttackSpeed() {
+        //Source: http://leagueoflegends.wikia.com/wiki/Attack_delay
+        double d = (0.625 / (1 + Float.parseFloat(attackspeedoffset)));
+        String r = d + "";
+        return r.length() > 5 ? r.substring(0, 5) : r;
+    }
+
+    public String getAttackSpeedPerLevel() {
+        return attackspeedperlevel;
+    }
+
+    public String getArmorPerLevel() {
+        return armorperlevel;
+    }
+
+    public String getArmor() {
+        return armor;
+    }
+
+    public String getHpRegenPerLevel() {
+        return hpregenperlevel;
+    }
+
+    public String getMoveSpeed() {
+        return movespeed;
+    }
+
+    public String getAttackDamagePerLevel() {
+        return attackdamageperlevel;
+    }
+
+    public String getAttackDamage() {
+        return attackdamage;
+    }
+
+    public String getHpPerlevel() {
+        return hpperlevel;
+    }
+
+    public String getHp() {
+        return hp;
+    }
+
+    public String getHpRegen() {
+        return hpregen;
+    }
 
     public Champion(Parcel in) {
         Field[] declaredFields = Champion.class.getDeclaredFields();

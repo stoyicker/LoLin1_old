@@ -59,6 +59,7 @@
 					<TextView android:id="@+id/health_title"
 					          android:layout_width="wrap_content"
 					          android:layout_height="wrap_content"
+					          android:text="@string/health_title_text"
 					          android:drawableLeft="@drawable/icon_health"/>
 					<TextView android:id="@+id/health_contents"
 					          android:layout_width="wrap_content"
@@ -75,6 +76,7 @@
 					<TextView android:id="@+id/ad_title"
 					          android:layout_width="wrap_content"
 					          android:layout_height="wrap_content"
+					          android:text="@string/ad_title_text"
 					          android:drawableLeft="@drawable/icon_ad"/>
 					<TextView android:id="@+id/ad_contents"
 					          android:layout_width="wrap_content"
@@ -83,6 +85,7 @@
 					<TextView android:id="@+id/as_title"
 					          android:layout_width="wrap_content"
 					          android:layout_height="wrap_content"
+					          android:text="@string/as_title_text"
 					          android:drawableLeft="@drawable/icon_as"/>
 					<TextView android:id="@+id/as_contents"
 					          android:layout_width="wrap_content"
@@ -91,6 +94,7 @@
 					<TextView android:id="@+id/movspeed_title"
 					          android:layout_width="wrap_content"
 					          android:layout_height="wrap_content"
+					          android:text="@string/movspeed_title_text"
 					          android:drawableLeft="@drawable/icon_movspeed"/>
 					<TextView android:id="@+id/movspeed_contents"
 					          android:layout_width="wrap_content"
@@ -107,6 +111,7 @@
 					<TextView android:id="@+id/healthregen_title"
 					          android:layout_width="wrap_content"
 					          android:layout_height="wrap_content"
+					          android:text="@string/healthregen_title_text"
 					          android:drawableLeft="@drawable/icon_healthregen"/>
 					<TextView android:id="@+id/healthregen_contents"
 					          android:layout_width="wrap_content"
@@ -123,6 +128,7 @@
 					<TextView android:id="@+id/armor_title"
 					          android:layout_width="wrap_content"
 					          android:layout_height="wrap_content"
+					          android:text="@string/armor_title_text"
 					          android:drawableLeft="@drawable/icon_armor"/>
 					<TextView android:id="@+id/armor_contents"
 					          android:layout_width="wrap_content"
@@ -131,6 +137,7 @@
 					<TextView android:id="@+id/mr_title"
 					          android:layout_width="wrap_content"
 					          android:layout_height="wrap_content"
+					          android:text="@string/mr_title_text"
 					          android:drawableLeft="@drawable/icon_mr"/>
 					<TextView android:id="@+id/mr_contents"
 					          android:layout_width="wrap_content"
