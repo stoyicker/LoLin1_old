@@ -413,7 +413,7 @@ public class SplashActivity extends Activity {
                     return Boolean.FALSE;
                 }
                 final String bustImageName = champion.getBustImageName(), passiveImageName =
-                        champion.getPassiveImageName(), simplifiedName =
+                        champion.getPassive().getImageName(), simplifiedName =
                         champion.getSimplifiedName();
                 final String[] skinNames = champion.getSkinNames(), spellImageNames =
                         champion.getSpellImageNames();

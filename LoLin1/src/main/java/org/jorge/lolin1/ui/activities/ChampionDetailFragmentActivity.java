@@ -5,13 +5,13 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 
-import com.jfeinstein.jazzyviewpager.JazzyViewPager;
-
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.models.Champion;
+import org.jorge.lolin1.func.custom.TransitionViewPager;
 import org.jorge.lolin1.ui.frags.ChampionAbilitiesSupportFragment;
 import org.jorge.lolin1.ui.frags.ChampionLoreSupportFragment;
 
@@ -39,17 +39,17 @@ import java.util.List;
 public class ChampionDetailFragmentActivity extends FragmentActivity {
 
     public static final String SELECTED_CHAMPION = "SELECTED_CHAMPION";
-    private static final JazzyViewPager.TransitionEffect TRANSITION_EFFECT =
-            JazzyViewPager.TransitionEffect.CubeOut;
+    private static final TransitionViewPager.TransitionEffect TRANSITION_EFFECT =
+            TransitionViewPager.TransitionEffect.CubeOut;
     private Champion selectedChampion;
-    private JazzyViewPager viewPager;
+    private TransitionViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        selectedChampion = getIntent().getParcelableExtra(SELECTED_CHAMPION);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_champion_detail);
         getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
-        selectedChampion = getIntent().getParcelableExtra(SELECTED_CHAMPION);
         initPager();
     }
 
@@ -57,7 +57,7 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new ChampionAbilitiesSupportFragment());
         fragments.add(new ChampionLoreSupportFragment());
-        viewPager = (JazzyViewPager) findViewById(R.id.champion_detail_pager);
+        viewPager = (TransitionViewPager) findViewById(R.id.champion_detail_pager);
         viewPager.setTransitionEffect(TRANSITION_EFFECT);
         viewPager.setAdapter(new ChampionDetailPageAdapter(getSupportFragmentManager(), fragments));
     }
@@ -75,6 +75,7 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
     }
 
     public Champion getSelectedChampion() {
+        Log.d("debug", "Selected champion when called is null? " + (selectedChampion == null));
         return selectedChampion;
     }
 

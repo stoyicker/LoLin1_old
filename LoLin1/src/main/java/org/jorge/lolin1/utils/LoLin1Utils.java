@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.util.TypedValue;
 
 import org.jorge.lolin1.R;
 
@@ -39,6 +41,11 @@ import java.util.Locale;
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */
 public abstract class LoLin1Utils {
+
+    public static int dpToPx(Resources res, int dp) {
+        return (int) TypedValue
+                .applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());
+    }
 
     public static void restartApp(Activity activity) {
         Intent i = activity.getBaseContext().getPackageManager()

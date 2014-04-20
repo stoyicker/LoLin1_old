@@ -131,9 +131,8 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
             @Override
             protected Void doInBackground(final Object... params) {
                 final Bitmap bmp =
-                        ChampionManager.getInstance().getBustImageByChampionIndex(
-                                (Integer) params[1], (Integer) params[2],
-                                (Integer) params[2], data,
+                        ChampionManager.getInstance().getBustImageByChampion((Integer) params[2],
+                                (Integer) params[2], data.get((Integer) params[1]),
                                 mActivity.getApplicationContext());
                 mActivity.runOnUiThread(new Runnable() {
                     @Override

@@ -32,10 +32,10 @@
 			android:layout_height="wrap_content"
 			android:layout_width="match_parent"
 			/>
-		<com.jfeinstein.jazzyviewpager.JazzyViewPager
+		<org.jorge.lolin1.func.custom.TransitionViewPager
 			android:id="@+id/champion_detail_pager"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent">
-		</com.jfeinstein.jazzyviewpager.JazzyViewPager>
+		</org.jorge.lolin1.func.custom.TransitionViewPager>
 	</LinearLayout>
 </ScrollView>
