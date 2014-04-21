@@ -2,6 +2,7 @@ package org.jorge.lolin1.ui.frags;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +44,7 @@ public class ChampionLoreSupportFragment extends ChampionDetailSupportFragment {
 
         TextView loreContents = (TextView) view.findViewById(R.id.lore_contents);
 
-        loreContents.setText(getSelectedChampion().getLore());
+        loreContents.setText(Html.fromHtml(getSelectedChampion().getLore()));
 
         return view;
     }

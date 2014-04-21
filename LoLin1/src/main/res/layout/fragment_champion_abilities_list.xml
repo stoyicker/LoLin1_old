@@ -26,5 +26,9 @@
           android:divider="@color/theme_white"
           android:dividerHeight="@dimen/champion_divider"
           android:clickable="false"
+          android:focusable="false"
+          android:focusableInTouchMode="false"
+          android:hapticFeedbackEnabled="false"
+          android:listSelector="@android:color/transparent"
           android:requiresFadingEdge="vertical">
 </ListView>

@@ -67,7 +67,7 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
                 ((ImageView) findViewById(R.id.champion_bust))
                         .setImageDrawable(
                                 new BitmapDrawable(getResources(), ChampionManager.getInstance()
-                                        .getBustImageByChampion(100, 100, selectedChampion,
+                                        .getBustImageByChampion(200, 200, selectedChampion,
                                                 getApplicationContext()))
                         );
                 return null;

@@ -121,11 +121,12 @@ public final class Champion implements Parcelable {
     }
 
     public String getAttackDamagePerLevel() {
-        return attackdamageperlevel;
+        return attackdamageperlevel.length() > 5 ? attackdamageperlevel.substring(0, 5) :
+                attackdamageperlevel;
     }
 
     public String getAttackDamage() {
-        return attackdamage;
+        return attackdamage.length() > 5 ? attackdamage.substring(0, 5) : attackdamage;
     }
 
     public String getHpPerlevel() {

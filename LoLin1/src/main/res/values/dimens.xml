@@ -61,4 +61,13 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="champion_list_overlay_text_horizontal_margin">5dp</dimen>
 	<dimen name="champion_divider">1dp</dimen>
 	<dimen name="champion_stat_padding_bottom">10dp</dimen>
+	<dimen name="champion_stat_drawable_padding">4dp</dimen>
+	<dimen name="champion_stat_lateral_padding">20dp</dimen>
+	<dimen name="champion_stat_non_drawable_padding">28dp</dimen>
+	<dimen name="champion_stat_title_to_content_padding">4dp</dimen>
+	<dimen name="champion_detail_header_bottom_padding">20dp</dimen>
+	<dimen name="champion_detail_name_text_size">25sp</dimen>
+	<dimen name="champion_detail_title_text_size">15sp</dimen>
+	<dimen name="champion_detail_padding">10dp</dimen>
+	<dimen name="champion_detail_stats_padding">30dp</dimen>
 </resources>
