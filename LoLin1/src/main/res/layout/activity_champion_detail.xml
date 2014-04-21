@@ -18,15 +18,18 @@
 ~ <p/>
 ~ Created by JorgeAntonio on 19/4/2014.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:padding="@dimen/champion_detail_padding"
-              android:background="@color/theme_champion_related_background">
-	<RelativeLayout android:layout_width="match_parent"
-	                android:layout_height="wrap_content"
-	                android:paddingBottom="@dimen/champion_detail_header_bottom_padding">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="@dimen/champion_detail_padding"
+                android:background="@color/theme_champion_related_background">
+	<RelativeLayout
+		android:id="@+id/header"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:paddingBottom="@dimen/champion_detail_header_bottom_padding">
 		<ImageView android:id="@+id/champion_bust"
 		           android:layout_width="wrap_content"
 		           android:layout_height="wrap_content"
@@ -49,9 +52,18 @@
 				android:layout_height="wrap_content"/>
 		</LinearLayout>
 	</RelativeLayout>
+	<com.viewpagerindicator.LinePageIndicator
+		android:id="@+id/champion_detail_pager_indicator"
+		android:layout_alignParentBottom="true"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		app:lineWidth="@dimen/view_pager_line_width"
+		app:selectedColor="@color/theme_light_blue"/>
 	<org.jorge.lolin1.func.custom.TransitionViewPager
 		android:id="@+id/champion_detail_pager"
+		android:layout_below="@id/header"
 		android:layout_width="match_parent"
+		android:paddingBottom="@dimen/view_pager_top_padding"
 		android:layout_height="wrap_content">
 	</org.jorge.lolin1.func.custom.TransitionViewPager>
-</LinearLayout>
+</RelativeLayout>

@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.viewpagerindicator.PageIndicator;
+
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
@@ -83,6 +85,8 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
         viewPager = (TransitionViewPager) findViewById(R.id.champion_detail_pager);
         viewPager.setTransitionEffect(TRANSITION_EFFECT);
         viewPager.setAdapter(new ChampionDetailPageAdapter(getSupportFragmentManager(), fragments));
+        ((PageIndicator) findViewById(R.id.champion_detail_pager_indicator))
+                .setViewPager(viewPager);
     }
 
     @Override
