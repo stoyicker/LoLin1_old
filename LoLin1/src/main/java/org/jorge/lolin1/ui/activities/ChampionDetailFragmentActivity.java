@@ -1,5 +1,6 @@
 package org.jorge.lolin1.ui.activities;
 
+import android.app.ActionBar;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -7,6 +8,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -17,6 +20,7 @@ import com.viewpagerindicator.PageIndicator;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
+import org.jorge.lolin1.func.custom.SkinsViewPagerAdapter;
 import org.jorge.lolin1.func.custom.TransitionViewPager;
 import org.jorge.lolin1.ui.frags.ChampionAbilitiesSupportFragment;
 import org.jorge.lolin1.ui.frags.ChampionLoreSupportFragment;
@@ -50,31 +54,52 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
             TransitionViewPager.TransitionEffect.CubeOut;
     private Champion selectedChampion;
     private TransitionViewPager viewPager;
+    private ViewPager skinsViewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         selectedChampion = getIntent().getParcelableExtra(SELECTED_CHAMPION);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_champion_detail);
-        getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
-        initPager();
-
-        ((TextView) findViewById(R.id.champion_name)).setText(selectedChampion.getName());
-        ((TextView) findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
-        new AsyncTask<Void, Void, Void>(
-
-        ) {
-            @Override
-            protected Void doInBackground(Void... params) {
-                ((ImageView) findViewById(R.id.champion_bust))
-                        .setImageDrawable(
-                                new BitmapDrawable(getResources(), ChampionManager.getInstance()
-                                        .getBustImageByChampion(200, 200, selectedChampion,
-                                                getApplicationContext()))
-                        );
-                return null;
+        ActionBar actionBar;
+        if (findViewById(R.id.champion_title) != null) {
+            if (!(actionBar = getActionBar()).isShowing()) {
+                actionBar.show();
+                actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
             }
-        }.execute();
+            //Portrait layout
+            ((TextView) findViewById(R.id.champion_name)).setText(selectedChampion.getName());
+            ((TextView) findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
+            initPager();
+            new AsyncTask<Void, Void, Void>(
+
+            ) {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    ((ImageView) findViewById(R.id.champion_bust))
+                            .setImageDrawable(
+                                    new BitmapDrawable(getResources(), ChampionManager.getInstance()
+                                            .getBustImageByChampion(200, 200, selectedChampion,
+                                                    getApplicationContext()))
+                            );
+                    return null;
+                }
+            }.execute();
+        }
+        else {
+            //Landscape layout
+            if ((actionBar = getActionBar()).isShowing()) {
+                actionBar.hide();
+            }
+            skinsViewPager = ((ViewPager) findViewById(R.id.skins_view_pager));
+            PagerAdapter pagerAdapter =
+                    new SkinsViewPagerAdapter(this, selectedChampion,
+                            getSupportFragmentManager());
+            skinsViewPager.setAdapter(pagerAdapter);
+            skinsViewPager.setOnPageChangeListener((ViewPager.OnPageChangeListener) pagerAdapter);
+            skinsViewPager.setCurrentItem(0);
+            skinsViewPager.setOffscreenPageLimit(selectedChampion.getSkinNames().length);
+        }
     }
 
     private void initPager() {
@@ -103,6 +128,10 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
 
     public Champion getSelectedChampion() {
         return selectedChampion;
+    }
+
+    public ViewPager getSkinsViewPager() {
+        return skinsViewPager;
     }
 
     private final class ChampionDetailPageAdapter extends FragmentPagerAdapter {

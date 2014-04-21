@@ -200,4 +200,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="resource_mana_title_text">Mana:</string>
 	<string name="resourceregen_energy_title_text">Energy Regen:</string>
 	<string name="resourceregen_mana_title_text">Mana Regen:</string>
+	<string name="skin_view_content_description">Skin view</string>
 </resources>

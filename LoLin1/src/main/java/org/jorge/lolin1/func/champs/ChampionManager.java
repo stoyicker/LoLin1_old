@@ -186,4 +186,32 @@ public final class ChampionManager {
         return bitmapLoader
                 .getBitmapFromCache(absolutePathToPassiveBuilder.toString(), width, height);
     }
+
+    public Bitmap getSplashImageByChampion(Champion target, Context context,
+                                           Integer width, Integer height, int splashIndex) {
+        File root = context.getExternalFilesDir(
+                LoLin1Utils.getString(context, "content_folder_name", null));
+        final String realm = LoLin1Utils.getRealm(context), pathSeparator =
+                LoLin1Utils.getString(context, "symbol_path_separator",
+                        null);
+
+        StringBuilder absolutePathToPassiveBuilder =
+                new StringBuilder(root.getPath()).append(pathSeparator).append(realm)
+                        .append(LoLin1Utils.getString(context, "symbol_hyphen",
+                                null))
+                        .append(PreferenceManager.getDefaultSharedPreferences(context).getString(
+                                "pref_version_" + realm, "0")).append(pathSeparator)
+                        .append(LoLin1Utils.getLocale(context)).append(pathSeparator)
+                        .append(LoLin1Utils.getString(context, "champion_image_folder",
+                                null)).append(pathSeparator);
+
+        absolutePathToPassiveBuilder
+                .append(LoLin1Utils.getString(context, "splash_image_folder_name",
+                        null)).append(pathSeparator)
+                .append(target.getSimplifiedName() + "_" + splashIndex + "." +
+                        LoLin1Utils.getString(context, "splash_image_extension", null));
+
+        return bitmapLoader
+                .getBitmapFromCache(absolutePathToPassiveBuilder.toString(), width, height);
+    }
 }
