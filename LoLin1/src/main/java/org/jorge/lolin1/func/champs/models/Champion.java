@@ -148,14 +148,7 @@ public final class Champion implements Parcelable {
                 Class<?> thisType = x.getType();
                 if (thisType == String.class) {
                     x.setAccessible(Boolean.TRUE);
-                    if (thisType.isArray()) {
-                        String[] values = null;
-                        in.readStringArray(values);
-                        x.set(this, values);
-                    }
-                    else {
-                        x.set(this, in.readString());
-                    }
+                    x.set(this, in.readString());
                     x.setAccessible(Boolean.FALSE);
                 }
             }
@@ -163,6 +156,8 @@ public final class Champion implements Parcelable {
         catch (IllegalAccessException e) {
             Log.wtf("debug", e.getClass().getName(), e);
         }
+        tags = in.createStringArray();
+        skins = in.createStringArray();
         passive = in.readParcelable(PassiveSpell.class.getClassLoader());
         Parcelable[] parcelableSpells = in.readParcelableArray(ActiveSpell.class.getClassLoader());
         spells = new ActiveSpell[parcelableSpells.length];
@@ -200,8 +195,9 @@ public final class Champion implements Parcelable {
         JSONArray skinsDescriptor = descriptor.getJSONArray("skins");
         size = skinsDescriptor.length();
         this.skins = new String[size];
-        for (int i = 0; i < size; i++)
+        for (int i = 0; i < size; i++) {
             this.skins[i] = skinsDescriptor.getString(i);
+        }
     }
 
     public String getKey() {
@@ -292,12 +288,7 @@ public final class Champion implements Parcelable {
                 Class<?> thisType = x.getType();
                 if (thisType == String.class) {
                     x.setAccessible(Boolean.TRUE);
-                    if (thisType.isArray()) {
-                        dest.writeStringArray((String[]) x.get(this));
-                    }
-                    else {
-                        dest.writeString(x.get(this).toString());
-                    }
+                    dest.writeString(x.get(this).toString());
                     x.setAccessible(Boolean.FALSE);
                 }
             }
@@ -305,6 +296,8 @@ public final class Champion implements Parcelable {
         catch (IllegalAccessException e) {
             Log.wtf("debug", e.getClass().getName(), e);
         }
+        dest.writeStringArray(tags);
+        dest.writeStringArray(skins);
         dest.writeParcelable(this.passive, flags);
         dest.writeParcelableArray(this.spells, flags);
     }
