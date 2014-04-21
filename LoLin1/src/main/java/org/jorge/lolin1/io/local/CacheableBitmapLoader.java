@@ -118,7 +118,12 @@ public final class CacheableBitmapLoader {
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
         retAux = BitmapFactory.decodeFile(absolutePath, options);
-        return Bitmap.createScaledBitmap(retAux, width, height, Boolean.TRUE);
+        if (width > 0 && height > 0) {
+            return Bitmap.createScaledBitmap(retAux, width, height, Boolean.TRUE);
+        }
+        else {
+            return retAux;
+        }
     }
 
     private void clearCache() {
