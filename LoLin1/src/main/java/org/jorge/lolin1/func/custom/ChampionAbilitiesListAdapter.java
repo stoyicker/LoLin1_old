@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -115,11 +116,14 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
             rangeContents.setVisibility(View.VISIBLE);
             viewHolder.getCooldownTitleView().setVisibility(View.VISIBLE);
             TextView cooldownContents = viewHolder.getCooldownContentsView();
-            cooldownContents.setText(((ActiveSpell) thisSpell).getCooldownBurn());
+            cooldownContents.setText(((ActiveSpell) thisSpell).getCooldownBurn() + " " +
+                    LoLin1Utils
+                            .getString(mActivity.getApplicationContext(), "time_unit_second_plural",
+                                    null));
             cooldownContents.setVisibility(View.VISIBLE);
         }
 
-        viewHolder.getDetailView().setText(thisSpell.getName());
+        viewHolder.getDetailView().setText(Html.fromHtml(thisSpell.getDetail()));
         TextView nameView = viewHolder.getNameView();
         nameView.setText(thisSpell.getName());
 
