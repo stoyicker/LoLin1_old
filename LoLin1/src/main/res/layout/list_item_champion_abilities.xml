@@ -94,5 +94,6 @@
 	          android:layout_width="wrap_content"
 	          android:layout_height="wrap_content"
 	          android:layout_marginTop="@dimen/ability_detail_top_margin"
+	          android:visibility="gone"
 	          style="@style/ChampionAbilityContentsStyle"/>
 </RelativeLayout>

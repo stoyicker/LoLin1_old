@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.custom.ChampionAbilitiesListAdapter;
@@ -42,10 +44,23 @@ public class ChampionAbilitiesSupportFragment extends ChampionDetailSupportFragm
                              Bundle savedInstanceState) {
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
-        ListView abilitiesListView = (ListView) view.findViewById(android.R.id.list);
+        final ListView abilitiesListView = (ListView) view.findViewById(android.R.id.list);
 
         abilitiesListView
                 .setAdapter(new ChampionAbilitiesListAdapter(getActivity(), getSelectedChampion()));
+        abilitiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                TextView abilityDetailTextView =
+                        ((TextView) view.findViewById(R.id.ability_detail));
+                if (abilityDetailTextView.isShown()) {
+                    abilityDetailTextView.setVisibility(View.GONE);
+                }
+                else {
+                    abilityDetailTextView.setVisibility(View.VISIBLE);
+                }
+            }
+        });
 
         return view;
     }
