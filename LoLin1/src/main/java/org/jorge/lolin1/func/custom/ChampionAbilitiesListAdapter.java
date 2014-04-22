@@ -3,6 +3,7 @@ package org.jorge.lolin1.func.custom;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.text.Html;
@@ -154,8 +155,9 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
                     public void run() {
                         ViewHolder viewHolder1 = (ViewHolder) params[0];
                         (viewHolder1).getNameView().setCompoundDrawablesWithIntrinsicBounds(
-                                new BitmapDrawable(mActivity.getResources(), bmp), null, null,
-                                null);
+                                null, null, null,
+                                new BitmapDrawable(mActivity.getResources(),
+                                        addAbilityBorder(bmp, 2)));
                     }
                 });
                 return null;
@@ -163,6 +165,16 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
         }.execute(viewHolder, sideLength, position);
 
         return convertView;
+    }
+
+    private Bitmap addAbilityBorder(Bitmap bmp, int borderSize) {
+        Bitmap bmpWithBorder = Bitmap.createBitmap(bmp.getWidth() + borderSize * 2,
+                bmp.getHeight() + borderSize * 2, bmp.getConfig());
+        Canvas canvas = new Canvas(bmpWithBorder);
+        canvas.drawColor(mActivity.getApplicationContext().getResources()
+                .getColor(R.color.theme_champion_ability_background));
+        canvas.drawBitmap(bmp, borderSize, borderSize, null);
+        return bmpWithBorder;
     }
 
     private class ViewHolder {
