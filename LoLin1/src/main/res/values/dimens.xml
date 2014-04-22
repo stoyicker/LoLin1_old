@@ -74,4 +74,9 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="view_pager_top_padding">10dp</dimen>
 	<dimen name="champion_skin_name_text_size">20sp</dimen>
 	<dimen name="champion_skin_name_padding">10dp</dimen>
+	<dimen name="champion_ability_name_text_size">17sp</dimen>
+	<dimen name="champion_ability_contents_text_size">12sp</dimen>
+	<dimen name="champion_abilities_list_item_padding">7dp</dimen>
+	<dimen name="champion_ability_title_to_contents_spacing">5dp</dimen>
+	<dimen name="ability_detail_top_margin">10dp</dimen>
 </resources>

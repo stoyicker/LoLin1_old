@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
@@ -88,6 +89,7 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
                     (TextView) convertView.findViewById(R.id.cooldown_title));
             viewHolder.setCooldownContentsView(
                     (TextView) convertView.findViewById(R.id.cooldown_contents));
+            viewHolder.setIconView((ImageView) convertView.findViewById(R.id.ability_icon));
             convertView.setTag(viewHolder);
         }
         else {
@@ -111,10 +113,17 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
             viewHolder.getCostTitleView().setVisibility(View.VISIBLE);
             costContents.setText(((ActiveSpell) thisSpell).getCostBurn());
             costContents.setVisibility(View.VISIBLE);
-            viewHolder.getRangeTitleView().setVisibility(View.VISIBLE);
             TextView rangeContents = viewHolder.getRangeContentsView();
-            rangeContents.setText(((ActiveSpell) thisSpell).getRangeBurn());
-            rangeContents.setVisibility(View.VISIBLE);
+            String rangeBurn = ((ActiveSpell) thisSpell).getRangeBurn();
+            if (!rangeBurn.contentEquals("self")) {
+                viewHolder.getRangeTitleView().setVisibility(View.VISIBLE);
+                rangeContents.setText(rangeBurn);
+                rangeContents.setVisibility(View.VISIBLE);
+            }
+            else {
+                viewHolder.getRangeTitleView().setVisibility(View.GONE);
+                viewHolder.getRangeContentsView().setVisibility(View.GONE);
+            }
             viewHolder.getCooldownTitleView().setVisibility(View.VISIBLE);
             TextView cooldownContents = viewHolder.getCooldownContentsView();
             cooldownContents.setText(((ActiveSpell) thisSpell).getCooldownBurn() + " " +
@@ -154,10 +163,10 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
                     @Override
                     public void run() {
                         ViewHolder viewHolder1 = (ViewHolder) params[0];
-                        (viewHolder1).getNameView().setCompoundDrawablesWithIntrinsicBounds(
-                                null, null, null,
+                        viewHolder1.getIconView().setImageDrawable(
                                 new BitmapDrawable(mActivity.getResources(),
-                                        addAbilityBorder(bmp, 2)));
+                                        addAbilityBorder(bmp, 2))
+                        );
                     }
                 });
                 return null;
@@ -244,5 +253,15 @@ public class ChampionAbilitiesListAdapter extends BaseAdapter {
 
         private TextView nameView, detailView, costTitleView, rangeTitleView, costContentsView,
                 rangeContentsView, cooldownTitleView, cooldownContentsView;
+
+        public ImageView getIconView() {
+            return iconView;
+        }
+
+        public void setIconView(ImageView iconView) {
+            this.iconView = iconView;
+        }
+
+        private ImageView iconView;
     }
 }
