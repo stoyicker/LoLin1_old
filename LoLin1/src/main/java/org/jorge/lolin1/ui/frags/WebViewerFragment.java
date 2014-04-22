@@ -107,6 +107,7 @@ public class WebViewerFragment extends ProgressFragment {
             getWebView().loadUrl(mUrl = url);
         }
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -189,7 +190,7 @@ public class WebViewerFragment extends ProgressFragment {
         public void onReceivedError(WebView view, int errorCode, String description,
                                     String failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
-            final String msg = LoLin1Utils.getString(getActivity(), "error_no_internet", "ERROR");
+            final String msg = LoLin1Utils.getString(getActivity(), "error_no_connection", null);
             (getActivity()).runOnUiThread(new Runnable() {
                 @Override
                 public void run() {

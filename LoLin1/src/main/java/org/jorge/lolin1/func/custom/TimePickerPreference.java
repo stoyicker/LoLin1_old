@@ -56,7 +56,7 @@ public class TimePickerPreference extends DialogPreference
         }
         defaultTime =
                 LoLin1Utils.getString(getContext(), "pref_default_" + instanceType + "_respawn",
-                        "ERROR");
+                        null);
         TYPE_COUNTER++;
     }
 

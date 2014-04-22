@@ -41,7 +41,7 @@ public class SurrFeedHandler implements IFeedHandler {
 
     @Override
     public void onNoInternetConnection() {
-        final String msg = LoLin1Utils.getString(context, "error_no_connection", "ERROR");
+        final String msg = LoLin1Utils.getString(context, "error_no_connection", null);
         ((Activity) context).runOnUiThread(new Runnable() {
             @Override
             public void run() {
