@@ -11,6 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -63,14 +64,14 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
         setContentView(R.layout.activity_champion_detail);
         ActionBar actionBar;
         if (findViewById(R.id.champion_title) != null) {
+            //Portrait layout
             if (!(actionBar = getActionBar()).isShowing()) {
                 actionBar.show();
-                actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
             }
-            //Portrait layout
+            actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
             ((TextView) findViewById(R.id.champion_name)).setText(selectedChampion.getName());
             ((TextView) findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
-            initPager();
+            initChampionInfoPager();
             new AsyncTask<Void, Void, Void>(
 
             ) {
@@ -92,17 +93,22 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
                 actionBar.hide();
             }
             skinsViewPager = ((ViewPager) findViewById(R.id.skins_view_pager));
-            PagerAdapter pagerAdapter =
-                    new SkinsViewPagerAdapter(this, selectedChampion,
-                            getSupportFragmentManager());
-            skinsViewPager.setAdapter(pagerAdapter);
-            skinsViewPager.setOnPageChangeListener((ViewPager.OnPageChangeListener) pagerAdapter);
-            skinsViewPager.setCurrentItem(0);
-            skinsViewPager.setOffscreenPageLimit(selectedChampion.getSkinNames().length);
+            initChampionSkinsPager();
         }
     }
 
-    private void initPager() {
+    private void initChampionSkinsPager() {
+        PagerAdapter pagerAdapter =
+                new SkinsViewPagerAdapter(this, selectedChampion,
+                        getSupportFragmentManager());
+        skinsViewPager.setPageTransformer(Boolean.TRUE, new ZoomOutPageTransformer());
+        skinsViewPager.setAdapter(pagerAdapter);
+        skinsViewPager.setOnPageChangeListener((ViewPager.OnPageChangeListener) pagerAdapter);
+        skinsViewPager.setCurrentItem(0);
+        skinsViewPager.setOffscreenPageLimit(selectedChampion.getSkinNames().length);
+    }
+
+    private void initChampionInfoPager() {
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new ChampionStatsSupportFragment());
         fragments.add(new ChampionAbilitiesSupportFragment());
@@ -158,6 +164,48 @@ public class ChampionDetailFragmentActivity extends FragmentActivity {
         @Override
         public int getCount() {
             return items.size();
+        }
+    }
+
+    private class ZoomOutPageTransformer implements ViewPager.PageTransformer {
+        private static final float MIN_SCALE = 0.85f;
+        private static final float MIN_ALPHA = 0.5f;
+
+        public void transformPage(View view, float position) {
+            int pageWidth = view.getWidth();
+            int pageHeight = view.getHeight();
+
+            if (position < -1) { // [-Infinity,-1)
+                // This page is way off-screen to the left.
+                view.setAlpha(0);
+
+            }
+            else if (position <= 1) { // [-1,1]
+                // Modify the default slide transition to shrink the page as well
+                float scaleFactor = Math.max(MIN_SCALE, 1 - Math.abs(position));
+                float vertMargin = pageHeight * (1 - scaleFactor) / 2;
+                float horzMargin = pageWidth * (1 - scaleFactor) / 2;
+                if (position < 0) {
+                    view.setTranslationX(horzMargin - vertMargin / 2);
+                }
+                else {
+                    view.setTranslationX(-horzMargin + vertMargin / 2);
+                }
+
+                // Scale the page down (between MIN_SCALE and 1)
+                view.setScaleX(scaleFactor);
+                view.setScaleY(scaleFactor);
+
+                // Fade the page relative to its size.
+                view.setAlpha(MIN_ALPHA +
+                        (scaleFactor - MIN_SCALE) /
+                                (1 - MIN_SCALE) * (1 - MIN_ALPHA));
+
+            }
+            else { // (1,+Infinity]
+                // This page is way off-screen to the right.
+                view.setAlpha(0);
+            }
         }
     }
 }

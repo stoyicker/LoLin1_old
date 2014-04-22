@@ -23,6 +23,7 @@ import android.util.Log;
 import org.jorge.lolin1.func.champs.models.spells.AbstractSpellFactory;
 import org.jorge.lolin1.func.champs.models.spells.ActiveSpell;
 import org.jorge.lolin1.func.champs.models.spells.PassiveSpell;
+import org.jorge.lolin1.io.local.JsonManager;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -196,7 +197,7 @@ public final class Champion implements Parcelable {
         size = skinsDescriptor.length();
         this.skins = new String[size];
         for (int i = 0; i < size; i++) {
-            this.skins[i] = skinsDescriptor.getString(i);
+            this.skins[i] = JsonManager.getStringAttribute(skinsDescriptor.getString(i), "name");
         }
     }
 

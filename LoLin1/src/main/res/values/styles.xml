@@ -118,4 +118,12 @@ Created by JorgeAntonio on 02/01/14.
 		<item name="android:shadowDy">2</item>
 		<item name="android:shadowRadius">2</item>
 	</style>
+	<style name="SkinNameStyle">
+		<item name="android:textColor">@color/theme_transparent_white</item>
+		<item name="android:textSize">@dimen/champion_skin_name_text_size</item>
+		<item name="android:shadowColor">@color/theme_black</item>
+		<item name="android:shadowDx">2</item>
+		<item name="android:shadowDy">2</item>
+		<item name="android:shadowRadius">2</item>
+	</style>
 </resources>

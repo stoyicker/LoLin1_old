@@ -22,7 +22,7 @@
               android:orientation="vertical"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
-              android:background="@color/theme_champion_related_background">
+              android:background="@color/theme_black">
 	<android.support.v4.view.ViewPager
 		android:id="@+id/skins_view_pager"
 		android:layout_width="match_parent"

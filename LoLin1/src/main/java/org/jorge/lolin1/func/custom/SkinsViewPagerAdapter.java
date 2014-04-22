@@ -9,7 +9,7 @@ import android.support.v4.view.ViewPager;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.ui.activities.ChampionDetailFragmentActivity;
-import org.jorge.lolin1.ui.frags.SkinSupportFragment;
+import org.jorge.lolin1.ui.frags.ChampionSkinSupportFragment;
 
 /**
  * This file is part of LoLin1.
@@ -44,9 +44,9 @@ public class SkinsViewPagerAdapter extends FragmentPagerAdapter
         champion = thisChampion;
         context = _context;
         String[] skinNames = thisChampion.getSkinNames();
-        skins = new SkinSupportFragment[skinNames.length];
+        skins = new ChampionSkinSupportFragment[skinNames.length];
         for (int i = 0; i < skinNames.length; i++) {
-            skins[i] = SkinSupportFragment.newInstance(context, i, thisChampion,
+            skins[i] = ChampionSkinSupportFragment.newInstance(context, i, thisChampion,
                     i == 0 ? ScalableLinearLayout.BIG_SCALE : ScalableLinearLayout.SMALL_SCALE);
         }
     }
@@ -69,7 +69,7 @@ public class SkinsViewPagerAdapter extends FragmentPagerAdapter
 
         Fragment ret = skins[position];
         if (ret.getView() == null) {
-            return SkinSupportFragment.newInstance(context, position, champion,
+            return ChampionSkinSupportFragment.newInstance(context, position, champion,
                     position == 0 ? ScalableLinearLayout.BIG_SCALE :
                             ScalableLinearLayout.SMALL_SCALE
             );

@@ -72,4 +72,6 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="champion_detail_stats_padding">30dp</dimen>
 	<dimen name="view_pager_line_width">50dp</dimen>
 	<dimen name="view_pager_top_padding">10dp</dimen>
+	<dimen name="champion_skin_name_text_size">20sp</dimen>
+	<dimen name="champion_skin_name_padding">10dp</dimen>
 </resources>

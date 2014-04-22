@@ -23,6 +23,7 @@ Created by JorgeAntonio on 21/01/14.
 	<color name="theme_strong_orange">#FFBB33</color>
 	<color name="theme_black">#000000</color>
 	<color name="theme_white">#FFFFFF</color>
+	<color name="theme_transparent_white">#AAFFFFFF</color>
 	<color name="theme_surr_grey">#444444</color>
 	<color name="theme_champion_related_background">#DEDEDE</color>
 </resources>

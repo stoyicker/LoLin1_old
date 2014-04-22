@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.ChampionManager;
@@ -33,7 +34,7 @@ import org.jorge.lolin1.func.custom.ScalableLinearLayout;
  * <p/>
  * Created by JorgeAntonio on 21/04/2014.
  */
-public class SkinSupportFragment extends Fragment {
+public class ChampionSkinSupportFragment extends Fragment {
 
     private static final String KEY_SCALE = "SCALE", KEY_CHAMPION = "CHAMPION", KEY_POSITION =
             "POSITION";
@@ -46,7 +47,7 @@ public class SkinSupportFragment extends Fragment {
         args.putFloat(KEY_SCALE, scale);
         args.putInt(KEY_POSITION, position);
         args.putParcelable(KEY_CHAMPION, champion);
-        return Fragment.instantiate(_context, SkinSupportFragment.class.getName(), args);
+        return Fragment.instantiate(_context, ChampionSkinSupportFragment.class.getName(), args);
     }
 
     @Override
@@ -72,6 +73,10 @@ public class SkinSupportFragment extends Fragment {
                                 getArguments().getInt(KEY_POSITION))
         ));
         //TODO Update the name of the skin
+
+        TextView skinNameView = (TextView) l.findViewById(R.id.skin_name);
+        skinNameView.setText(((Champion) getArguments().getParcelable(KEY_CHAMPION))
+                .getSkinNames()[getArguments().getInt(KEY_POSITION)]);
 
         return l;
     }
