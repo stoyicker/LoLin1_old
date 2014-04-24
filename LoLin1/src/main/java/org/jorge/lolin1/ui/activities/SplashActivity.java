@@ -630,6 +630,7 @@ public class SplashActivity extends Activity {
         do {
             try {
                 target = dataProviders[index];
+                Log.d("debug", target);
                 getContentInputStream = HTTPServices.performGetRequest(target);
                 String content = LoLin1Utils.inputStreamAsString(getContentInputStream);
                 if (!content.contains(LoLin1Utils.getString(getApplicationContext(),

@@ -36,9 +36,9 @@ import java.net.URLDecoder;
  */
 public abstract class HTTPServices {
 
-    private static final String VERSION_SERVICE_LOCATION = "/services/champions/version/",
-            LIST_SERVICE_LOCATION = "/services/champions/list/", CDN_SERVICE_LOCATION =
-            "/services/champions/cdn/";
+    private static final String VERSION_SERVICE_LOCATION = "/services/champions/version",
+            LIST_SERVICE_LOCATION = "/services/champions/list", CDN_SERVICE_LOCATION =
+            "/services/champions/cdn";
 
     public static void downloadFile(String whatToDownload, File whereToSaveIt) throws IOException {
         BufferedInputStream bufferedInputStream = null;
@@ -84,19 +84,22 @@ public abstract class HTTPServices {
 
     public static InputStream performVersionRequest(String serverUri, String realm)
             throws IOException, URISyntaxException, ServerIsCheckingException {
-        return performGetRequest(serverUri + VERSION_SERVICE_LOCATION + realm.toLowerCase());
+        return performGetRequest(
+                serverUri + VERSION_SERVICE_LOCATION + "?realm=" + realm.toLowerCase());
     }
 
     public static InputStream performListRequest(String serverUri, String realm, String locale)
             throws ServerIsCheckingException, IOException, URISyntaxException {
         return performGetRequest(
-                serverUri + LIST_SERVICE_LOCATION + realm.toLowerCase() + "/" + locale);
+                serverUri + LIST_SERVICE_LOCATION + "?realm=" + realm.toLowerCase() + "&locale=" +
+                        locale
+        );
     }
 
     public static String performCdnRequest(String serverUri, String realm)
             throws ServerIsCheckingException, IOException, URISyntaxException {
         return LoLin1Utils.inputStreamAsString(performGetRequest(
-                serverUri + CDN_SERVICE_LOCATION + realm.toLowerCase()));
+                serverUri + CDN_SERVICE_LOCATION + "?realm=" + realm.toLowerCase()));
     }
 
     public static class ServerIsCheckingException extends Exception {
