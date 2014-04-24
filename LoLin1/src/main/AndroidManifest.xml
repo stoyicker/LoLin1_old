@@ -131,6 +131,16 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+		<activity
+			android:name=".ui.activities.JungleTimersActivity"
+			android:label="@string/jungle_timers_activity"
+			android:launchMode="singleTop"
+			android:logo="@drawable/icon_section2">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW"/>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
 	</application>
 
 </manifest>

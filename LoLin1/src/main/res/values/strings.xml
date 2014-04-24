@@ -203,4 +203,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="skin_view_content_description">Skin view</string>
 	<string name="time_unit_second_plural">seconds</string>
 	<string name="champion_ability_icon_content_description">Ability icon</string>
+	<string name="jungle_timers_activity">Jungle timers</string>
 </resources>

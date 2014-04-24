@@ -110,12 +110,23 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                     }
                 };
                 break;
+            case 1:
+                task = new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(
+                                new Intent(getApplicationContext(), JungleTimersActivity.class));
+                    }
+                };
+                break;
             case 2:
                 task = new Runnable() {
                     @Override
                     public void run() {
                         startActivity(
-                                new Intent(getApplicationContext(), ChampionListActivity.class));
+                                new Intent(getApplicationContext(),
+                                        ChampionListActivity.class)
+                        );
                     }
                 };
                 break;
@@ -124,7 +135,9 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                     @Override
                     public void run() {
                         startActivity(
-                                new Intent(getApplicationContext(), SurrReaderActivity.class));
+                                new Intent(getApplicationContext(),
+                                        SurrReaderActivity.class)
+                        );
                     }
                 };
                 break;

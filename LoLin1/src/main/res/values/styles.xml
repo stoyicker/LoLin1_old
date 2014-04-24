@@ -144,4 +144,13 @@ Created by JorgeAntonio on 02/01/14.
 		<item name="android:textColor">@color/theme_white</item>
 		<item name="android:shadowColor">@color/theme_black</item>
 	</style>
+	<style name="JungleTimerTextStyle">
+		<item name="android:textColor">@color/theme_white</item>
+		<item name="android:textSize">@dimen/jungle_timer_text_size</item>
+		<item name="android:shadowColor">@color/theme_black</item>
+		<item name="android:shadowDx">2</item>
+		<item name="android:shadowDy">2</item>
+		<item name="android:shadowRadius">2</item>
+	</style>
+	<dimen name="jungle_timer_text_size">25sp</dimen>
 </resources>
