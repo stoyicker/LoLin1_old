@@ -1,8 +1,4 @@
-package org.jorge.lolin1.ui.activities;
-
-import android.os.Bundle;
-
-import org.jorge.lolin1.R;
+package org.jorge.lolin1.ui.frags;
 
 /**
  * This file is part of LoLin1.
@@ -22,15 +18,5 @@ import org.jorge.lolin1.R;
  * <p/>
  * Created by JorgeAntonio on 25/04/2014.
  */
-public final class JungleTimersActivity extends DrawerLayoutFragmentActivity {
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            savedInstanceState = new Bundle();
-        }
-        savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
-                R.layout.activity_jungle_timers);
-        super.onCreate(savedInstanceState);
-    }
+public class BaronJungleTimerFragment extends JungleTimerFragment {
 }

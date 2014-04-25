@@ -78,14 +78,10 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="server_tr">tr</string>
 	<string name="pref_title_lang">Language</string>
 	<string name="pref_cat_jun">JUNGLE TIMERS</string>
-	<string name="pref_title_timers_reset">Confirm timers reset</string>
-	<string name="pref_summary_timers_reset">Request for confirmation when manually resetting
-		the jungle timers
-	</string>
 	<string name="pref_title_display">Keep display on</string>
 	<string name="pref_summary_display">While viewing the timers</string>
 	<string name="pref_title_baron_respawn">Baron respawn time</string>
-	<string name="pref_title_dragon_respawn">Dragon respawn time</string>
+	<string name="pref_title_dragon_respawn">Drake respawn time</string>
 	<string name="pref_title_buff_respawn">Buff respawn time</string>
 	<string name="pref_default_baron_respawn">07:00</string>
 	<string name="pref_default_dragon_respawn">06:00</string>

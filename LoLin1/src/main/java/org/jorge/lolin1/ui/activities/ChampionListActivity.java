@@ -30,7 +30,7 @@ import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
  * <p/>
  * Created by JorgeAntonio on 14/04/2014.
  */
-public class ChampionListActivity extends DrawerLayoutFragmentActivity implements
+public final class ChampionListActivity extends DrawerLayoutFragmentActivity implements
         ExpandableSearchFragment.ExpandableSearchListener,
         ChampionListFragment.ChampionSelectionListener {
 

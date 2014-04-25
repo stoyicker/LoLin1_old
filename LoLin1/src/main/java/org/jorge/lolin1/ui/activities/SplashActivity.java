@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
 
-public class SplashActivity extends Activity {
+public final class SplashActivity extends Activity {
 
     private final int NONE_YET = 0, ALLOW = 1, DISALLOW = 2;
     private int dataAllowance = NONE_YET;
@@ -630,7 +630,6 @@ public class SplashActivity extends Activity {
         do {
             try {
                 target = dataProviders[index];
-                Log.d("debug", target);
                 getContentInputStream = HTTPServices.performGetRequest(target);
                 String content = LoLin1Utils.inputStreamAsString(getContentInputStream);
                 if (!content.contains(LoLin1Utils.getString(getApplicationContext(),

@@ -27,4 +27,6 @@ Created by JorgeAntonio on 21/01/14.
 	<color name="theme_surr_grey">#444444</color>
 	<color name="theme_champion_related_background">#DEDEDE</color>
 	<color name="theme_champion_ability_background">#848484</color>
+	<color name="theme_red">#F55151</color>
+	<color name="theme_purple">#881450</color>
 </resources>

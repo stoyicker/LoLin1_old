@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * <p/>
  * Created by JorgeAntonio on 07/02/14.
  */
-public class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
+public final class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
         NewsListFragment.NewsListFragmentListener {
     private static Boolean isDualPane = Boolean.FALSE;
     private NewsListFragment NEWS_FRAGMENT;

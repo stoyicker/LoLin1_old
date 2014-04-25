@@ -37,7 +37,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * href="http://developer.android.com/guide/topics/ui/settings.html">Settings
  * API Guide</a> for more information on developing a Settings UI.
  */
-public class SettingsPreferenceActivity extends PreferenceActivity {
+public final class SettingsPreferenceActivity extends PreferenceActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

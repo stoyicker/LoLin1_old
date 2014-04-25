@@ -30,7 +30,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * <p/>
  * Created by JorgeAntonio on 18/03/14.
  */
-public class ServerAndLanguageChooserActivity extends Activity
+public final class ServerAndLanguageChooserActivity extends Activity
         implements RealmListFragment.RealmListFragmentListener,
         LanguageListFragment.LanguageListFragmentListener,
         VerificationFragment.VerificationFragmentListener {

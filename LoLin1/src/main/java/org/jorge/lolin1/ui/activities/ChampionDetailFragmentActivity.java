@@ -48,7 +48,7 @@ import java.util.List;
  * <p/>
  * Created by JorgeAntonio on 18/04/2014.
  */
-public class ChampionDetailFragmentActivity extends FragmentActivity {
+public final class ChampionDetailFragmentActivity extends FragmentActivity {
 
     public static final String SELECTED_CHAMPION = "SELECTED_CHAMPION";
     private static final TransitionViewPager.TransitionEffect TRANSITION_EFFECT =

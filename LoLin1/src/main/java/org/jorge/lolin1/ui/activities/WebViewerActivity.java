@@ -31,7 +31,7 @@ import java.util.ArrayList;
  * <p/>
  * Created by JorgeAntonio on 07/02/14.
  */
-public class WebViewerActivity extends FragmentActivity {
+public final class WebViewerActivity extends FragmentActivity {
 
     WebViewerFragment webViewerFragment;
 

@@ -1,6 +1,26 @@
 package org.jorge.lolin1.ui.frags;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.os.CountDownTimer;
+import android.os.PowerManager;
+import android.preference.PreferenceManager;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import org.jorge.lolin1.R;
+import org.jorge.lolin1.utils.LoLin1Utils;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 /**
  * This file is part of LoLin1.
@@ -20,5 +40,179 @@ import android.app.Fragment;
  * <p/>
  * Created by JorgeAntonio on 25/04/2014.
  */
-public class JungleTimerFragment extends Fragment {
+public abstract class JungleTimerFragment extends Fragment {
+
+    private static final SimpleDateFormat SDF = new SimpleDateFormat("mm:ss", Locale.ENGLISH);
+    private InnerCountDownTimer chronometer;
+    private int background_color;
+    private Boolean isChronometerRunning = Boolean.FALSE;
+    private Date initialValueAsDate;
+    private long initialValue, lastTimeTracked;
+    private TextView jungleTimeView;
+    private PowerManager.WakeLock mWakeLock;
+
+    public JungleTimerFragment() {
+        setRetainInstance(Boolean.TRUE);
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        mWakeLock = ((PowerManager) activity.getApplicationContext().getSystemService(
+                Context.POWER_SERVICE))
+                .newWakeLock(PowerManager.SCREEN_DIM_WAKE_LOCK, getClass().getName());
+        background_color = -1;
+        String prefName = null;
+
+        if (this instanceof BlueJungleTimerFragment) {
+            background_color = R.color.theme_light_blue;
+            prefName = "buff";
+        }
+        else if (this instanceof RedJungleTimerFragment) {
+            background_color = R.color.theme_red;
+            prefName = "buff";
+        }
+        else if (this instanceof BaronJungleTimerFragment) {
+            background_color = R.color.theme_purple;
+            prefName = "baron";
+        }
+        else if (this instanceof DrakeJungleTimerFragment) {
+            background_color = R.color.theme_strong_orange;
+            prefName = "dragon";
+        }
+
+        SharedPreferences preferences = PreferenceManager
+                .getDefaultSharedPreferences(activity.getApplicationContext());
+
+        String key = LoLin1Utils
+                .getString(getActivity().getApplicationContext(),
+                        "pref_title_" + prefName + "_respawn", null);
+        Log.d("debug", "key: " + key);
+        prefName = preferences.getString(key, "00:30");
+        try {
+            initialValueAsDate = SDF.parse(prefName);
+            initialValue =
+                    new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("01-01-1970 01:" + prefName)
+                            .getTime();
+        }
+        catch (ParseException e) {
+            Log.wtf("debug", e.getClass().getName(), e);
+        }
+
+        chronometer = new InnerCountDownTimer(initialValue, 1000);
+    }
+
+    @Override
+    public void onDestroyView() {
+        if (PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                .getBoolean("pref_title_display", Boolean.TRUE)) {
+            mWakeLock.release();
+        }
+        super.onDestroyView();
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View ret = inflater.inflate(R.layout.fragment_jungle_timer, container, false);
+
+        if (PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
+                .getBoolean("pref_title_display", Boolean.TRUE)) {
+            mWakeLock.acquire();
+        }
+
+        jungleTimeView = (TextView) ret.findViewById(R.id.jungle_time_view);
+
+        jungleTimeView.setBackgroundResource(background_color);
+
+        jungleTimeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!isChronometerRunning) {
+                    Log.d("debug", "onClick!");
+                    chronometer.start();
+                    Log.d("debug", "Countdown started!");
+                    isChronometerRunning = Boolean.TRUE;
+                }
+                else {
+                    chronometer.cancel();
+                    chronometer = new InnerCountDownTimer(lastTimeTracked, 1000);
+                    isChronometerRunning = Boolean.FALSE;
+                }
+            }
+        });
+
+        jungleTimeView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Log.d("debug", "onLongClick!");
+                chronometer.cancel();
+                chronometer = new InnerCountDownTimer(initialValue, 1000);
+                lastTimeTracked = 0;
+                isChronometerRunning = Boolean.FALSE;
+                jungleTimeView.setText(SDF.format(initialValueAsDate));
+                return Boolean.TRUE;
+            }
+        });
+        if (jungleTimeView.getText().toString().isEmpty()) {
+            String prefName = null;
+
+            if (this instanceof BlueJungleTimerFragment) {
+                background_color = R.color.theme_light_blue;
+                prefName = "buff";
+            }
+            else if (this instanceof RedJungleTimerFragment) {
+                background_color = R.color.theme_red;
+                prefName = "buff";
+            }
+            else if (this instanceof BaronJungleTimerFragment) {
+                background_color = R.color.theme_purple;
+                prefName = "baron";
+            }
+            else if (this instanceof DrakeJungleTimerFragment) {
+                background_color = R.color.theme_strong_orange;
+                prefName = "dragon";
+            }
+            jungleTimeView.setText(PreferenceManager
+                    .getDefaultSharedPreferences(getActivity().getApplicationContext())
+                    .getString(LoLin1Utils.getString(getActivity().getApplicationContext(),
+                            "pref_title_" + prefName + "_respawn", null), "00:30"));
+        }
+        return ret;
+    }
+
+
+    private class InnerCountDownTimer extends CountDownTimer {
+
+        private InnerCountDownTimer(long initialValue, long tickInterval) {
+            super(initialValue, tickInterval);
+        }
+
+        @Override
+        public void onTick(final long millisUntilFinished) {
+            Log.d("debug", "onTick!");
+            lastTimeTracked = millisUntilFinished;
+            if (jungleTimeView != null) {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        jungleTimeView
+                                .setText(SDF
+                                        .format(new Date(millisUntilFinished).getTime()));
+                    }
+                });
+            }
+        }
+
+        @Override
+        public void onFinish() {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    jungleTimeView.setText(SDF.format(initialValueAsDate));
+                }
+            });
+            isChronometerRunning = Boolean.FALSE;
+        }
+    }
 }

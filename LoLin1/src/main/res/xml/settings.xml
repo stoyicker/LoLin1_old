@@ -43,12 +43,6 @@
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_jun">
 		<CheckBoxPreference
-			android:defaultValue="true"
-			android:key="@string/pref_title_timers_reset"
-			android:summary="@string/pref_summary_timers_reset"
-			android:title="@string/pref_title_timers_reset"
-			/>
-		<CheckBoxPreference
 			android:defaultValue="false"
 			android:key="@string/pref_title_display"
 			android:summary="@string/pref_summary_display"

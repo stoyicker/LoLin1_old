@@ -38,14 +38,14 @@
 				android:layout_width="match_parent"
 				android:layout_weight="1"
 				android:layout_height="0dp"
-				android:name="org.jorge.lolin1.ui.frags.JungleTimerFragment"
+				android:name="org.jorge.lolin1.ui.frags.BlueJungleTimerFragment"
 				tools:layout="@layout/fragment_jungle_timer"/>
 			<fragment
 				android:id="@+id/left_red"
 				android:layout_width="match_parent"
 				android:layout_weight="1"
 				android:layout_height="0dp"
-				android:name="org.jorge.lolin1.ui.frags.JungleTimerFragment"
+				android:name="org.jorge.lolin1.ui.frags.RedJungleTimerFragment"
 				tools:layout="@layout/fragment_jungle_timer"/>
 		</LinearLayout>
 		<LinearLayout
@@ -59,14 +59,14 @@
 				android:layout_width="match_parent"
 				android:layout_weight="1"
 				android:layout_height="0dp"
-				android:name="org.jorge.lolin1.ui.frags.JungleTimerFragment"
+				android:name="org.jorge.lolin1.ui.frags.BaronJungleTimerFragment"
 				tools:layout="@layout/fragment_jungle_timer"/>
 			<fragment
 				android:id="@+id/drake"
 				android:layout_width="match_parent"
 				android:layout_weight="1"
 				android:layout_height="0dp"
-				android:name="org.jorge.lolin1.ui.frags.JungleTimerFragment"
+				android:name="org.jorge.lolin1.ui.frags.DrakeJungleTimerFragment"
 				tools:layout="@layout/fragment_jungle_timer"/>
 		</LinearLayout>
 		<LinearLayout
@@ -80,14 +80,14 @@
 				android:layout_width="match_parent"
 				android:layout_weight="1"
 				android:layout_height="0dp"
-				android:name="org.jorge.lolin1.ui.frags.JungleTimerFragment"
+				android:name="org.jorge.lolin1.ui.frags.RedJungleTimerFragment"
 				tools:layout="@layout/fragment_jungle_timer"/>
 			<fragment
 				android:id="@+id/right_blue"
 				android:layout_width="match_parent"
 				android:layout_weight="1"
 				android:layout_height="0dp"
-				android:name="org.jorge.lolin1.ui.frags.JungleTimerFragment"
+				android:name="org.jorge.lolin1.ui.frags.BlueJungleTimerFragment"
 				tools:layout="@layout/fragment_jungle_timer"/>
 		</LinearLayout>
 	</LinearLayout>

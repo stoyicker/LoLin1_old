@@ -30,7 +30,7 @@ import java.util.ArrayList;
  * <p/>
  * Created by JorgeAntonio on 09/02/14.
  */
-public class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
+public final class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
         SurrListFragment.SurrListFragmentListener {
     //    private static Boolean isDualPane = Boolean.FALSE;
     private SurrListFragment SURR_FRAGMENT;
