@@ -39,11 +39,11 @@ public final class InitialActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
         SQLiteDAO.setup(getApplicationContext());
         flushCacheIfNecessary();
-        PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.FALSE);
         SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         LoLin1Utils
                 .setLocale(getApplicationContext(), LoLin1Utils.getLocale(getApplicationContext()));
         preferences.edit().putInt("lastSelectedNewsIndex", 0).commit();

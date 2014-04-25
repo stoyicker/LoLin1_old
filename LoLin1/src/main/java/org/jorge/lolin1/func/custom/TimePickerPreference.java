@@ -1,6 +1,7 @@
 package org.jorge.lolin1.func.custom;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.preference.DialogPreference;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -31,10 +32,11 @@ public class TimePickerPreference extends DialogPreference
         implements TimePicker.OnTimeChangedListener {
 
     private static final String SANITY_EXPRESSION = "[0-5]*[0-9]:[0-5]*[0-9]";
+    private static final String DEFAULT_VALUE = "00:00";
     private static final Integer ERROR_CODE = -1;
     private static final Integer COUNTER_AMOUNT = 3;
     private static Integer TYPE_COUNTER = 0;
-    private String defaultTime;
+    private String value;
 
     public TimePickerPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -54,10 +56,17 @@ public class TimePickerPreference extends DialogPreference
                 Log.wtf("TYPE COUNTER", "" + TYPE_COUNTER);
                 instanceType = "ERROR";
         }
-        defaultTime =
-                LoLin1Utils.getString(getContext(), "pref_default_" + instanceType + "_respawn",
-                        null);
+        value = LoLin1Utils.getString(context, "pref_default_" + instanceType + "_respawn",
+                null);
+        System.out.println("value is " + value);
         TYPE_COUNTER++;
+    }
+
+    @Override
+    protected void onDialogClosed(boolean positiveResult) {
+        if (positiveResult) {
+            persistString(value);
+        }
     }
 
     @Override
@@ -80,17 +89,16 @@ public class TimePickerPreference extends DialogPreference
 
     @Override
     public void onTimeChanged(TimePicker view, int minutes, int seconds) {
-
         String result = minutes + ":" + seconds;
         callChangeListener(result);
-        persistString(result);
+        value = result;
     }
 
     /**
      * @return {@link java.lang.Integer} The minutes, which will be 0 to 59 (inclusive)
      */
     private Integer getMinutes() {
-        String time = getPersistedString(this.defaultTime);
+        String time = getPersistedString(this.value);
 
         if (time == null || !time.matches(SANITY_EXPRESSION)) {
             return ERROR_CODE;
@@ -103,7 +111,7 @@ public class TimePickerPreference extends DialogPreference
      * @return {@link java.lang.Integer} The seconds, which will be from 0 to 59 (inclusive)
      */
     private Integer getSeconds() {
-        String time = getPersistedString(this.defaultTime);
+        String time = getPersistedString(this.value);
 
         if (time == null || !time.matches(SANITY_EXPRESSION)) {
             return ERROR_CODE;
@@ -113,16 +121,20 @@ public class TimePickerPreference extends DialogPreference
     }
 
     @Override
+    protected Object onGetDefaultValue(TypedArray a, int index) {
+        return a.getString(index);
+    }
+
+    @Override
     protected void onSetInitialValue(boolean restorePersistedValue, Object defaultValue) {
-        if (restorePersistedValue)
-        //Restore state
-        {
-            defaultTime = getPersistedString(defaultTime);
+        if (restorePersistedValue) {
+            // Restore existing state
+            value = this.getPersistedString(DEFAULT_VALUE);
         }
         else {
-            //Set state
-            defaultTime = (String) defaultValue;
-            persistString(defaultTime);
+            // Set default state from the XML attribute
+            value = (String) defaultValue;
+            persistString(value);
         }
     }
 }

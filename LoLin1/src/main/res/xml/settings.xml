@@ -64,39 +64,9 @@
 			android:title="@string/pref_title_buff_respawn"
 			/>
 	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_chat">
-		<EditTextPreference
-			android:defaultValue="@string/pref_default_username"
-			android:key="@string/pref_title_username"
-			android:title="@string/pref_title_username"/>
-		<EditTextPreference
-			android:defaultValue="@string/pref_default_pass"
-			android:key="@string/pref_title_pass"
-			android:password="true"
-			android:title="@string/pref_title_pass"
-			/>
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_share">
-		<Preference android:title="@string/pref_title_facebook">
-			<intent android:action="org.jorge.lolin1.activities.SHARETOFBACTIVITY"
-				/>
-		</Preference>
-		<Preference android:title="@string/pref_title_twitter">
-			<intent android:action="org.jorge.lolin1.activities.SHARETOTWITTERACTIVITY"
-				/>
-		</Preference>
-	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_about">
-		<Preference android:title="@string/pref_title_rate">
-			<intent android:action="org.jorge.lolin1.activities.RATEACTIVITY"
-				/>
-		</Preference>
 		<Preference android:title="@string/pref_title_developer">
 			<intent android:action="http://www.linkedin.com/in/jorgediazbenitosoriano"
-				/>
-		</Preference>
-		<Preference android:title="@string/pref_title_policy">
-			<intent android:action="org.jorge.lolin1.activities.POLICYACTIVITY"
 				/>
 		</Preference>
 	</PreferenceCategory>
