@@ -45,7 +45,6 @@ public class ChampionAbilitiesSupportFragment extends ChampionDetailSupportFragm
         View view = super.onCreateView(inflater, container, savedInstanceState);
 
         final ListView abilitiesListView = (ListView) view.findViewById(android.R.id.list);
-
         abilitiesListView
                 .setAdapter(new ChampionAbilitiesListAdapter(getActivity(), getSelectedChampion()));
         abilitiesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -58,6 +57,15 @@ public class ChampionAbilitiesSupportFragment extends ChampionDetailSupportFragm
                 }
                 else {
                     abilityDetailTextView.setVisibility(View.VISIBLE);
+                }
+                if (position == abilitiesListView.getAdapter().getCount() - 1) {
+                    abilitiesListView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            abilitiesListView
+                                    .setSelection(abilitiesListView.getAdapter().getCount() - 1);
+                        }
+                    });
                 }
             }
         });
