@@ -195,4 +195,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="time_unit_second_plural">seconds</string>
 	<string name="champion_ability_icon_content_description">Ability icon</string>
 	<string name="jungle_timers_activity">Jungle timers</string>
+	<string name="developer_profile_url">https://www.linkedin.com/in/jorgediazbenitosoriano</string>
 </resources>

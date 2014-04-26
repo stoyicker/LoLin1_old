@@ -1,6 +1,8 @@
 package org.jorge.lolin1.ui.frags;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
@@ -40,6 +42,22 @@ public class SettingsFragment extends PreferenceFragment {
 
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings);
+
+        final Preference developerProfilePreference = findPreference(
+                LoLin1Utils.getString(getActivity().getApplicationContext(), "pref_title_developer",
+                        null)
+        );
+        developerProfilePreference
+                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(LoLin1Utils
+                                .getString(getActivity().getApplicationContext(),
+                                        "developer_profile_url",
+                                        null))));
+                        return Boolean.TRUE;
+                    }
+                });
 
         final ListPreference serverPreference = (ListPreference) findPreference(
                 LoLin1Utils.getString(getActivity().getApplicationContext(), "pref_title_server",

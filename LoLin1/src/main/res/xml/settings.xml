@@ -61,9 +61,8 @@
 			/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_about">
-		<Preference android:title="@string/pref_title_developer">
-			<intent android:action="http://www.linkedin.com/in/jorgediazbenitosoriano"
-				/>
+		<Preference android:title="@string/pref_title_developer"
+		            android:key="@string/pref_title_developer">
 		</Preference>
 	</PreferenceCategory>
 </PreferenceScreen>
