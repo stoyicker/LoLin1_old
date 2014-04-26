@@ -215,7 +215,7 @@ public abstract class LoLin1Utils {
     }
 
     public static String inputStreamAsString(InputStream is) throws IOException {
-        java.util.Scanner s = new java.util.Scanner(is);
+        java.util.Scanner s = new java.util.Scanner(is, "ISO-8859-1");
         String ret;
         ret = s.useDelimiter("\\A").hasNext() ? s.next() : "";
         return ret;

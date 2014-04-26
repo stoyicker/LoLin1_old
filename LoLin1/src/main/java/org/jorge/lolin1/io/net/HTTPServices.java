@@ -4,6 +4,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.BufferedInputStream;
@@ -70,6 +73,8 @@ public abstract class HTTPServices {
             throws IOException, URISyntaxException, ServerIsCheckingException {
         HttpResponse response;
 
+        HttpParams params = new BasicHttpParams();
+        HttpProtocolParams.setContentCharset(params, "ISO-8859-1");
         HttpClient client = new DefaultHttpClient();
         HttpGet request = new HttpGet();
         request.setURI(new URI(uri));
