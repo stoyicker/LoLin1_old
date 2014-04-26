@@ -27,16 +27,12 @@
 			android:title="@string/pref_title_data"
 			/>
 		<ListPreference
-			android:defaultValue="@string/server_euw"
 			android:entries="@array/servers"
 			android:entryValues="@array/servers"
 			android:key="@string/pref_title_server"
 			android:title="@string/pref_title_server"
 			/>
 		<ListPreference
-			android:defaultValue="@string/lang_en"
-			android:entries="@array/lang_euw"
-			android:entryValues="@array/lang_euw"
 			android:key="@string/pref_title_lang"
 			android:title="@string/pref_title_lang"
 			/>
