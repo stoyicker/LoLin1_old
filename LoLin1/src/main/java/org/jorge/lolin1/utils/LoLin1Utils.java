@@ -13,12 +13,16 @@ import android.util.Log;
 import android.util.TypedValue;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.ui.activities.NewsReaderActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.nio.charset.Charset;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * This file is part of LoLin1.
@@ -42,12 +46,33 @@ import java.util.Locale;
  */
 public abstract class LoLin1Utils {
 
+    private static final Map<String, Charset> charsetMap = new HashMap<>();
+
+    public static void initCharsetMap() {
+        charsetMap.put("tr_TR", Charset.forName("ISO-8859-3"));
+        charsetMap.put("en_US", Charset.forName("UTF-8"));
+        charsetMap.put("es_ES", Charset.forName("ISO-8859-1"));
+        charsetMap.put("de_DE", Charset.forName("ISO-8859-2"));
+        charsetMap.put("fr_FR", Charset.forName("UTF-8"));
+        charsetMap.put("it_IT", Charset.forName("ISO-8859-3"));
+        charsetMap.put("pt_PT", Charset.forName("ISO-8859-1"));
+        charsetMap.put("el_GR", Charset.forName("Windows-1253"));
+        charsetMap.put("pl_PL", Charset.forName("Windows-1250"));
+        charsetMap.put("ro_RO", Charset.forName("Windows-1250"));
+    }
+
+    public static Charset getLocaleCharset(String locale) {
+        return charsetMap.containsKey(locale) ? charsetMap.get(locale) :
+                Charset.forName(locale);
+    }
+
     public static int dpToPx(Resources res, int dp) {
         return (int) TypedValue
                 .applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, res.getDisplayMetrics());
     }
 
     public static void restartApp(Activity activity) {
+        activity.startActivity(new Intent(activity, NewsReaderActivity.class));
         Intent i = activity.getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(activity.getBaseContext().getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -214,8 +239,9 @@ public abstract class LoLin1Utils {
         return (int) (sizeInPx * scale + 0.5f);
     }
 
-    public static String inputStreamAsString(InputStream is) throws IOException {
-        java.util.Scanner s = new java.util.Scanner(is, "ISO-8859-1");
+    public static String inputStreamAsString(InputStream is, String locale) throws IOException {
+        java.util.Scanner s =
+                new java.util.Scanner(is, LoLin1Utils.getLocaleCharset(locale).name());
         String ret;
         ret = s.useDelimiter("\\A").hasNext() ? s.next() : "";
         return ret;

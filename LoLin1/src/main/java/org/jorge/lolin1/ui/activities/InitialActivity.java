@@ -40,6 +40,7 @@ public final class InitialActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
+        LoLin1Utils.initCharsetMap();
         SQLiteDAO.setup(getApplicationContext());
         flushCacheIfNecessary();
         SharedPreferences preferences =

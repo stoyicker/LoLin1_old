@@ -1,5 +1,7 @@
 package org.jorge.lolin1.io.local;
 
+import org.jorge.lolin1.utils.LoLin1Utils;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -39,7 +41,7 @@ public abstract class FileManager {
         return dir.delete();
     }
 
-    public static void writeStringToFile(String string, File file)
+    public static void writeStringToFile(String string, File file, String locale)
             throws IOException {
 
         if (!file.exists()) {
@@ -47,7 +49,7 @@ public abstract class FileManager {
         }
 
         FileOutputStream outputStream = new FileOutputStream(file);
-        outputStream.write(string.getBytes("UTF-8"));
+        outputStream.write(string.getBytes(LoLin1Utils.getLocaleCharset(locale)));
         outputStream.close();
     }
 

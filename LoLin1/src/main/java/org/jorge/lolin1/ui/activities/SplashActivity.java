@@ -325,7 +325,7 @@ public final class SplashActivity extends Activity {
             String dataStreamAsString;
             try {
                 dataStream = HTTPServices.performListRequest(server, realm, locale);
-                dataStreamAsString = LoLin1Utils.inputStreamAsString(dataStream);
+                dataStreamAsString = LoLin1Utils.inputStreamAsString(dataStream, locale);
                 if (!JsonManager.getResponseStatus(dataStreamAsString)) {
                     LOG_FRAGMENT.appendToSameLine(
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
@@ -347,7 +347,7 @@ public final class SplashActivity extends Activity {
             );
             try {
                 FileManager
-                        .writeStringToFile(dataStreamAsString, dataFile);
+                        .writeStringToFile(dataStreamAsString, dataFile, locale);
             }
             catch (IOException e) {
                 LOG_FRAGMENT.appendToSameLine(
@@ -363,7 +363,7 @@ public final class SplashActivity extends Activity {
                                 .getString(getApplicationContext(), "progress_character", null)
                 );
                 try {
-                    String cdnResponse = HTTPServices.performCdnRequest(server, realm);
+                    String cdnResponse = HTTPServices.performCdnRequest(server, realm, locale);
                     if (JsonManager.getResponseStatus(cdnResponse)) {
                         cdn = JsonManager.getStringAttribute(cdnResponse,
                                 LoLin1Utils.getString(getApplicationContext(), "cdn_key", null));
@@ -573,7 +573,7 @@ public final class SplashActivity extends Activity {
             JSONObject newVersionAsJSON;
             try {
                 newVersion = LoLin1Utils.inputStreamAsString(
-                        HTTPServices.performVersionRequest(server, realm));
+                        HTTPServices.performVersionRequest(server, realm, "en_US"), "en_US");
             }
             catch (IOException | URISyntaxException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
@@ -630,8 +630,9 @@ public final class SplashActivity extends Activity {
         do {
             try {
                 target = dataProviders[index];
-                getContentInputStream = HTTPServices.performGetRequest(target);
-                String content = LoLin1Utils.inputStreamAsString(getContentInputStream);
+                getContentInputStream = HTTPServices.performGetRequest(target, "en_US");
+                String content = LoLin1Utils
+                        .inputStreamAsString(getContentInputStream, "en_US");
                 if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
                         "provider_application_error_identifier", null)) &&
                         !content.contains(
