@@ -15,7 +15,7 @@
 -->
 
 <!-- BEGIN_INCLUDE(all) -->
-<android.support.v4.widget.DrawerLayout
+<org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout
 	android:id="@+id/drawer_layout"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:tools="http://schemas.android.com/tools"
@@ -50,5 +50,5 @@
 		android:layout_height="match_parent"
 		android:layout_gravity="left"
 		tools:layout="@layout/fragment_navigation_drawer"/>
-</android.support.v4.widget.DrawerLayout>
+</org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout>
 	<!-- END_INCLUDE(all) -->

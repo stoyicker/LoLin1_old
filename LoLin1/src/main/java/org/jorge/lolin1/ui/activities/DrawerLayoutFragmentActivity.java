@@ -6,12 +6,12 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout;
 import org.jorge.lolin1.ui.frags.NavigationDrawerFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
@@ -46,7 +46,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     public static final String ACTIVITY_LAYOUT = "LAYOUT";
     public static final String ACTION_BAR_MENU_LAYOUT = "ACTION_BAR_MENU_LAYOUT";
     private static final long NEW_ACTIVITY_DELAY = 250;
-    private DrawerLayout drawerLayout;
+    private FixedDrawerLayout drawerLayout;
     private CharSequence mTitle;
 
     public static int getLastSelectedNavDavIndex() {
@@ -192,7 +192,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
-                drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout));
+                drawerLayout = (FixedDrawerLayout) findViewById(R.id.drawer_layout));
     }
 
     public void onSectionAttached(int number) {

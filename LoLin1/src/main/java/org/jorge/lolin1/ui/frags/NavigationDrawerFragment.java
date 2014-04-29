@@ -5,9 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,9 +16,11 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.custom.NavigationDrawerAdapter;
+import org.jorge.lolin1.func.custom.navdrawerfix.FixedActionBarDrawerToggle;
+import org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
-import org.jorge.lolin1.func.custom.NavigationDrawerAdapter;
 
 /**
  * This file is part of LoLin1.
@@ -52,9 +52,9 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Helper component that ties the action bar to the navigation drawer.
      */
-    private ActionBarDrawerToggle mDrawerToggle;
+    private FixedActionBarDrawerToggle mDrawerToggle;
 
-    private DrawerLayout mDrawerLayout;
+    private FixedDrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
 
@@ -96,7 +96,7 @@ public class NavigationDrawerFragment extends Fragment {
      * @param fragmentId   The android:id of this fragment in its activity's layout.
      * @param drawerLayout The DrawerLayout containing this fragment's UI.
      */
-    public void setUp(int fragmentId, DrawerLayout drawerLayout) {
+    public void setUp(int fragmentId, FixedDrawerLayout drawerLayout) {
         mFragmentContainerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
 
@@ -110,7 +110,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
-        mDrawerToggle = new ActionBarDrawerToggle(
+        mDrawerToggle = new FixedActionBarDrawerToggle(
                 getActivity(),                    /* host Activity */
                 mDrawerLayout,                    /* DrawerLayout object */
                 R.drawable.ic_drawer,             /* nav drawer image to replace 'Up' caret */
