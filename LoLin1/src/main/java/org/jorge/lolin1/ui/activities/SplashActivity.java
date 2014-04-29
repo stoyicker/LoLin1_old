@@ -634,7 +634,7 @@ public final class SplashActivity extends Activity {
         do {
             try {
                 target = dataProviders[index];
-                getContentInputStream = HTTPServices.performGetRequest(target, "en_US");
+                getContentInputStream = HTTPServices.performVersionRequest(target, "euw", "en_US");
                 String content = LoLin1Utils
                         .inputStreamAsString(getContentInputStream, "en_US");
                 if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
