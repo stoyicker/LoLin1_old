@@ -87,7 +87,6 @@ public abstract class JungleTimerFragment extends Fragment {
         String key = LoLin1Utils
                 .getString(getActivity().getApplicationContext(),
                         "pref_title_" + prefName + "_respawn", null);
-        Log.d("debug", "key: " + key);
         prefName = preferences.getString(key, "00:30");
         try {
             initialValueAsDate = SDF.parse(prefName);
@@ -129,9 +128,7 @@ public abstract class JungleTimerFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (!isChronometerRunning) {
-                    Log.d("debug", "onClick!");
                     chronometer.start();
-                    Log.d("debug", "Countdown started!");
                     isChronometerRunning = Boolean.TRUE;
                 }
                 else {
@@ -145,7 +142,6 @@ public abstract class JungleTimerFragment extends Fragment {
         jungleTimeView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Log.d("debug", "onLongClick!");
                 chronometer.cancel();
                 chronometer = new InnerCountDownTimer(initialValue, 1000);
                 lastTimeTracked = 0;
@@ -190,7 +186,6 @@ public abstract class JungleTimerFragment extends Fragment {
 
         @Override
         public void onTick(final long millisUntilFinished) {
-            Log.d("debug", "onTick!");
             lastTimeTracked = millisUntilFinished;
             if (jungleTimeView != null) {
                 getActivity().runOnUiThread(new Runnable() {
@@ -209,7 +204,9 @@ public abstract class JungleTimerFragment extends Fragment {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    jungleTimeView.setText(SDF.format(initialValueAsDate));
+                    if (jungleTimeView != null) {
+                        jungleTimeView.setText(SDF.format(initialValueAsDate));
+                    }
                 }
             });
             isChronometerRunning = Boolean.FALSE;
