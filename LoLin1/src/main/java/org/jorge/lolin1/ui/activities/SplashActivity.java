@@ -627,6 +627,10 @@ public final class SplashActivity extends Activity {
         Boolean upServerFound = Boolean.FALSE;
         String target = "null";
         InputStream getContentInputStream;
+        LOG_FRAGMENT.appendToSameLine(
+                LoLin1Utils.getString(getApplicationContext(), "finding_server", null) +
+                        LoLin1Utils.getString(getApplicationContext(), "progress_character", null)
+        );
         do {
             try {
                 target = dataProviders[index];
@@ -654,7 +658,7 @@ public final class SplashActivity extends Activity {
                     index = 0;
                 }
                 if (index == firstIndex) {
-                    LOG_FRAGMENT.appendToNewLine(
+                    LOG_FRAGMENT.appendToSameLine(
                             LoLin1Utils.getString(getApplicationContext(),
                                     "no_providers_up", null)
                     );
@@ -663,6 +667,9 @@ public final class SplashActivity extends Activity {
             }
         }
         while (!upServerFound);
+
+        LOG_FRAGMENT.appendToSameLine(
+                LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
 
         return target;
     }
