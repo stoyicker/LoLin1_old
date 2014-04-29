@@ -8,10 +8,8 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
-import android.util.Log;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
@@ -67,7 +65,6 @@ public class SettingsFragment extends PreferenceFragment {
         String[] targetArray;
         String chosenServer;
         chosenServer = LoLin1Utils.getRealm(getActivity().getApplicationContext());
-        Log.d("debug", "realm: " + chosenServer);
         serverPreference.setValue(chosenServer);
         targetArray = LoLin1Utils
                 .getStringArray(getActivity().getApplicationContext(),
@@ -76,8 +73,6 @@ public class SettingsFragment extends PreferenceFragment {
                 LoLin1Utils.getString(getActivity(), "pref_title_lang",
                         null)
         );
-        Log.d("debug", "Entries set: ");
-        LoLin1DebugUtils.logArray("debug", "targetArray", targetArray);
         langPreference.setEntries(targetArray);
         langPreference.setEntryValues(targetArray);
 
@@ -118,12 +113,10 @@ public class SettingsFragment extends PreferenceFragment {
         });
 
         String currentLocale = LoLin1Utils.getLocale(getActivity().getApplicationContext());
-        Log.d("debug", "locale: " + currentLocale);
         int langIndex =
                 new ArrayList<>(Arrays.asList(
                         LoLin1Utils.getStringArray(getActivity(), "langs_simplified", null)))
                         .indexOf(currentLocale);
-        Log.d("debug", "langIndex " + langIndex);
         langPreference
                 .setValue(LoLin1Utils.getStringArray(getActivity(), "langs", null)[langIndex]);
 

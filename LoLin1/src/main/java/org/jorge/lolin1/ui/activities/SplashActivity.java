@@ -127,6 +127,7 @@ public final class SplashActivity extends Activity {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "no_connection_on_splash",
                             null));
+            Log.wtf("debug", "No connection");
         }
     }
 
@@ -275,6 +276,7 @@ public final class SplashActivity extends Activity {
                 !FileManager.recursiveDelete(previouslyAttemptedUpdateFolder)) {
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+            Log.wtf("debug", "Weird error #1");
             return Boolean.FALSE;
         }
         LOG_FRAGMENT.appendToSameLine(
@@ -314,6 +316,7 @@ public final class SplashActivity extends Activity {
             if (!bust.mkdirs() || !splash.mkdirs() || !spell.mkdirs() || !passive.mkdirs()) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                Log.wtf("debug", "Weird error #2");
                 return Boolean.FALSE;
             }
             LOG_FRAGMENT.appendToNewLine(
@@ -331,12 +334,14 @@ public final class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                     null)
                     );
+                    Log.wtf("debug", "Response status was not fine!");
                     return Boolean.FALSE;
                 }
             }
             catch (IOException | URISyntaxException | HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                Log.wtf("debug", e.getClass().getName(), e);
                 return Boolean.FALSE;
             }
             File dataFile = new File(
@@ -352,6 +357,7 @@ public final class SplashActivity extends Activity {
             catch (IOException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                Log.wtf("debug", e.getClass().getName(), e);
                 return Boolean.FALSE;
             }
             LOG_FRAGMENT.appendToSameLine(
@@ -373,6 +379,7 @@ public final class SplashActivity extends Activity {
                                 LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                         null)
                         );
+                        Log.wtf("debug", "Status was not fine!");
                         return Boolean.FALSE;
                     }
                 }
@@ -381,6 +388,7 @@ public final class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                     null)
                     );
+                    Log.wtf("debug", e.getClass().getName(), e);
                     return Boolean.FALSE;
                 }
                 LOG_FRAGMENT.appendToSameLine(
@@ -401,6 +409,7 @@ public final class SplashActivity extends Activity {
             if (champs.isEmpty()) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                Log.wtf("debug", "No champs, wth?");
                 return Boolean.FALSE;
             }
             final String finalCdn = cdn;
@@ -410,6 +419,7 @@ public final class SplashActivity extends Activity {
                 if (!currentStatus.getValue()) {
                     LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
                             getApplicationContext(), "update_fatal_error", null));
+                    Log.wtf("debug", "Boxed boolean was false!");
                     return Boolean.FALSE;
                 }
                 final String bustImageName = champion.getBustImageName(), passiveImageName =
@@ -547,6 +557,7 @@ public final class SplashActivity extends Activity {
                 Log.wtf("debug", e.getClass().getName(), e);
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
                         getApplicationContext(), "update_fatal_error", null));
+                Log.wtf("debug", e.getClass().getName(), e);
                 return Boolean.FALSE;
             }
             LOG_FRAGMENT.appendToSameLine(
@@ -579,12 +590,14 @@ public final class SplashActivity extends Activity {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_fatal_error",
                                 null));
+                Log.wtf("debug", e.getClass().getName(), e);
                 return;
             }
             catch (HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_server_is_updating",
                                 null));
+                Log.wtf("debug", e.getClass().getName(), e);
                 return;
             }
             try {
@@ -662,6 +675,7 @@ public final class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(),
                                     "no_providers_up", null)
                     );
+                    Log.d("debug", "no_providers_up");
                     return "null";
                 }
             }
@@ -670,6 +684,8 @@ public final class SplashActivity extends Activity {
 
         LOG_FRAGMENT.appendToSameLine(
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
+
+        Log.d("debug", "provider found: " + target);
 
         return target;
     }
