@@ -18,9 +18,10 @@
 ~ <p/>
 ~ Created by JorgeAntonio on 01/05/2014.
 -->
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:text="@string/chat_authenticator_login_title"
-          style="@style/AuthenticatorTitleStyle">
-</TextView>
+<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
+         android:id="@+id/authenticator_realm_selector_spinner"
+         android:background="@color/theme_strong_red"
+         style="@style/AuthenticatorRealmSelector"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:entries="@array/servers"/>

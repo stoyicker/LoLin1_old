@@ -30,4 +30,5 @@ Created by JorgeAntonio on 21/01/14.
 	<color name="theme_red">#F55151</color>
 	<color name="theme_purple">#881450</color>
 	<color name="theme_chat_login_background">#240F30</color>
+	<color name="theme_strong_red">#ED3029</color>
 </resources>

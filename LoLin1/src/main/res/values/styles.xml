@@ -164,4 +164,8 @@ Created by JorgeAntonio on 02/01/14.
 		<item name="android:textColor">@color/theme_white</item>
 		<item name="android:textSize">@dimen/chat_authenticator_title_text_size</item>
 	</style>
+	<style name="AuthenticatorRealmSelector">
+		<item name="android:textColor">@color/theme_white</item>
+		<item name="android:textSize">@dimen/chat_authenticator_realm_selector_text_size</item>
+	</style>
 </resources>
