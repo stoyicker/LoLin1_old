@@ -195,4 +195,6 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="developer_profile_url">https://www.linkedin.com/in/jorgediazbenitosoriano</string>
 	<string name="finding_server">Finding update server</string>
 	<string name="pref_title_chat_credentials">chat credentials</string>
+	<string name="chat_credentials_username_component_title">Username</string>
+	<string name="chat_credentials_password_component_title">Password</string>
 </resources>
