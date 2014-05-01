@@ -82,4 +82,5 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="jungle_timer_text_size">25sp</dimen>
 	<dimen name="chat_credentials_component_title_text_size">17sp</dimen>
 	<dimen name="chat_credentials_component_content_text_size">25sp</dimen>
+	<dimen name="chat_authenticator_title_text_size">21sp</dimen>
 </resources>

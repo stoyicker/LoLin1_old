@@ -160,4 +160,8 @@ Created by JorgeAntonio on 02/01/14.
 		<item name="android:textColor">@color/theme_black</item>
 		<item name="android:textSize">@dimen/chat_credentials_component_content_text_size</item>
 	</style>
+	<style name="AuthenticatorTitleStyle">
+		<item name="android:textColor">@color/theme_white</item>
+		<item name="android:textSize">@dimen/chat_authenticator_title_text_size</item>
+	</style>
 </resources>
