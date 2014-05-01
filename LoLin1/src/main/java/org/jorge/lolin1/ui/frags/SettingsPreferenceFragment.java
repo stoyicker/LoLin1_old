@@ -10,6 +10,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.ui.activities.LoLChatAccountAuthenticationActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
@@ -33,7 +34,7 @@ import java.util.Arrays;
  * <p/>
  * Created by JorgeAntonio on 06/01/14.
  */
-public class SettingsFragment extends PreferenceFragment {
+public class SettingsPreferenceFragment extends PreferenceFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,7 +45,10 @@ public class SettingsFragment extends PreferenceFragment {
         final Preference developerProfilePreference = findPreference(
                 LoLin1Utils.getString(getActivity().getApplicationContext(), "pref_title_developer",
                         null)
-        );
+        ), chatCredentialsPreference = findPreference(LoLin1Utils
+                .getString(getActivity().getApplicationContext(), "pref_title_chat_credentials",
+                        null));
+
         developerProfilePreference
                 .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                     @Override
@@ -53,6 +57,16 @@ public class SettingsFragment extends PreferenceFragment {
                                 .getString(getActivity().getApplicationContext(),
                                         "developer_profile_url",
                                         null))));
+                        return Boolean.TRUE;
+                    }
+                });
+
+        chatCredentialsPreference
+                .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+                    @Override
+                    public boolean onPreferenceClick(Preference preference) {
+                        startActivity(new Intent(getActivity().getApplicationContext(),
+                                LoLChatAccountAuthenticationActivity.class));
                         return Boolean.TRUE;
                     }
                 });

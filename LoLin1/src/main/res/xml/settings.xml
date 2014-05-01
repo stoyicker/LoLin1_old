@@ -60,6 +60,11 @@
 			android:title="@string/pref_title_buff_respawn"
 			/>
 	</PreferenceCategory>
+	<PreferenceCategory android:title="@string/pref_cat_chat">
+		<Preference android:title="@string/pref_title_chat_credentials"
+		            android:key="@string/pref_title_chat_credentials">
+		</Preference>
+	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_about">
 		<Preference android:title="@string/pref_title_developer"
 		            android:key="@string/pref_title_developer">
