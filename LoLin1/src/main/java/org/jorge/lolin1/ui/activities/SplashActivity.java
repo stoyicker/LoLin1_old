@@ -692,6 +692,7 @@ public final class SplashActivity extends Activity {
 
     private void launchNewsReader() {
         final Intent newsIntent = new Intent(getApplicationContext(), NewsReaderActivity.class);
+        DrawerLayoutFragmentActivity.clearNavigation();
         finish();
         startActivity(newsIntent);
     }

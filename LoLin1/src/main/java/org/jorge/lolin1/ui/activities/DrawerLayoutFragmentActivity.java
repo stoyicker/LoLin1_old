@@ -49,6 +49,12 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     private FixedDrawerLayout drawerLayout;
     private CharSequence mTitle;
 
+    public static void clearNavigation() {
+        navigatedItemsStack.clear();
+        navigatedItemsStack
+                .add(0, 0);//By default say that the first thing we did was staying at Home
+    }
+
     public static int getLastSelectedNavDavIndex() {
         return navigatedItemsStack.get(0);
     }
@@ -153,8 +159,14 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     @Override
     protected void onResume() {
         super.onResume();
-        mTitle = LoLin1Utils
-                .getString(this, "title_section" + (getLastSelectedNavDavIndex() + 1), "");
+        try {
+            mTitle = LoLin1Utils
+                    .getString(this, "title_section" + (getLastSelectedNavDavIndex() + 1), null);
+        }
+        catch (IndexOutOfBoundsException ex) {
+            mTitle = LoLin1Utils
+                    .getString(this, "title_section1", null);
+        }
         restoreActionBar();
     }
 
