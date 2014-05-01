@@ -30,6 +30,8 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  */
 public class ChatAccountCredentialsComponentFragment extends Fragment {
 
+    private TextView contentsView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -38,7 +40,12 @@ public class ChatAccountCredentialsComponentFragment extends Fragment {
         ((TextView) ret.findViewById(R.id.chat_credentials_component_title))
                 .setText(LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "chat_credentials_" + aux + "_component_title", null));
+        contentsView = (TextView) ret.findViewById(R.id.chat_credentials_component_content);
         //TODO Set the username or the hint somehow
         return ret;
+    }
+
+    public CharSequence getContents() {
+        return contentsView.getText();
     }
 }
