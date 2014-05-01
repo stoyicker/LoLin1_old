@@ -88,9 +88,8 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="pref_default_buff_respawn">05:00</string>
 	<string name="pref_cat_chat">CHAT</string>
 	<string name="pref_title_username">Username</string>
-	<string name="pref_default_username"/>
+	<string name="auth_token_label">Full access to a LoLin1 account</string>
 	<string name="pref_title_pass">Password</string>
-	<string name="pref_default_pass"/>
 	<string name="pref_cat_about">ABOUT</string>
 	<string name="news_empty">No news to show</string>
 	<string name="empty_content">Nothing to show</string>
