@@ -1,10 +1,12 @@
 package org.jorge.lolin1.ui.frags;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import org.jorge.lolin1.R;
 
@@ -28,11 +30,39 @@ import org.jorge.lolin1.R;
  */
 public class AcceptCredentialsFragment extends Fragment {
 
+    private AcceptCredentialsListener mCallback;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (AcceptCredentialsListener) activity;
+        }
+        catch (ClassCastException ex) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement AcceptCredentialsListener");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View ret = inflater.inflate(R.layout.fragment_accept_credentials, container, false);
 
+        Button acceptButton = (Button) ret.findViewById(R.id.authenticator_accept_button);
+
+        acceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mCallback.onCredentialsAccepted();
+            }
+        });
+
         return ret;
+    }
+
+    public interface AcceptCredentialsListener {
+        public void onCredentialsAccepted();
     }
 }

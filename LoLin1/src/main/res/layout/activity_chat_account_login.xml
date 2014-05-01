@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+~ This file is part of LoLin1.
+~ <p/>
+~ LoLin1 is free software: you can redistribute it and/or modify
+~ it under the terms of the GNU General Public License as published by
+~ the Free Software Foundation, either version 3 of the License, or
+~ (at your option) any later version.
+~ <p/>
+~ LoLin1 is distributed in the hope that it will be useful,
+~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+~ GNU General Public License for more details.
+~ <p/>
+~ You should have received a copy of the GNU General Public License
+~ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
+~ <p/>
+~ Created by JorgeAntonio on 01/05/2014.
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:orientation="vertical"
+              android:layout_height="match_parent"
+              android:background="@color/theme_chat_login_background">
+	<fragment
+		android:id="@+id/authenticator_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:name="org.jorge.lolin1.ui.frags.LoLChatAuthenticatorTitleFragment"
+		tools:layout="@layout/fragment_chat_authenticator_title"/>
+	<fragment
+		android:id="@+id/realm_indicator"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:name="org.jorge.lolin1.ui.frags.AuthRealmSelectorFragment"
+		tools:layout="@layout/fragment_authenticator_realm_selector"/>
+	<RelativeLayout android:gravity="center"
+	                android:orientation="vertical"
+	                android:layout_width="match_parent"
+	                android:layout_height="match_parent">
+		<fragment
+			android:id="@+id/username_fragment"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:name="org.jorge.lolin1.ui.frags.ChatAccountCredentialsComponentFragment"
+			tools:layout="@layout/fragment_chat_credentials_component"/>
+		<fragment
+			android:id="@+id/password_fragment"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/username_fragment"
+			android:name="org.jorge.lolin1.ui.frags.ChatAccountCredentialsComponentFragment"
+			tools:layout="@layout/fragment_chat_credentials_component"/>
+		<fragment
+			android:id="@+id/accept_credentials"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_below="@+id/password_fragment"
+			android:layout_alignRight="@+id/password_fragment"
+			android:name="org.jorge.lolin1.ui.frags.AcceptCredentialsFragment"
+			tools:layout="@layout/fragment_accept_credentials"/>
+	</RelativeLayout>
+</LinearLayout>
