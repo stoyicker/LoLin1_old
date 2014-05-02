@@ -1,8 +1,11 @@
 package org.jorge.lolin1.ui.frags;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.InputType;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,9 +33,28 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * <p/>
  * Created by JorgeAntonio on 01/05/2014.
  */
-public class LoLin1AccountCredentialsComponentFragment extends Fragment {
+public class AccountCredentialsComponentFragment extends Fragment {
 
+    public interface AccountCredentialsComponentListener {
+
+        public void onFieldUpdated();
+    }
+
+    private AccountCredentialsComponentListener mCallback;
     private TextView contentsView;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (AccountCredentialsComponentListener) activity;
+        }
+        catch (ClassCastException ex) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement LoLin1AccountCredentialsComponentListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +71,22 @@ public class LoLin1AccountCredentialsComponentFragment extends Fragment {
             aux = "password";
             contentsView.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
         }
+        contentsView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                mCallback.onFieldUpdated();
+            }
+        });
         ((TextView) ret.findViewById(R.id.chat_credentials_component_title))
                 .setText(LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "chat_credentials_" + aux + "_component_title", null));

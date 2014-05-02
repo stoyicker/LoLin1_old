@@ -149,8 +149,7 @@ Created by JorgeAntonio on 02/01/14.
 			android:configChanges="orientation|screenSize|keyboardHidden"
 			android:label="@string/app_name"
 			android:launchMode="singleTop"
-			android:logo="@drawable/icon_app"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar">
+			android:logo="@drawable/icon_app">
 			<intent-filter>
 				<action android:name="android.intent.action.INSERT_OR_EDIT"/>
 				<category android:name="android.intent.category.DEFAULT"/>

@@ -31,6 +31,11 @@ import org.jorge.lolin1.R;
 public class AcceptCredentialsFragment extends Fragment {
 
     private AcceptCredentialsListener mCallback;
+    private Button acceptButton;
+
+    public void setEnabled(Boolean enabled) {
+        acceptButton.setEnabled(enabled);
+    }
 
     @Override
     public void onAttach(Activity activity) {
@@ -48,9 +53,10 @@ public class AcceptCredentialsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = inflater.inflate(R.layout.fragment_account_authenticator_accept_credentials, container, false);
+        View ret = inflater.inflate(R.layout.fragment_account_authenticator_accept_credentials,
+                container, false);
 
-        Button acceptButton = (Button) ret.findViewById(R.id.authenticator_accept_button);
+        acceptButton = (Button) ret.findViewById(R.id.authenticator_accept_button);
 
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override

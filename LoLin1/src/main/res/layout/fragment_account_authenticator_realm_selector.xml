@@ -24,4 +24,5 @@
          style="@style/AuthenticatorRealmSelector"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
+         android:spinnerMode="dropdown"
          android:entries="@array/servers"/>
