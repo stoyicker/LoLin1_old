@@ -9,7 +9,7 @@ import android.os.Bundle;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.auth.LoLin1Authenticator;
 import org.jorge.lolin1.ui.frags.AcceptCredentialsFragment;
-import org.jorge.lolin1.ui.frags.ChatAccountCredentialsComponentFragment;
+import org.jorge.lolin1.ui.frags.LoLin1AccountCredentialsComponentFragment;
 
 /**
  * This file is part of LoLin1.
@@ -40,7 +40,7 @@ public class LoLChatAccountAuthenticationActivity extends Activity implements
         CHAT
     }
 
-    private ChatAccountCredentialsComponentFragment USERNAME_FRAGMENT, PASSWORD_FRAGMENT;
+    private LoLin1AccountCredentialsComponentFragment USERNAME_FRAGMENT, PASSWORD_FRAGMENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,10 +48,10 @@ public class LoLChatAccountAuthenticationActivity extends Activity implements
         setContentView(R.layout.activity_chat_account_login);
 
         USERNAME_FRAGMENT =
-                (ChatAccountCredentialsComponentFragment) getFragmentManager()
+                (LoLin1AccountCredentialsComponentFragment) getFragmentManager()
                         .findFragmentById(R.id.username_fragment);
         PASSWORD_FRAGMENT =
-                (ChatAccountCredentialsComponentFragment) getFragmentManager()
+                (LoLin1AccountCredentialsComponentFragment) getFragmentManager()
                         .findFragmentById(R.id.password_fragment);
     }
 

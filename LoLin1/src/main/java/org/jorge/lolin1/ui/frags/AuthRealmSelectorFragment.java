@@ -36,7 +36,7 @@ public class AuthRealmSelectorFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View ret =
-                inflater.inflate(R.layout.fragment_authenticator_realm_selector, container, false);
+                inflater.inflate(R.layout.fragment_account_authenticator_realm_selector, container, false);
         Spinner spinner = (Spinner) ret.findViewById(R.id.authenticator_realm_selector_spinner);
         spinner.setSelection(Arrays.asList(
                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(), "servers", null))

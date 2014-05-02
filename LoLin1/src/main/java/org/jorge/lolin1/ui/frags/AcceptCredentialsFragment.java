@@ -48,7 +48,7 @@ public class AcceptCredentialsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = inflater.inflate(R.layout.fragment_accept_credentials, container, false);
+        View ret = inflater.inflate(R.layout.fragment_account_authenticator_accept_credentials, container, false);
 
         Button acceptButton = (Button) ret.findViewById(R.id.authenticator_accept_button);
 

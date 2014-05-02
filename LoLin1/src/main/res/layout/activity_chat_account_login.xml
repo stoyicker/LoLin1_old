@@ -44,14 +44,14 @@
 			android:id="@+id/username_fragment"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:name="org.jorge.lolin1.ui.frags.ChatAccountCredentialsComponentFragment"
+			android:name="org.jorge.lolin1.ui.frags.LoLin1AccountCredentialsComponentFragment"
 			tools:layout="@layout/fragment_chat_credentials_component"/>
 		<fragment
 			android:id="@+id/password_fragment"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_below="@+id/username_fragment"
-			android:name="org.jorge.lolin1.ui.frags.ChatAccountCredentialsComponentFragment"
+			android:name="org.jorge.lolin1.ui.frags.LoLin1AccountCredentialsComponentFragment"
 			tools:layout="@layout/fragment_chat_credentials_component"/>
 		<fragment
 			android:id="@+id/accept_credentials"

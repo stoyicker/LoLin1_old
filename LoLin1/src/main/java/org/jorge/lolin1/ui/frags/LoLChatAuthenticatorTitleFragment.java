@@ -31,7 +31,7 @@ public class LoLChatAuthenticatorTitleFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = inflater.inflate(R.layout.fragment_chat_authenticator_title, container, false);
+        View ret = inflater.inflate(R.layout.fragment_account_authenticator_title, container, false);
         return ret;
     }
 }

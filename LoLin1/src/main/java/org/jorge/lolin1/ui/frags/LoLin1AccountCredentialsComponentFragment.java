@@ -2,6 +2,7 @@ package org.jorge.lolin1.ui.frags;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,19 +30,28 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * <p/>
  * Created by JorgeAntonio on 01/05/2014.
  */
-public class ChatAccountCredentialsComponentFragment extends Fragment {
+public class LoLin1AccountCredentialsComponentFragment extends Fragment {
 
     private TextView contentsView;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        String aux = getId() == R.id.username_fragment ? "username" : "password";
-        View ret = inflater.inflate(R.layout.fragment_chat_credentials_component, container, false);
+        View ret =
+                inflater.inflate(R.layout.fragment_account_credentials_component, container, false);
+        contentsView = (EditText) ret.findViewById(R.id.chat_credentials_component_contents);
+        String aux;
+        if (getId() == R.id.username_fragment) {
+            aux = "username";
+            contentsView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
+        }
+        else {
+            aux = "password";
+            contentsView.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+        }
         ((TextView) ret.findViewById(R.id.chat_credentials_component_title))
                 .setText(LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "chat_credentials_" + aux + "_component_title", null));
-        contentsView = (EditText) ret.findViewById(R.id.chat_credentials_component_contents);
         //TODO Set the username or the hint somehow
         return ret;
     }
