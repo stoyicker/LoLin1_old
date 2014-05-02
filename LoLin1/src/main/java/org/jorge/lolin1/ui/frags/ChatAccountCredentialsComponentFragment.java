@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
@@ -40,7 +41,7 @@ public class ChatAccountCredentialsComponentFragment extends Fragment {
         ((TextView) ret.findViewById(R.id.chat_credentials_component_title))
                 .setText(LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "chat_credentials_" + aux + "_component_title", null));
-        contentsView = (TextView) ret.findViewById(R.id.chat_credentials_component_content);
+        contentsView = (EditText) ret.findViewById(R.id.chat_credentials_component_contents);
         //TODO Set the username or the hint somehow
         return ret;
     }
