@@ -85,7 +85,8 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="chat_authenticator_title_text_size">21sp</dimen>
 	<dimen name="chat_authenticator_realm_selector_text_size">19sp</dimen>
 	<dimen name="chat_authenticator_login_button_text_size">16sp</dimen>
-	<dimen name="account_login_activity_padding">30dp</dimen>
+	<dimen name="account_login_activity_padding">25dp</dimen>
 	<dimen name="account_credentials_component_padding_to_input">10dp</dimen>
 	<dimen name="account_credentials_component_bottom_padding">15dp</dimen>
+	<dimen name="account_credentials_component_edittext_width">250dp</dimen>
 </resources>
