@@ -31,12 +31,12 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * <p/>
  * Created by JorgeAntonio on 01/05/2014.
  */
-public class LoLChatAuthenticator extends AbstractAccountAuthenticator {
+public class LoLin1Authenticator extends AbstractAccountAuthenticator {
 
     private final Context mContext;
     public static final String TOKEN_GENERATION_JOINT = "acuwRQZChu"; //Generated through Random.org
 
-    public LoLChatAuthenticator(Context context) {
+    public LoLin1Authenticator(Context context) {
         super(context);
         mContext = context;
     }

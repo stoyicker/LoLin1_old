@@ -7,7 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.auth.LoLChatAuthenticator;
+import org.jorge.lolin1.func.auth.LoLin1Authenticator;
 import org.jorge.lolin1.ui.frags.AcceptCredentialsFragment;
 import org.jorge.lolin1.ui.frags.ChatAccountCredentialsComponentFragment;
 
@@ -59,7 +59,7 @@ public class LoLChatAccountAuthenticationActivity extends Activity implements
     public void onCredentialsAccepted() {
         CharSequence username = USERNAME_FRAGMENT.getContents(), password =
                 PASSWORD_FRAGMENT.getContents(), authToken =
-                username + LoLChatAuthenticator.TOKEN_GENERATION_JOINT + password;
+                username + LoLin1Authenticator.TOKEN_GENERATION_JOINT + password;
         final Intent res = new Intent();
         res.putExtra(AccountManager.KEY_ACCOUNT_NAME, username);
         res.putExtra(AccountManager.KEY_AUTHTOKEN, authToken);
@@ -71,7 +71,7 @@ public class LoLChatAccountAuthenticationActivity extends Activity implements
         AccountManager accountManager = AccountManager.get(getBaseContext());
         String[] processedToken =
                 intent.getStringArrayExtra(AccountManager.KEY_ACCOUNT_NAME).toString()
-                        .split(LoLChatAuthenticator.TOKEN_GENERATION_JOINT);
+                        .split(LoLin1Authenticator.TOKEN_GENERATION_JOINT);
         String accountName = processedToken[0];
         String accountPassword = processedToken[1];
         final Account account =

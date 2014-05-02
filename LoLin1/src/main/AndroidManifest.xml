@@ -156,5 +156,13 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+		<service android:name=".func.auth.LoLin1AuthenticatorService"
+		         android:permission="android.permission.GET_ACCOUNTS">
+			<intent-filter>
+				<action android:name="android.accounts.AccountAuthenticator"/>
+			</intent-filter>
+			<meta-data android:name="android.accounts.AccountAuthenticator"
+			           android:resource="@xml/authenticator"/>
+		</service>
 	</application>
 </manifest>
