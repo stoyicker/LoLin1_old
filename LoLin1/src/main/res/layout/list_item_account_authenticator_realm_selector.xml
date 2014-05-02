@@ -16,11 +16,12 @@
 ~ You should have received a copy of the GNU General Public License
 ~ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 ~ <p/>
-~ Created by JorgeAntonio on 01/05/2014.
+~ Created by JorgeAntonio on 02/05/2014.
 -->
-<Spinner xmlns:android="http://schemas.android.com/apk/res/android"
-         android:id="@+id/authenticator_realm_selector_spinner"
-         android:layout_width="wrap_content"
-         android:background="@drawable/account_authenticator_realm_selector"
-         android:layout_height="wrap_content"
-         android:spinnerMode="dropdown"/>
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+                 android:id="@+id/entry_name"
+                 android:layout_width="match_parent"
+                 android:layout_height="match_parent"
+                 android:layout_gravity="center"
+                 android:gravity="center"
+                 style="@style/AuthenticatorRealmSelector"/>

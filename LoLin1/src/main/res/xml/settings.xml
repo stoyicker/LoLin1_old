@@ -61,8 +61,8 @@
 			/>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_chat">
-		<Preference android:title="@string/pref_title_chat_credentials"
-		            android:key="@string/pref_title_chat_credentials">
+		<Preference android:title="@string/chat_authenticator_login_title"
+		            android:key="@string/chat_authenticator_login_title">
 		</Preference>
 	</PreferenceCategory>
 	<PreferenceCategory android:title="@string/pref_cat_about">

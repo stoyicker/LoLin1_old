@@ -1,11 +1,14 @@
 package org.jorge.lolin1.ui.frags;
 
 import android.app.Fragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -30,17 +33,40 @@ import java.util.Arrays;
  * <p/>
  * Created by JorgeAntonio on 01/05/2014.
  */
-public class AuthRealmSelectorFragment extends Fragment {
+public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View ret =
-                inflater.inflate(R.layout.fragment_account_authenticator_realm_selector, container, false);
+                inflater.inflate(R.layout.fragment_account_authenticator_realm_selector, container,
+                        false);
         Spinner spinner = (Spinner) ret.findViewById(R.id.authenticator_realm_selector_spinner);
+        String[] servers =
+                LoLin1Utils.getStringArray(getActivity().getApplicationContext(), "servers", null);
+        for (int i = 0; i < servers.length; i++)
+            servers[i] = servers[i].toUpperCase();
+        spinner.setAdapter(new RealmSpinnerAdapter(getActivity().getApplicationContext(), servers));
         spinner.setSelection(Arrays.asList(
                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(), "servers", null))
                 .indexOf(LoLin1Utils.getRealm(getActivity().getApplicationContext())));
         return ret;
+    }
+
+    private class RealmSpinnerAdapter extends ArrayAdapter<String> {
+
+        public RealmSpinnerAdapter(Context context, String[] servers) {
+            super(context, R.layout.list_item_account_authenticator_realm_selector, servers);
+        }
+
+        @Override
+        public View getDropDownView(int position, View convertView, ViewGroup parent) {
+            View view = super.getDropDownView(position, convertView, parent);
+
+            ((TextView) view.findViewById(R.id.entry_name))
+                    .setTextColor(getResources().getColor(R.color.theme_black));
+
+            return view;
+        }
     }
 }

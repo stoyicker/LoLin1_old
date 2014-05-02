@@ -46,7 +46,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
                 LoLin1Utils.getString(getActivity().getApplicationContext(), "pref_title_developer",
                         null)
         ), chatCredentialsPreference = findPreference(LoLin1Utils
-                .getString(getActivity().getApplicationContext(), "pref_title_chat_credentials",
+                .getString(getActivity().getApplicationContext(), "chat_authenticator_login_title",
                         null));
 
         developerProfilePreference

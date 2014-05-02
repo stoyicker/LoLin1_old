@@ -194,9 +194,8 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="jungle_timers_activity">Jungle timers</string>
 	<string name="developer_profile_url">https://www.linkedin.com/in/jorgediazbenitosoriano</string>
 	<string name="finding_server">Finding update server</string>
-	<string name="pref_title_chat_credentials">Chat credentials</string>
 	<string name="chat_credentials_username_component_title">Username</string>
 	<string name="chat_credentials_password_component_title">Password</string>
-	<string name="chat_authenticator_login_title">Account Login</string>
-	<string name="chat_authenticator_login_button_text">Log In</string>
+	<string name="chat_authenticator_login_title">Account Manager</string>
+	<string name="chat_authenticator_login_button_text">Save account</string>
 </resources>

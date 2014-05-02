@@ -24,25 +24,24 @@
               android:layout_height="match_parent"
               android:padding="@dimen/account_login_activity_padding"
               android:background="@color/theme_chat_login_background">
-	<LinearLayout android:layout_width="match_parent"
-	              android:orientation="horizontal"
-	              android:layout_height="wrap_content">
+	<RelativeLayout android:layout_width="match_parent"
+	                android:layout_height="wrap_content">
 		<fragment
 			android:id="@+id/authenticator_title"
 			android:layout_width="wrap_content"
-			android:layout_margin="5dp"
-			android:layout_gravity="center_vertical|left"
+			android:layout_margin="@dimen/account_authenticator_title_margin"
+			android:layout_alignParentLeft="true"
 			android:layout_height="wrap_content"
-			android:name="org.jorge.lolin1.ui.frags.LoLChatAuthenticatorTitleFragment"
+			android:name="org.jorge.lolin1.ui.frags.AccountAuthenticatorTitleFragment"
 			tools:layout="@layout/fragment_account_authenticator_title"/>
 		<fragment
 			android:id="@+id/realm_indicator"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical|right"
-			android:name="org.jorge.lolin1.ui.frags.AuthRealmSelectorFragment"
+			android:layout_alignParentRight="true"
+			android:name="org.jorge.lolin1.ui.frags.AccountAuthenticatorRealmSelectorFragment"
 			tools:layout="@layout/fragment_account_authenticator_realm_selector"/>
-	</LinearLayout>
+	</RelativeLayout>
 	<LinearLayout android:gravity="center"
 	              android:orientation="vertical"
 	              android:layout_width="match_parent"

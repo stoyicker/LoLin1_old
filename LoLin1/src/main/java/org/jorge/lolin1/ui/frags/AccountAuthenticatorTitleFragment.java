@@ -26,7 +26,7 @@ import org.jorge.lolin1.R;
  * <p/>
  * Created by JorgeAntonio on 01/05/2014.
  */
-public class LoLChatAuthenticatorTitleFragment extends Fragment {
+public class AccountAuthenticatorTitleFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
