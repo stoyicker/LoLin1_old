@@ -50,6 +50,14 @@ public class LoLChatAccountAuthenticationActivity extends Activity implements
         );
     }
 
+    @Override
+    public void onDonePressed() {
+        if (!TextUtils.isEmpty(USERNAME_COMPONENT_FRAGMENT.getContents()) &&
+                !TextUtils.isEmpty(PASSWORD_COMPONENT_FRAGMENT.getContents())) {
+            onCredentialsAccepted();
+        }
+    }
+
     public enum AccountType {
         CHAT
     }

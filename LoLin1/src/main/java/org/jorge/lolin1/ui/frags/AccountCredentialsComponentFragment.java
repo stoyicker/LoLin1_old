@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -38,6 +40,8 @@ public class AccountCredentialsComponentFragment extends Fragment {
     public interface AccountCredentialsComponentListener {
 
         public void onFieldUpdated();
+
+        public void onDonePressed();
     }
 
     private AccountCredentialsComponentListener mCallback;
@@ -70,6 +74,15 @@ public class AccountCredentialsComponentFragment extends Fragment {
         else {
             aux = "password";
             contentsView.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
+            contentsView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+                @Override
+                public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                    if (actionId == EditorInfo.IME_ACTION_DONE) {
+                        mCallback.onDonePressed();
+                    }
+                    return Boolean.FALSE; //I still want Android to run its thingies
+                }
+            });
         }
         contentsView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -90,6 +103,7 @@ public class AccountCredentialsComponentFragment extends Fragment {
         ((TextView) ret.findViewById(R.id.chat_credentials_component_title))
                 .setText(LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "chat_credentials_" + aux + "_component_title", null));
+
         //TODO Set the username or the hint somehow
         return ret;
     }
