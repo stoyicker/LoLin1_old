@@ -200,4 +200,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="chat_authenticator_login_button_text">Save account</string>
 	<string name="account_type">org.jorge.lolin1</string>
 	<string name="account_save_success">Account saved</string>
+	<string name="profile_icons_folder_name">profile_icons</string>
 </resources>

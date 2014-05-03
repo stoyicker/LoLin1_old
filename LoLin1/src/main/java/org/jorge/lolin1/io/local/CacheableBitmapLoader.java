@@ -74,7 +74,7 @@ public final class CacheableBitmapLoader {
     private void addBitmapToCache(String absolutePath, Bitmap bitmap) {
         if (bitmap != null) {
             synchronized (sHardBitmapCache) {
-                sHardBitmapCache.put(absolutePath + bitmap.getWidth() + bitmap.getHeight(), bitmap);
+                sHardBitmapCache.put(absolutePath, bitmap);
             }
         }
     }
@@ -113,7 +113,7 @@ public final class CacheableBitmapLoader {
 
     }
 
-    private Bitmap loadBitmapFromDisk(String absolutePath, int width, int height) {
+    protected Bitmap loadBitmapFromDisk(String absolutePath, int width, int height) {
         Bitmap retAux;
         BitmapFactory.Options options = new BitmapFactory.Options();
         options.inPreferredConfig = Bitmap.Config.ARGB_8888;
@@ -131,7 +131,7 @@ public final class CacheableBitmapLoader {
         sSoftBitmapCache.clear();
     }
 
-    private void resetPurgeTimer() {
+    protected void resetPurgeTimer() {
         purgeHandler.removeCallbacks(purger);
         purgeHandler.postDelayed(purger, DELAY_BEFORE_PURGE_MILLIS);
     }
