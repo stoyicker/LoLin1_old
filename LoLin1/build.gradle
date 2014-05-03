@@ -28,6 +28,7 @@ android {
 }
 
 dependencies {
+    compile project(':LoLChatAPI')
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.github.johnkil.android-progressfragment:progressfragment:+'
