@@ -37,6 +37,8 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  */
 public class AccountCredentialsComponentFragment extends Fragment {
 
+    private final char PASSWORD_HINT_CHARACTER = '*';
+
     public interface AccountCredentialsComponentListener {
 
         public void onFieldUpdated();
@@ -58,6 +60,17 @@ public class AccountCredentialsComponentFragment extends Fragment {
             throw new ClassCastException(activity.toString()
                     + " must implement LoLin1AccountCredentialsComponentListener");
         }
+    }
+
+    public void setContents(String contents) {
+        contentsView.setText(contents);
+    }
+
+    public void setHint(int hintLength) {
+        StringBuilder stringBuilder = new StringBuilder("");
+        for (int i = 0; i < hintLength; i++)
+            stringBuilder.append(PASSWORD_HINT_CHARACTER);
+        contentsView.setHint(stringBuilder.toString());
     }
 
     @Override

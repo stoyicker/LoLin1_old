@@ -1,11 +1,13 @@
 package org.jorge.lolin1.ui.frags;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -35,7 +37,27 @@ import java.util.Arrays;
  */
 public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
 
+    private AccountAuthenticatorRealmSelectorListener mCallback;
+
+    public interface AccountAuthenticatorRealmSelectorListener {
+        void onNewRealmSelected();
+    }
+
     Spinner spinner;
+    private int lastSelectedIndex = 0;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        try {
+            mCallback = (AccountAuthenticatorRealmSelectorListener) activity;
+        }
+        catch (ClassCastException ex) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement AccountAuthenticatorRealmSelectorListener");
+        }
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -52,11 +74,25 @@ public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
         spinner.setSelection(Arrays.asList(
                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(), "servers", null))
                 .indexOf(LoLin1Utils.getRealm(getActivity().getApplicationContext())));
+        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if (position != lastSelectedIndex) {
+                    lastSelectedIndex = position;
+                    mCallback.onNewRealmSelected();
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
         return ret;
     }
 
     public String getSelectedRealm() {
-        return spinner.getSelectedItem().toString().toLowerCase();
+        return spinner.getSelectedItem().toString().toUpperCase();
     }
 
     private class RealmSpinnerAdapter extends ArrayAdapter<String> {

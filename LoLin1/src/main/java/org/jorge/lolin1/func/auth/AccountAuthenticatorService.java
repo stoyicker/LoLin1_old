@@ -22,10 +22,10 @@ import android.os.IBinder;
  * <p/>
  * Created by JorgeAntonio on 02/05/2014.
  */
-public class LoLin1AuthenticatorService extends Service {
+public class AccountAuthenticatorService extends Service {
     @Override
     public IBinder onBind(Intent intent) {
-        LoLin1Authenticator authenticator = new LoLin1Authenticator(getApplicationContext());
+        AccountAuthenticator authenticator = new AccountAuthenticator(getApplicationContext());
         return authenticator.getIBinder();
     }
 }

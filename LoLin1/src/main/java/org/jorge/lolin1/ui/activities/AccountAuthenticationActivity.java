@@ -3,19 +3,25 @@ package org.jorge.lolin1.ui.activities;
 import android.accounts.Account;
 import android.accounts.AccountAuthenticatorActivity;
 import android.accounts.AccountManager;
+import android.accounts.AccountManagerCallback;
+import android.accounts.AccountManagerFuture;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.auth.LoLin1Authenticator;
+import org.jorge.lolin1.func.auth.AccountAuthenticator;
 import org.jorge.lolin1.ui.frags.AcceptCredentialsFragment;
 import org.jorge.lolin1.ui.frags.AccountAuthenticatorRealmSelectorFragment;
 import org.jorge.lolin1.ui.frags.AccountCredentialsComponentFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
+import java.io.IOException;
 import java.util.ArrayDeque;
 import java.util.Collection;
 
@@ -39,12 +45,13 @@ import java.util.Collection;
  */
 public class AccountAuthenticationActivity extends AccountAuthenticatorActivity implements
         AcceptCredentialsFragment.AcceptCredentialsListener,
-        AccountCredentialsComponentFragment.AccountCredentialsComponentListener {
+        AccountCredentialsComponentFragment.AccountCredentialsComponentListener,
+        AccountAuthenticatorRealmSelectorFragment.AccountAuthenticatorRealmSelectorListener {
 
     public static final String KEY_ACCOUNT_TYPE = "ACCOUNT_TYPE";
     public static final String KEY_NEW_ACCOUNT = "NEW_ACCOUNT";
     public static final String KEY_RESPONSE = "RESPONSE";
-
+    private String ACCOUNT_TYPE;
     private AccountCredentialsComponentFragment USERNAME_COMPONENT_FRAGMENT,
             PASSWORD_COMPONENT_FRAGMENT;
     private AcceptCredentialsFragment ACCEPT_CREDENTIALS_FRAGMENT;
@@ -69,6 +76,7 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ACCOUNT_TYPE = LoLin1Utils.getString(getApplicationContext(), "account_type", null);
         setContentView(R.layout.activity_account_login);
 
         getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
@@ -84,6 +92,56 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
                         .findFragmentById(R.id.accept_credentials);
         REALM_SELECTION_FRAGMENT = (AccountAuthenticatorRealmSelectorFragment) getFragmentManager()
                 .findFragmentById(R.id.realm_indicator);
+
+        onNewRealmSelected();
+    }
+
+    @Override
+    public void onNewRealmSelected() {
+        AccountManager accountManager = AccountManager.get(getApplicationContext());
+        Account account = null;
+        Account[] accounts = accountManager.getAccountsByType(ACCOUNT_TYPE);
+        for (Account acc : accounts) {
+            if (acc.name.contentEquals(REALM_SELECTION_FRAGMENT.getSelectedRealm())) {
+                account = acc;
+                break;
+            }
+        }
+        if (account != null) {
+            accountManager.getAuthToken(account, "none", null, this,
+                    new AccountManagerCallback<Bundle>() {
+                        @Override
+                        public void run(AccountManagerFuture<Bundle> future) {
+                            String authToken = null;
+                            try {
+                                authToken =
+                                        future.getResult().getString(AccountManager.KEY_AUTHTOKEN);
+                            }
+                            catch (OperationCanceledException e) {
+                                Log.wtf("debug", e.getClass().getName(), e);
+                            }
+                            catch (IOException e) {
+                                Log.wtf("debug", e.getClass().getName(), e);
+                            }
+                            catch (AuthenticatorException e) {
+                                Log.wtf("debug", e.getClass().getName(), e);
+                            }
+                            if (authToken != null) {
+                                final String[] processedToken = authToken
+                                        .split(AccountAuthenticator.TOKEN_GENERATION_JOINT);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        USERNAME_COMPONENT_FRAGMENT.setContents(processedToken[0]);
+                                        PASSWORD_COMPONENT_FRAGMENT
+                                                .setHint(processedToken[1].length());
+                                    }
+                                });
+                            }
+                        }
+                    }, null
+            );
+        }
     }
 
     @Override
@@ -102,17 +160,14 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
     public void onCredentialsAccepted() {
         CharSequence username = USERNAME_COMPONENT_FRAGMENT.getContents(), password =
                 PASSWORD_COMPONENT_FRAGMENT.getContents(), authToken =
-                username + LoLin1Authenticator.TOKEN_GENERATION_JOINT + password;
+                username + AccountAuthenticator.TOKEN_GENERATION_JOINT + password;
         final Intent res = new Intent();
         String realm;
         res.putExtra(AccountManager.KEY_ACCOUNT_NAME,
-                realm = REALM_SELECTION_FRAGMENT.getSelectedRealm().toUpperCase());
+                realm = REALM_SELECTION_FRAGMENT.getSelectedRealm());
         res.putExtra(AccountManager.KEY_AUTHTOKEN, authToken);
-        String accType = LoLin1Utils.getString(getApplicationContext(), "account_type", null);
-        res.putExtra(AccountManager.KEY_ACCOUNT_TYPE, accType
-        );
         Account[] LoLIn1Accounts = AccountManager.get(getApplicationContext()).getAccountsByType(
-                accType);
+                ACCOUNT_TYPE);
         Collection<String> x = new ArrayDeque<>();
         for (Account acc : LoLIn1Accounts)
             x.add(acc.name);
@@ -126,15 +181,16 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
         String accountPassword =
                 ""; //We don't want the password field for anything, so we won't store any relevant data on it
         final Account account =
-                new Account(accountName, intent.getStringExtra(AccountManager.KEY_ACCOUNT_TYPE));
+                new Account(accountName, ACCOUNT_TYPE);
         String authToken = intent.getStringExtra(AccountManager.KEY_AUTHTOKEN);
         if (intent.getBooleanExtra(KEY_NEW_ACCOUNT, Boolean.FALSE)) {
-            Log.d("debug", "new acc");
             accountManager.addAccountExplicitly(account, accountPassword, null);
         }
         accountManager.setAuthToken(account, "none", authToken);
         setAccountAuthenticatorResult(intent.getExtras());
         setResult(RESULT_OK, intent);
+        Toast.makeText(getApplicationContext(), R.string.account_save_success, Toast.LENGTH_SHORT)
+                .show();
         finish();
     }
 }

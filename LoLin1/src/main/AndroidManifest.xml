@@ -27,6 +27,7 @@ Created by JorgeAntonio on 02/01/14.
 	<uses-permission android:name="android.permission.WAKE_LOCK"/>
 	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
 	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+	<uses-permission android:name="android.permission.USE_CREDENTIALS"/>
 
 	<application
 		android:allowBackup="true"
@@ -158,7 +159,7 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
-		<service android:name=".func.auth.LoLin1AuthenticatorService"
+		<service android:name=".func.auth.AccountAuthenticatorService"
 		         android:permission="android.permission.GET_ACCOUNTS">
 			<intent-filter>
 				<action android:name="android.accounts.AccountAuthenticator"/>
