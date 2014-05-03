@@ -198,4 +198,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="chat_credentials_password_component_title">Password</string>
 	<string name="chat_authenticator_login_title">Account Manager</string>
 	<string name="chat_authenticator_login_button_text">Save account</string>
+	<string name="account_type">org.jorge.lolin1</string>
 </resources>

@@ -10,7 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import org.jorge.lolin1.ui.activities.LoLChatAccountAuthenticationActivity;
+import org.jorge.lolin1.ui.activities.AccountAuthenticationActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
@@ -50,10 +50,10 @@ public class LoLin1Authenticator extends AbstractAccountAuthenticator {
     public Bundle addAccount(AccountAuthenticatorResponse response, String accountType,
                              String authTokenType, String[] requiredFeatures, Bundle options)
             throws NetworkErrorException {
-        final Intent intent = new Intent(mContext, LoLChatAccountAuthenticationActivity.class);
-        intent.putExtra(LoLChatAccountAuthenticationActivity.KEY_REALM, accountType);
-        intent.putExtra(LoLChatAccountAuthenticationActivity.KEY_NEW_ACCOUNT, Boolean.TRUE);
-        intent.putExtra(LoLChatAccountAuthenticationActivity.KEY_RESPONSE, response);
+        final Intent intent = new Intent(mContext, AccountAuthenticationActivity.class);
+        intent.putExtra(AccountAuthenticationActivity.KEY_ACCOUNT_TYPE, accountType);
+        intent.putExtra(AccountAuthenticationActivity.KEY_NEW_ACCOUNT, Boolean.TRUE);
+        intent.putExtra(AccountAuthenticationActivity.KEY_RESPONSE, response);
         final Bundle bundle = new Bundle();
         bundle.putParcelable(AccountManager.KEY_INTENT, intent);
         return bundle;
@@ -83,7 +83,7 @@ public class LoLin1Authenticator extends AbstractAccountAuthenticator {
         }
         else {
             //Account not found
-            final Intent intent = new Intent(mContext, LoLChatAccountAuthenticationActivity.class);
+            final Intent intent = new Intent(mContext, AccountAuthenticationActivity.class);
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);
             bundle.putParcelable(AccountManager.KEY_INTENT, intent);
         }

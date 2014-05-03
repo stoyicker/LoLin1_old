@@ -10,7 +10,7 @@ import android.preference.PreferenceFragment;
 import android.preference.PreferenceManager;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.ui.activities.LoLChatAccountAuthenticationActivity;
+import org.jorge.lolin1.ui.activities.AccountAuthenticationActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
@@ -66,7 +66,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
                     @Override
                     public boolean onPreferenceClick(Preference preference) {
                         startActivity(new Intent(getActivity().getApplicationContext(),
-                                LoLChatAccountAuthenticationActivity.class));
+                                AccountAuthenticationActivity.class));
                         return Boolean.TRUE;
                     }
                 });

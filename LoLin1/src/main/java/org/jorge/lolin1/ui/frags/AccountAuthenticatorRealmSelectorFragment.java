@@ -35,13 +35,15 @@ import java.util.Arrays;
  */
 public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
 
+    Spinner spinner;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View ret =
                 inflater.inflate(R.layout.fragment_account_authenticator_realm_selector, container,
                         false);
-        Spinner spinner = (Spinner) ret.findViewById(R.id.authenticator_realm_selector_spinner);
+        spinner = (Spinner) ret.findViewById(R.id.authenticator_realm_selector_spinner);
         String[] servers =
                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(), "servers", null);
         for (int i = 0; i < servers.length; i++)
@@ -51,6 +53,10 @@ public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(), "servers", null))
                 .indexOf(LoLin1Utils.getRealm(getActivity().getApplicationContext())));
         return ret;
+    }
+
+    public String getSelectedRealm() {
+        return spinner.getSelectedItem().toString().toLowerCase();
     }
 
     private class RealmSpinnerAdapter extends ArrayAdapter<String> {
