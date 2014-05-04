@@ -1,14 +1,21 @@
 package org.jorge.lolin1.ui.activities;
 
+import android.app.ActivityManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.chat.ChatService;
 import org.jorge.lolin1.ui.frags.ChatOverviewFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -35,9 +42,26 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     static final String KEY_FRIEND_NAME = "FRIEND_NAME";
     private ChatOverviewFragment CHAT_OVERVIEW_FRAGMENT;
     private ExpandableSearchFragment SEARCH_FRAGMENT;
+    private ChatService mService;
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mService = ((ChatService.ChatBinder) service).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mService = null;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
+            //TODO report that internet is not reachable, and tap to retry
+            return;
+        }
+        initChatService();
         getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
                 R.menu.menu_chat_overview);
         if (savedInstanceState == null) {
@@ -46,6 +70,26 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_chat_overview);
         super.onCreate(savedInstanceState);
+    }
+
+    private void initChatService() {
+        Intent intent = new Intent(getApplicationContext(), ChatService.class);
+        if (!isChatServiceAlreadyRunning()) {
+            stopService(intent);
+        }
+        bindService(intent, mConnection, Context.BIND_ABOVE_CLIENT);
+        startService(intent);
+    }
+
+    private boolean isChatServiceAlreadyRunning() {
+        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningServiceInfo service : manager
+                .getRunningServices(Integer.MAX_VALUE)) {
+            if (ChatService.class.getName().equals(service.service.getClassName())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override
