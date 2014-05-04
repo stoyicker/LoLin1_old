@@ -18,6 +18,7 @@ import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
+import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -62,7 +63,7 @@ public class ChampionsFilterableAdapter extends BaseAdapter implements Filterabl
                     ret.values = allChampions;
                 }
                 else {
-                    List<Champion> validChampions = new ArrayList<>();
+                    Collection<Champion> validChampions = new ArrayDeque<>();
                     for (Champion x : allChampions) {
                         if (x.matchesFilterQuery(constraint)) {
                             validChampions.add(x);
