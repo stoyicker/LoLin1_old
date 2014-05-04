@@ -25,18 +25,21 @@ import java.util.Collection;
  */
 public abstract class FriendManager {
 
-    private static final Collection<Friend> FRIENDS = new ArrayDeque<>();
+    private static final Collection<Friend> ONLINE_FRIENDS = new ArrayDeque<>();
 
     public static Friend findFriendByName(String friendName) {
-        for (Friend f : FRIENDS)
+        for (Friend f : ONLINE_FRIENDS)
             if (f.getName().contentEquals(friendName)) {
                 return f;
             }
         return null;
     }
 
-    public static void setFriends(Collection<Friend> friends) {
-        FRIENDS.clear();
-        FRIENDS.addAll(friends);
+    public static void updateOnlineFriends() {
+        //TODO
+    }
+
+    public static Collection<Friend> getOnlineFriends() {
+        return ONLINE_FRIENDS;
     }
 }
