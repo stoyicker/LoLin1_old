@@ -19,9 +19,4 @@
 		<attr name="outlineEnabled" format="boolean"/>
 		<attr name="outlineColor" format="color|reference"/>
 	</declare-styleable>
-	<declare-styleable name="Chat">
-		<attr name="state_online" format="boolean"/>
-		<attr name="state_away" format="boolean"/>
-		<attr name="state_unknown" format="boolean"/>
-	</declare-styleable>
 </resources>
