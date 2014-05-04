@@ -65,8 +65,7 @@ public class ChampionListFragment extends Fragment {
                                         getActivity(),
                                         "navigation_drawer_items", new String[]{""})
                         )
-                ).indexOf(LoLin1Utils.getString(getActivity(), "title_section3",
-                        "Champions"))
+                ).indexOf(LoLin1Utils.getString(getActivity(), "title_section3", null))
         );
     }
 
