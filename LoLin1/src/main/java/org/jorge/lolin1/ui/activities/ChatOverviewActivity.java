@@ -10,6 +10,7 @@ import android.os.IBinder;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatService;
@@ -58,7 +59,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            //TODO report that internet is not reachable, and tap to retry
+            setContentView(R.layout.activity_chat_overview_no_connection);
             return;
         }
         initChatService();
@@ -109,6 +110,22 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         View ret = super.onCreateView(name, context, attrs);
+        View unconnectedView;
+        if ((unconnectedView = ret.findViewById(R.id.chat_overview_no_connection)) != null) {
+            unconnectedView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
+                        onCreate(null);
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), R.string.error_no_connection,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+            return ret;
+        }
 
         CHAT_OVERVIEW_FRAGMENT =
                 (ChatOverviewFragment) getFragmentManager()

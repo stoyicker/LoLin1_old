@@ -203,4 +203,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="profile_icons_folder_name">profile_icons</string>
 	<string name="chat_status_content_description">Chat status</string>
 	<string name="profile_icon_content_description">Profile icon</string>
+	<string name="no_connection_tap_to_retry">No connection found. Tap to retry.</string>
 </resources>
