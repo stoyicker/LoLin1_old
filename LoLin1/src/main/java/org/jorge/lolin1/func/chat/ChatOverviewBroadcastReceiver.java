@@ -4,6 +4,8 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 
+import org.jorge.lolin1.utils.LoLin1Utils;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -24,12 +26,17 @@ import android.content.Intent;
  */
 public class ChatOverviewBroadcastReceiver extends BroadcastReceiver {
 
-    public static final String CHAT_OVERVIEW_EVENT = "org.jorge.lolin1.CHAT_OVERVIEW_EVENT";
-
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (intent.getAction().contentEquals(CHAT_OVERVIEW_EVENT)) {
+        String action = intent.getAction();
+        if (action.contentEquals(LoLin1Utils
+                .getString(context.getApplicationContext(), "chat_overview_event", null))) {
             //TODO Tell the ChatOverviewActivity to invalidate/refresh the view
+        }
+        else if (action.contentEquals("android.net.conn.CONNECTIVITY_CHANGE")) {
+            if (!LoLin1Utils.isInternetReachable(context.getApplicationContext())) {
+                //TODO Notify that Internet is gone so that the activity changes the view
+            }
         }
     }
 }

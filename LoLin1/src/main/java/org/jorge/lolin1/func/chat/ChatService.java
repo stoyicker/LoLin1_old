@@ -5,7 +5,9 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
@@ -57,10 +59,14 @@ public class ChatService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
         if (loginSuccess) {
-            //TODO Register listener with this code
-            //Intent i = new Intent();
-            //i.setAction(ChatOverviewBroadcastReceiver.CHAT_OVERVIEW_EVENT);
-            //getApplicationContext().sendBroadcast(i);
+            PackageManager packageManager = getApplicationContext().getPackageManager();
+            packageManager
+                    .setComponentEnabledSetting(new ComponentName(
+                                    ChatOverviewBroadcastReceiver.class.getPackage().getName(),
+                                    ChatOverviewBroadcastReceiver.class.getName()),
+                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                            PackageManager.DONT_KILL_APP
+                    );
         }
         else {
             stopSelf();
@@ -112,7 +118,7 @@ public class ChatService extends Service {
             if (api.login(processedAuthToken[0], processedAuthToken[1])) {
                 try {
                     Thread.sleep(
-                            LOG_IN_DELAY_MILLIS); //I completely hate myself, but the library is designed this way...
+                            LOG_IN_DELAY_MILLIS); //I completely hate myself for doing this, but the library is designed this way...
                 }
                 catch (InterruptedException e) {
                     Log.wtf("debug", e.getClass().getName(), e);
@@ -131,6 +137,14 @@ public class ChatService extends Service {
     @Override
     public void onDestroy() {
         api.disconnect();
+        PackageManager packageManager = getApplicationContext().getPackageManager();
+        packageManager
+                .setComponentEnabledSetting(new ComponentName(
+                                ChatOverviewBroadcastReceiver.class.getPackage().getName(),
+                                ChatOverviewBroadcastReceiver.class.getName()),
+                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+                        PackageManager.DONT_KILL_APP
+                );
         super.onDestroy();
     }
 }

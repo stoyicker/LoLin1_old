@@ -159,6 +159,21 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
+		<activity android:name=".ui.activities.ChatOverviewActivity"
+		          android:configChanges="orientation|screenSize|keyboardHidden"
+		          android:launchMode="singleTop"
+		          android:logo="@drawable/icon_section5">
+			<intent-filter>
+				<category android:name="android.intent.category.DEFAULT"/>
+			</intent-filter>
+		</activity>
+		<receiver android:name=".func.chat.ChatOverviewBroadcastReceiver"
+		          android:enabled="false">
+			<intent-filter>
+				<action android:name="@string/chat_overview_event"/>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+			</intent-filter>
+		</receiver>
 		<service android:name=".func.auth.AccountAuthenticatorService"
 		         android:permission="android.permission.GET_ACCOUNTS">
 			<intent-filter>
