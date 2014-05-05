@@ -110,9 +110,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         View ret = super.onCreateView(name, context, attrs);
-        View unconnectedView;
-        if ((unconnectedView = ret.findViewById(R.id.chat_overview_no_connection)) != null) {
-            unconnectedView.setOnClickListener(new View.OnClickListener() {
+        if (ret.findViewById(R.id.chat_overview_no_connection) != null) {
+            ret.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
