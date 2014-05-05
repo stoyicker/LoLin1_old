@@ -16,20 +16,29 @@
 ~ You should have received a copy of the GNU General Public License
 ~ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 ~ <p/>
-~ Created by JorgeAntonio on 05/05/2014.
+~ Created by JorgeAntonio on 01/05/2014.
 -->
 <org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:orientation="vertical"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/drawer_layout"
 	android:layout_width="match_parent"
-	android:gravity="center"
 	android:layout_height="match_parent">
-	<TextView
-		android:id="@+id/chat_overview_no_connection"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:drawableTop="@drawable/icon_no_internet"
-		android:text="@string/no_connection_tap_to_retry"/>
+	<LinearLayout android:layout_width="match_parent"
+	              android:orientation="vertical"
+	              android:layout_height="match_parent">
+		<fragment
+			android:id="@+id/chat_list_search"
+			android:name="org.jorge.lolin1.ui.frags.ExpandableSearchFragment"
+			android:layout_height="wrap_content"
+			android:layout_width="match_parent"
+			/>
+		<fragment
+			android:id="@+id/chat_overview_fragment"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:name="org.jorge.lolin1.ui.frags.ChatOverviewFragment"/>
+	</LinearLayout>
 	<fragment
 		android:id="@+id/navigation_drawer"
 		android:name="org.jorge.lolin1.ui.frags.NavigationDrawerFragment"

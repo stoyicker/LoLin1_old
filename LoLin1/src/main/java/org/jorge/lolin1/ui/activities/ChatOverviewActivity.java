@@ -11,6 +11,7 @@ import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+import android.widget.ViewSwitcher;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatService;
@@ -41,6 +42,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         ChatOverviewFragment.ChatRoomSelectionListener {
 
     static final String KEY_FRIEND_NAME = "FRIEND_NAME";
+    private final int INDEX_VIEW_CONNECTED = 0, INDEX_VIEW_NOT_CONNECTED = 1,
+            INDEX_VIEW_WRONG_CREDENTIALS = 2;
     private ChatOverviewFragment CHAT_OVERVIEW_FRAGMENT;
     private ExpandableSearchFragment SEARCH_FRAGMENT;
     private ChatService mService;
@@ -107,10 +110,14 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         return ret;
     }
 
+    //TODO ProgressFragment
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         View ret = super.onCreateView(name, context, attrs);
-        if (ret.findViewById(R.id.chat_overview_no_connection) != null) {
+        ViewSwitcher viewSwitcher = (ViewSwitcher) findViewById(R.id.chat_overview_view_switcher);
+        if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
+            //No connection
+            viewSwitcher.setDisplayedChild(INDEX_VIEW_NOT_CONNECTED);
             ret.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -123,18 +130,22 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     }
                 }
             });
-            return ret;
         }
+        else if () {
+            //TODO Layout for the Wrong credentials
+            viewSwitcher.setDisplayedChild(INDEX_VIEW_WRONG_CREDENTIALS);
+        }
+        else {
+            //Successfully logged in
+            CHAT_OVERVIEW_FRAGMENT =
+                    (ChatOverviewFragment) getFragmentManager()
+                            .findFragmentById(R.id.chat_overview_fragment);
 
-        CHAT_OVERVIEW_FRAGMENT =
-                (ChatOverviewFragment) getFragmentManager()
-                        .findFragmentById(R.id.chat_overview_fragment);
 
-
-        SEARCH_FRAGMENT =
-                (ExpandableSearchFragment) getFragmentManager()
-                        .findFragmentById(R.id.champion_list_search);
-
+            SEARCH_FRAGMENT =
+                    (ExpandableSearchFragment) getFragmentManager()
+                            .findFragmentById(R.id.champion_list_search);
+        }
         return ret;
     }
 
