@@ -56,6 +56,15 @@ public class ChatService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
+        if (loginSuccess) {
+            //TODO Register listener with this code
+            //Intent i = new Intent();
+            //i.setAction(ChatOverviewBroadcastReceiver.CHAT_OVERVIEW_EVENT);
+            //getApplicationContext().sendBroadcast(i);
+        }
+        else {
+            stopSelf();
+        }
         return super.onStartCommand(intent, flags, startId);
     }
 
