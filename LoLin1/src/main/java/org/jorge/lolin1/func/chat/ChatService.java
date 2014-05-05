@@ -1,9 +1,22 @@
 package org.jorge.lolin1.func.chat;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.accounts.AuthenticatorException;
+import android.accounts.OperationCanceledException;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
+import android.util.Log;
+
+import com.github.theholywaffle.lolchatapi.ChatServer;
+import com.github.theholywaffle.lolchatapi.LolChat;
+
+import org.jorge.lolin1.func.auth.AccountAuthenticator;
+import org.jorge.lolin1.utils.LoLin1Utils;
+
+import java.io.IOException;
 
 /**
  * This file is part of LoLin1.
@@ -25,7 +38,9 @@ import android.os.IBinder;
  */
 public class ChatService extends Service {
 
+    private static final long LOG_IN_DELAY_MILLIS = 3000;
     private final IBinder mBinder = new ChatBinder();
+    private LolChat api;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -40,13 +55,73 @@ public class ChatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        //TODO Login and stuff
+        Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private Boolean login(String upperCaseRealm) {
+        ChatServer chatServer;
+        switch (upperCaseRealm) {
+            case "NA":
+                chatServer = ChatServer.NA;
+                break;
+            case "EUW":
+                chatServer = ChatServer.EUW;
+                break;
+            case "EUNE":
+                chatServer = ChatServer.EUNE;
+                break;
+            case "TR":
+                chatServer = ChatServer.TR;
+                break;
+            case "BR":
+                chatServer = ChatServer.BR;
+                break;
+            default:
+                throw new UnsupportedOperationException("Not yet implemented");
+        }
+        api = new LolChat(chatServer, Boolean.FALSE);
+        AccountManager accountManager = AccountManager.get(getApplicationContext());
+        Account[] accounts = accountManager.getAccountsByType(
+                LoLin1Utils.getString(getApplicationContext(), "account_type", null));
+        Account thisRealmAccount = null;
+        for (Account acc : accounts) {
+            if (acc.name.contentEquals(upperCaseRealm)) {
+                thisRealmAccount = acc;
+                break;
+            }
+        }
+        if (thisRealmAccount == null) {
+            return Boolean.FALSE;//There's no account associated to this realm
+        }
+        String[] processedAuthToken;
+        try {
+            processedAuthToken =
+                    accountManager.blockingGetAuthToken(thisRealmAccount, "none", Boolean.TRUE)
+                            .split(
+                                    AccountAuthenticator.TOKEN_GENERATION_JOINT);
+            if (api.login(processedAuthToken[0], processedAuthToken[1])) {
+                try {
+                    Thread.sleep(
+                            LOG_IN_DELAY_MILLIS); //I completely hate myself, but the library is designed this way...
+                }
+                catch (InterruptedException e) {
+                    Log.wtf("debug", e.getClass().getName(), e);
+                }
+                return Boolean.TRUE;
+            }
+            else {
+                return Boolean.FALSE;
+            }
+        }
+        catch (OperationCanceledException | IOException | AuthenticatorException e) {
+            return Boolean.FALSE;
+        }
     }
 
     @Override
     public void onDestroy() {
-        //TODO Log out and stuff
+        api.disconnect();
         super.onDestroy();
     }
 }
