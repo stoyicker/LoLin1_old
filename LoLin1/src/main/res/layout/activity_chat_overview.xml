@@ -27,6 +27,8 @@
 	<ViewSwitcher
 		android:id="@+id/chat_overview_view_switcher"
 		android:layout_width="match_parent"
+		android:inAnimation="@anim/anim_appear"
+		android:outAnimation="@anim/anim_appear"
 		android:layout_height="match_parent">
 		<include layout="@layout/activity_chat_overview_connected"/>
 		<include layout="@layout/activity_chat_overview_no_connection"/>

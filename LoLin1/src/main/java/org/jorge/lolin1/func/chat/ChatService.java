@@ -16,6 +16,7 @@ import com.github.theholywaffle.lolchatapi.ChatServer;
 import com.github.theholywaffle.lolchatapi.LolChat;
 
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
+import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
@@ -62,13 +63,18 @@ public class ChatService extends Service {
             PackageManager packageManager = getApplicationContext().getPackageManager();
             packageManager
                     .setComponentEnabledSetting(new ComponentName(
-                                    ChatOverviewBroadcastReceiver.class.getPackage().getName(),
-                                    ChatOverviewBroadcastReceiver.class.getName()),
+                                    ChatOverviewActivity.ChatOverviewBroadcastReceiver.class
+                                            .getPackage().getName(),
+                                    ChatOverviewActivity.ChatOverviewBroadcastReceiver.class
+                                            .getName()
+                            ),
                             PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
                             PackageManager.DONT_KILL_APP
                     );
+            //TODO Launch a successful login in-app (LocalBroadcastHelper) broadcast
         }
         else {
+            //TODO Launch an unsuccessful login in-app (LocalBroadcastHelper) broadcast
             stopSelf();
         }
         return super.onStartCommand(intent, flags, startId);
@@ -137,11 +143,14 @@ public class ChatService extends Service {
     @Override
     public void onDestroy() {
         api.disconnect();
+        api = null;
         PackageManager packageManager = getApplicationContext().getPackageManager();
         packageManager
                 .setComponentEnabledSetting(new ComponentName(
-                                ChatOverviewBroadcastReceiver.class.getPackage().getName(),
-                                ChatOverviewBroadcastReceiver.class.getName()),
+                                ChatOverviewActivity.ChatOverviewBroadcastReceiver.class
+                                        .getPackage().getName(),
+                                ChatOverviewActivity.ChatOverviewBroadcastReceiver.class.getName()
+                        ),
                         PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
                         PackageManager.DONT_KILL_APP
                 );

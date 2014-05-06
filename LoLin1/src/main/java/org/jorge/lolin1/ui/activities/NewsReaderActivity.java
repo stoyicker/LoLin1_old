@@ -9,7 +9,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.feeds.news.NewsEntry;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.ui.frags.NewsListFragment;
-import org.jorge.lolin1.ui.frags.WebViewerFragment;
+import org.jorge.lolin1.ui.frags.WebViewerProgressFragment;
 
 import java.util.ArrayList;
 
@@ -35,7 +35,7 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
         NewsListFragment.NewsListFragmentListener {
     private static Boolean isDualPane = Boolean.FALSE;
     private NewsListFragment NEWS_FRAGMENT;
-    private WebViewerFragment WEB_FRAGMENT;
+    private WebViewerProgressFragment WEB_FRAGMENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,7 +52,7 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
         NEWS_FRAGMENT =
                 (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
         WEB_FRAGMENT =
-                (WebViewerFragment) getSupportFragmentManager()
+                (WebViewerProgressFragment) getSupportFragmentManager()
                         .findFragmentById(R.id.fragment_web_viewer);
 
         getFragmentManager().executePendingTransactions();

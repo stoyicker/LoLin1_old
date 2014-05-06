@@ -1,6 +1,7 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.app.ActivityManager;
+import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatService;
 import org.jorge.lolin1.ui.frags.ChatOverviewFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
+import org.jorge.lolin1.ui.frags.WrongChatCredentialsFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
@@ -46,34 +48,37 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             INDEX_VIEW_WRONG_CREDENTIALS = 2;
     private ChatOverviewFragment CHAT_OVERVIEW_FRAGMENT;
     private ExpandableSearchFragment SEARCH_FRAGMENT;
-    private ChatService mService;
+    private WrongChatCredentialsFragment WRONG_CREDENTIALS_FRAGMENT;
     private ServiceConnection mConnection = new ServiceConnection() {
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mService = ((ChatService.ChatBinder) service).getService();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mService = null;
         }
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            setContentView(R.layout.activity_chat_overview_no_connection);
-            return;
-        }
-        initChatService();
-        getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
-                R.menu.menu_chat_overview);
         if (savedInstanceState == null) {
             savedInstanceState = new Bundle();
         }
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_chat_overview);
         super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected void onResume() {
+        if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
+            showViewNoConnection();
+            return;
+        }
+        initChatService();
+        getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
+                R.menu.menu_chat_overview);
+        super.onResume();
     }
 
     private void initChatService() {
@@ -101,6 +106,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         Boolean ret = Boolean.TRUE;
         switch (item.getItemId()) {
             case R.id.action_champion_search:
+                //TODO if(connected/logged in)
                 SEARCH_FRAGMENT.toggleVisibility();
                 break;
             default: //Up or Settings buttons
@@ -110,15 +116,38 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         return ret;
     }
 
-    //TODO ProgressFragment
     @Override
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         View ret = super.onCreateView(name, context, attrs);
-        ViewSwitcher viewSwitcher = (ViewSwitcher) findViewById(R.id.chat_overview_view_switcher);
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            //No connection
+            showViewNoConnection();
+        }
+        else {
+            //I'm use the progress bar from this ProgressFragment to show the login procedure. The corresponding event will show which view has to be actually shown.
+            showViewNoConnection();
+        }
+        return ret;
+    }
+
+    private void showViewConnected() {
+        ViewSwitcher viewSwitcher = (ViewSwitcher) findViewById(R.id.chat_overview_view_switcher);
+        if (viewSwitcher.getDisplayedChild() != INDEX_VIEW_CONNECTED) {
+            viewSwitcher.setDisplayedChild(INDEX_VIEW_CONNECTED);
+            CHAT_OVERVIEW_FRAGMENT =
+                    (ChatOverviewFragment) getFragmentManager()
+                            .findFragmentById(R.id.chat_overview_fragment);
+
+            SEARCH_FRAGMENT =
+                    (ExpandableSearchFragment) getFragmentManager()
+                            .findFragmentById(R.id.champion_list_search);
+        }
+    }
+
+    private void showViewNoConnection() {
+        ViewSwitcher viewSwitcher = (ViewSwitcher) findViewById(R.id.chat_overview_view_switcher);
+        if (viewSwitcher.getDisplayedChild() != INDEX_VIEW_NOT_CONNECTED) {
             viewSwitcher.setDisplayedChild(INDEX_VIEW_NOT_CONNECTED);
-            ret.setOnClickListener(new View.OnClickListener() {
+            findViewById(android.R.id.content).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
@@ -131,22 +160,16 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 }
             });
         }
-        else if () {
-            //TODO Layout for the Wrong credentials
+    }
+
+    private void showViewWrongCredentials() {
+        ViewSwitcher viewSwitcher = (ViewSwitcher) findViewById(R.id.chat_overview_view_switcher);
+        if (viewSwitcher.getDisplayedChild() != INDEX_VIEW_WRONG_CREDENTIALS) {
+            WRONG_CREDENTIALS_FRAGMENT = (WrongChatCredentialsFragment) getFragmentManager()
+                    .findFragmentById(R.id.chat_overview_wrong_credentials);
             viewSwitcher.setDisplayedChild(INDEX_VIEW_WRONG_CREDENTIALS);
+            WRONG_CREDENTIALS_FRAGMENT.showContent();
         }
-        else {
-            //Successfully logged in
-            CHAT_OVERVIEW_FRAGMENT =
-                    (ChatOverviewFragment) getFragmentManager()
-                            .findFragmentById(R.id.chat_overview_fragment);
-
-
-            SEARCH_FRAGMENT =
-                    (ExpandableSearchFragment) getFragmentManager()
-                            .findFragmentById(R.id.champion_list_search);
-        }
-        return ret;
     }
 
     @Override
@@ -159,5 +182,31 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         //TODO Intent intent = new Intent(getApplicationContext(), ChatRoomActivity.class);
         //intent.putExtra(KEY_FRIEND_NAME, friendName);
         //startActivity(intent);
+    }
+
+    public class ChatOverviewBroadcastReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (action.contentEquals(LoLin1Utils
+                    .getString(context.getApplicationContext(), "event_chat_overview", null))) {
+                //TODO Tell the ChatOverviewActivity to invalidate/refresh the view
+
+            }
+            else if (action.contentEquals("android.net.conn.CONNECTIVITY_CHANGE")) {
+                if (!LoLin1Utils.isInternetReachable(context.getApplicationContext())) {
+                    showViewNoConnection();
+                }
+            }
+            else if (action.contentEquals(LoLin1Utils
+                    .getString(context.getApplicationContext(), "event_login_failed", null))) {
+                showViewWrongCredentials();
+            }
+            else if (action.contentEquals(LoLin1Utils
+                    .getString(context.getApplicationContext(), "event_login_successful", null))) {
+                showViewConnected();
+            }
+        }
     }
 }
