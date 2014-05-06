@@ -9,7 +9,7 @@ import android.view.MenuItem;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.feeds.BaseEntry;
 import org.jorge.lolin1.io.db.SQLiteDAO;
-import org.jorge.lolin1.ui.frags.WebViewerFragment;
+import org.jorge.lolin1.ui.frags.WebViewerProgressFragment;
 
 import java.util.ArrayList;
 
@@ -33,7 +33,7 @@ import java.util.ArrayList;
  */
 public final class WebViewerActivity extends FragmentActivity {
 
-    WebViewerFragment webViewerFragment;
+    WebViewerProgressFragment webViewerProgressFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +64,7 @@ public final class WebViewerActivity extends FragmentActivity {
 
         getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content,
-                        webViewerFragment = new WebViewerFragment(
+                        webViewerProgressFragment = new WebViewerProgressFragment(
                                 elements.isEmpty() ? null :
                                         elements.get(getIntent().getExtras().getInt("index", 0))
                                                 .getLink()
@@ -77,7 +77,7 @@ public final class WebViewerActivity extends FragmentActivity {
 
     @Override
     public void onBackPressed() {
-        if (!webViewerFragment.tryToGoBack()) {
+        if (!webViewerProgressFragment.tryToGoBack()) {
             if (!getResources().getBoolean(R.bool.feed_has_two_panes)) {
                 protectAgainstWindowLeaks();
                 finish();
@@ -102,7 +102,7 @@ public final class WebViewerActivity extends FragmentActivity {
     }
 
     private void protectAgainstWindowLeaks() {
-        getSupportFragmentManager().beginTransaction().remove(webViewerFragment).addToBackStack("")
+        getSupportFragmentManager().beginTransaction().remove(webViewerProgressFragment).addToBackStack("")
                 .commit();
         getSupportFragmentManager().executePendingTransactions();
     }

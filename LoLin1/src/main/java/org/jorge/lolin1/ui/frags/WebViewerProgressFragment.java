@@ -32,7 +32,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
  */
-public class WebViewerFragment extends ProgressFragment {
+public class WebViewerProgressFragment extends ProgressFragment {
 
     private WebView mWebView;
     private boolean mIsWebViewAvailable;
@@ -40,10 +40,10 @@ public class WebViewerFragment extends ProgressFragment {
 
     //This method is indeed used when instantiating the fragment through XML
     @SuppressWarnings("UnusedDeclaration")
-    public WebViewerFragment() {
+    public WebViewerProgressFragment() {
     }
 
-    public WebViewerFragment(String url) {
+    public WebViewerProgressFragment(String url) {
         mUrl = url;
     }
 
@@ -151,7 +151,7 @@ public class WebViewerFragment extends ProgressFragment {
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             super.onPageStarted(view, url, favicon);
             try {
-                WebViewerFragment.this.setContentShown(Boolean.FALSE);
+                WebViewerProgressFragment.this.setContentShown(Boolean.FALSE);
             }
             catch (IllegalStateException ex) {
                 //Content view not yet created (too quick user)!
@@ -168,7 +168,7 @@ public class WebViewerFragment extends ProgressFragment {
         public void onPageFinished(WebView view, String url) {
             super.onPageFinished(view, url);
             try {
-                WebViewerFragment.this.setContentShown(Boolean.TRUE);
+                WebViewerProgressFragment.this.setContentShown(Boolean.TRUE);
             }
             catch (IllegalStateException ex) {
                 //Means that the webpage has been closed too quickly, and thus the host
