@@ -23,11 +23,22 @@ import java.util.Collection;
  * <p/>
  * Created by JorgeAntonio on 04/05/2014.
  */
-public abstract class FriendManager {
+public class FriendManager {
 
-    private static final Collection<Friend> ONLINE_FRIENDS = new ArrayDeque<>();
+    private static FriendManager instance;
+    private final Collection<Friend> ONLINE_FRIENDS = new ArrayDeque<>();
 
-    public static Friend findFriendByName(String friendName) {
+    public static FriendManager getInstance() {
+        if (instance == null) {
+            instance = new FriendManager();
+        }
+        return instance;
+    }
+
+    private FriendManager() {
+    }
+
+    public Friend findFriendByName(String friendName) {
         for (Friend f : ONLINE_FRIENDS)
             if (f.getName().contentEquals(friendName)) {
                 return f;
@@ -39,7 +50,7 @@ public abstract class FriendManager {
         //TODO
     }
 
-    public static Collection<Friend> getOnlineFriends() {
+    public Collection<Friend> getOnlineFriends() {
         return ONLINE_FRIENDS;
     }
 }

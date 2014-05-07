@@ -54,7 +54,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
 
     public ChatFilterableListAdapter(Activity activity) {
         mActivity = activity;
-        data.addAll(FriendManager.getOnlineFriends());
+        data.addAll(FriendManager.getInstance().getOnlineFriends());
     }
 
     @Override
@@ -136,7 +136,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
             @Override
             protected FilterResults performFiltering(CharSequence constraint) {
                 FilterResults ret = new FilterResults();
-                Collection<Friend> allFriends = FriendManager.getOnlineFriends();
+                Collection<Friend> allFriends = FriendManager.getInstance().getOnlineFriends();
                 if (constraint == null || constraint.length() == 0) {
                     ret.values = allFriends;
                 }
