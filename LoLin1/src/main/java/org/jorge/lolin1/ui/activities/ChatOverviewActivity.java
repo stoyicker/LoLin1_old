@@ -179,6 +179,18 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         //startActivity(intent);
     }
 
+    private synchronized void requestUIRefresh() {
+        final View thisView = findViewById(android.R.id.content);
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (thisView.isShown()) {
+                    thisView.invalidate();
+                }
+            }
+        });
+    }
+
     public class ChatOverviewBroadcastReceiver extends BroadcastReceiver {
 
         @Override
@@ -186,8 +198,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             String action = intent.getAction();
             if (action.contentEquals(LoLin1Utils
                     .getString(context.getApplicationContext(), "event_chat_overview", null))) {
-                //TODO Tell the ChatOverviewActivity to invalidate/refresh the view
-
+                requestUIRefresh();
             }
             else if (action.contentEquals("android.net.conn.CONNECTIVITY_CHANGE")) {
                 if (!LoLin1Utils.isInternetReachable(context.getApplicationContext())) {
