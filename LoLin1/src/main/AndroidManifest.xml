@@ -167,15 +167,6 @@ Created by JorgeAntonio on 02/01/14.
 				<category android:name="android.intent.category.DEFAULT"/>
 			</intent-filter>
 		</activity>
-		<receiver android:name=".ui.activities.ChatOverviewActivity$ChatOverviewBroadcastReceiver"
-		          android:enabled="false">
-			<intent-filter>
-				<action android:name="@string/event_chat_overview"/>
-				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-				<action android:name="@string/event_login_failed"/>
-				<action android:name="@string/event_login_successful"/>
-			</intent-filter>
-		</receiver>
 		<service android:name=".func.auth.AccountAuthenticatorService"
 		         android:permission="android.permission.GET_ACCOUNTS">
 			<intent-filter>

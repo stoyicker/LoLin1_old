@@ -50,9 +50,11 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     private ExpandableSearchFragment SEARCH_FRAGMENT;
     private WrongChatCredentialsFragment WRONG_CREDENTIALS_FRAGMENT;
     private ChatServiceConnection mConnection = new ChatServiceConnection();
+    private static ChatOverviewActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        instance = this;
         if (savedInstanceState == null) {
             savedInstanceState = new Bundle();
         }
@@ -118,7 +120,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             showViewNoConnection();
         }
         else {
-            //I'm use the progress bar from this ProgressFragment to show the login procedure. The corresponding event will show which view has to be actually shown.
+            //I'm using the progress bar from this ProgressFragment to show the login procedure. The corresponding event will show which view has to be actually shown.
             showViewNoConnection();
         }
         return ret;
@@ -189,6 +191,10 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 }
             }
         });
+    }
+
+    public static BroadcastReceiver instantiateBroadcastReceiver() {
+        return instance.new ChatOverviewBroadcastReceiver();
     }
 
     public class ChatOverviewBroadcastReceiver extends BroadcastReceiver {

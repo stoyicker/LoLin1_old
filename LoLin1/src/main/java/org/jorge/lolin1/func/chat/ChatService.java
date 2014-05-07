@@ -5,11 +5,12 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.Service;
-import android.content.ComponentName;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.content.IntentFilter;
 import android.os.Binder;
 import android.os.IBinder;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.github.theholywaffle.lolchatapi.ChatServer;
@@ -44,6 +45,7 @@ public class ChatService extends Service {
     private static final long LOG_IN_DELAY_MILLIS = 3000;
     private final IBinder mBinder = new ChatBinder();
     private LolChat api;
+    private BroadcastReceiver mChatBroadcastReceiver;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -60,24 +62,42 @@ public class ChatService extends Service {
     public int onStartCommand(Intent intent, int flags, int startId) {
         Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
         if (loginSuccess) {
-            PackageManager packageManager = getApplicationContext().getPackageManager();
-            packageManager
-                    .setComponentEnabledSetting(new ComponentName(
-                                    ChatOverviewActivity.ChatOverviewBroadcastReceiver.class
-                                            .getPackage().getName(),
-                                    ChatOverviewActivity.ChatOverviewBroadcastReceiver.class
-                                            .getName()
-                            ),
-                            PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
-                            PackageManager.DONT_KILL_APP
-                    );
-            //TODO Launch a successful login in-app (LocalBroadcastHelper) broadcast
+            mChatBroadcastReceiver = ChatOverviewActivity.instantiateBroadcastReceiver();
+            IntentFilter intentFilter = new IntentFilter();
+            intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+            intentFilter.addAction(LoLin1Utils
+                    .getString(getApplicationContext(), "event_login_failed", null));
+            intentFilter.addAction(LoLin1Utils
+                    .getString(getApplicationContext(), "event_chat_overview", null));
+            intentFilter.addAction(LoLin1Utils
+                    .getString(getApplicationContext(), "event_login_successful", null));
+            LocalBroadcastManager.getInstance(getApplicationContext())
+                    .registerReceiver(mChatBroadcastReceiver, intentFilter);
+            launchBroadcastLoginSuccessful();
         }
         else {
-            //TODO Launch an unsuccessful login in-app (LocalBroadcastHelper) broadcast
+            launchBroadcastLoginUnsuccessful();
             stopSelf();
         }
         return super.onStartCommand(intent, flags, startId);
+    }
+
+    private void launchBroadcastLoginUnsuccessful() {
+        Intent intent = new Intent();
+        intent.setAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_login_failed", null));
+        sendLocalBroadcast(intent);
+    }
+
+    private void sendLocalBroadcast(Intent intent) {
+        LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+    }
+
+    private void launchBroadcastLoginSuccessful() {
+        Intent intent = new Intent();
+        intent.setAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_login_successful", null));
+        sendLocalBroadcast(intent);
     }
 
     private Boolean login(String upperCaseRealm) {
@@ -144,16 +164,9 @@ public class ChatService extends Service {
     public void onDestroy() {
         api.disconnect();
         api = null;
-        PackageManager packageManager = getApplicationContext().getPackageManager();
-        packageManager
-                .setComponentEnabledSetting(new ComponentName(
-                                ChatOverviewActivity.ChatOverviewBroadcastReceiver.class
-                                        .getPackage().getName(),
-                                ChatOverviewActivity.ChatOverviewBroadcastReceiver.class.getName()
-                        ),
-                        PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
-                        PackageManager.DONT_KILL_APP
-                );
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .unregisterReceiver(mChatBroadcastReceiver);
+        mChatBroadcastReceiver = null;
         super.onDestroy();
     }
 }
