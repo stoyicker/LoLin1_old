@@ -49,15 +49,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     private ChatOverviewFragment CHAT_OVERVIEW_FRAGMENT;
     private ExpandableSearchFragment SEARCH_FRAGMENT;
     private WrongChatCredentialsFragment WRONG_CREDENTIALS_FRAGMENT;
-    private ServiceConnection mConnection = new ServiceConnection() {
-        @Override
-        public void onServiceConnected(ComponentName name, IBinder service) {
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName name) {
-        }
-    };
+    private ChatServiceConnection mConnection = new ChatServiceConnection();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,16 +67,19 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             showViewNoConnection();
             return;
         }
-        initChatService();
+        restartOrRunChatService();
         getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
                 R.menu.menu_chat_overview);
         super.onResume();
     }
 
-    private void initChatService() {
+    private void restartOrRunChatService() {
         Intent intent = new Intent(getApplicationContext(), ChatService.class);
-        if (!isChatServiceAlreadyRunning()) {
+        if (isChatServiceAlreadyRunning()) {
             stopService(intent);
+        }
+        if (mConnection.isConnected()) {
+            unbindService(mConnection);
         }
         bindService(intent, mConnection, Context.BIND_ABOVE_CLIENT);
         startService(intent);
@@ -151,7 +146,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 @Override
                 public void onClick(View v) {
                     if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
-                        onCreate(null);
+                        onResume();
                     }
                     else {
                         Toast.makeText(getApplicationContext(), R.string.error_no_connection,
@@ -198,6 +193,9 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 if (!LoLin1Utils.isInternetReachable(context.getApplicationContext())) {
                     showViewNoConnection();
                 }
+                else {
+                    ChatOverviewActivity.this.restartOrRunChatService();
+                }
             }
             else if (action.contentEquals(LoLin1Utils
                     .getString(context.getApplicationContext(), "event_login_failed", null))) {
@@ -207,6 +205,24 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     .getString(context.getApplicationContext(), "event_login_successful", null))) {
                 showViewConnected();
             }
+        }
+    }
+
+    private class ChatServiceConnection implements ServiceConnection {
+        private ChatService mChatService;
+
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            mChatService = ((ChatService.ChatBinder) service).getService();
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            mChatService = null;
+        }
+
+        private Boolean isConnected() {
+            return mChatService == null;
         }
     }
 }
