@@ -18,32 +18,20 @@
 ~ <p/>
 ~ Created by JorgeAntonio on 01/05/2014.
 -->
-<org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout
+<LinearLayout
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:id="@+id/drawer_layout"
 	android:layout_width="match_parent"
+	android:orientation="vertical"
 	android:layout_height="match_parent">
-	<LinearLayout android:layout_width="match_parent"
-	              android:orientation="vertical"
-	              android:layout_height="match_parent">
-		<fragment
-			android:id="@+id/chat_list_search"
-			android:name="org.jorge.lolin1.ui.frags.ExpandableSearchFragment"
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			/>
-		<fragment
-			android:id="@+id/chat_overview_fragment"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:name="org.jorge.lolin1.ui.frags.ChatOverviewFragment"/>
-	</LinearLayout>
 	<fragment
-		android:id="@+id/navigation_drawer"
-		android:name="org.jorge.lolin1.ui.frags.NavigationDrawerFragment"
-		android:layout_width="@dimen/navigation_drawer_width"
+		android:id="@+id/chat_list_search"
+		android:name="org.jorge.lolin1.ui.frags.ExpandableSearchFragment"
+		android:layout_height="wrap_content"
+		android:layout_width="match_parent"
+		/>
+	<fragment
+		android:id="@+id/chat_overview_fragment"
+		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		android:layout_gravity="left"
-		tools:layout="@layout/fragment_navigation_drawer"/>
-</org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout>
+		android:name="org.jorge.lolin1.ui.frags.ChatOverviewFragment"/>
+</LinearLayout>

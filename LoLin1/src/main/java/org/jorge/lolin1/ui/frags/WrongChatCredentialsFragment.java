@@ -36,7 +36,6 @@ public class WrongChatCredentialsFragment extends ProgressFragment {
                              Bundle savedInstanceState) {
         View ret = inflater.inflate(R.layout.fragment_chat_overview_wrong_credentials, container,
                 Boolean.FALSE);
-        hideContent();
         return ret;
     }
 

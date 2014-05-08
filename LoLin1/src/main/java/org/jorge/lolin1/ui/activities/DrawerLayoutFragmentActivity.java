@@ -147,6 +147,17 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                     }
                 };
                 break;
+            case 4:
+                task = new Runnable() {
+                    @Override
+                    public void run() {
+                        startActivity(
+                                new Intent(getApplicationContext(),
+                                        ChatOverviewActivity.class)
+                        );
+                    }
+                };
+                break;
             default:
                 Log.wtf("debug", "Should never happen - Selected index - " + position);
                 task = null;

@@ -11,7 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.ui.activities.ChampionListActivity;
+import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
@@ -115,7 +115,7 @@ public class ExpandableSearchFragment extends Fragment {
                     + " must implement ExpandableSearchListener");
         }
 
-        ((ChampionListActivity) activity).onSectionAttached(
+        ((DrawerLayoutFragmentActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(
                                 LoLin1Utils.getStringArray(

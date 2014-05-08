@@ -37,14 +37,10 @@ public class WebViewerProgressFragment extends ProgressFragment {
     private WebView mWebView;
     private boolean mIsWebViewAvailable;
     private String mUrl = null;
+    public static final String KEY_URL = "URL";
 
-    //This method is indeed used when instantiating the fragment through XML
-    @SuppressWarnings("UnusedDeclaration")
     public WebViewerProgressFragment() {
-    }
-
-    public WebViewerProgressFragment(String url) {
-        mUrl = url;
+        mUrl = getArguments().getString(KEY_URL);
     }
 
     /**

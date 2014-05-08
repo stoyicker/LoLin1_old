@@ -62,17 +62,18 @@ public final class WebViewerActivity extends FragmentActivity {
                 );
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .add(android.R.id.content,
-                        webViewerProgressFragment = new WebViewerProgressFragment(
-                                elements.isEmpty() ? null :
-                                        elements.get(getIntent().getExtras().getInt("index", 0))
-                                                .getLink()
-                        )
-                )
-                .addToBackStack("").commit();
+        webViewerProgressFragment = new WebViewerProgressFragment();
+        Bundle args = new Bundle();
+        args.putString(WebViewerProgressFragment.KEY_URL, elements.isEmpty() ? null :
+                elements.get(getIntent().getExtras().getInt("index", 0))
+                        .getLink());
 
-        getSupportFragmentManager().executePendingTransactions();
+        getFragmentManager().beginTransaction()
+                .add(android.R.id.content,
+                        webViewerProgressFragment).addToBackStack(
+                "").commit();
+
+        getFragmentManager().executePendingTransactions();
     }
 
     @Override
@@ -102,8 +103,9 @@ public final class WebViewerActivity extends FragmentActivity {
     }
 
     private void protectAgainstWindowLeaks() {
-        getSupportFragmentManager().beginTransaction().remove(webViewerProgressFragment).addToBackStack("")
+        getFragmentManager().beginTransaction().remove(webViewerProgressFragment)
+                .addToBackStack("")
                 .commit();
-        getSupportFragmentManager().executePendingTransactions();
+        getFragmentManager().executePendingTransactions();
     }
 }

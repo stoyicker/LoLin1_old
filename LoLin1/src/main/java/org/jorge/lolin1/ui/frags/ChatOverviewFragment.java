@@ -66,13 +66,6 @@ public class ChatOverviewFragment extends Fragment {
                         )
                 ).indexOf(LoLin1Utils.getString(getActivity(), "title_section5", null))
         );
-
-        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                mCallback.onRoomSelected(((Friend) listAdapter.getItem(position)).getName());
-            }
-        });
     }
 
     @Override
@@ -94,6 +87,13 @@ public class ChatOverviewFragment extends Fragment {
         });
 
         mListView.setAdapter(listAdapter);
+
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                mCallback.onRoomSelected(((Friend) listAdapter.getItem(position)).getName());
+            }
+        });
 
         return ret;
     }

@@ -52,11 +52,10 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
         NEWS_FRAGMENT =
                 (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
         WEB_FRAGMENT =
-                (WebViewerProgressFragment) getSupportFragmentManager()
+                (WebViewerProgressFragment) getFragmentManager()
                         .findFragmentById(R.id.fragment_web_viewer);
 
         getFragmentManager().executePendingTransactions();
-        getSupportFragmentManager().executePendingTransactions();
 
         isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
                 WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;

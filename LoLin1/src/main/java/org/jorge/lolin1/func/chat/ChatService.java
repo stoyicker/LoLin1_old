@@ -15,9 +15,10 @@ import android.util.Log;
 
 import com.github.theholywaffle.lolchatapi.ChatServer;
 import com.github.theholywaffle.lolchatapi.LolChat;
+import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
+import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
-import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
@@ -58,22 +59,27 @@ public class ChatService extends Service {
         }
     }
 
+    private void runChatOverviewBroadcastReceiver() {
+//        mChatBroadcastReceiver = ChatOverviewActivity.instantiateBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        intentFilter.addAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_login_failed", null));
+        intentFilter.addAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_chat_overview", null));
+        intentFilter.addAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_login_successful", null));
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .registerReceiver(mChatBroadcastReceiver, intentFilter);
+    }
+
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
         if (loginSuccess) {
-            mChatBroadcastReceiver = ChatOverviewActivity.instantiateBroadcastReceiver();
-            IntentFilter intentFilter = new IntentFilter();
-            intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-            intentFilter.addAction(LoLin1Utils
-                    .getString(getApplicationContext(), "event_login_failed", null));
-            intentFilter.addAction(LoLin1Utils
-                    .getString(getApplicationContext(), "event_chat_overview", null));
-            intentFilter.addAction(LoLin1Utils
-                    .getString(getApplicationContext(), "event_login_successful", null));
-            LocalBroadcastManager.getInstance(getApplicationContext())
-                    .registerReceiver(mChatBroadcastReceiver, intentFilter);
+            runChatOverviewBroadcastReceiver();
             launchBroadcastLoginSuccessful();
+            setUpChatOverviewListener();
         }
         else {
             launchBroadcastLoginUnsuccessful();
@@ -82,11 +88,39 @@ public class ChatService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private void launchBroadcastLoginUnsuccessful() {
-        Intent intent = new Intent();
-        intent.setAction(LoLin1Utils
-                .getString(getApplicationContext(), "event_login_failed", null));
-        sendLocalBroadcast(intent);
+    private void setUpChatOverviewListener() {
+        api.addFriendListener(new FriendListener() {
+
+            @Override
+            public void onFriendLeave(Friend friend) {
+                ChatService.this.launchBroadcastFriendEvent();
+            }
+
+            @Override
+            public void onFriendJoin(Friend friend) {
+                ChatService.this.launchBroadcastFriendEvent();
+            }
+
+            @Override
+            public void onFriendAvailable(Friend friend) {
+                ChatService.this.launchBroadcastFriendEvent();
+            }
+
+            @Override
+            public void onFriendAway(Friend friend) {
+                ChatService.this.launchBroadcastFriendEvent();
+            }
+
+            @Override
+            public void onFriendBusy(Friend friend) {
+                ChatService.this.launchBroadcastFriendEvent();
+            }
+
+            @Override
+            public void onFriendStatusChange(Friend friend) {
+                ChatService.this.launchBroadcastFriendEvent();
+            }
+        });
     }
 
     private void sendLocalBroadcast(Intent intent) {
@@ -97,6 +131,20 @@ public class ChatService extends Service {
         Intent intent = new Intent();
         intent.setAction(LoLin1Utils
                 .getString(getApplicationContext(), "event_login_successful", null));
+        sendLocalBroadcast(intent);
+    }
+
+    private void launchBroadcastLoginUnsuccessful() {
+        Intent intent = new Intent();
+        intent.setAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_login_failed", null));
+        sendLocalBroadcast(intent);
+    }
+
+    private void launchBroadcastFriendEvent() {
+        Intent intent = new Intent();
+        intent.setAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_chat_overview", null));
         sendLocalBroadcast(intent);
     }
 
