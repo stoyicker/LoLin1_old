@@ -1,11 +1,15 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
+import android.view.View;
+import android.widget.Toast;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.frags.ChatOverviewFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
 import org.jorge.lolin1.ui.frags.WrongChatCredentialsFragment;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -50,7 +54,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 R.layout.activity_chat_overview);
         super.onCreate(savedInstanceState);
     }
-//
+
+    //
 //    @Override
 //    protected void onResume() {
 //        if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
@@ -113,50 +118,50 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 //        return ret;
 //    }
 //
-//    private void showViewConnected(View view) {
-//        ViewSwitcher viewSwitcher = (ViewSwitcher) view.findViewById(
-//                R.id.chat_overview_view_switcher);
-//        if (viewSwitcher.getDisplayedChild() != INDEX_VIEW_CONNECTED) {
-//            viewSwitcher.setDisplayedChild(INDEX_VIEW_CONNECTED);
-//            CHAT_OVERVIEW_FRAGMENT =
-//                    (ChatOverviewFragment) getFragmentManager()
-//                            .findFragmentById(R.id.chat_overview_fragment);
-//
-//            SEARCH_FRAGMENT =
-//                    (ExpandableSearchFragment) getFragmentManager()
-//                            .findFragmentById(R.id.champion_list_search);
-//        }
-//    }
-//
-//    private void showViewNoConnection(View view) {
-//        ViewSwitcher viewSwitcher = (ViewSwitcher) view.findViewById(
-//                R.id.chat_overview_view_switcher);
-//        if (viewSwitcher.getDisplayedChild() != INDEX_VIEW_NOT_CONNECTED) {
-//            viewSwitcher.setDisplayedChild(INDEX_VIEW_NOT_CONNECTED);
-//            findViewById(android.R.id.content).setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
-//                        onResume();
-//                    }
-//                    else {
-//                        Toast.makeText(getApplicationContext(), R.string.error_no_connection,
-//                                Toast.LENGTH_SHORT).show();
-//                    }
-//                }
-//            });
-//        }
-//    }
-//
-//    private void showViewWrongCredentials(View view) {
-//        ViewSwitcher viewSwitcher = (ViewSwitcher) view.findViewById(
-//                R.id.chat_overview_view_switcher);
-//        if (viewSwitcher.getDisplayedChild() != INDEX_VIEW_WRONG_CREDENTIALS) {
-//            WRONG_CREDENTIALS_FRAGMENT = (WrongChatCredentialsFragment) getFragmentManager()
-//                    .findFragmentById(R.id.chat_overview_wrong_credentials);
-//            viewSwitcher.setDisplayedChild(INDEX_VIEW_WRONG_CREDENTIALS);
-//        }
-//    }
+    private void showViewConnected(View view) {
+        ViewPager viewPager = (ViewPager) view.findViewById(
+                R.id.chat_overview_view_pager);
+        if (viewPager.getCurrentItem() != INDEX_VIEW_CONNECTED) {
+            viewPager.setCurrentItem(INDEX_VIEW_CONNECTED);
+            CHAT_OVERVIEW_FRAGMENT =
+                    (ChatOverviewFragment) getFragmentManager()
+                            .findFragmentById(R.id.chat_overview_fragment);
+
+            SEARCH_FRAGMENT =
+                    (ExpandableSearchFragment) getFragmentManager()
+                            .findFragmentById(R.id.champion_list_search);
+        }
+    }
+
+    private void showViewNoConnection(View view) {
+        ViewPager viewPager = (ViewPager) view.findViewById(
+                R.id.chat_overview_view_pager);
+        if (viewPager.getCurrentItem() != INDEX_VIEW_NOT_CONNECTED) {
+            viewPager.setCurrentItem(INDEX_VIEW_NOT_CONNECTED);
+            findViewById(android.R.id.content).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
+                        onResume();
+                    }
+                    else {
+                        Toast.makeText(getApplicationContext(), R.string.error_no_connection,
+                                Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+        }
+    }
+
+    private void showViewWrongCredentials(View view) {
+        ViewPager viewPager = (ViewPager) view.findViewById(
+                R.id.chat_overview_view_pager);
+        if (viewPager.getCurrentItem() != INDEX_VIEW_WRONG_CREDENTIALS) {
+            WRONG_CREDENTIALS_FRAGMENT = (WrongChatCredentialsFragment) getFragmentManager()
+                    .findFragmentById(R.id.chat_overview_wrong_credentials);
+            viewPager.setCurrentItem(INDEX_VIEW_WRONG_CREDENTIALS);
+        }
+    }
 
     @Override
     public void onNewQuery(String query) {
