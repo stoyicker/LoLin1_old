@@ -6,6 +6,8 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.github.theholywaffle.lolchatapi.LoLChat;
+
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.io.local.FileManager;
@@ -41,6 +43,7 @@ public final class InitialActivity extends Activity {
         super.onCreate(savedInstanceState);
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
         LoLin1Utils.initCharsetMap();
+        LoLChat.init(getApplicationContext());
         SQLiteDAO.setup(getApplicationContext());
         flushCacheIfNecessary();
         SharedPreferences preferences =
