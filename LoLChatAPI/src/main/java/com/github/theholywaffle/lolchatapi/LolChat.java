@@ -10,23 +10,46 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi;
 
+import android.content.Context;
+import android.util.Log;
+
 import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 import com.github.theholywaffle.lolchatapi.wrapper.FriendGroup;
-import org.jivesoftware.smack.*;
+
+import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
+import org.jivesoftware.smack.ChatManagerListener;
+import org.jivesoftware.smack.ConnectionConfiguration;
+import org.jivesoftware.smack.MessageListener;
+import org.jivesoftware.smack.Roster;
 import org.jivesoftware.smack.Roster.SubscriptionMode;
+import org.jivesoftware.smack.RosterEntry;
+import org.jivesoftware.smack.RosterGroup;
+import org.jivesoftware.smack.RosterListener;
+import org.jivesoftware.smack.SASLAuthentication;
+import org.jivesoftware.smack.SmackAndroid;
+import org.jivesoftware.smack.SmackException;
+import org.jivesoftware.smack.XMPPConnection;
+import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.XMPPTCPConnection;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.spark.util.DummySSLSocketFactory;
 
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * This and all the files in the module have been developed by Bert De Geyter (https://github.com/TheHolyWaffle) and are protected by the Apache GPLv3 license.
  */
-public class LolChat {
+public class LoLChat {
 
     private final XMPPConnection connection;
     private final ArrayList<ChatListener> chatListeners = new ArrayList<>();
@@ -45,18 +68,19 @@ public class LolChat {
      *                             ignore all friend requests. NOTE: automatic accepting of
      *                             requests causes the name of the new friend to be null.
      */
-    public LolChat(ChatServer server, boolean acceptFriendRequests) {
-        Roster.setDefaultSubscriptionMode(acceptFriendRequests ? SubscriptionMode.accept_all : SubscriptionMode.manual);
+    public LoLChat(ChatServer server, boolean acceptFriendRequests) throws IOException {
+        Roster.setDefaultSubscriptionMode(
+                acceptFriendRequests ? SubscriptionMode.accept_all : SubscriptionMode.manual);
         ConnectionConfiguration config = new ConnectionConfiguration(server.host, 5223, "pvp.net");
-        config.setSASLAuthenticationEnabled(true);
         SASLAuthentication.supportSASLMechanism("PLAIN", 0);
         config.setSecurityMode(ConnectionConfiguration.SecurityMode.enabled);
         config.setSocketFactory(new DummySSLSocketFactory());
         config.setCompressionEnabled(true);
-        connection = new XMPPConnection(config);
+        connection = new XMPPTCPConnection(config);
         try {
             connection.connect();
-        } catch (XMPPException e) {
+        }
+        catch (XMPPException | SmackException e) {
             System.err.println("Failed to connect to " + connection.getHost());
         }
         addListeners();
@@ -67,7 +91,8 @@ public class LolChat {
                 while (!stop) {
                     try {
                         Thread.sleep(500);
-                    } catch (InterruptedException ignored) {
+                    }
+                    catch (InterruptedException ignored) {
                     }
                 }
             }
@@ -117,23 +142,31 @@ public class LolChat {
                         for (FriendListener l : friendListeners) {
                             if (typeUsers.containsKey(from)) {
                                 Presence.Type previous = typeUsers.get(from);
-                                if (p.getType() == Presence.Type.available && previous != Presence.Type.available) {
+                                if (p.getType() == Presence.Type.available &&
+                                        previous != Presence.Type.available) {
                                     l.onFriendJoin(friend);
-                                } else if (p.getType() == Presence.Type.unavailable
+                                }
+                                else if (p.getType() == Presence.Type.unavailable
                                         && previous != Presence.Type.unavailable) {
                                     l.onFriendLeave(friend);
                                 }
-                            } else if (p.getType() == Presence.Type.available) {
+                            }
+                            else if (p.getType() == Presence.Type.available) {
                                 l.onFriendJoin(friend);
                             }
 
                             if (modeUsers.containsKey(from)) {
                                 Presence.Mode previous = modeUsers.get(from);
-                                if (p.getMode() == Presence.Mode.chat && previous != Presence.Mode.chat) {
+                                if (p.getMode() == Presence.Mode.chat &&
+                                        previous != Presence.Mode.chat) {
                                     l.onFriendAvailable(friend);
-                                } else if (p.getMode() == Presence.Mode.away && previous != Presence.Mode.away) {
+                                }
+                                else if (p.getMode() == Presence.Mode.away &&
+                                        previous != Presence.Mode.away) {
                                     l.onFriendAway(friend);
-                                } else if (p.getMode() == Presence.Mode.dnd && previous != Presence.Mode.dnd) {
+                                }
+                                else if (p.getMode() == Presence.Mode.dnd &&
+                                        previous != Presence.Mode.dnd) {
                                     l.onFriendBusy(friend);
                                 }
                             }
@@ -154,7 +187,7 @@ public class LolChat {
             }
         });
 
-        connection.getChatManager().addChatListener(new ChatManagerListener() {
+        ChatManager.getInstanceFor(connection).addChatListener(new ChatManagerListener() {
 
             @Override
             public void chatCreated(Chat c, boolean locally) {
@@ -171,8 +204,9 @@ public class LolChat {
                             }
                         }
                     });
-                } else {
-                    System.err.println("Friend is null in chat creation");
+                }
+                else {
+                    Log.wtf("debug", "Friend is null in chat creation");
                 }
 
             }
@@ -182,7 +216,7 @@ public class LolChat {
     /**
      * Disconnects from chatserver and releases all resources.
      */
-    public void disconnect() {
+    public void disconnect() throws SmackException.NotConnectedException {
         connection.disconnect();
         stop = true;
     }
@@ -202,7 +236,8 @@ public class LolChat {
      * not a friend of you
      */
     public Friend getFriendById(String xmppAddress) {
-        return new Friend(this, connection, connection.getRoster().getEntry(StringUtils.parseBareAddress(xmppAddress)));
+        return new Friend(this, connection,
+                connection.getRoster().getEntry(StringUtils.parseBareAddress(xmppAddress)));
     }
 
     /**
@@ -302,7 +337,7 @@ public class LolChat {
      *
      * @return true if login is successful, otherwise false
      */
-    public boolean login(String username, String password) {
+    public boolean login(String username, String password) throws IOException {
         return login(username, password, false);
     }
 
@@ -314,18 +349,24 @@ public class LolChat {
      *                      the official connection in the League of Legends client.
      * @return True if login was successful
      */
-    public boolean login(String username, String password, boolean replaceLeague) {
+    public boolean login(String username, String password, boolean replaceLeague)
+            throws IOException {
         try {
             if (replaceLeague) {
                 connection.login(username, "AIR_" + password, "xiff");
-            } else {
+            }
+            else {
                 connection.login(username, "AIR_" + password);
             }
-
-        } catch (XMPPException e) {
+        }
+        catch (XMPPException | SmackException e) {
             e.printStackTrace(System.err);
         }
         return connection.isAuthenticated();
+    }
+
+    public static void init(Context context) {
+        SmackAndroid.init(context);
     }
 
     /**
@@ -390,7 +431,12 @@ public class LolChat {
 
     private void updateStatus() {
         Presence newPresence = new Presence(type, status, 1, mode);
-        connection.sendPacket(newPresence);
+        try {
+            connection.sendPacket(newPresence);
+        }
+        catch (SmackException.NotConnectedException e) {
+            System.err.println("Trying to send a packet when not connected.");
+        }
     }
 
 }

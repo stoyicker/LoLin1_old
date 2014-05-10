@@ -12,7 +12,7 @@ package com.github.theholywaffle.lolchatapi.wrapper;
 
 import org.jivesoftware.smack.XMPPConnection;
 
-import com.github.theholywaffle.lolchatapi.LolChat;
+import com.github.theholywaffle.lolchatapi.LoLChat;
 
 /**
  * This and all the files in the module have been developed by Bert De Geyter (https://github.com/TheHolyWaffle) and are protected by the Apache GPLv3 license.
@@ -21,9 +21,9 @@ public class Wrapper<E> {
 
 	protected XMPPConnection con;
 	private E object;
-	protected LolChat api;
+	protected LoLChat api;
 
-	protected Wrapper(LolChat api, XMPPConnection con, E object) {
+	protected Wrapper(LoLChat api, XMPPConnection con, E object) {
 		this.con = con;
 		this.object = object;
 		this.api = api;

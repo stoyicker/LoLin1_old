@@ -11,14 +11,16 @@
 package com.github.theholywaffle.lolchatapi.wrapper;
 
 import com.github.theholywaffle.lolchatapi.ChatMode;
-import com.github.theholywaffle.lolchatapi.LolChat;
+import com.github.theholywaffle.lolchatapi.LoLChat;
 import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 
 import org.jdom2.JDOMException;
 import org.jivesoftware.smack.Chat;
+import org.jivesoftware.smack.ChatManager;
 import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.RosterEntry;
+import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
@@ -36,7 +38,7 @@ public class Friend extends Wrapper<RosterEntry> {
     private Chat chat = null;
     private ChatListener listener = null;
 
-    public Friend(LolChat api, XMPPConnection connection, RosterEntry entry) {
+    public Friend(LoLChat api, XMPPConnection connection, RosterEntry entry) {
         super(api, connection, entry);
         this.instance = this;
     }
@@ -48,7 +50,15 @@ public class Friend extends Wrapper<RosterEntry> {
      */
     public boolean delete() {
         try {
-            con.getRoster().removeEntry(get());
+            try {
+                con.getRoster().removeEntry(get());
+            }
+            catch (SmackException.NotLoggedInException | SmackException.NotConnectedException e) {
+                System.err.println("Attempted to transmit data while not connected.");
+            }
+            catch (SmackException.NoResponseException e) {
+                e.printStackTrace();
+            }
             return true;
         }
         catch (XMPPException e) {
@@ -59,7 +69,7 @@ public class Friend extends Wrapper<RosterEntry> {
 
     private Chat getChat() {
         if (chat == null) {
-            chat = con.getChatManager().createChat(getUserId(),
+            chat = ChatManager.getInstanceFor(con).createChat(getUserId(),
                     new MessageListener() {
 
                         @Override
@@ -152,6 +162,9 @@ public class Friend extends Wrapper<RosterEntry> {
         catch (XMPPException e) {
             e.printStackTrace();
         }
+        catch (SmackException.NotConnectedException e) {
+            System.err.println("Attempted to transmit data while not connected.");
+        }
     }
 
     /**
@@ -172,6 +185,9 @@ public class Friend extends Wrapper<RosterEntry> {
         catch (XMPPException e) {
             e.printStackTrace();
         }
+        catch (SmackException.NotConnectedException e) {
+            System.err.println("Attempted to transmit data while not connected.");
+        }
     }
 
     /**
@@ -180,8 +196,6 @@ public class Friend extends Wrapper<RosterEntry> {
      * will be replaced by this one.
      * <p/>
      * This ChatListener gets called when this Friend only sends you a message.
-     *
-     * @param listener
      */
     public void setChatListener(ChatListener listener) {
         this.listener = listener;
