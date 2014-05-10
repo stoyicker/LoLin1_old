@@ -1,2 +1,2 @@
-include 'LoLin1'
-include 'LoLChatAPI'
+include ':LoLin1'
+include ':LoLChatAPI'
