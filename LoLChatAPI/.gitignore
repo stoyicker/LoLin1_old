@@ -11,7 +11,7 @@ properties
 /bin
 /doc
 /releases
-
+proguard-lolchatapi.txt
 .idea
 *.iml
 
