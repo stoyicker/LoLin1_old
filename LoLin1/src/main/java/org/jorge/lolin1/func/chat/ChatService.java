@@ -14,10 +14,11 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
 import com.github.theholywaffle.lolchatapi.ChatServer;
-import com.github.theholywaffle.lolchatapi.LolChat;
+import com.github.theholywaffle.lolchatapi.LoLChat;
 import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
+import org.jivesoftware.smack.SmackException;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
 import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -46,7 +47,7 @@ public class ChatService extends Service {
 
     private static final long LOG_IN_DELAY_MILLIS = 3000;
     private final IBinder mBinder = new ChatBinder();
-    private LolChat api;
+    private LoLChat api;
     private BroadcastReceiver mChatBroadcastReceiver;
 
     @Override
@@ -85,7 +86,6 @@ public class ChatService extends Service {
         }
         else {
             launchBroadcastLoginUnsuccessful();
-            stopSelf();
         }
         return super.onStartCommand(intent, flags, startId);
     }
@@ -150,6 +150,13 @@ public class ChatService extends Service {
         sendLocalBroadcast(intent);
     }
 
+    private void launchBroadcastLostConnection() {
+        Intent intent = new Intent();
+        intent.setAction(LoLin1Utils
+                .getString(getApplicationContext(), "android.net.conn.CONNECTIVITY_CHANGE", null));
+        sendLocalBroadcast(intent);
+    }
+
     private Boolean login(String upperCaseRealm) {
         ChatServer chatServer;
         switch (upperCaseRealm) {
@@ -171,7 +178,12 @@ public class ChatService extends Service {
             default:
                 throw new UnsupportedOperationException("Not yet implemented");
         }
-        api = new LolChat(chatServer, Boolean.FALSE);
+        try {
+            api = new LoLChat(chatServer, Boolean.FALSE);
+        }
+        catch (IOException e) {
+            launchBroadcastLostConnection();
+        }
         AccountManager accountManager = AccountManager.get(getApplicationContext());
         Account[] accounts = accountManager.getAccountsByType(
                 LoLin1Utils.getString(getApplicationContext(), "account_type", null));
@@ -212,7 +224,12 @@ public class ChatService extends Service {
 
     @Override
     public void onDestroy() {
-        api.disconnect();
+        try {
+            api.disconnect();
+        }
+        catch (SmackException.NotConnectedException e) {
+            Log.wtf("debug", e.getClass().getName(), e);
+        }
         api = null;
         LocalBroadcastManager.getInstance(getApplicationContext())
                 .unregisterReceiver(mChatBroadcastReceiver);
