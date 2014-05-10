@@ -227,6 +227,9 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                                 showViewNoConnection();
                             }
                         });
+                        if (isChatServiceAlreadyRunning()) {
+                            stopChatService();
+                        }
                     }
                     else {
                         ChatOverviewActivity.this.restartOrRunChatService();
@@ -240,6 +243,9 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                             showViewWrongCredentials();
                         }
                     });
+                    if (isChatServiceAlreadyRunning()) {
+                        stopChatService();
+                    }
                 }
                 else if (action.contentEquals(LoLin1Utils
                         .getString(context.getApplicationContext(), "event_login_successful",
@@ -254,6 +260,10 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             }
 
         }
+    }
+
+    private void stopChatService() {
+        stopService(new Intent(getApplicationContext(), ChatService.class));
     }
 
     private class ChatServiceConnection implements ServiceConnection {
