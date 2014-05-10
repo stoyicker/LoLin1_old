@@ -40,7 +40,9 @@ public class WebViewerProgressFragment extends ProgressFragment {
     public static final String KEY_URL = "URL";
 
     public WebViewerProgressFragment() {
-        mUrl = getArguments().getString(KEY_URL);
+        if (getArguments() != null) {
+            mUrl = getArguments().getString(KEY_URL);
+        }
     }
 
     /**
@@ -92,12 +94,7 @@ public class WebViewerProgressFragment extends ProgressFragment {
         super.onStart();
         setContentShown(Boolean.TRUE);
     }
-
-    /**
-     * Convenience method for loading a url.
-     *
-     * @param url
-     */
+    
     public void loadUrl(String url) {
         if (mIsWebViewAvailable) {
             getWebView().loadUrl(mUrl = url);
