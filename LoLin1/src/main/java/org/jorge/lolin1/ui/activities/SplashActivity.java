@@ -69,46 +69,42 @@ public final class SplashActivity extends Activity {
     }
 
     private void load() {
-        new AsyncTask<Void, Integer, Void>() {
+        if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
+            new AsyncTask<Void, Integer, Void>() {
 
-            @Override
-            protected void onPostExecute(Void aVoid) {
-                super.onPostExecute(aVoid);
-                ChampionManager.getInstance()
-                        .setChampions(SplashActivity.this.getApplicationContext());
-                launchNewsReader();
-            }
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    super.onPostExecute(aVoid);
+                    ChampionManager.getInstance()
+                            .setChampions(SplashActivity.this.getApplicationContext());
+                    launchNewsReader();
+                }
 
-            @Override
-            protected Void doInBackground(Void... params) {
-                final CountDownLatch countDownLatch = new CountDownLatch(1);
+                @Override
+                protected Void doInBackground(Void... params) {
+                    final CountDownLatch countDownLatch = new CountDownLatch(1);
 
-                Runnable workerThread = new Runnable() {
-                    /**
-                     * Calls the <code>run()</code> method of the Runnable object the receiver
-                     * holds. If no Runnable is set, does nothing.
-                     *
-                     * @see Thread#start
-                     */
-                    @Override
-                    public void run() {
-                        runUpdate();
-                        countDownLatch.countDown();
+                    Runnable workerThread = new Runnable() {
+                        @Override
+                        public void run() {
+                            runUpdate();
+                            countDownLatch.countDown();
+                        }
+                    };
+
+                    workerThread.run();
+
+                    try {
+                        countDownLatch.await();
                     }
-                };
+                    catch (InterruptedException e) {
+                        Log.wtf("debug", e.getClass().getName(), e);
+                    }
 
-                workerThread.run();
-
-                try {
-                    countDownLatch.await();
+                    return null;
                 }
-                catch (InterruptedException e) {
-                    Log.wtf("debug", e.getClass().getName(), e);
-                }
-
-                return null;
-            }
-        }.execute();
+            }.execute();
+        }
     }
 
     private void runUpdate() {
