@@ -1,7 +1,6 @@
 package org.jorge.lolin1.ui.frags;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,7 +36,7 @@ import java.util.Arrays;
  * <p/>
  * Created by JorgeAntonio on 01/05/2014.
  */
-public class ChatOverviewFragment extends Fragment {
+public class ChatOverviewSupportFragment extends android.support.v4.app.Fragment {
 
     private ChatRoomSelectionListener mCallback;
     private ListView mListView;
@@ -71,7 +70,7 @@ public class ChatOverviewFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = inflater.inflate(R.layout.fragment_chat_overview, container, false);
+        View ret = inflater.inflate(R.layout.fragment_chat_overview_connected, container, false);
 
         mListView = (ListView) ret.findViewById(android.R.id.list);
 

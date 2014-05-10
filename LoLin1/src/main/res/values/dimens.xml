@@ -91,4 +91,5 @@ Created by JorgeAntonio on 02/01/14.
 	<dimen name="account_credentials_component_edittext_width">250dp</dimen>
 	<dimen name="account_authenticator_title_margin">5dp</dimen>
 	<dimen name="chat_status_circle_dimen">30dp</dimen>
+	<dimen name="wrong_credentials_text_padding">10dp</dimen>
 </resources>

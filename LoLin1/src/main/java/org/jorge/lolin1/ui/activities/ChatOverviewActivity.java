@@ -8,16 +8,22 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.IBinder;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatService;
-import org.jorge.lolin1.ui.frags.ChatOverviewFragment;
+import org.jorge.lolin1.ui.frags.ChatOverviewSupportFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
-import org.jorge.lolin1.ui.frags.WrongChatCredentialsFragment;
+import org.jorge.lolin1.ui.frags.IndefiniteFancyProgressSupportFragment;
+import org.jorge.lolin1.ui.frags.NoChatConnectionSupportFragment;
+import org.jorge.lolin1.ui.frags.WrongChatCredentialsSupportFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
@@ -40,14 +46,14 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  */
 public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         implements ExpandableSearchFragment.ExpandableSearchListener,
-        ChatOverviewFragment.ChatRoomSelectionListener {
+        ChatOverviewSupportFragment.ChatRoomSelectionListener {
 
     static final String KEY_FRIEND_NAME = "FRIEND_NAME";
-    private final int INDEX_VIEW_CONNECTED = 0, INDEX_VIEW_NOT_CONNECTED = 1,
-            INDEX_VIEW_WRONG_CREDENTIALS = 2;
-    private ChatOverviewFragment CHAT_OVERVIEW_FRAGMENT;
+    private static final int VIEW_INDEX_CONNECTED = 0, VIEW_INDEX_NOT_CONNECTED = 1,
+            VIEW_INDEX_WRONG_CREDENTIALS = 2, VIEW_INDEX_LOADING = 3;
     private ExpandableSearchFragment SEARCH_FRAGMENT;
-    private WrongChatCredentialsFragment WRONG_CREDENTIALS_FRAGMENT;
+    private ViewPager mViewPager;
+    private ChatStatesPagerAdapter mPagerAdapter;
     private ChatServiceConnection mConnection = new ChatServiceConnection();
     private static ChatOverviewActivity instance;
 
@@ -64,26 +70,47 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         super.onCreate(savedInstanceState);
     }
 
+    @Override
+    public View onCreateView(String name, Context context, AttributeSet attrs) {
+        View ret = super.onCreateView(name, context, attrs);
+
+        SEARCH_FRAGMENT =
+                (ExpandableSearchFragment) getFragmentManager()
+                        .findFragmentById(R.id.champion_list_search);
+
+        return ret;
+    }
+
+    public void requestProtocolReInit() {
+        onResume();
+    }
 
     @Override
     protected void onResume() {
+        Log.d("debug", "I'm on onResume");
+        final View thisView =
+                findViewById(android.R.id.content);
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            if (findViewById(android.R.id.content) != null) {
-                showViewNoConnection(findViewById(android.R.id.content));
-            }
-        }
-        else {
-            final View thisView =
-                    findViewById(android.R.id.content);
+            Log.d("debug", "I'm on the onResume if");
             thisView.post(new Runnable() {
                 @Override
                 public void run() {
-                    //I'm using the progress bar from this ProgressFragment to show the login procedure. The corresponding event will show which view has to be actually shown.
-                    showViewWrongCredentials(thisView);
-                    WRONG_CREDENTIALS_FRAGMENT.hideContent();
+                    showViewNoConnection();
                 }
             });
-            restartOrRunChatService();
+        }
+        else {
+            Log.d("debug", "I'm on the onResume else");
+            thisView.post(new Runnable() {
+                @Override
+                public void run() {
+                    Log.d("debug", "I'm on the onResume else post");
+                    mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
+                    mViewPager.setAdapter(mPagerAdapter =
+                            new ChatStatesPagerAdapter(getSupportFragmentManager()));
+                    showViewLoading();
+                }
+            });
         }
         super.onResume();
     }
@@ -128,54 +155,33 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         return ret;
     }
 
-    private void showViewConnected(View view) {
-        ViewPager viewPager = (ViewPager) view.findViewById(
-                R.id.chat_overview_view_pager);
-        if (viewPager.getCurrentItem() != INDEX_VIEW_CONNECTED) {
-            viewPager.setCurrentItem(INDEX_VIEW_CONNECTED);
-            CHAT_OVERVIEW_FRAGMENT =
-                    (ChatOverviewFragment) getFragmentManager()
-                            .findFragmentById(R.id.chat_overview_fragment);
-
-            SEARCH_FRAGMENT =
-                    (ExpandableSearchFragment) getFragmentManager()
-                            .findFragmentById(R.id.champion_list_search);
+    private void showViewConnected() {
+        if (mViewPager.getCurrentItem() != VIEW_INDEX_CONNECTED) {
+            mViewPager.setCurrentItem(VIEW_INDEX_CONNECTED);
         }
     }
 
-    private void showViewNoConnection(View view) {
-        ViewPager viewPager = (ViewPager) view.findViewById(
-                R.id.chat_overview_view_pager);
-        if (viewPager.getCurrentItem() != INDEX_VIEW_NOT_CONNECTED) {
-            viewPager.setCurrentItem(INDEX_VIEW_NOT_CONNECTED);
-            findViewById(android.R.id.content).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (LoLin1Utils.isInternetReachable(getApplicationContext())) {
-                        onResume();
-                    }
-                    else {
-                        Toast.makeText(getApplicationContext(), R.string.error_no_connection,
-                                Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
+    private void showViewNoConnection() {
+        if (mViewPager.getCurrentItem() != VIEW_INDEX_NOT_CONNECTED) {
+            mViewPager.setCurrentItem(VIEW_INDEX_NOT_CONNECTED);
         }
     }
 
-    private void showViewWrongCredentials(View view) {
-        ViewPager viewPager = (ViewPager) view.findViewById(
-                R.id.chat_overview_view_pager);
-        if (viewPager.getCurrentItem() != INDEX_VIEW_WRONG_CREDENTIALS) {
-            WRONG_CREDENTIALS_FRAGMENT = (WrongChatCredentialsFragment) getFragmentManager()
-                    .findFragmentById(R.id.chat_overview_wrong_credentials);
-            viewPager.setCurrentItem(INDEX_VIEW_WRONG_CREDENTIALS);
+    private void showViewWrongCredentials() {
+        if (mViewPager.getCurrentItem() != VIEW_INDEX_WRONG_CREDENTIALS) {
+            mViewPager.setCurrentItem(VIEW_INDEX_WRONG_CREDENTIALS);
+        }
+    }
+
+    private void showViewLoading() {
+        if (mViewPager.getCurrentItem() != VIEW_INDEX_LOADING) {
+            mViewPager.setCurrentItem(VIEW_INDEX_LOADING);
         }
     }
 
     @Override
     public void onNewQuery(String query) {
-        CHAT_OVERVIEW_FRAGMENT.applyFilter(query);
+        mPagerAdapter.applyChatFilter(query);
     }
 
     @Override
@@ -210,23 +216,43 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     .getString(context.getApplicationContext(), "event_chat_overview", null))) {
                 requestListRefresh();
             }
-            else if (action.contentEquals("android.net.conn.CONNECTIVITY_CHANGE")) {
-                if (!LoLin1Utils.isInternetReachable(context.getApplicationContext())) {
-                    showViewNoConnection(findViewById(android.R.id.content));
+            else {
+                final View thisView =
+                        findViewById(android.R.id.content);
+                if (action.contentEquals("android.net.conn.CONNECTIVITY_CHANGE")) {
+                    if (!LoLin1Utils.isInternetReachable(context.getApplicationContext())) {
+                        thisView.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                showViewNoConnection();
+                            }
+                        });
+                    }
+                    else {
+                        ChatOverviewActivity.this.restartOrRunChatService();
+                    }
                 }
-                else {
-                    ChatOverviewActivity.this.restartOrRunChatService();
+                else if (action.contentEquals(LoLin1Utils
+                        .getString(context.getApplicationContext(), "event_login_failed", null))) {
+                    thisView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showViewWrongCredentials();
+                        }
+                    });
+                }
+                else if (action.contentEquals(LoLin1Utils
+                        .getString(context.getApplicationContext(), "event_login_successful",
+                                null))) {
+                    thisView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showViewConnected();
+                        }
+                    });
                 }
             }
-            else if (action.contentEquals(LoLin1Utils
-                    .getString(context.getApplicationContext(), "event_login_failed", null))) {
-                showViewWrongCredentials(findViewById(android.R.id.content));
-                WRONG_CREDENTIALS_FRAGMENT.showContent();
-            }
-            else if (action.contentEquals(LoLin1Utils
-                    .getString(context.getApplicationContext(), "event_login_successful", null))) {
-                showViewConnected(findViewById(android.R.id.content));
-            }
+
         }
     }
 
@@ -245,6 +271,77 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 
         private Boolean isConnected() {
             return mChatService != null;
+        }
+    }
+
+    private class ChatStatesPagerAdapter extends FragmentStatePagerAdapter {
+
+        private final int STATE_AMOUNT = 4;
+        private ChatOverviewSupportFragment CHAT_OVERVIEW_FRAGMENT;
+        private IndefiniteFancyProgressSupportFragment PROGRESS_FRAGMENT;
+        private WrongChatCredentialsSupportFragment WRONG_CREDENTIALS_FRAGMENT;
+        private Fragment NOT_CONNECTED_FRAGMENT;
+
+        public ChatStatesPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        private void applyChatFilter(String query) {
+            CHAT_OVERVIEW_FRAGMENT.applyFilter(query);
+        }
+
+        @Override
+        public int getCount() {
+            return STATE_AMOUNT;
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            Fragment ret;
+            switch (position) {
+                case ChatOverviewActivity.VIEW_INDEX_CONNECTED:
+                    if (CHAT_OVERVIEW_FRAGMENT == null) {
+                        CHAT_OVERVIEW_FRAGMENT =
+                                (ChatOverviewSupportFragment) ChatOverviewSupportFragment
+                                        .instantiate(getApplicationContext(),
+                                                ChatOverviewSupportFragment.class.getName());
+                    }
+                    ret = CHAT_OVERVIEW_FRAGMENT;
+                    break;
+                case ChatOverviewActivity.VIEW_INDEX_WRONG_CREDENTIALS:
+                    if (WRONG_CREDENTIALS_FRAGMENT == null) {
+                        WRONG_CREDENTIALS_FRAGMENT =
+                                (WrongChatCredentialsSupportFragment) WrongChatCredentialsSupportFragment
+                                        .instantiate(getApplicationContext(),
+                                                WrongChatCredentialsSupportFragment.class
+                                                        .getName()
+                                        );
+                    }
+                    ret = WRONG_CREDENTIALS_FRAGMENT;
+                    break;
+                case ChatOverviewActivity.VIEW_INDEX_NOT_CONNECTED:
+                    if (NOT_CONNECTED_FRAGMENT == null) {
+                        NOT_CONNECTED_FRAGMENT = NoChatConnectionSupportFragment
+                                .instantiate(getApplicationContext(),
+                                        NoChatConnectionSupportFragment.class.getName());
+                    }
+                    ret = NOT_CONNECTED_FRAGMENT;
+                    break;
+                case ChatOverviewActivity.VIEW_INDEX_LOADING:
+                    if (PROGRESS_FRAGMENT == null) {
+                        PROGRESS_FRAGMENT =
+                                (IndefiniteFancyProgressSupportFragment) IndefiniteFancyProgressSupportFragment
+                                        .instantiate(getApplicationContext(),
+                                                IndefiniteFancyProgressSupportFragment.class
+                                                        .getName()
+                                        );
+                    }
+                    ret = PROGRESS_FRAGMENT;
+                    break;
+                default:
+                    throw new IllegalArgumentException("Unexpected page index " + position);
+            }
+            return ret;
         }
     }
 }

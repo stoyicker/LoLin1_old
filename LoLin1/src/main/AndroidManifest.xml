@@ -175,5 +175,6 @@ Created by JorgeAntonio on 02/01/14.
 			<meta-data android:name="android.accounts.AccountAuthenticator"
 			           android:resource="@xml/authenticator"/>
 		</service>
+		<service android:name=".func.chat.ChatService"/>
 	</application>
 </manifest>

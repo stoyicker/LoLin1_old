@@ -19,6 +19,7 @@ import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
+import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
@@ -60,7 +61,7 @@ public class ChatService extends Service {
     }
 
     private void runChatOverviewBroadcastReceiver() {
-//        mChatBroadcastReceiver = ChatOverviewActivity.instantiateBroadcastReceiver();
+        mChatBroadcastReceiver = ChatOverviewActivity.instantiateBroadcastReceiver();
         IntentFilter intentFilter = new IntentFilter();
         intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
         intentFilter.addAction(LoLin1Utils
@@ -75,6 +76,7 @@ public class ChatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        Log.d("debug", "Service starting");
         Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
         if (loginSuccess) {
             runChatOverviewBroadcastReceiver();

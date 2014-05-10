@@ -1,13 +1,13 @@
 package org.jorge.lolin1.ui.frags;
 
-import android.app.Activity;
-import android.app.Fragment;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.ui.activities.AccountAuthenticationActivity;
 
 /**
  * This file is part of LoLin1.
@@ -25,24 +25,27 @@ import org.jorge.lolin1.R;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 10/05/2014.
+ * Created by JorgeAntonio on 06/05/2014.
  */
-public class IndefiniteFancyProgressFragment extends Fragment {
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-    }
+public class WrongChatCredentialsSupportFragment extends android.support.v4.app.Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_fancy_indeterminate_progress, container,
+        View ret = inflater.inflate(R.layout.fragment_chat_overview_wrong_credentials, container,
                 Boolean.FALSE);
+
+        if (ret != null) {
+            ret.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent accoutManagementIntent =
+                            new Intent(getActivity().getApplicationContext(),
+                                    AccountAuthenticationActivity.class);
+                    startActivity(accoutManagementIntent);
+                }
+            });
+        }
+        return ret;
     }
 }
