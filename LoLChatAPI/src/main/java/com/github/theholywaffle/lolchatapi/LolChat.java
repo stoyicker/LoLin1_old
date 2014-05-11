@@ -71,6 +71,7 @@ public class LoLChat {
     public LoLChat(ChatServer server, boolean acceptFriendRequests) throws IOException {
         Roster.setDefaultSubscriptionMode(
                 acceptFriendRequests ? SubscriptionMode.accept_all : SubscriptionMode.manual);
+        Log.d("debug", "server.host: " + server.host);
         ConnectionConfiguration config = new ConnectionConfiguration(server.host, 5223, "pvp.net");
         SASLAuthentication.supportSASLMechanism("PLAIN", 0);
         config.setSecurityMode(ConnectionConfiguration.SecurityMode.enabled);
@@ -81,7 +82,7 @@ public class LoLChat {
             connection.connect();
         }
         catch (XMPPException | SmackException e) {
-            System.err.println("Failed to connect to " + connection.getHost());
+            Log.wtf("debug", "Failed to connect to " + connection.getHost(), e);
         }
         addListeners();
         new Thread(new Runnable() {
@@ -360,7 +361,7 @@ public class LoLChat {
             }
         }
         catch (XMPPException | SmackException e) {
-            e.printStackTrace(System.err);
+            Log.wtf("debug", e);
         }
         return connection.isAuthenticated();
     }
@@ -435,7 +436,7 @@ public class LoLChat {
             connection.sendPacket(newPresence);
         }
         catch (SmackException.NotConnectedException e) {
-            System.err.println("Trying to send a packet when not connected.");
+            Log.wtf("debug", "Trying to send a packet when not connected.", e);
         }
     }
 

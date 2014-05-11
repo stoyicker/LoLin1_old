@@ -20,11 +20,11 @@ public enum ChatServer {
     EUW("chat.eu.lol.riotgames.com"),
     NA("chat.na1.lol.riotgames.com"),
     EUNE("chat.eun1.lol.riotgames.com"),
-    TR("chat.tr.lol.riotgames.com"),//To be confirmed
-    RU("chat.ru.lol.riotgames.com"),//To be confirmed
-    BR("chat.br.lol.riotgames.com"),//To be confirmed
-    LAN("chat.la1.lol.riotgames.com"),//To be confirmed
-    LAS("chat.la2.lol.riotgames.com"),//To be confirmed
+    TR("chat.tr.lol.riotgames.com"),//TODO Doesn't seem to work
+    RU("chat.ru.lol.riotgames.com"),//TODO To be confirmed
+    BR("chat.br.lol.riotgames.com"),//TODO To be confirmed
+    LAN("chat.la1.lol.riotgames.com"),//TODO To be confirmed
+    LAS("chat.la2.lol.riotgames.com"),//TODO To be confirmed
     TW("chattw.lol.garenanow.com"),
     TH("chatth.lol.garenanow.com"),
     PH("chatph.lol.garenanow.com"),
