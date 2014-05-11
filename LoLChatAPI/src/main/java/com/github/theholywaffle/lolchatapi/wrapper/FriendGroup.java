@@ -10,6 +10,8 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi.wrapper;
 
+import android.util.Log;
+
 import com.github.theholywaffle.lolchatapi.LoLChat;
 
 import org.jivesoftware.smack.RosterEntry;
@@ -40,10 +42,10 @@ public class FriendGroup extends Wrapper<RosterGroup> {
             get().addEntry(friend.get());
         }
         catch (XMPPException | SmackException.NoResponseException e) {
-            e.printStackTrace();
+            Log.wtf("debug", e);
         }
         catch (SmackException.NotConnectedException e) {
-            System.err.println("Attempted to transmit data while not connected.");
+            Log.wtf("debug", "Attempted to transmit data while not connected.", e);
         }
     }
 
@@ -91,7 +93,7 @@ public class FriendGroup extends Wrapper<RosterGroup> {
             get().setName(name);
         }
         catch (SmackException.NotConnectedException e) {
-            System.err.println("Attempted to transmit data while not connected.");
+            Log.wtf("debug", "Attempted to transmit data while not connected.", e);
         }
     }
 

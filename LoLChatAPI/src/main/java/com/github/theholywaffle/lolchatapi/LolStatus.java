@@ -10,6 +10,8 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi;
 
+import android.util.Log;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -141,7 +143,7 @@ public class LolStatus {
                 }
             }
             if (!found) {
-                System.err.println("XMLProperty \"" + e.getName()
+                Log.wtf("debug", "XMLProperty \"" + e.getName()
                         + "\" not implemented yet!");
             }
         }

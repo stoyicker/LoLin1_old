@@ -19,6 +19,8 @@
  */
 package org.jivesoftware.spark.util;
 
+import android.util.Log;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -55,10 +57,10 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
             factory = sslcontent.getSocketFactory();
         }
         catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            Log.wtf("debug", e);
         }
         catch (KeyManagementException e) {
-            e.printStackTrace();
+            Log.wtf("debug", e);
         }
     }
 

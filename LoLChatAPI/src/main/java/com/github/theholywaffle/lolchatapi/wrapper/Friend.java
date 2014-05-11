@@ -10,6 +10,8 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi.wrapper;
 
+import android.util.Log;
+
 import com.github.theholywaffle.lolchatapi.ChatMode;
 import com.github.theholywaffle.lolchatapi.LoLChat;
 import com.github.theholywaffle.lolchatapi.LolStatus;
@@ -54,15 +56,15 @@ public class Friend extends Wrapper<RosterEntry> {
                 con.getRoster().removeEntry(get());
             }
             catch (SmackException.NotLoggedInException | SmackException.NotConnectedException e) {
-                System.err.println("Attempted to transmit data while not connected.");
+                Log.wtf("debug", "Attempted to transmit data while not logged in/connected.", e);
             }
             catch (SmackException.NoResponseException e) {
-                e.printStackTrace();
+                Log.wtf("debug", "No response received.", e);
             }
             return true;
         }
         catch (XMPPException e) {
-            e.printStackTrace();
+            Log.wtf("debug", e);
         }
         return false;
     }
@@ -130,7 +132,7 @@ public class Friend extends Wrapper<RosterEntry> {
                 return new LolStatus(status);
             }
             catch (JDOMException | IOException e) {
-                e.printStackTrace();
+                Log.wtf("debug", e);
             }
         }
         return new LolStatus();
@@ -160,10 +162,10 @@ public class Friend extends Wrapper<RosterEntry> {
             getChat().sendMessage(message);
         }
         catch (XMPPException e) {
-            e.printStackTrace();
+            Log.wtf("debug", e);
         }
         catch (SmackException.NotConnectedException e) {
-            System.err.println("Attempted to transmit data while not connected.");
+            Log.wtf("debug", "Attempted to transmit data while not connected.", e);
         }
     }
 
@@ -183,10 +185,10 @@ public class Friend extends Wrapper<RosterEntry> {
             getChat().sendMessage(message);
         }
         catch (XMPPException e) {
-            e.printStackTrace();
+            Log.wtf("debug", e);
         }
         catch (SmackException.NotConnectedException e) {
-            System.err.println("Attempted to transmit data while not connected.");
+            Log.wtf("debug", "Attempted to transmit data while not connected.", e);
         }
     }
 
