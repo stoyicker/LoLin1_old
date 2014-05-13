@@ -1,4 +1,4 @@
-LoLin1
+LoLin1 - master: [![master](https://travis-ci.org/Stoyicker/LoLin1.svg?branch=master)]()
 ======
 
 League of Legends LoLin1 app for Android.
