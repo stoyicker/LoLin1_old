@@ -9,6 +9,7 @@ import android.preference.PreferenceManager;
 import com.github.theholywaffle.lolchatapi.LoLChat;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.chat.ChatService;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -43,6 +44,7 @@ public final class InitialActivity extends Activity {
         super.onCreate(savedInstanceState);
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
         LoLin1Utils.initCharsetMap();
+        stopChatServiceIfAlreadyRunning();
         LoLChat.init(getApplicationContext());
         SQLiteDAO.setup(getApplicationContext());
         flushCacheIfNecessary();
@@ -60,6 +62,14 @@ public final class InitialActivity extends Activity {
             final Intent splashIntent = new Intent(getApplicationContext(), SplashActivity.class);
             finish();
             startActivity(splashIntent);
+        }
+    }
+
+    private void stopChatServiceIfAlreadyRunning() {
+        Intent intent = new Intent(getApplicationContext(), ChatService.class);
+        if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                getApplicationContext())) {
+            stopService(intent);
         }
     }
 
