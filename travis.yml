@@ -27,6 +27,8 @@ before_install:
   - cd LoLChatAPI/libs
   # aSmack 4.0.0 RC2
   - wget http://asmack.freakempire.de/SNAPSHOTS/4.0.0-rc2-SNAPSHOT-2014-05-11/asmack-android-8-4.0.0-rc2-SNAPSHOT-2014-05-11.jar
+  - cd ..
+  - cd ..
 install:
   - true
 script:
