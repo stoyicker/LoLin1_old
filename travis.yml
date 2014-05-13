@@ -22,6 +22,11 @@ before_install:
   - echo yes | android update sdk --filter android-19 --no-ui --force > /dev/null
   - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
   - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
+  # Install 3rd-party dependencies.
+  - mkdir LoLChatAPI/libs
+  - cd LoLChatAPI/libs
+  # aSmack 4.0.0 RC2
+  - wget http://asmack.freakempire.de/SNAPSHOTS/4.0.0-rc2-SNAPSHOT-2014-05-11/asmack-android-8-4.0.0-rc2-SNAPSHOT-2014-05-11.jar
 install:
   - true
 script:

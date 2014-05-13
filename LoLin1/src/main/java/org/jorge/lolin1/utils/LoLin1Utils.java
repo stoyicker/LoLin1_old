@@ -162,7 +162,7 @@ public abstract class LoLin1Utils {
         return ret;
     }
 
-    public static boolean isChatServiceAlreadyRunning(Class serviceClass, Context context) {
+    public static boolean isServiceAlreadyRunning(Class serviceClass, Context context) {
         ActivityManager manager = (ActivityManager) context.getSystemService(
                 Context.ACTIVITY_SERVICE);
         for (ActivityManager.RunningServiceInfo service : manager

@@ -1,6 +1,5 @@
 package org.jorge.lolin1.ui.activities;
 
-import android.app.ActivityManager;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -87,37 +86,37 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 
     @Override
     protected void onResume() {
-        Log.d("debug", "I'm on onResume");
         final View thisView =
                 findViewById(android.R.id.content);
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            Log.d("debug", "I'm on the onResume if");
             thisView.post(new Runnable() {
                 @Override
                 public void run() {
                     showViewNoConnection();
                 }
             });
+
         }
         else {
-            Log.d("debug", "I'm on the onResume else");
-            thisView.post(new Runnable() {
-                @Override
-                public void run() {
-                    Log.d("debug", "I'm on the onResume else post");
-                    mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
-                    mViewPager.setAdapter(mPagerAdapter =
-                            new ChatStatesPagerAdapter(getSupportFragmentManager()));
-                    showViewLoading();
-                }
-            });
+            mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
+            if (mViewPager.getAdapter() == null) {
+                mViewPager.setAdapter(mPagerAdapter =
+                        new ChatStatesPagerAdapter(getSupportFragmentManager()));
+                showViewLoading();
+            }
+
+            if (!LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                    getApplicationContext())) {
+                restartOrRunChatService();
+            }
         }
         super.onResume();
     }
 
     private void restartOrRunChatService() {
         Intent intent = new Intent(getApplicationContext(), ChatService.class);
-        if (isChatServiceAlreadyRunning()) {
+        if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                getApplicationContext())) {
             stopService(intent);
         }
         if (mConnection.isConnected()) {
@@ -127,23 +126,13 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         startService(intent);
     }
 
-    private boolean isChatServiceAlreadyRunning() {
-        ActivityManager manager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
-        for (ActivityManager.RunningServiceInfo service : manager
-                .getRunningServices(Integer.MAX_VALUE)) {
-            if (ChatService.class.getName().equals(service.service.getClassName())) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Boolean ret = Boolean.TRUE;
         switch (item.getItemId()) {
             case R.id.action_champion_search:
-                if (isChatServiceAlreadyRunning())//If it's running it means that we are actually logged in
+                if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                        getApplicationContext()))//If it's running it means that we are actually logged in
                 {
                     SEARCH_FRAGMENT.toggleVisibility();
                 }
@@ -227,7 +216,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                                 showViewNoConnection();
                             }
                         });
-                        if (isChatServiceAlreadyRunning()) {
+                        if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                                getApplicationContext())) {
                             stopChatService();
                         }
                     }
@@ -243,7 +233,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                             showViewWrongCredentials();
                         }
                     });
-                    if (isChatServiceAlreadyRunning()) {
+                    if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                            getApplicationContext())) {
                         stopChatService();
                     }
                 }

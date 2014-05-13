@@ -8,6 +8,7 @@ import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
@@ -24,6 +25,7 @@ import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * This file is part of LoLin1.
@@ -77,17 +79,20 @@ public class ChatService extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        Log.d("debug", "Service starting");
+        int ret = super.onStartCommand(intent, flags, startId);
         Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
+        Log.d("debug", "Log-in finished");
         if (loginSuccess) {
+            Log.d("debug", "Log-in successful");
             runChatOverviewBroadcastReceiver();
             launchBroadcastLoginSuccessful();
             setUpChatOverviewListener();
         }
         else {
+            Log.d("debug", "Log-in failed");
             launchBroadcastLoginUnsuccessful();
         }
-        return super.onStartCommand(intent, flags, startId);
+        return ret;
     }
 
     private void setUpChatOverviewListener() {
@@ -179,12 +184,14 @@ public class ChatService extends Service {
                 throw new UnsupportedOperationException("Not yet implemented");
         }
         try {
+            Log.d("debug", "Before constructing the LoLChat");
             api = new LoLChat(chatServer, Boolean.FALSE);
+            Log.d("debug", "After constructing the LoLChat");
         }
         catch (IOException e) {
             launchBroadcastLostConnection();
         }
-        AccountManager accountManager = AccountManager.get(getApplicationContext());
+        final AccountManager accountManager = AccountManager.get(getApplicationContext());
         Account[] accounts = accountManager.getAccountsByType(
                 LoLin1Utils.getString(getApplicationContext(), "account_type", null));
         Account thisRealmAccount = null;
@@ -197,27 +204,54 @@ public class ChatService extends Service {
         if (thisRealmAccount == null) {
             return Boolean.FALSE;//There's no account associated to this realm
         }
-        String[] processedAuthToken;
-        try {
-            processedAuthToken =
-                    accountManager.blockingGetAuthToken(thisRealmAccount, "none", Boolean.TRUE)
-                            .split(
-                                    AccountAuthenticator.TOKEN_GENERATION_JOINT);
-            if (api.login(processedAuthToken[0], processedAuthToken[1])) {
+        Log.d("debug", "Creating the asynctask");
+        AsyncTask credentialsTask = new AsyncTask<Account, Void, String[]>() {
+            @Override
+            protected String[] doInBackground(Account... params) {
+                String[] processedAuthToken = null;
                 try {
-                    Thread.sleep(
-                            LOG_IN_DELAY_MILLIS); //I completely hate myself for doing this, but the library is designed this way...
+                    processedAuthToken =
+                            accountManager
+                                    .blockingGetAuthToken(params[0], "none", Boolean.TRUE)
+                                    .split(
+                                            AccountAuthenticator.TOKEN_GENERATION_JOINT);
                 }
-                catch (InterruptedException e) {
+                catch (OperationCanceledException | IOException | AuthenticatorException e) {
                     Log.wtf("debug", e.getClass().getName(), e);
                 }
-                return Boolean.TRUE;
+                return processedAuthToken;
             }
-            else {
-                return Boolean.FALSE;
-            }
+        };
+        Log.d("debug", "Starting the executio of the asynctask");
+        credentialsTask.execute(thisRealmAccount);
+        Log.d("debug", "Executing the asynctask");
+        String[] processedAuthToken = new String[0];
+        try {
+            Log.d("debug", "Before the get");
+            processedAuthToken = (String[]) credentialsTask.get();
+            Log.d("debug", "After the get");
         }
-        catch (OperationCanceledException | IOException | AuthenticatorException e) {
+        catch (InterruptedException | ExecutionException e) {
+            Log.wtf("debug", e.getClass().getName(), e);
+        }
+        Boolean loginSuccess = Boolean.FALSE;
+        try {
+            loginSuccess = api.login(processedAuthToken[0], processedAuthToken[1]);
+        }
+        catch (IOException e) {
+            Log.wtf("debug", e.getClass().getName(), e);
+        }
+        if (loginSuccess) {
+            try {
+                Thread.sleep(
+                        LOG_IN_DELAY_MILLIS); //I completely hate myself for doing this, but the library is designed this way...
+            }
+            catch (InterruptedException e) {
+                Log.wtf("debug", e.getClass().getName(), e);
+            }
+            return Boolean.TRUE;
+        }
+        else {
             return Boolean.FALSE;
         }
     }
