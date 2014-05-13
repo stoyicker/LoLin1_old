@@ -22,5 +22,5 @@ android {
 dependencies {
     compile 'org.jdom:jdom2:2.0.5'
     compile 'dnsjava:dnsjava:2.1.1'
-    compile files('libs/asmack-android-8-4.0.0-rc1.jar')
+    compile fileTree('libs')
 }
