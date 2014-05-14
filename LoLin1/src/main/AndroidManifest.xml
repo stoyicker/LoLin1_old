@@ -176,5 +176,6 @@ Created by JorgeAntonio on 02/01/14.
 			           android:resource="@xml/authenticator"/>
 		</service>
 		<service android:name=".func.chat.ChatService"/>
+		<meta-data android:name="com.crashlytics.ApiKey" android:value="86e97245af3721940bc1f7a5fff3927950c2ac7c"/>
 	</application>
 </manifest>
