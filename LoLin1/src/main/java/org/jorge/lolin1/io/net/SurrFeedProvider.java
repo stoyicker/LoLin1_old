@@ -1,8 +1,9 @@
 package org.jorge.lolin1.io.net;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.Xml;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.func.feeds.IFeedHandler;
 import org.jorge.lolin1.func.feeds.surr.SurrEntry;
@@ -66,7 +67,7 @@ public class SurrFeedProvider {
             }
         }
         catch (IOException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
             handler.onNoInternetConnection();
         }
         return ret;
@@ -97,7 +98,7 @@ public class SurrFeedProvider {
             items = readFeed(parser);
         }
         catch (XmlPullParserException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         ArrayList<String> ret = new ArrayList<>();

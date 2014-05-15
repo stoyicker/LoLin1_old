@@ -10,8 +10,9 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.util.TypedValue;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.activities.NewsReaderActivity;
@@ -127,7 +128,7 @@ public abstract class LoLin1Utils {
             ret = context.getResources().getStringArray(resourceId);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -142,7 +143,7 @@ public abstract class LoLin1Utils {
             ret = context.getString(resourceId);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -156,7 +157,7 @@ public abstract class LoLin1Utils {
             ret = resourceField.getInt(resourceField);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         return ret;
@@ -205,7 +206,7 @@ public abstract class LoLin1Utils {
             ret = context.getResources().getInteger(resourceId);
         }
         catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         return ret;

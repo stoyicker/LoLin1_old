@@ -1,6 +1,6 @@
 package org.jorge.lolin1.utils;
 
-import android.util.Log;
+import com.crashlytics.android.Crashlytics;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -35,7 +35,7 @@ public final class ISO8601Time {
             value = PATTERN.parse(source);
         }
         catch (ParseException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
     }
 
@@ -45,7 +45,7 @@ public final class ISO8601Time {
             target = PATTERN.parse(comparisonTarget);
         }
         catch (ParseException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         return value.after(target);

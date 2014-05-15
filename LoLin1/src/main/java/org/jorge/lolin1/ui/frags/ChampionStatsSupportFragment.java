@@ -2,11 +2,12 @@ package org.jorge.lolin1.ui.frags;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.models.Champion;
@@ -101,7 +102,8 @@ public class ChampionStatsSupportFragment extends ChampionDetailSupportFragment 
                 resourceRegenContents.setVisibility(View.GONE);
                 break;
             default:
-                Log.wtf("debug", "Should never happen", new IllegalArgumentException());
+                Crashlytics.logException(new IllegalArgumentException(
+                        "Non-handled champion stat " + selectedChampion.getUsedResource().name()));
         }
         ((TextView) view.findViewById(R.id.ad_contents)).setText(
                 selectedChampion.getAttackDamage() + " " + scalingString

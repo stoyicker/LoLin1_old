@@ -152,7 +152,7 @@ public class NavigationDrawerFragment extends Fragment {
         actionBar.setDisplayShowTitleEnabled(Boolean.TRUE);
         actionBar.setTitle(
                 LoLin1Utils.getString(getActivity(), "title_section" + (
-                                DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex() + 1),
+                                DrawerLayoutFragmentActivity.getLastSelectedNavDrawerIndex() + 1),
                         "Home"
                 )
         );

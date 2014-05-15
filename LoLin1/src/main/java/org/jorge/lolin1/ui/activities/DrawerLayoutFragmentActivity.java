@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout;
 import org.jorge.lolin1.ui.frags.NavigationDrawerFragment;
@@ -55,7 +57,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                 .add(0, 0);//By default say that the first thing we did was staying at Home
     }
 
-    public static int getLastSelectedNavDavIndex() {
+    public static int getLastSelectedNavDrawerIndex() {
         return navigatedItemsStack.get(0);
     }
 
@@ -96,7 +98,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        if (position == getLastSelectedNavDavIndex()) {
+        if (position == getLastSelectedNavDrawerIndex()) {
             //We don't want to perform an unnecessary Activity reload
             //noinspection UnnecessaryReturnStatement
             return;
@@ -159,12 +161,15 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                 };
                 break;
             default:
-                Log.wtf("debug", "Should never happen - Selected index - " + position);
+                Crashlytics.log(Log.ERROR, "debug",
+                        "Should never happen - Selected index - " + position);
                 task = null;
         }
-        ScheduledExecutorService newActivityExecutor =
-                Executors.newSingleThreadScheduledExecutor();
-        newActivityExecutor.schedule(task, NEW_ACTIVITY_DELAY, TimeUnit.MILLISECONDS);
+        if (task != null) {
+            ScheduledExecutorService newActivityExecutor =
+                    Executors.newSingleThreadScheduledExecutor();
+            newActivityExecutor.schedule(task, NEW_ACTIVITY_DELAY, TimeUnit.MILLISECONDS);
+        }
     }
 
     @Override
@@ -172,7 +177,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         super.onResume();
         try {
             mTitle = LoLin1Utils
-                    .getString(this, "title_section" + (getLastSelectedNavDavIndex() + 1), null);
+                    .getString(this, "title_section" + (getLastSelectedNavDrawerIndex() + 1), null);
         }
         catch (IndexOutOfBoundsException ex) {
             mTitle = LoLin1Utils

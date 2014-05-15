@@ -4,9 +4,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.util.Xml;
 import android.widget.Toast;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.func.feeds.IFeedHandler;
 import org.jorge.lolin1.func.feeds.news.NewsEntry;
@@ -68,7 +69,7 @@ public class NewsFeedProvider {
             }
         }
         catch (IOException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
             handler.onNoInternetConnection();
         }
     }
@@ -118,7 +119,7 @@ public class NewsFeedProvider {
             items = readFeed(parser);
         }
         catch (XmlPullParserException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         ArrayList<String> ret = new ArrayList<>();

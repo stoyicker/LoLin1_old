@@ -10,8 +10,7 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi.wrapper;
 
-import android.util.Log;
-
+import com.crashlytics.android.Crashlytics;
 import com.github.theholywaffle.lolchatapi.LoLChat;
 
 import org.jivesoftware.smack.RosterEntry;
@@ -41,11 +40,8 @@ public class FriendGroup extends Wrapper<RosterGroup> {
         try {
             get().addEntry(friend.get());
         }
-        catch (XMPPException | SmackException.NoResponseException e) {
-            Log.wtf("debug", e);
-        }
-        catch (SmackException.NotConnectedException e) {
-            Log.wtf("debug", "Attempted to transmit data while not connected.", e);
+        catch (XMPPException | SmackException.NoResponseException | SmackException.NotConnectedException e) {
+            Crashlytics.logException(e);
         }
     }
 
@@ -93,7 +89,7 @@ public class FriendGroup extends Wrapper<RosterGroup> {
             get().setName(name);
         }
         catch (SmackException.NotConnectedException e) {
-            Log.wtf("debug", "Attempted to transmit data while not connected.", e);
+            Crashlytics.logException(e);
         }
     }
 

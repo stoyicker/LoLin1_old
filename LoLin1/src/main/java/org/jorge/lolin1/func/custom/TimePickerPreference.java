@@ -8,6 +8,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.TimePicker;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
@@ -53,7 +55,8 @@ public class TimePickerPreference extends DialogPreference
                 instanceType = "buff";
                 break;
             default:
-                Log.wtf("TYPE COUNTER", "" + TYPE_COUNTER);
+                Crashlytics.log(Log.ERROR, "debug",
+                        "Unsupported timer type - TYPE_COUNTER: " + TYPE_COUNTER);
                 instanceType = "ERROR";
         }
         value = LoLin1Utils.getString(context, "pref_default_" + instanceType + "_respawn",

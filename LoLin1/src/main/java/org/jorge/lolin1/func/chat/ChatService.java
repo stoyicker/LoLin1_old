@@ -14,6 +14,7 @@ import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.theholywaffle.lolchatapi.ChatServer;
 import com.github.theholywaffle.lolchatapi.LoLChat;
 import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
@@ -208,23 +209,24 @@ public class ChatService extends Service {
             return Boolean.FALSE;//There's no account associated to this realm
         }
         Log.d("debug", "Creating the asynctask");
-        AsyncTask<Account, Void, String[]> credentialsTask = new AsyncTask<Account, Void, String[]>() {
-            @Override
-            protected String[] doInBackground(Account... params) {
-                String[] processedAuthToken = null;
-                try {
-                    processedAuthToken =
-                            accountManager
-                                    .blockingGetAuthToken(params[0], "none", Boolean.TRUE)
-                                    .split(
-                                            AccountAuthenticator.TOKEN_GENERATION_JOINT);
-                }
-                catch (OperationCanceledException | IOException | AuthenticatorException e) {
-                    Log.wtf("debug", e.getClass().getName(), e);
-                }
-                return processedAuthToken;
-            }
-        };
+        AsyncTask<Account, Void, String[]> credentialsTask =
+                new AsyncTask<Account, Void, String[]>() {
+                    @Override
+                    protected String[] doInBackground(Account... params) {
+                        String[] processedAuthToken = null;
+                        try {
+                            processedAuthToken =
+                                    accountManager
+                                            .blockingGetAuthToken(params[0], "none", Boolean.TRUE)
+                                            .split(
+                                                    AccountAuthenticator.TOKEN_GENERATION_JOINT);
+                        }
+                        catch (OperationCanceledException | IOException | AuthenticatorException e) {
+                            Crashlytics.logException(e);
+                        }
+                        return processedAuthToken;
+                    }
+                };
         Log.d("debug", "Starting the executio of the asynctask");
         credentialsTask.execute(thisRealmAccount);
         Log.d("debug", "Executing the asynctask");
@@ -235,14 +237,14 @@ public class ChatService extends Service {
             Log.d("debug", "After the get");
         }
         catch (InterruptedException | ExecutionException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
         Boolean loginSuccess = Boolean.FALSE;
         try {
             loginSuccess = api.login(processedAuthToken[0], processedAuthToken[1]);
         }
         catch (IOException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
         if (loginSuccess) {
             try {
@@ -250,7 +252,7 @@ public class ChatService extends Service {
                         LOG_IN_DELAY_MILLIS); //I completely hate myself for doing this, but the library is designed this way...
             }
             catch (InterruptedException e) {
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
             }
             return Boolean.TRUE;
         }
@@ -265,7 +267,7 @@ public class ChatService extends Service {
             api.disconnect();
         }
         catch (SmackException.NotConnectedException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
         api = null;
         LocalBroadcastManager.getInstance(getApplicationContext())

@@ -16,7 +16,7 @@
  */
 package org.jorge.lolin1.func.champs.models.spells;
 
-import android.util.Log;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,7 +33,7 @@ public abstract class AbstractSpellFactory {
         }
         catch (JSONException e) {
             name = DUMMY_ERROR_MESSAGE;
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         try {
@@ -41,7 +41,7 @@ public abstract class AbstractSpellFactory {
         }
         catch (JSONException e) {
             imageName = DUMMY_ERROR_MESSAGE;
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         try {
@@ -49,7 +49,7 @@ public abstract class AbstractSpellFactory {
         }
         catch (JSONException e) {
             detail = DUMMY_ERROR_MESSAGE;
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         return new PassiveSpell(name, detail, imageName);
@@ -68,21 +68,21 @@ public abstract class AbstractSpellFactory {
         }
         catch (JSONException e) {
             name = AbstractSpellFactory.DUMMY_ERROR_MESSAGE;
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
         try {
             detail = contentDescriptor.getString("detail");
         }
         catch (JSONException e) {
             detail = AbstractSpellFactory.DUMMY_ERROR_MESSAGE;
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
         try {
             imageName = contentDescriptor.getString("imageName");
         }
         catch (JSONException e) {
             imageName = AbstractSpellFactory.DUMMY_ERROR_MESSAGE;
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
         try {
             cooldown = contentDescriptor.getString("cooldownBurn");

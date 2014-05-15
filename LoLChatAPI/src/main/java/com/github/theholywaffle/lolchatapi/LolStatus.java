@@ -12,6 +12,8 @@ package com.github.theholywaffle.lolchatapi;
 
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
@@ -143,7 +145,7 @@ public class LolStatus {
                 }
             }
             if (!found) {
-                Log.wtf("debug", "XMLProperty \"" + e.getName()
+                Crashlytics.log(Log.ERROR, "debug", "XMLProperty \"" + e.getName()
                         + "\" not implemented yet!");
             }
         }

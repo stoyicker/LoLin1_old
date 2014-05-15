@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.io.BufferedInputStream;
@@ -72,7 +74,7 @@ public abstract class LoLin1DebugUtils {
             outputStreamWriter.close();
         }
         catch (IOException e) {
-            Log.wtf("Exception", "File write failed: " + e.toString());
+            Crashlytics.logException(e);
         }
     }
 

@@ -10,9 +10,10 @@ import android.accounts.OperationCanceledException;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.widget.Toast;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
@@ -117,14 +118,8 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
                                 authToken =
                                         future.getResult().getString(AccountManager.KEY_AUTHTOKEN);
                             }
-                            catch (OperationCanceledException e) {
-                                Log.wtf("debug", e.getClass().getName(), e);
-                            }
-                            catch (IOException e) {
-                                Log.wtf("debug", e.getClass().getName(), e);
-                            }
-                            catch (AuthenticatorException e) {
-                                Log.wtf("debug", e.getClass().getName(), e);
+                            catch (OperationCanceledException | IOException | AuthenticatorException e) {
+                                Crashlytics.logException(e);
                             }
                             if (authToken != null) {
                                 final String[] processedToken = authToken

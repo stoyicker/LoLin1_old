@@ -8,11 +8,12 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.PowerManager;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -95,7 +96,7 @@ public abstract class JungleTimerFragment extends Fragment {
                             .getTime();
         }
         catch (ParseException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         chronometer = new InnerCountDownTimer(initialValue, 1000);

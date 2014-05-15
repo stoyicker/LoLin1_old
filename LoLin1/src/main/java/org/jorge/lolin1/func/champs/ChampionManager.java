@@ -3,7 +3,8 @@ package org.jorge.lolin1.func.champs;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.preference.PreferenceManager;
-import android.util.Log;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.io.local.CacheableBitmapLoader;
@@ -76,7 +77,7 @@ public final class ChampionManager {
                             .getString(context, "champion_list_key", null)));
         }
         catch (IOException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
             //It's fine, nothing will get shown
             champions = new ArrayList<>();
         }
@@ -89,7 +90,7 @@ public final class ChampionManager {
             rawChamps = new JSONArray(list);
         }
         catch (JSONException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
 
         int length = rawChamps.length();
@@ -101,7 +102,7 @@ public final class ChampionManager {
                 ret.add(currentChampion);
             }
             catch (JSONException e) {
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
             }
         }
         return ret;

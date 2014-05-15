@@ -18,7 +18,8 @@ package org.jorge.lolin1.func.champs.models;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
+
+import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.func.champs.models.spells.AbstractSpellFactory;
 import org.jorge.lolin1.func.champs.models.spells.ActiveSpell;
@@ -155,7 +156,7 @@ public final class Champion implements Parcelable {
             }
         }
         catch (IllegalAccessException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
         tags = in.createStringArray();
         skins = in.createStringArray();
@@ -176,7 +177,7 @@ public final class Champion implements Parcelable {
                     x.set(this, descriptor.getString(x.getName()));
                 }
                 catch (IllegalAccessException | JSONException e) {
-                    Log.wtf("debug", e.getClass().getName(), e);
+                    Crashlytics.logException(e);
                 }
             }
             x.setAccessible(Boolean.FALSE);
@@ -295,7 +296,7 @@ public final class Champion implements Parcelable {
             }
         }
         catch (IllegalAccessException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
         dest.writeStringArray(tags);
         dest.writeStringArray(skins);

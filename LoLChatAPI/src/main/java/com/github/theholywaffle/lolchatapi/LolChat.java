@@ -10,9 +10,9 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi;
 
-import android.content.Context;
 import android.util.Log;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
@@ -29,7 +29,6 @@ import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterGroup;
 import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SASLAuthentication;
-import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
@@ -81,7 +80,8 @@ public class LoLChat {
             connection.connect();
         }
         catch (XMPPException | SmackException e) {
-            Log.wtf("debug", "Failed to connect to " + connection.getHost(), e);
+            Crashlytics.log(Log.ERROR, "debug", "Failed to connect to " + connection.getHost());
+            Crashlytics.logException(e);
         }
         addListeners();
         new Thread(new Runnable() {
@@ -206,7 +206,7 @@ public class LoLChat {
                     });
                 }
                 else {
-                    Log.wtf("debug", "Friend is null in chat creation");
+                    Crashlytics.log(Log.ERROR, "debug", "Friend is null in chat creation");
                 }
 
             }
@@ -360,13 +360,9 @@ public class LoLChat {
             }
         }
         catch (XMPPException | SmackException e) {
-            Log.wtf("debug", e);
+            Crashlytics.logException(e);
         }
         return connection.isAuthenticated();
-    }
-
-    public static void init(Context context) {
-        SmackAndroid.init(context);
     }
 
     /**
@@ -435,7 +431,7 @@ public class LoLChat {
             connection.sendPacket(newPresence);
         }
         catch (SmackException.NotConnectedException e) {
-            Log.wtf("debug", "Trying to send a packet when not connected.", e);
+            Crashlytics.logException(e);
         }
     }
 

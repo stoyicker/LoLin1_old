@@ -12,6 +12,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
@@ -98,7 +100,7 @@ public final class SplashActivity extends Activity {
                         countDownLatch.await();
                     }
                     catch (InterruptedException e) {
-                        Log.wtf("debug", e.getClass().getName(), e);
+                        Crashlytics.logException(e);
                     }
 
                     return null;
@@ -123,7 +125,6 @@ public final class SplashActivity extends Activity {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "no_connection_on_splash",
                             null));
-            Log.wtf("debug", "No connection");
         }
     }
 
@@ -199,7 +200,7 @@ public final class SplashActivity extends Activity {
                         alertDialogLatch.await();
                     }
                     catch (InterruptedException e) {
-                        Log.wtf("debug", e.getClass().getName(), e);
+                        Crashlytics.logException(e);
                     }
 
 
@@ -272,7 +273,6 @@ public final class SplashActivity extends Activity {
                 !FileManager.recursiveDelete(previouslyAttemptedUpdateFolder)) {
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
-            Log.wtf("debug", "Weird error #1");
             return Boolean.FALSE;
         }
         LOG_FRAGMENT.appendToSameLine(
@@ -312,7 +312,6 @@ public final class SplashActivity extends Activity {
             if (!bust.mkdirs() || !splash.mkdirs() || !spell.mkdirs() || !passive.mkdirs()) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
-                Log.wtf("debug", "Weird error #2");
                 return Boolean.FALSE;
             }
             LOG_FRAGMENT.appendToNewLine(
@@ -330,14 +329,14 @@ public final class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                     null)
                     );
-                    Log.wtf("debug", "Response status was not fine!");
+                    Crashlytics.log(Log.ERROR, "debug", "Response status was not ok");
                     return Boolean.FALSE;
                 }
             }
             catch (IOException | URISyntaxException | HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
                 return Boolean.FALSE;
             }
             File dataFile = new File(
@@ -353,7 +352,7 @@ public final class SplashActivity extends Activity {
             catch (IOException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
                 return Boolean.FALSE;
             }
             LOG_FRAGMENT.appendToSameLine(
@@ -375,7 +374,7 @@ public final class SplashActivity extends Activity {
                                 LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                         null)
                         );
-                        Log.wtf("debug", "Status was not fine!");
+                        Crashlytics.log(Log.ERROR, "debug", "Response status was not ok");
                         return Boolean.FALSE;
                     }
                 }
@@ -384,7 +383,7 @@ public final class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                     null)
                     );
-                    Log.wtf("debug", e.getClass().getName(), e);
+                    Crashlytics.logException(e);
                     return Boolean.FALSE;
                 }
                 LOG_FRAGMENT.appendToSameLine(
@@ -405,7 +404,7 @@ public final class SplashActivity extends Activity {
             if (champs.isEmpty()) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
-                Log.wtf("debug", "No champs, wth?");
+                Crashlytics.log(Log.ERROR, "debug", "No champions found");
                 return Boolean.FALSE;
             }
             final String finalCdn = cdn;
@@ -415,7 +414,8 @@ public final class SplashActivity extends Activity {
                 if (!currentStatus.getValue()) {
                     LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
                             getApplicationContext(), "update_fatal_error", null));
-                    Log.wtf("debug", "Boxed boolean was false!");
+                    Crashlytics.log(Log.ERROR, "debug",
+                            "An error happened on a content download AsyncTask");
                     return Boolean.FALSE;
                 }
                 final String bustImageName = champion.getBustImageName(), passiveImageName =
@@ -440,7 +440,7 @@ public final class SplashActivity extends Activity {
                                     );
                                 }
                                 catch (IOException e) {
-                                    Log.wtf("debug", e.getClass().getName(), e);
+                                    Crashlytics.logException(e);
                                     return Boolean.FALSE;
                                 }
                                 return Boolean.TRUE;
@@ -467,7 +467,7 @@ public final class SplashActivity extends Activity {
                                     );
                                 }
                                 catch (IOException e) {
-                                    Log.wtf("debug", e.getClass().getName(), e);
+                                    Crashlytics.logException(e);
                                     return Boolean.FALSE;
                                 }
                                 return Boolean.TRUE;
@@ -494,7 +494,7 @@ public final class SplashActivity extends Activity {
                                 );
                             }
                             catch (IOException e) {
-                                Log.wtf("debug", e.getClass().getName(), e);
+                                Crashlytics.logException(e);
                                 return Boolean.FALSE;
                             }
                             return Boolean.TRUE;
@@ -530,7 +530,7 @@ public final class SplashActivity extends Activity {
                                 );
                             }
                             catch (IOException e) {
-                                Log.wtf("debug", e.getClass().getName(), e);
+                                Crashlytics.logException(e);
                                 return Boolean.FALSE;
                             }
                             return Boolean.TRUE;
@@ -550,10 +550,10 @@ public final class SplashActivity extends Activity {
                 downloadExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
             }
             catch (InterruptedException e) {
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
                         getApplicationContext(), "update_fatal_error", null));
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
                 return Boolean.FALSE;
             }
             LOG_FRAGMENT.appendToSameLine(
@@ -586,14 +586,14 @@ public final class SplashActivity extends Activity {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_fatal_error",
                                 null));
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
                 return;
             }
             catch (HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_server_is_updating",
                                 null));
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
                 return;
             }
             try {
@@ -627,7 +627,7 @@ public final class SplashActivity extends Activity {
             networkOperationsLatch.await();
         }
         catch (InterruptedException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
         }
     }
 
@@ -656,7 +656,7 @@ public final class SplashActivity extends Activity {
                 }
             }
             catch (IOException | URISyntaxException e) {
-                Log.wtf("debug", e.getClass().getName(), e);
+                Crashlytics.logException(e);
             }
             catch (HTTPServices.ServerIsCheckingException e) {
                 //Server is busy checking for updates, so look for a new one
@@ -671,7 +671,7 @@ public final class SplashActivity extends Activity {
                             LoLin1Utils.getString(getApplicationContext(),
                                     "no_providers_up", null)
                     );
-                    Log.d("debug", "no_providers_up");
+                    Crashlytics.log(Log.ERROR, "debug", "No available data servers found");
                     return "null";
                 }
             }
@@ -680,8 +680,6 @@ public final class SplashActivity extends Activity {
 
         LOG_FRAGMENT.appendToSameLine(
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
-
-        Log.d("debug", "provider found: " + target);
 
         return target;
     }

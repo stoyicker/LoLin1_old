@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MenuItem;
 
+import com.crashlytics.android.Crashlytics;
+
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.feeds.BaseEntry;
 import org.jorge.lolin1.io.db.SQLiteDAO;
@@ -48,7 +50,7 @@ public final class WebViewerActivity extends FragmentActivity {
 
         ArrayList<BaseEntry> elements = new ArrayList<>();
 
-        switch (DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex()) {
+        switch (DrawerLayoutFragmentActivity.getLastSelectedNavDrawerIndex()) {
             case 0:
                 elements.addAll(SQLiteDAO.getSingleton().getNews());
                 break;
@@ -56,9 +58,9 @@ public final class WebViewerActivity extends FragmentActivity {
                 elements.addAll(SQLiteDAO.getSingleton().getSurrs());
                 break;
             default:
-                Log.wtf("debug",
-                        "Should never happen - NewsReaderActivity.getLastSelectedNavDavIndex() is " +
-                                DrawerLayoutFragmentActivity.getLastSelectedNavDavIndex()
+                Crashlytics.log(Log.ERROR, "debug",
+                        "Should never happen - DrawerLayoutFragmentActivity.getLastSelectedNavDrawIndex() is " +
+                                DrawerLayoutFragmentActivity.getLastSelectedNavDrawerIndex()
                 );
         }
 

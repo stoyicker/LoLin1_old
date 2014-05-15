@@ -1,6 +1,6 @@
 package org.jorge.lolin1.io.local;
 
-import android.util.Log;
+import com.crashlytics.android.Crashlytics;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,7 +32,7 @@ public abstract class JsonManager {
             return responseAsObject.getString(attributeName);
         }
         catch (JSONException e) {
-            Log.wtf("debug", e.getClass().getName(), e);
+            Crashlytics.logException(e);
             return null;
         }
     }
