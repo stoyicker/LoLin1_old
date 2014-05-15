@@ -17,7 +17,7 @@ import org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout;
 import org.jorge.lolin1.ui.frags.NavigationDrawerFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
-import java.util.ArrayList;
+import java.util.Stack;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,8 +43,8 @@ import java.util.concurrent.TimeUnit;
 public abstract class DrawerLayoutFragmentActivity extends FragmentActivity implements
         NavigationDrawerFragment.NavigationDrawerCallbacks {
 
-    private static final ArrayList<Integer> navigatedItemsStack =
-            new ArrayList<>();
+    private static final Stack<Integer> navigatedItemsStack =
+            new Stack<>();
     public static final String ACTIVITY_LAYOUT = "LAYOUT";
     public static final String ACTION_BAR_MENU_LAYOUT = "ACTION_BAR_MENU_LAYOUT";
     private static final long NEW_ACTIVITY_DELAY = 250;
@@ -58,7 +58,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     }
 
     public static int getLastSelectedNavDrawerIndex() {
-        return navigatedItemsStack.get(0);
+        return navigatedItemsStack.peek();
     }
 
     @Override
@@ -191,11 +191,14 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         if (navigatedItemsStack.size() > 1) {
             finish();
         }
+        else {
+            navigatedItemsStack.pop();
+        }
     }
 
     @Override
     protected void onDestroy() {
-        navigatedItemsStack.remove(0);
+        navigatedItemsStack.pop();
         super.onDestroy();
     }
 
