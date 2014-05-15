@@ -19,6 +19,7 @@ import com.github.theholywaffle.lolchatapi.LoLChat;
 import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
+import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
 import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
@@ -51,6 +52,7 @@ public class ChatService extends Service {
     private final IBinder mBinder = new ChatBinder();
     private LoLChat api;
     private BroadcastReceiver mChatBroadcastReceiver;
+    private SmackAndroid mSmackAndroid;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -80,6 +82,7 @@ public class ChatService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
+        mSmackAndroid = SmackAndroid.init(getApplicationContext());
         Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
         Log.d("debug", "Log-in finished");
         if (loginSuccess) {
@@ -205,7 +208,7 @@ public class ChatService extends Service {
             return Boolean.FALSE;//There's no account associated to this realm
         }
         Log.d("debug", "Creating the asynctask");
-        AsyncTask credentialsTask = new AsyncTask<Account, Void, String[]>() {
+        AsyncTask<Account, Void, String[]> credentialsTask = new AsyncTask<Account, Void, String[]>() {
             @Override
             protected String[] doInBackground(Account... params) {
                 String[] processedAuthToken = null;
@@ -228,7 +231,7 @@ public class ChatService extends Service {
         String[] processedAuthToken = new String[0];
         try {
             Log.d("debug", "Before the get");
-            processedAuthToken = (String[]) credentialsTask.get();
+            processedAuthToken = credentialsTask.get();
             Log.d("debug", "After the get");
         }
         catch (InterruptedException | ExecutionException e) {
@@ -269,5 +272,6 @@ public class ChatService extends Service {
                 .unregisterReceiver(mChatBroadcastReceiver);
         mChatBroadcastReceiver = null;
         super.onDestroy();
+        mSmackAndroid.onDestroy();
     }
 }

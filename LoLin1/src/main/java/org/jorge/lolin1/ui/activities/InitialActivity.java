@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 
 import com.crashlytics.android.Crashlytics;
-import com.github.theholywaffle.lolchatapi.LoLChat;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatService;
@@ -48,7 +47,6 @@ public final class InitialActivity extends Activity {
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
         LoLin1Utils.initCharsetMap();
         stopChatServiceIfAlreadyRunning();
-        LoLChat.init(getApplicationContext());
         SQLiteDAO.setup(getApplicationContext());
         flushCacheIfNecessary();
         SharedPreferences preferences =
