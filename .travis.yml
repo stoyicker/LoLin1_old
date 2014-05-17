@@ -32,4 +32,4 @@ before_install:
 install:
   - true
 script:
-  - TERM=dumb gradle assembleDebug
+  - TERM=dumb gradle assemble
