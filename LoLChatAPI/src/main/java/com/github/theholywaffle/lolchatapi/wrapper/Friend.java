@@ -13,7 +13,7 @@ package com.github.theholywaffle.lolchatapi.wrapper;
 import android.util.Log;
 
 import com.github.theholywaffle.lolchatapi.ChatMode;
-import com.github.theholywaffle.lolchatapi.LoLChat;
+import com.github.theholywaffle.lolchatapi.LoLChato;
 import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 
@@ -40,7 +40,7 @@ public class Friend extends Wrapper<RosterEntry> {
     private Chat chat = null;
     private ChatListener listener = null;
 
-    public Friend(LoLChat api, XMPPConnection connection, RosterEntry entry) {
+    public Friend(LoLChato api, XMPPConnection connection, RosterEntry entry) {
         super(api, connection, entry);
         this.instance = this;
     }

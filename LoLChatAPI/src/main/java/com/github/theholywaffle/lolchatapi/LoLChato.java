@@ -46,7 +46,7 @@ import java.util.List;
 /**
  * This and all the files in the module have been developed by Bert De Geyter (https://github.com/TheHolyWaffle) and are protected by the Apache GPLv3 license.
  */
-public class LoLChat {
+public class LoLChato {
 
     private final XMPPTCPConnection connection;
     private final ArrayList<ChatListener> chatListeners = new ArrayList<>();
@@ -65,7 +65,7 @@ public class LoLChat {
      *                             ignore all friend requests. NOTE: automatic accepting of
      *                             requests causes the name of the new friend to be null.
      */
-    public LoLChat(ChatServer server, boolean acceptFriendRequests) throws IOException {
+    public LoLChato(ChatServer server, boolean acceptFriendRequests) throws IOException {
         Roster.setDefaultSubscriptionMode(
                 acceptFriendRequests ? SubscriptionMode.accept_all : SubscriptionMode.manual);
         Log.d("debug", "server.host: " + server.host);
