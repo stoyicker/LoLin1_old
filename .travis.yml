@@ -14,18 +14,12 @@ before_install:
   # Done
   - cd ..
   - cd ..
-  # Compile modules separately
+install:
+  # Compile depencencies that need it
   # LoLChatApi
   - cd LoLChatAPI
   - gradle assemble
   - cd ..
   # Done
-  # LoLin1
-  - cd LoLin1
-  - gradle assemble
-  - cd ..
-  # Done
-install:
-  - true
 script:
   - TERM=dumb gradle assemble
