@@ -12,7 +12,7 @@ package com.github.theholywaffle.lolchatapi.wrapper;
 
 import android.util.Log;
 
-import com.github.theholywaffle.lolchatapi.LoLChato;
+import com.github.theholywaffle.lolchatapi.LoLChat;
 
 import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterGroup;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class FriendGroup extends Wrapper<RosterGroup> {
 
-    public FriendGroup(LoLChato api, XMPPConnection con, RosterGroup group) {
+    public FriendGroup(LoLChat api, XMPPConnection con, RosterGroup group) {
         super(api, con, group);
     }
 

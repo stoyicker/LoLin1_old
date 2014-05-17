@@ -12,7 +12,7 @@ package com.github.theholywaffle.lolchatapi.wrapper;
 
 import android.util.Log;
 
-import com.github.theholywaffle.lolchatapi.LoLChato;
+import com.github.theholywaffle.lolchatapi.LoLChat;
 
 import org.jivesoftware.smack.XMPPConnection;
 
@@ -23,9 +23,9 @@ public class Wrapper<E> {
 
     protected XMPPConnection con;
     private E object;
-    protected LoLChato api;
+    protected LoLChat api;
 
-    protected Wrapper(LoLChato api, XMPPConnection con, E object) {
+    protected Wrapper(LoLChat api, XMPPConnection con, E object) {
         this.con = con;
         this.object = object;
         this.api = api;
