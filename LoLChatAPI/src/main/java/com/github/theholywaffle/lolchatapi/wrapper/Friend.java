@@ -10,7 +10,8 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi.wrapper;
 
-import com.crashlytics.android.Crashlytics;
+import android.util.Log;
+
 import com.github.theholywaffle.lolchatapi.ChatMode;
 import com.github.theholywaffle.lolchatapi.LoLChat;
 import com.github.theholywaffle.lolchatapi.LolStatus;
@@ -55,12 +56,14 @@ public class Friend extends Wrapper<RosterEntry> {
                 con.getRoster().removeEntry(get());
             }
             catch (SmackException.NotLoggedInException | SmackException.NotConnectedException | SmackException.NoResponseException e) {
-                Crashlytics.logException(e);
+                Log.wtf("debug", e);
+//                Crashlytics.logException(e);
             }
             return true;
         }
         catch (XMPPException e) {
-            Crashlytics.logException(e);
+            Log.wtf("debug", e);
+//            Crashlytics.logException(e);
         }
         return false;
     }
@@ -128,7 +131,8 @@ public class Friend extends Wrapper<RosterEntry> {
                 return new LolStatus(status);
             }
             catch (JDOMException | IOException e) {
-                Crashlytics.logException(e);
+                Log.wtf("debug", e);
+//                Crashlytics.logException(e);
             }
         }
         return new LolStatus();
@@ -158,7 +162,8 @@ public class Friend extends Wrapper<RosterEntry> {
             getChat().sendMessage(message);
         }
         catch (XMPPException | SmackException.NotConnectedException e) {
-            Crashlytics.logException(e);
+            Log.wtf("debug", e);
+//            Crashlytics.logException(e);
         }
     }
 
@@ -178,7 +183,8 @@ public class Friend extends Wrapper<RosterEntry> {
             getChat().sendMessage(message);
         }
         catch (XMPPException | SmackException.NotConnectedException e) {
-            Crashlytics.logException(e);
+            Log.wtf("debug", e);
+//            Crashlytics.logException(e);
         }
     }
 

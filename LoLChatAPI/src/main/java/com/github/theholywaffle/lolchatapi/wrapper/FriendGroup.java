@@ -10,7 +10,8 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi.wrapper;
 
-import com.crashlytics.android.Crashlytics;
+import android.util.Log;
+
 import com.github.theholywaffle.lolchatapi.LoLChat;
 
 import org.jivesoftware.smack.RosterEntry;
@@ -41,7 +42,8 @@ public class FriendGroup extends Wrapper<RosterGroup> {
             get().addEntry(friend.get());
         }
         catch (XMPPException | SmackException.NoResponseException | SmackException.NotConnectedException e) {
-            Crashlytics.logException(e);
+            Log.wtf("debug", e);
+//            Crashlytics.logException(e);
         }
     }
 
@@ -89,7 +91,8 @@ public class FriendGroup extends Wrapper<RosterGroup> {
             get().setName(name);
         }
         catch (SmackException.NotConnectedException e) {
-            Crashlytics.logException(e);
+            Log.wtf("debug", e);
+//            Crashlytics.logException(e);
         }
     }
 

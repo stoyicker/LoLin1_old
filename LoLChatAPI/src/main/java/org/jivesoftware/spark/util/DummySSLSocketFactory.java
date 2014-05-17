@@ -19,7 +19,7 @@
  */
 package org.jivesoftware.spark.util;
 
-import com.crashlytics.android.Crashlytics;
+import android.util.Log;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -57,10 +57,10 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
             factory = sslcontent.getSocketFactory();
         }
         catch (NoSuchAlgorithmException e) {
-            Crashlytics.logException(e);
+            Log.wtf("debug", e);
         }
         catch (KeyManagementException e) {
-            Crashlytics.logException(e);
+            Log.wtf("debug", e);
         }
     }
 
