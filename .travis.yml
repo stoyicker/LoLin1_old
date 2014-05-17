@@ -28,5 +28,6 @@ before_install:
   - wget http://asmack.freakempire.de/SNAPSHOTS/4.0.0-rc2-SNAPSHOT-2014-05-11/asmack-android-8-4.0.0-rc2-SNAPSHOT-2014-05-11.jar
   - cd ..
   - cd ..
+  - pwd
 install:
   - true
