@@ -1,4 +1,4 @@
-language: java
+language: android
 jdk: oraclejdk7
 branches:
   only:
@@ -11,11 +11,9 @@ before_install:
   - tar xzf android-sdk_r22.6.1-linux.tgz
   - export ANDROID_HOME=$PWD/android-sdk-linux
   - export PATH=${PATH}:${ANDROID_HOME}/:${ANDROID_HOME}/platform-tools
-  # install android build tools
-  - wget https://dl-ssl.google.com/android/repository/build-tools_r19.1-linux.zip
-  - unzip build-tools_r19.1-linux.zip -d $ANDROID_HOME
-  - mkdir -p $ANDROID_HOME/build-tools/
-  - mv $ANDROID_HOME/android-4.4.2 $ANDROID_HOME/build-tools/19.1
+  android:
+    components:
+    - build-tools-19.1
   # Install required components.
   - echo yes | android update sdk --filter platform-tools --no-ui --force > /dev/null
   - echo yes | android update sdk --filter android-19 --no-ui --force > /dev/null
