@@ -8,11 +8,13 @@ android {
     compileSdkVersion 15
     buildToolsVersion '19.1.0'
 
-    defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 19
-        versionCode 1
-        versionName "Release"
+    productFlavors {
+        definitive {
+            minSdkVersion 15
+            targetSdkVersion 19
+            versionCode 1
+            versionName "Release"
+        }
     }
 
     compileOptions {
