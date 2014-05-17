@@ -7,17 +7,10 @@ before_install:
   # Install base Android SDK
   - sudo apt-get update -qq
   - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
-  - wget http://dl.google.com/android/android-sdk_r22.6.2-linux.tgz
-  - tar xzf android-sdk_r22.6.2-linux.tgz
-  - ls
-  - cd android-sdk-linux
-  - ls
-  - cd platforms
-  - ls
-  - cd ..
-  - cd ..
+  - wget http://dl.google.com/android/android-sdk_r22.0.5-linux.tgz
+  - tar xzf android-sdk_r22.0.5-linux.tgz
   - export ANDROID_HOME=$PWD/android-sdk-linux
-  - export PATH=${PATH}:${ANDROID_HOME}/:${ANDROID_HOME}/platforms
+  - export PATH=${PATH}:${ANDROID_HOME}/:${ANDROID_HOME}/platform-tools
   # install android build tools
   - wget https://dl-ssl.google.com/android/repository/build-tools_r19.1-linux.zip
   - unzip build-tools_r19.1-linux.zip -d $ANDROID_HOME
