@@ -13,9 +13,9 @@ before_install:
   - export PATH=${PATH}:${ANDROID_HOME}/:${ANDROID_HOME}/platform-tools
   # install android build tools
   - wget https://dl-ssl.google.com/android/repository/build-tools_r19.1-linux.zip
-  - unzip build-tools_r19.1-linux.zip -d $ANDROID_HOME
+  - unzip build-tools_r19.0.3-linux.zip -d $ANDROID_HOME
   - mkdir -p $ANDROID_HOME/build-tools/
-  - mv $ANDROID_HOME/android-4.4.2 $ANDROID_HOME/build-tools/19.1
+  - mv $ANDROID_HOME/android-4.4.2 $ANDROID_HOME/build-tools/19.0.3
   # Install required components.
   - echo yes | android update sdk --filter platform-tools --no-ui --force > /dev/null
   - echo yes | android update sdk --filter android-19 --no-ui --force > /dev/null
@@ -26,6 +26,7 @@ before_install:
   - cd LoLChatAPI/libs
   # aSmack 4.0.0 RC2
   - wget http://asmack.freakempire.de/SNAPSHOTS/4.0.0-rc2-SNAPSHOT-2014-05-11/asmack-android-8-4.0.0-rc2-SNAPSHOT-2014-05-11.jar
+  # Done
   - cd ..
   - cd ..
 install:
