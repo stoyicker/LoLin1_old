@@ -12,12 +12,12 @@ before_install:
   - ls
   - cd android-sdk-linux
   - ls
-  - cd SDK
+  - cd platforms
   - ls
   - cd ..
   - cd ..
   - export ANDROID_HOME=$PWD/android-sdk-linux
-  - export PATH=${PATH}:${ANDROID_HOME}/:${ANDROID_HOME}/SDK
+  - export PATH=${PATH}:${ANDROID_HOME}/:${ANDROID_HOME}/platforms
   # install android build tools
   - wget https://dl-ssl.google.com/android/repository/build-tools_r19.1-linux.zip
   - unzip build-tools_r19.1-linux.zip -d $ANDROID_HOME
