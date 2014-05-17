@@ -6,3 +6,4 @@ gradle
 gradlew.bat
 local.properties
 gradlew
+com_crashlytics_export_strings.xml
