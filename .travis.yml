@@ -4,21 +4,6 @@ branches:
   only:
     - master
 before_install:
-  # Install base Android SDK
-  - sudo apt-get update -qq
-  - if [ `uname -m` = x86_64 ]; then sudo apt-get install -qq --force-yes libgd2-xpm ia32-libs ia32-libs-multiarch > /dev/null; fi
-  - wget http://dl.google.com/android/android-sdk_r22.6.1-linux.tgz
-  - tar xzf android-sdk_r22.6.1-linux.tgz
-  - export ANDROID_HOME=$PWD/android-sdk-linux
-  - export PATH=${PATH}:${ANDROID_HOME}/:${ANDROID_HOME}/platform-tools
-  android:
-    components:
-    - build-tools-19.1
-  # Install required components.
-  - echo yes | android update sdk --filter platform-tools --no-ui --force > /dev/null
-  - echo yes | android update sdk --filter android-19 --no-ui --force > /dev/null
-  - echo yes | android update sdk --filter extra-android-support --no-ui --force > /dev/null
-  - echo yes | android update sdk --filter extra-android-m2repository --no-ui --force > /dev/null
   # Install 3rd-party dependencies
   - mkdir LoLChatAPI/libs
   - cd LoLChatAPI/libs
