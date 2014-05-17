@@ -16,7 +16,7 @@ before_install:
   - cd ..
 install:
   # Compile depencencies that need it
-  # LoLChatApi
+  # LoLChatAPI
   - cd LoLChatAPI
   - gradle assemble
   - cd ..
