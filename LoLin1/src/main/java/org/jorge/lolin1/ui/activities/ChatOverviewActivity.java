@@ -75,7 +75,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 
         SEARCH_FRAGMENT =
                 (ExpandableSearchFragment) getFragmentManager()
-                        .findFragmentById(R.id.champion_list_search);
+                        .findFragmentById(R.id.chat_list_search);
 
         return ret;
     }
@@ -201,6 +201,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            Log.d("debug", "Received action: " + action);
             if (action.contentEquals(LoLin1Utils
                     .getString(context.getApplicationContext(), "event_chat_overview", null))) {
                 requestListRefresh();
