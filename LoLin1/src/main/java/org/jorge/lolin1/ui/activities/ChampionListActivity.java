@@ -11,6 +11,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.ui.frags.ChampionListFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
+import org.jorge.lolin1.utils.LoLin1Utils;
 
 /**
  * This file is part of LoLin1.
@@ -56,6 +57,9 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
         SEARCH_FRAGMENT =
                 (ExpandableSearchFragment) getFragmentManager()
                         .findFragmentById(R.id.champion_list_search);
+
+        SEARCH_FRAGMENT.getQueryField().setHint(
+                LoLin1Utils.getString(getApplicationContext(), "champion_search_hint", null));
 
         CHAMPION_LIST_FRAGMENT = (ChampionListFragment) getFragmentManager()
                 .findFragmentById(R.id.champion_list_grid);

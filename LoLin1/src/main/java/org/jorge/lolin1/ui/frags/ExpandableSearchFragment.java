@@ -41,6 +41,11 @@ public class ExpandableSearchFragment extends Fragment {
 
     private static final String WAS_SHOWN = "wasShown";
     private ExpandableSearchListener mCallback;
+
+    public EditText getQueryField() {
+        return queryField;
+    }
+
     private EditText queryField;
     private String lastQuery = "";
     private Timer filterUpdateTimer;
@@ -64,8 +69,7 @@ public class ExpandableSearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View ret = inflater.inflate(R.layout.fragment_expandable_search, container, false);
-        return ret;
+        return inflater.inflate(R.layout.fragment_expandable_search, container, false);
     }
 
     private void cancelTimer() {
@@ -162,7 +166,9 @@ public class ExpandableSearchFragment extends Fragment {
                         .hideSoftInputFromWindow(queryField.getWindowToken(), 0);
                 queryField.clearFocus();
                 queryField.setEnabled(Boolean.FALSE);
-                getView().setVisibility(View.VISIBLE);
+                if (getView() != null) {
+                    getView().setVisibility(View.VISIBLE);
+                }
             }
             else {
                 setTimer();
@@ -172,7 +178,9 @@ public class ExpandableSearchFragment extends Fragment {
                 ((InputMethodManager) getActivity().getApplicationContext().getSystemService(
                         Context.INPUT_METHOD_SERVICE))
                         .showSoftInput(queryField, InputMethodManager.SHOW_FORCED);
-                getView().setVisibility(View.VISIBLE);
+                if (getView() != null) {
+                    getView().setVisibility(View.VISIBLE);
+                }
             }
         }
     }

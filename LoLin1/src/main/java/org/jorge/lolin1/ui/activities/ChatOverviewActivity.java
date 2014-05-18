@@ -12,7 +12,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -76,6 +75,9 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         SEARCH_FRAGMENT =
                 (ExpandableSearchFragment) getFragmentManager()
                         .findFragmentById(R.id.chat_list_search);
+
+        SEARCH_FRAGMENT.getQueryField().setHint(
+                LoLin1Utils.getString(getApplicationContext(), "friend_search_hint", null));
 
         return ret;
     }
@@ -201,7 +203,6 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            Log.d("debug", "Received action: " + action);
             if (action.contentEquals(LoLin1Utils
                     .getString(context.getApplicationContext(), "event_chat_overview", null))) {
                 requestListRefresh();
