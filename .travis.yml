@@ -7,13 +7,16 @@ branches:
     - master
 before_install:
   # Install 3rd-party dependencies
+  # Module LoLChatAPI
   - mkdir LoLChatAPI/libs
   - cd LoLChatAPI/libs
-  # aSmack 4.0.0 RC2
+  # aSmack 4.0.0 RC2 Nightly
   - wget http://asmack.freakempire.de/SNAPSHOTS/4.0.0-rc2-SNAPSHOT-2014-05-11/asmack-android-8-4.0.0-rc2-SNAPSHOT-2014-05-11.jar
   # Done
+  # Done with the module
   - cd ..
   - cd ..
+  # Done with the 3rd-party dependencies
 install:
   # Compile depencencies that need it
   # LoLChatAPI
