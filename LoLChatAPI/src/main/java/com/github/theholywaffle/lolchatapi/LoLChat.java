@@ -31,7 +31,6 @@ import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
-import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.XMPPTCPConnection;
 import org.jivesoftware.smack.packet.Message;
@@ -51,7 +50,7 @@ import java.util.List;
  */
 public class LoLChat {
 
-    private final XMPPConnection connection;
+    private final XMPPTCPConnection connection;
     private final ArrayList<ChatListener> chatListeners = new ArrayList<>();
     private final ArrayList<FriendListener> friendListeners = new ArrayList<>();
     private boolean stop = false;

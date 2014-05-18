@@ -32,6 +32,8 @@ import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
@@ -87,8 +89,9 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 return ret;
             }
         };
-
-        socketCreationTask.execute(socket, s, i, flag);
+//It's necessary to run the task in an executor because the main one is already full and if we add this one a livelock will occur
+        ExecutorService socketCreationExecutor = Executors.newFixedThreadPool(1);
+        socketCreationTask.executeOnExecutor(socketCreationExecutor, socket, s, i, flag);
         Object returned;
         try {
             returned = socketCreationTask.get();
@@ -123,8 +126,9 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 return ret;
             }
         };
-
-        socketCreationTask.execute(inaddr, i, inaddr2, j);
+//It's necessary to run the task in an executor because the main one is already full and if we add this one a livelock will occur
+        ExecutorService socketCreationExecutor = Executors.newFixedThreadPool(1);
+        socketCreationTask.executeOnExecutor(socketCreationExecutor, inaddr, i, inaddr2, j);
         Object returned;
         try {
             returned = socketCreationTask.get();
@@ -157,8 +161,9 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 return ret;
             }
         };
-
-        socketCreationTask.execute(inaddr, i);
+//It's necessary to run the task in an executor because the main one is already full and if we add this one a livelock will occur
+        ExecutorService socketCreationExecutor = Executors.newFixedThreadPool(1);
+        socketCreationTask.executeOnExecutor(socketCreationExecutor, inaddr, i);
         Object returned;
         try {
             returned = socketCreationTask.get();
@@ -192,8 +197,9 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 return ret;
             }
         };
-
-        socketCreationTask.execute(s, i, inaddr, j);
+//It's necessary to run the task in an executor because the main one is already full and if we add this one a livelock will occur
+        ExecutorService socketCreationExecutor = Executors.newFixedThreadPool(1);
+        socketCreationTask.executeOnExecutor(socketCreationExecutor, s, i, inaddr, j);
         Object returned;
         try {
             returned = socketCreationTask.get();
@@ -226,8 +232,9 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 return ret;
             }
         };
-
-        socketCreationTask.execute(s, i);
+//It's necessary to run the task in an executor because the main one is already full and if we add this one a livelock will occur
+        ExecutorService socketCreationExecutor = Executors.newFixedThreadPool(1);
+        socketCreationTask.executeOnExecutor(socketCreationExecutor, s, i);
         Object returned;
         try {
             returned = socketCreationTask.get();

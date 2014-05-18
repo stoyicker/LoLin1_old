@@ -12,6 +12,7 @@ import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
@@ -50,6 +51,7 @@ import java.util.concurrent.ExecutionException;
 public class ChatIntentService extends IntentService {
 
     private static final long LOG_IN_DELAY_MILLIS = 3000;
+    public static final String ACTION_DISCONNECT = "DISCONNECT";
     private final IBinder mBinder = new ChatBinder();
     private LoLChat api;
     private BroadcastReceiver mChatBroadcastReceiver;
@@ -67,7 +69,18 @@ public class ChatIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        //TODO To be used to send messages
+        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
+            return;
+        }
+        switch (intent.getAction()) {
+            case ACTION_DISCONNECT:
+                disconnect();
+                break;
+            //TODO Send messages
+            default:
+                throw new IllegalArgumentException(
+                        "Action " + intent.getAction() + " not yet supported");
+        }
     }
 
     public class ChatBinder extends Binder {
@@ -212,6 +225,7 @@ public class ChatIntentService extends IntentService {
         catch (IOException e) {
             launchBroadcastLostConnection();
         }
+        Log.d("debug", "After the constructor");
         final AccountManager accountManager = AccountManager.get(getApplicationContext());
         Account[] accounts = accountManager.getAccountsByType(
                 LoLin1Utils.getString(getApplicationContext(), "account_type", null));
@@ -273,10 +287,9 @@ public class ChatIntentService extends IntentService {
         }
     }
 
-    @Override
-    public void onDestroy() {
+    private void disconnect() {
         try {
-            loginTask.get();
+            loginTask.get(); // Disconnecting in the middle of a login may be troublesome
         }
         catch (InterruptedException | ExecutionException e) {
             Crashlytics.logException(e);
@@ -291,7 +304,6 @@ public class ChatIntentService extends IntentService {
         LocalBroadcastManager.getInstance(getApplicationContext())
                 .unregisterReceiver(mChatBroadcastReceiver);
         mChatBroadcastReceiver = null;
-        super.onDestroy();
         mSmackAndroid.onDestroy();
     }
 }
