@@ -10,8 +10,6 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi.wrapper;
 
-import android.util.Log;
-
 import com.github.theholywaffle.lolchatapi.LoLChat;
 
 import org.jivesoftware.smack.XMPPConnection;
@@ -29,9 +27,6 @@ public class Wrapper<E> {
         this.con = con;
         this.object = object;
         this.api = api;
-        if (object == null) {
-            Log.d("debug", "Object " + object + " is null");
-        }
     }
 
     protected E get() {

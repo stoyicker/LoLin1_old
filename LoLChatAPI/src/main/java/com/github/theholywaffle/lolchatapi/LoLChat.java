@@ -71,7 +71,6 @@ public class LoLChat {
     public LoLChat(ChatServer server, boolean acceptFriendRequests) throws IOException {
         Roster.setDefaultSubscriptionMode(
                 acceptFriendRequests ? SubscriptionMode.accept_all : SubscriptionMode.manual);
-        Log.d("debug", "server.host: " + server.host);
         ConnectionConfiguration config = new ConnectionConfiguration(server.host, 5223, "pvp.net");
         SASLAuthentication.supportSASLMechanism("PLAIN", 0);
         config.setSecurityMode(ConnectionConfiguration.SecurityMode.enabled);
