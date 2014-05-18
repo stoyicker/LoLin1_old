@@ -185,12 +185,11 @@ public class ChatService extends Service {
                 chatServer = ChatServer.BR;
                 break;
             default:
-                throw new UnsupportedOperationException("Not yet implemented");
+                throw new IllegalArgumentException(
+                        "Region " + upperCaseRealm + " not yet implemented");
         }
         try {
-            Log.d("debug", "Before constructing the LoLChat");
             api = new LoLChat(chatServer, Boolean.FALSE);
-            Log.d("debug", "After constructing the LoLChat");
         }
         catch (IOException e) {
             launchBroadcastLostConnection();
