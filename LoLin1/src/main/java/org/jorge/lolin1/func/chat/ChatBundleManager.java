@@ -28,7 +28,7 @@ import java.util.Map;
 public abstract class ChatBundleManager {
 
     private static final Map<Friend, Bundle> BUNDLES = new HashMap<>();
-    private static final String KEY_MESSAGE = "MESSAGE";
+    private static final String KEY_MESSAGE = "LOL_CHAT_MESSAGE";
 
     public static Bundle getBundleByFriend(Friend f) {
         return BUNDLES.get(f);
