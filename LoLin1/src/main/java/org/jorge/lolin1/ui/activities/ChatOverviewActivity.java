@@ -12,6 +12,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -23,6 +24,8 @@ import org.jorge.lolin1.ui.frags.IndefiniteFancyProgressSupportFragment;
 import org.jorge.lolin1.ui.frags.NoChatConnectionSupportFragment;
 import org.jorge.lolin1.ui.frags.WrongChatCredentialsSupportFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
+
+import java.util.Arrays;
 
 /**
  * This file is part of LoLin1.
@@ -121,6 +124,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         Intent intent = new Intent(getApplicationContext(), ChatIntentService.class);
         if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                 getApplicationContext())) {
+            Log.d("debug", "Stopping chat service..." +
+                    Arrays.toString(new Exception().getStackTrace()));
             stopService(intent);
         }
         if (mConnection.isConnected()) {
@@ -258,6 +263,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     }
 
     private void stopChatService() {
+        Log.d("debug", "Stopping chat service..." +
+                Arrays.toString(new Exception().getStackTrace()));
         stopService(new Intent(getApplicationContext(), ChatIntentService.class));
     }
 

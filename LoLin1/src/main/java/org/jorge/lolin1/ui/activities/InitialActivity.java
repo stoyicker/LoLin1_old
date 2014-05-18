@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -15,6 +16,7 @@ import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.File;
+import java.util.Arrays;
 
 /**
  * This file is part of LoLin1.
@@ -70,6 +72,8 @@ public final class InitialActivity extends Activity {
         Intent intent = new Intent(getApplicationContext(), ChatIntentService.class);
         if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                 getApplicationContext())) {
+            Log.d("debug", "Stopping chat service..." +
+                    Arrays.toString(new Exception().getStackTrace()));
             stopService(intent);
         }
     }

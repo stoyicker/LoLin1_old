@@ -54,14 +54,10 @@ public class ChatIntentService extends IntentService {
     private LoLChat api;
     private BroadcastReceiver mChatBroadcastReceiver;
     private SmackAndroid mSmackAndroid;
+    private AsyncTask<Void, Void, Void> loginTask;
 
-    /**
-     * Creates an IntentService.  Invoked by your subclass's constructor.
-     *
-     * @param name Used to name the worker thread, important only for debugging.
-     */
-    public ChatIntentService(String name) {
-        super(name);
+    public ChatIntentService() {
+        super(ChatIntentService.class.getName());
     }
 
     @Override
@@ -98,18 +94,26 @@ public class ChatIntentService extends IntentService {
     public int onStartCommand(Intent intent, int flags, int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
         mSmackAndroid = LoLChat.init(getApplicationContext());
-        Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
-        Log.d("debug", "Log-in finished");
-        if (loginSuccess) {
-            Log.d("debug", "Log-in successful");
-            runChatOverviewBroadcastReceiver();
-            launchBroadcastLoginSuccessful();
-            setUpChatOverviewListener();
-        }
-        else {
-            Log.d("debug", "Log-in failed");
-            launchBroadcastLoginUnsuccessful();
-        }
+        loginTask = new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                Log.d("debug", "Before trying");
+                Boolean loginSuccess =
+                        login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
+                Log.d("debug", "Attempt completed");
+                if (loginSuccess) {
+                    Log.d("debug", "logged in");
+                    runChatOverviewBroadcastReceiver();
+                    launchBroadcastLoginSuccessful();
+                    setUpChatOverviewListener();
+                }
+                else {
+                    launchBroadcastLoginUnsuccessful();
+                }
+                return null;
+            }
+        };
+        loginTask.execute();
         return ret;
     }
 
@@ -221,7 +225,6 @@ public class ChatIntentService extends IntentService {
         if (thisRealmAccount == null) {
             return Boolean.FALSE;//There's no account associated to this realm
         }
-        Log.d("debug", "Creating the asynctask");
         AsyncTask<Account, Void, String[]> credentialsTask =
                 new AsyncTask<Account, Void, String[]>() {
                     @Override
@@ -240,14 +243,10 @@ public class ChatIntentService extends IntentService {
                         return processedAuthToken;
                     }
                 };
-        Log.d("debug", "Starting the executio of the asynctask");
         credentialsTask.execute(thisRealmAccount);
-        Log.d("debug", "Executing the asynctask");
         String[] processedAuthToken = new String[0];
         try {
-            Log.d("debug", "Before the get");
             processedAuthToken = credentialsTask.get();
-            Log.d("debug", "After the get");
         }
         catch (InterruptedException | ExecutionException e) {
             Crashlytics.logException(e);
@@ -276,6 +275,12 @@ public class ChatIntentService extends IntentService {
 
     @Override
     public void onDestroy() {
+        try {
+            loginTask.get();
+        }
+        catch (InterruptedException | ExecutionException e) {
+            Crashlytics.logException(e);
+        }
         try {
             api.disconnect();
         }
