@@ -17,12 +17,5 @@ before_install:
   - cd ..
   - cd ..
   # Done with the 3rd-party dependencies
-install:
-  # Compile depencencies that need it
-  # LoLChatAPI
-  - cd LoLChatAPI
-  - gradle assemble
-  - cd ..
-  # Done
 script:
   - TERM=dumb gradle assemble
