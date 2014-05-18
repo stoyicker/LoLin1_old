@@ -443,4 +443,12 @@ public class LoLChat {
         }
     }
 
+    public void reloadRoster() {
+        try {
+            connection.getRoster().reload();
+        }
+        catch (SmackException.NotLoggedInException | SmackException.NotConnectedException e) {
+            Log.wtf("debug", e);
+        }
+    }
 }

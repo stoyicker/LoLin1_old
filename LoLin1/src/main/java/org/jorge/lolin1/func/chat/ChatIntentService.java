@@ -29,6 +29,8 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * This file is part of LoLin1.
@@ -50,8 +52,8 @@ import java.util.concurrent.ExecutionException;
  */
 public class ChatIntentService extends IntentService {
 
-    private static final long LOG_IN_DELAY_MILLIS = 3000;
-    public static final String ACTION_DISCONNECT = "DISCONNECT";
+    private static final long LOG_IN_DELAY_MILLIS = 10000;
+    public static final String ACTION_CONNECT = "CONNECT", ACTION_DISCONNECT = "DISCONNECT";
     private final IBinder mBinder = new ChatBinder();
     private LoLChat api;
     private BroadcastReceiver mChatBroadcastReceiver;
@@ -69,10 +71,18 @@ public class ChatIntentService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        if (intent == null || TextUtils.isEmpty(intent.getAction())) {
-            return;
+        if (intent == null) {
+            throw new IllegalArgumentException(
+                    "No intent found");
+        }
+        if (TextUtils.isEmpty(intent.getAction())) {
+            throw new IllegalArgumentException(
+                    "Empty action is not supported");
         }
         switch (intent.getAction()) {
+            case ACTION_CONNECT:
+                connect();
+                break;
             case ACTION_DISCONNECT:
                 disconnect();
                 break;
@@ -103,19 +113,17 @@ public class ChatIntentService extends IntentService {
                 .registerReceiver(mChatBroadcastReceiver, intentFilter);
     }
 
-    @Override
-    public int onStartCommand(Intent intent, int flags, int startId) {
-        int ret = super.onStartCommand(intent, flags, startId);
+    private void connect() {
         mSmackAndroid = LoLChat.init(getApplicationContext());
         loginTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
-                Log.d("debug", "Before trying");
                 Boolean loginSuccess =
                         login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
-                Log.d("debug", "Attempt completed");
                 if (loginSuccess) {
-                    Log.d("debug", "logged in");
+                    Log.d("debug", "Login successful");
+                    for (Friend f : api.getFriends())
+                        Log.d("debug", f.getName());
                     runChatOverviewBroadcastReceiver();
                     launchBroadcastLoginSuccessful();
                     setUpChatOverviewListener();
@@ -127,7 +135,6 @@ public class ChatIntentService extends IntentService {
             }
         };
         loginTask.execute();
-        return ret;
     }
 
     private void setUpChatOverviewListener() {
@@ -225,7 +232,6 @@ public class ChatIntentService extends IntentService {
         catch (IOException e) {
             launchBroadcastLostConnection();
         }
-        Log.d("debug", "After the constructor");
         final AccountManager accountManager = AccountManager.get(getApplicationContext());
         Account[] accounts = accountManager.getAccountsByType(
                 LoLin1Utils.getString(getApplicationContext(), "account_type", null));
@@ -257,7 +263,9 @@ public class ChatIntentService extends IntentService {
                         return processedAuthToken;
                     }
                 };
-        credentialsTask.execute(thisRealmAccount);
+        //It's necessary to run the task in an executor because the main one is already full and if we add this one a livelock will occur
+        ExecutorService loginExecutor = Executors.newFixedThreadPool(1);
+        credentialsTask.executeOnExecutor(loginExecutor, thisRealmAccount);
         String[] processedAuthToken = new String[0];
         try {
             processedAuthToken = credentialsTask.get();
@@ -273,13 +281,7 @@ public class ChatIntentService extends IntentService {
             Crashlytics.logException(e);
         }
         if (loginSuccess) {
-            try {
-                Thread.sleep(
-                        LOG_IN_DELAY_MILLIS); //I completely hate myself for doing this, but the library is designed this way...
-            }
-            catch (InterruptedException e) {
-                Crashlytics.logException(e);
-            }
+            api.reloadRoster();
             return Boolean.TRUE;
         }
         else {

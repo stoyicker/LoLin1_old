@@ -107,19 +107,21 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 
             if (!LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                     getApplicationContext())) {
-                restartOrRunChatService();
+                runChat();
             }
         }
         super.onResume();
     }
 
-    private void restartOrRunChatService() {
+    private void runChat() {
         Intent intent = new Intent(getApplicationContext(), ChatIntentService.class);
         if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                 getApplicationContext())) {
             stopService(intent);
         }
-        startService(intent);
+        Intent chatDisconnectIntent = new Intent(getApplicationContext(), ChatIntentService.class);
+        chatDisconnectIntent.setAction(ChatIntentService.ACTION_CONNECT);
+        startService(chatDisconnectIntent);
     }
 
     @Override
@@ -218,7 +220,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                         }
                     }
                     else {
-                        ChatOverviewActivity.this.restartOrRunChatService();
+                        ChatOverviewActivity.this.runChat();
                     }
                 }
                 else if (action.contentEquals(LoLin1Utils

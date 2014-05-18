@@ -17,6 +17,7 @@ import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
+import org.jorge.lolin1.func.chat.ChatIntentService;
 import org.jorge.lolin1.ui.frags.AcceptCredentialsFragment;
 import org.jorge.lolin1.ui.frags.AccountAuthenticatorRealmSelectorFragment;
 import org.jorge.lolin1.ui.frags.AccountCredentialsComponentFragment;
@@ -153,6 +154,9 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
 
     @Override
     public void onCredentialsAccepted() {
+        Intent chatDisconnectIntent = new Intent(getApplicationContext(), ChatIntentService.class);
+        chatDisconnectIntent.setAction(ChatIntentService.ACTION_DISCONNECT);
+        startService(chatDisconnectIntent);
         CharSequence username = USERNAME_COMPONENT_FRAGMENT.getContents(), password =
                 PASSWORD_COMPONENT_FRAGMENT.getContents(), authToken =
                 username + AccountAuthenticator.TOKEN_GENERATION_JOINT + password;
