@@ -21,8 +21,7 @@ Created by JorgeAntonio on 02/01/14.
 	<style name="AppTheme" parent="android:Theme.Holo.Light">
 		<item name="android:actionBarStyle">@style/ActionBarStyle</item>
 	</style>
-	<style name="ActionBarStyle" parent="@android:style/Widget.Holo.ActionBar">
-		<item name="android:background">@color/theme_light_blue</item>
+	<style name="ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
 		<item name="android:textStyle">bold</item>
 		<item name="android:textSize">@dimen/action_bar_text_size</item>
 	</style>
