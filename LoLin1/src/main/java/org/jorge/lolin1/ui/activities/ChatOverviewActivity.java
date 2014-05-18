@@ -16,7 +16,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.chat.ChatService;
+import org.jorge.lolin1.func.chat.ChatIntentService;
 import org.jorge.lolin1.ui.frags.ChatOverviewSupportFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
 import org.jorge.lolin1.ui.frags.IndefiniteFancyProgressSupportFragment;
@@ -76,8 +76,10 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 (ExpandableSearchFragment) getFragmentManager()
                         .findFragmentById(R.id.chat_list_search);
 
-        SEARCH_FRAGMENT.getQueryField().setHint(
-                LoLin1Utils.getString(getApplicationContext(), "friend_search_hint", null));
+        if (SEARCH_FRAGMENT != null && SEARCH_FRAGMENT.getQueryField() != null) {
+            SEARCH_FRAGMENT.getQueryField().setHint(
+                    LoLin1Utils.getString(getApplicationContext(), "friend_search_hint", null));
+        }
 
         return ret;
     }
@@ -107,7 +109,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 showViewLoading();
             }
 
-            if (!LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+            if (!LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                     getApplicationContext())) {
                 restartOrRunChatService();
             }
@@ -116,8 +118,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     }
 
     private void restartOrRunChatService() {
-        Intent intent = new Intent(getApplicationContext(), ChatService.class);
-        if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+        Intent intent = new Intent(getApplicationContext(), ChatIntentService.class);
+        if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                 getApplicationContext())) {
             stopService(intent);
         }
@@ -133,7 +135,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         Boolean ret = Boolean.TRUE;
         switch (item.getItemId()) {
             case R.id.action_champion_search:
-                if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                         getApplicationContext()))//If it's running it means that we are actually logged in
                 {
                     SEARCH_FRAGMENT.toggleVisibility();
@@ -218,7 +220,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                                 showViewNoConnection();
                             }
                         });
-                        if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                        if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                                 getApplicationContext())) {
                             stopChatService();
                         }
@@ -235,7 +237,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                             showViewWrongCredentials();
                         }
                     });
-                    if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+                    if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                             getApplicationContext())) {
                         stopChatService();
                     }
@@ -256,24 +258,24 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     }
 
     private void stopChatService() {
-        stopService(new Intent(getApplicationContext(), ChatService.class));
+        stopService(new Intent(getApplicationContext(), ChatIntentService.class));
     }
 
     private class ChatServiceConnection implements ServiceConnection {
-        private ChatService mChatService;
+        private ChatIntentService mChatIntentService;
 
         @Override
         public void onServiceConnected(ComponentName name, IBinder service) {
-            mChatService = ((ChatService.ChatBinder) service).getService();
+            mChatIntentService = ((ChatIntentService.ChatBinder) service).getService();
         }
 
         @Override
         public void onServiceDisconnected(ComponentName name) {
-            mChatService = null;
+            mChatIntentService = null;
         }
 
         private Boolean isConnected() {
-            return mChatService != null;
+            return mChatIntentService != null;
         }
     }
 

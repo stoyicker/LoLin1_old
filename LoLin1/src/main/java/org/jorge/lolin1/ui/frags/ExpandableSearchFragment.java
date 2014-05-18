@@ -40,6 +40,8 @@ import java.util.TimerTask;
 public class ExpandableSearchFragment extends Fragment {
 
     private static final String WAS_SHOWN = "wasShown";
+    public static final String KEY_UPDATE_DELAY_MILLIS = "UPDATE_DELAY_MILLIS",
+            KEY_UPDATE_INTERVAL_MILLIS = "UPDATE_INTERVAL_MILLIS";
     private ExpandableSearchListener mCallback;
 
     public EditText getQueryField() {
@@ -55,14 +57,15 @@ public class ExpandableSearchFragment extends Fragment {
 
     @SuppressWarnings("unused")
     public ExpandableSearchFragment() {
-        this(-1, -1);
-    }
-
-    public ExpandableSearchFragment(int filterUpdateDelayMillis, int filterUpdateIntervalMillis) {
-        FILTER_UPDATE_DELAY_MILLIS = filterUpdateDelayMillis > 0 ? filterUpdateDelayMillis :
+        int delay = 0, interval = 0;
+        if (getArguments() != null) {
+            delay = getArguments().getInt(KEY_UPDATE_DELAY_MILLIS);
+            interval = getArguments().getInt(KEY_UPDATE_INTERVAL_MILLIS);
+        }
+        FILTER_UPDATE_DELAY_MILLIS = delay > 0 ? delay :
                 DEFAULT_FILTER_UPDATE_DELAY_MILLIS;
         FILTER_UPDATE_INTERVAL_MILLIS =
-                filterUpdateIntervalMillis > 0 ? filterUpdateIntervalMillis :
+                interval > 0 ? interval :
                         DEFAULT_FILTER_UPDATE_INTERVAL_MILLIS;
     }
 
@@ -84,7 +87,7 @@ public class ExpandableSearchFragment extends Fragment {
 
         queryField = (EditText) view.findViewById(R.id.query_field);
 
-        queryField.setVisibility(View.GONE);
+        queryField.setVisibility(View.INVISIBLE);
     }
 
     private void setTimer() {

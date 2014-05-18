@@ -9,7 +9,7 @@ import android.preference.PreferenceManager;
 import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.chat.ChatService;
+import org.jorge.lolin1.func.chat.ChatIntentService;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.io.local.FileManager;
 import org.jorge.lolin1.utils.LoLin1Utils;
@@ -67,8 +67,8 @@ public final class InitialActivity extends Activity {
     }
 
     private void stopChatServiceIfAlreadyRunning() {
-        Intent intent = new Intent(getApplicationContext(), ChatService.class);
-        if (LoLin1Utils.isServiceAlreadyRunning(ChatService.class,
+        Intent intent = new Intent(getApplicationContext(), ChatIntentService.class);
+        if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                 getApplicationContext())) {
             stopService(intent);
         }

@@ -54,15 +54,17 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
     public View onCreateView(String name, Context context, AttributeSet attrs) {
         View ret = super.onCreateView(name, context, attrs);
 
+        CHAMPION_LIST_FRAGMENT = (ChampionListFragment) getFragmentManager()
+                .findFragmentById(R.id.champion_list_grid);
+
         SEARCH_FRAGMENT =
                 (ExpandableSearchFragment) getFragmentManager()
                         .findFragmentById(R.id.champion_list_search);
 
-        SEARCH_FRAGMENT.getQueryField().setHint(
-                LoLin1Utils.getString(getApplicationContext(), "champion_search_hint", null));
-
-        CHAMPION_LIST_FRAGMENT = (ChampionListFragment) getFragmentManager()
-                .findFragmentById(R.id.champion_list_grid);
+        if (SEARCH_FRAGMENT != null && SEARCH_FRAGMENT.getQueryField() != null) {
+            SEARCH_FRAGMENT.getQueryField().setHint(
+                    LoLin1Utils.getString(getApplicationContext(), "champion_search_hint", null));
+        }
 
         return ret;
     }
