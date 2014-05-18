@@ -19,6 +19,7 @@
  */
 package org.jivesoftware.spark.util;
 
+import android.os.AsyncTask;
 import android.util.Log;
 
 import java.io.IOException;
@@ -30,6 +31,7 @@ import java.security.cert.CertificateException;
 import java.security.cert.CertificateExpiredException;
 import java.security.cert.CertificateNotYetValidException;
 import java.security.cert.X509Certificate;
+import java.util.concurrent.ExecutionException;
 
 import javax.net.SocketFactory;
 import javax.net.ssl.SSLContext;
@@ -70,24 +72,177 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
 
     public Socket createSocket(Socket socket, String s, int i, boolean flag)
             throws IOException {
-        return factory.createSocket(socket, s, i, flag);
+        AsyncTask<Object, Void, Object> socketCreationTask = new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object... params) {
+                Object ret;
+                try {
+                    ret = factory.createSocket((Socket) params[0], (String) params[1],
+                            (int) params[2], (boolean) params[3]);
+                }
+                catch (Exception e) {
+                    Log.wtf("debug", e);
+                    ret = e;
+                }
+                return ret;
+            }
+        };
+
+        socketCreationTask.execute(socket, s, i, flag);
+        Object returned;
+        try {
+            returned = socketCreationTask.get();
+        }
+        catch (InterruptedException | ExecutionException e) {
+            Log.wtf("debug", e);
+            throw new IOException();//Provoke a fail
+        }
+
+        if (returned instanceof Exception) {
+            throw (IOException) returned;
+        }
+        else {
+            return (Socket) returned;
+        }
     }
 
     public Socket createSocket(InetAddress inaddr, int i, InetAddress inaddr2, int j)
             throws IOException {
-        return factory.createSocket(inaddr, i, inaddr2, j);
+        AsyncTask<Object, Void, Object> socketCreationTask = new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object... params) {
+                Object ret;
+                try {
+                    ret = factory.createSocket((InetAddress) params[0], (int) params[1],
+                            (InetAddress) params[2], (int) params[3]);
+                }
+                catch (Exception e) {
+                    Log.wtf("debug", e);
+                    ret = e;
+                }
+                return ret;
+            }
+        };
+
+        socketCreationTask.execute(inaddr, i, inaddr2, j);
+        Object returned;
+        try {
+            returned = socketCreationTask.get();
+        }
+        catch (InterruptedException | ExecutionException e) {
+            Log.wtf("debug", e);
+            throw new IOException();//Provoke a fail
+        }
+
+        if (returned instanceof Exception) {
+            throw (IOException) returned;
+        }
+        else {
+            return (Socket) returned;
+        }
     }
 
     public Socket createSocket(InetAddress inaddr, int i) throws IOException {
-        return factory.createSocket(inaddr, i);
+        AsyncTask<Object, Void, Object> socketCreationTask = new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object... params) {
+                Object ret;
+                try {
+                    ret = factory.createSocket((InetAddress) params[0], (int) params[1]);
+                }
+                catch (Exception e) {
+                    Log.wtf("debug", e);
+                    ret = e;
+                }
+                return ret;
+            }
+        };
+
+        socketCreationTask.execute(inaddr, i);
+        Object returned;
+        try {
+            returned = socketCreationTask.get();
+        }
+        catch (InterruptedException | ExecutionException e) {
+            Log.wtf("debug", e);
+            throw new IOException();//Provoke a fail
+        }
+
+        if (returned instanceof Exception) {
+            throw (IOException) returned;
+        }
+        else {
+            return (Socket) returned;
+        }
     }
 
     public Socket createSocket(String s, int i, InetAddress inaddr, int j) throws IOException {
-        return factory.createSocket(s, i, inaddr, j);
+        AsyncTask<Object, Void, Object> socketCreationTask = new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object... params) {
+                Object ret;
+                try {
+                    ret = factory.createSocket((String) params[0], (int) params[1],
+                            (InetAddress) params[2], (int) params[3]);
+                }
+                catch (Exception e) {
+                    Log.wtf("debug", e);
+                    ret = e;
+                }
+                return ret;
+            }
+        };
+
+        socketCreationTask.execute(s, i, inaddr, j);
+        Object returned;
+        try {
+            returned = socketCreationTask.get();
+        }
+        catch (InterruptedException | ExecutionException e) {
+            Log.wtf("debug", e);
+            throw new IOException();//Provoke a fail
+        }
+
+        if (returned instanceof Exception) {
+            throw (IOException) returned;
+        }
+        else {
+            return (Socket) returned;
+        }
     }
 
     public Socket createSocket(String s, int i) throws IOException {
-        return factory.createSocket(s, i);
+        AsyncTask<Object, Void, Object> socketCreationTask = new AsyncTask<Object, Void, Object>() {
+            @Override
+            protected Object doInBackground(Object... params) {
+                Object ret;
+                try {
+                    ret = factory.createSocket((String) params[0], (int) params[1]);
+                }
+                catch (Exception e) {
+                    Log.wtf("debug", e);
+                    ret = e;
+                }
+                return ret;
+            }
+        };
+
+        socketCreationTask.execute(s, i);
+        Object returned;
+        try {
+            returned = socketCreationTask.get();
+        }
+        catch (InterruptedException | ExecutionException e) {
+            Log.wtf("debug", e);
+            throw new IOException();//Provoke a fail
+        }
+
+        if (returned instanceof Exception) {
+            throw (IOException) returned;
+        }
+        else {
+            return (Socket) returned;
+        }
     }
 
     public String[] getDefaultCipherSuites() {
