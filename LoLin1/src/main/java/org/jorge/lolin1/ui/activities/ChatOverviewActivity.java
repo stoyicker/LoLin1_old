@@ -14,6 +14,7 @@ import android.view.View;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatIntentService;
+import org.jorge.lolin1.func.chat.FriendManager;
 import org.jorge.lolin1.ui.frags.ChatOverviewSupportFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
 import org.jorge.lolin1.ui.frags.IndefiniteFancyProgressSupportFragment;
@@ -242,6 +243,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     thisView.post(new Runnable() {
                         @Override
                         public void run() {
+                            FriendManager.getInstance().updateOnlineFriends();
                             showViewConnected();
                         }
                     });

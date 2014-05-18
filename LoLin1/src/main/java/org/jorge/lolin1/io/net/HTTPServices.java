@@ -1,5 +1,9 @@
 package org.jorge.lolin1.io.net;
 
+import android.os.AsyncTask;
+
+import com.crashlytics.android.Crashlytics;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -18,6 +22,9 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 /**
  * This file is part of LoLin1.
@@ -42,30 +49,63 @@ public abstract class HTTPServices {
     private static final String VERSION_SERVICE_LOCATION = "/services/champions/version",
             LIST_SERVICE_LOCATION = "/services/champions/list", CDN_SERVICE_LOCATION =
             "/services/champions/cdn";
+    private static final ExecutorService imageDownloadExecutor = Executors.newFixedThreadPool(5);
 
-    public static void downloadFile(String whatToDownload, File whereToSaveIt) throws IOException {
-        BufferedInputStream bufferedInputStream = null;
-        FileOutputStream fileOutputStream = null;
+    public static void downloadFile(final String whatToDownload, final File whereToSaveIt)
+            throws IOException {
+        AsyncTask<Void, Void, Object> imageDownloadAsyncTask = new AsyncTask<Void, Void, Object>() {
+            @Override
+            protected Object doInBackground(Void... params) {
+                BufferedInputStream bufferedInputStream = null;
+                FileOutputStream fileOutputStream = null;
+                try {
+                    bufferedInputStream = new BufferedInputStream(
+                            new URL(URLDecoder.decode(whatToDownload, "UTF-8")
+                                    .replaceAll(" ", "%20"))
+                                    .openStream()
+                    );
+                    fileOutputStream = new FileOutputStream(whereToSaveIt);
+
+                    final byte data[] = new byte[1024];
+                    int count;
+                    while ((count = bufferedInputStream.read(data, 0, 1024)) != -1) {
+                        fileOutputStream.write(data, 0, count);
+                    }
+                }
+                catch (IOException e) {
+                    return e;
+                }
+                finally {
+                    if (bufferedInputStream != null) {
+                        try {
+                            bufferedInputStream.close();
+                        }
+                        catch (IOException e) {
+                            return e;
+                        }
+                    }
+                    if (fileOutputStream != null) {
+                        try {
+                            fileOutputStream.close();
+                        }
+                        catch (IOException e) {
+                            return e;
+                        }
+                    }
+                }
+                return null;
+            }
+        };
+        imageDownloadAsyncTask.execute();
+        Object returned = null;
         try {
-            bufferedInputStream = new BufferedInputStream(
-                    new URL(URLDecoder.decode(whatToDownload, "UTF-8").replaceAll(" ", "%20"))
-                            .openStream()
-            );
-            fileOutputStream = new FileOutputStream(whereToSaveIt);
-
-            final byte data[] = new byte[1024];
-            int count;
-            while ((count = bufferedInputStream.read(data, 0, 1024)) != -1) {
-                fileOutputStream.write(data, 0, count);
-            }
+            returned = imageDownloadAsyncTask.get();
         }
-        finally {
-            if (bufferedInputStream != null) {
-                bufferedInputStream.close();
-            }
-            if (fileOutputStream != null) {
-                fileOutputStream.close();
-            }
+        catch (ExecutionException | InterruptedException e) {
+            Crashlytics.logException(e);
+        }
+        if (returned != null) {
+            throw (IOException) returned;
         }
     }
 

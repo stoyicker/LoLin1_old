@@ -103,7 +103,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                         viewHolder.getProfileIcon());
         viewHolder.getName().setText(thisFriend.getName());
         final LolStatus thisStatus = thisFriend.getStatus();
-        viewHolder.getLevel().setText(thisStatus.getLevel());
+        viewHolder.getLevel().setText(thisStatus.getLevel() + "");
         LolStatus.Division thisDivision = thisStatus.getRankedLeagueDivision();
         viewHolder.getRankedDivision()
                 .setText(thisStatus.getRankedLeagueTier().name() + " " + thisDivision.name());

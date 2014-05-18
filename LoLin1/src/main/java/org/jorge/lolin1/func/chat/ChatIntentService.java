@@ -13,7 +13,6 @@ import android.os.Binder;
 import android.os.IBinder;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.theholywaffle.lolchatapi.ChatServer;
@@ -28,6 +27,7 @@ import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -55,13 +55,17 @@ public class ChatIntentService extends IntentService {
     private static final long LOG_IN_DELAY_MILLIS = 10000;
     public static final String ACTION_CONNECT = "CONNECT", ACTION_DISCONNECT = "DISCONNECT";
     private final IBinder mBinder = new ChatBinder();
-    private LoLChat api;
+    private static LoLChat api;
     private BroadcastReceiver mChatBroadcastReceiver;
     private SmackAndroid mSmackAndroid;
     private AsyncTask<Void, Void, Void> loginTask;
 
     public ChatIntentService() {
         super(ChatIntentService.class.getName());
+    }
+
+    static List<Friend> getOnlineFriends() {
+        return api.getOnlineFriends();
     }
 
     @Override
@@ -121,9 +125,6 @@ public class ChatIntentService extends IntentService {
                 Boolean loginSuccess =
                         login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
                 if (loginSuccess) {
-                    Log.d("debug", "Login successful");
-                    for (Friend f : api.getFriends())
-                        Log.d("debug", f.getName());
                     runChatOverviewBroadcastReceiver();
                     launchBroadcastLoginSuccessful();
                     setUpChatOverviewListener();

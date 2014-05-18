@@ -46,8 +46,8 @@ public class FriendManager {
         return null;
     }
 
-    public static void updateOnlineFriends() {
-        //TODO
+    public void updateOnlineFriends() {
+        ONLINE_FRIENDS.addAll(ChatIntentService.getOnlineFriends());
     }
 
     public Collection<Friend> getOnlineFriends() {
