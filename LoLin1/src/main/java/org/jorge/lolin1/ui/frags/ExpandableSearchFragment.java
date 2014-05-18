@@ -87,7 +87,7 @@ public class ExpandableSearchFragment extends Fragment {
 
         queryField = (EditText) view.findViewById(R.id.query_field);
 
-        queryField.setVisibility(View.INVISIBLE);
+        queryField.setVisibility(View.GONE);
     }
 
     private void setTimer() {
