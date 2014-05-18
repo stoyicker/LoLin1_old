@@ -4,7 +4,7 @@ import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
-import android.app.Service;
+import android.app.IntentService;
 import android.content.BroadcastReceiver;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -47,7 +47,7 @@ import java.util.concurrent.ExecutionException;
  * <p/>
  * Created by JorgeAntonio on 05/05/2014.
  */
-public class ChatService extends Service {
+public class ChatIntentService extends IntentService {
 
     private static final long LOG_IN_DELAY_MILLIS = 3000;
     private final IBinder mBinder = new ChatBinder();
@@ -55,14 +55,28 @@ public class ChatService extends Service {
     private BroadcastReceiver mChatBroadcastReceiver;
     private SmackAndroid mSmackAndroid;
 
+    /**
+     * Creates an IntentService.  Invoked by your subclass's constructor.
+     *
+     * @param name Used to name the worker thread, important only for debugging.
+     */
+    public ChatIntentService(String name) {
+        super(name);
+    }
+
     @Override
     public IBinder onBind(Intent intent) {
         return mBinder;
     }
 
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        //TODO To be used to send messages
+    }
+
     public class ChatBinder extends Binder {
-        public ChatService getService() {
-            return ChatService.this;
+        public ChatIntentService getService() {
+            return ChatIntentService.this;
         }
     }
 
@@ -104,32 +118,32 @@ public class ChatService extends Service {
 
             @Override
             public void onFriendLeave(Friend friend) {
-                ChatService.this.launchBroadcastFriendEvent();
+                ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendJoin(Friend friend) {
-                ChatService.this.launchBroadcastFriendEvent();
+                ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendAvailable(Friend friend) {
-                ChatService.this.launchBroadcastFriendEvent();
+                ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendAway(Friend friend) {
-                ChatService.this.launchBroadcastFriendEvent();
+                ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendBusy(Friend friend) {
-                ChatService.this.launchBroadcastFriendEvent();
+                ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendStatusChange(Friend friend) {
-                ChatService.this.launchBroadcastFriendEvent();
+                ChatIntentService.this.launchBroadcastFriendEvent();
             }
         });
     }
