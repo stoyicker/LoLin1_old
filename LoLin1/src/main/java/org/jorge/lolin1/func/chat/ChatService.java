@@ -83,7 +83,7 @@ public class ChatService extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         int ret = super.onStartCommand(intent, flags, startId);
-        mSmackAndroid = SmackAndroid.init(getApplicationContext());
+        mSmackAndroid = LoLChat.init(getApplicationContext());
         Boolean loginSuccess = login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
         Log.d("debug", "Log-in finished");
         if (loginSuccess) {

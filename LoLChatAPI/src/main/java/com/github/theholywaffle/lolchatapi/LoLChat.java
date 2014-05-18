@@ -10,6 +10,7 @@
  ******************************************************************************/
 package com.github.theholywaffle.lolchatapi;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
@@ -28,6 +29,7 @@ import org.jivesoftware.smack.RosterEntry;
 import org.jivesoftware.smack.RosterGroup;
 import org.jivesoftware.smack.RosterListener;
 import org.jivesoftware.smack.SASLAuthentication;
+import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
@@ -220,6 +222,10 @@ public class LoLChat {
     public void disconnect() throws SmackException.NotConnectedException {
         connection.disconnect();
         stop = true;
+    }
+
+    public static final SmackAndroid init(Context context) {
+        return SmackAndroid.init(context);
     }
 
     /**
