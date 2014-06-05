@@ -8,3 +8,4 @@ local.properties
 gradlew
 com_crashlytics_export_strings.xml
 build
+crashlytics.properties
