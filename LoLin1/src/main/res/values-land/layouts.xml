@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2011 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2011 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,8 +15,5 @@
 
 <!-- BEGIN_INCLUDE(all) -->
 <resources>
-	<item name="activity_news_reader" type="layout">@layout/activity_news_double_pane</item>
-	<!--<item name="surr_reader" type="layout">@layout/activity_surr_double_pane</item>-->
-	<bool name="feed_has_two_panes">true</bool>
-</resources>
-	<!-- END_INCLUDE(all) -->
+    <bool name="feed_has_two_panes">true</bool>
+</resources>    <!-- END_INCLUDE(all) -->

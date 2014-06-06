@@ -1,6 +1,7 @@
 package org.jorge.lolin1.io.net;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -49,28 +50,33 @@ public abstract class HTTPServices {
     private static final String VERSION_SERVICE_LOCATION = "/services/champions/version",
             LIST_SERVICE_LOCATION = "/services/champions/list", CDN_SERVICE_LOCATION =
             "/services/champions/cdn";
-    private static final ExecutorService imageDownloadExecutor = Executors.newFixedThreadPool(5);
+    private static final ExecutorService fileDownloadExecutor = Executors.newFixedThreadPool(5);
 
     public static void downloadFile(final String whatToDownload, final File whereToSaveIt)
             throws IOException {
+        Log.d("debug", "Downloading url " + whatToDownload);
         AsyncTask<Void, Void, Object> imageDownloadAsyncTask = new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... params) {
                 BufferedInputStream bufferedInputStream = null;
                 FileOutputStream fileOutputStream = null;
                 try {
+                    Log.d("debug", "Opening stream for " + whatToDownload);
                     bufferedInputStream = new BufferedInputStream(
                             new URL(URLDecoder.decode(whatToDownload, "UTF-8")
                                     .replaceAll(" ", "%20"))
                                     .openStream()
                     );
+                    Log.d("debug", "Opened stream for " + whatToDownload);
                     fileOutputStream = new FileOutputStream(whereToSaveIt);
 
                     final byte data[] = new byte[1024];
                     int count;
+                    Log.d("debug", "Loop-writing " + whatToDownload);
                     while ((count = bufferedInputStream.read(data, 0, 1024)) != -1) {
                         fileOutputStream.write(data, 0, count);
                     }
+                    Log.d("debug", "Loop-written " + whatToDownload);
                 } catch (IOException e) {
                     return e;
                 } finally {
@@ -92,7 +98,7 @@ public abstract class HTTPServices {
                 return null;
             }
         };
-        imageDownloadAsyncTask.execute();
+        imageDownloadAsyncTask.executeOnExecutor(fileDownloadExecutor);
         Object returned = null;
         try {
             returned = imageDownloadAsyncTask.get();

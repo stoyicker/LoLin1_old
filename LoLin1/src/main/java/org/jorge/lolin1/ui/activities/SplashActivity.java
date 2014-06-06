@@ -1,8 +1,6 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
@@ -42,8 +40,6 @@ import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
 
 public final class SplashActivity extends Activity {
 
-    private final int NONE_YET = 0, ALLOW = 1, DISALLOW = 2;
-    private int dataAllowance = NONE_YET;
     private SplashLogFragment LOG_FRAGMENT;
 
     @Override
@@ -134,88 +130,11 @@ public final class SplashActivity extends Activity {
         if (((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE))
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
                 .isConnectedOrConnecting()) {
-            switch (dataAllowance) {
-                case NONE_YET:
-                    final AlertDialog.Builder alertDialogBuilder =
-                            new AlertDialog.Builder(SplashActivity.this,
-                                    AlertDialog.THEME_HOLO_DARK);
-
-                    alertDialogBuilder.setTitle(
-                            LoLin1Utils
-                                    .getString(getApplicationContext(), "delay_update_dialog_title",
-                                            null)
-                    );
-
-                    alertDialogBuilder.setMessage(LoLin1Utils
-                            .getString(getApplicationContext(), "delay_update_dialog_content",
-                                    null))
-                            .setPositiveButton(LoLin1Utils.getString(getApplicationContext(),
-                                    "delay_update_dialog_positive_button",
-                                    null), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    LOG_FRAGMENT.appendToSameLine(
-                                            LoLin1Utils.getString(getApplicationContext(),
-                                                    "update_delayed", null)
-                                    );
-                                    dataAllowance = DISALLOW;
-                                    alertDialogLatch.countDown();
-                                }
-                            })
-                            .setNegativeButton(LoLin1Utils.getString(getApplicationContext(),
-                                    "delay_update_dialog_negative_button",
-                                    null), new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    new AsyncTask<Void, Void, Void>() {
-                                        @Override
-                                        protected Void doInBackground(Void... params) {
-                                            if (runInitProcedure(server, realm, localesInThisRealm,
-                                                    newVersion)) {
-                                                SplashActivity.this
-                                                        .performPostUpdateOperations(realm,
-                                                                newVersion);
-                                            }
-                                            return null;
-                                        }
-
-                                        @Override
-                                        protected void onPostExecute(Void aVoid) {
-                                            dataAllowance = ALLOW;
-                                            alertDialogLatch.countDown();
-                                        }
-                                    }.execute();
-                                }
-                            });
-
-                    SplashActivity.this.runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            alertDialogBuilder.show();
-                        }
-                    });
-                    try {
-                        alertDialogLatch.await();
-                    } catch (InterruptedException e) {
-                        Crashlytics.logException(e);
-                    }
-
-
-                    break;
-                case ALLOW:
-                    if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
-                        performPostUpdateOperations(realm, newVersion);
-                    }
-                    alertDialogLatch.countDown();
-                    break;
-                case DISALLOW:
-                    LOG_FRAGMENT.appendToSameLine(
-                            LoLin1Utils.getString(getApplicationContext(),
-                                    "update_delayed", null)
-                    );
-                    alertDialogLatch.countDown();
-                    break;
-            }
+            LOG_FRAGMENT.appendToSameLine(
+                    LoLin1Utils.getString(getApplicationContext(),
+                            "update_delayed", null)
+            );
+            alertDialogLatch.countDown();
         } else {
             if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
                 performPostUpdateOperations(realm, newVersion);
@@ -273,7 +192,9 @@ public final class SplashActivity extends Activity {
         }
         LOG_FRAGMENT.appendToSameLine(
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
+        Log.d("debug", "Pre-update operations finished");
         for (String locale : localesInThisRealm) {
+            Log.d("debug", "Updating locale " + locale);
             final String bustString =
                     root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
                             pathSeparator + locale + pathSeparator +
@@ -310,6 +231,7 @@ public final class SplashActivity extends Activity {
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
             }
+            Log.d("debug", "Directories allocated");
             LOG_FRAGMENT.appendToNewLine(
                     LoLin1Utils.getString(getApplicationContext(), "list_download", null) + " " +
                             realm + "." + locale + LoLin1Utils
@@ -318,7 +240,9 @@ public final class SplashActivity extends Activity {
             InputStream dataStream;
             String dataStreamAsString;
             try {
+                Log.d("debug", "Request initialized");
                 dataStream = HTTPServices.performListRequest(server, realm, locale);
+                Log.d("debug", "Request finished");
                 dataStreamAsString = LoLin1Utils.inputStreamAsString(dataStream, locale);
                 if (!JsonManager.getResponseStatus(dataStreamAsString)) {
                     LOG_FRAGMENT.appendToSameLine(
@@ -343,6 +267,7 @@ public final class SplashActivity extends Activity {
             try {
                 FileManager
                         .writeStringToFile(dataStreamAsString, dataFile, locale);
+                Log.d("debug", "Data file written");
             } catch (IOException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
@@ -393,6 +318,7 @@ public final class SplashActivity extends Activity {
             Collection<Champion> champs = ChampionManager.getInstance().buildChampions(JsonManager
                     .getStringAttribute(dataStreamAsString, LoLin1Utils
                             .getString(getApplicationContext(), "champion_list_key", null)));
+            Log.d("debug", "CDN checks finished");
             if (champs.isEmpty()) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
@@ -502,7 +428,7 @@ public final class SplashActivity extends Activity {
                         protected Boolean doInBackground(Integer... params) {
                             try {
                                 HTTPServices.downloadFile(
-                                        finalCdn + pathSeparator + pathSeparator + "img" +
+                                        finalCdn + pathSeparator + "img" +
                                                 pathSeparator + "champion" + pathSeparator +
                                                 LoLin1Utils
                                                         .getString(getApplicationContext(),
@@ -625,7 +551,9 @@ public final class SplashActivity extends Activity {
         do {
             try {
                 target = dataProviders[index];
+                Log.d("debug", "Testing " + target);
                 getContentInputStream = HTTPServices.performVersionRequest(target, "euw", "en_US");
+                Log.d("debug", "Tested " + target);
                 String content = LoLin1Utils
                         .inputStreamAsString(getContentInputStream, "en_US");
                 if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
@@ -661,6 +589,8 @@ public final class SplashActivity extends Activity {
         LOG_FRAGMENT.appendToSameLine(
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
 
+        Log.d("debug", "Provider found: " + target);
+
         return target;
     }
 
@@ -671,5 +601,3 @@ public final class SplashActivity extends Activity {
         startActivity(newsIntent);
     }
 }
-
-//FUTURE Remove <item name="news_reader" type="layout">@layout/activity_news_double_pane</item><item name="surr_reader" type="layout">@layout/activity_surr_double_pane</item><bool name="feed_has_two_panes">true</bool> from values-land/layouts.xml to not to see the double layout on devices which are not large enough
