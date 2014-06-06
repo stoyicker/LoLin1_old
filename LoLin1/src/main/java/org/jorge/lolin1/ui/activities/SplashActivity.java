@@ -98,8 +98,7 @@ public final class SplashActivity extends Activity {
 
                     try {
                         countDownLatch.await();
-                    }
-                    catch (InterruptedException e) {
+                    } catch (InterruptedException e) {
                         Crashlytics.logException(e);
                     }
 
@@ -120,8 +119,7 @@ public final class SplashActivity extends Activity {
             if (!(target = connectToOneOf(dataProviders)).contentEquals("null")) {
                 proceedWithUpdate(target);
             }
-        }
-        else {
+        } else {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "no_connection_on_splash",
                             null));
@@ -198,8 +196,7 @@ public final class SplashActivity extends Activity {
                     });
                     try {
                         alertDialogLatch.await();
-                    }
-                    catch (InterruptedException e) {
+                    } catch (InterruptedException e) {
                         Crashlytics.logException(e);
                     }
 
@@ -219,8 +216,7 @@ public final class SplashActivity extends Activity {
                     alertDialogLatch.countDown();
                     break;
             }
-        }
-        else {
+        } else {
             if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
                 performPostUpdateOperations(realm, newVersion);
             }
@@ -332,8 +328,7 @@ public final class SplashActivity extends Activity {
                     Crashlytics.log(Log.ERROR, "debug", "Response status was not ok");
                     return Boolean.FALSE;
                 }
-            }
-            catch (IOException | URISyntaxException | HTTPServices.ServerIsCheckingException e) {
+            } catch (IOException | URISyntaxException | HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 Crashlytics.logException(e);
@@ -348,8 +343,7 @@ public final class SplashActivity extends Activity {
             try {
                 FileManager
                         .writeStringToFile(dataStreamAsString, dataFile, locale);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 Crashlytics.logException(e);
@@ -368,8 +362,7 @@ public final class SplashActivity extends Activity {
                     if (JsonManager.getResponseStatus(cdnResponse)) {
                         cdn = JsonManager.getStringAttribute(cdnResponse,
                                 LoLin1Utils.getString(getApplicationContext(), "cdn_key", null));
-                    }
-                    else {
+                    } else {
                         LOG_FRAGMENT.appendToSameLine(
                                 LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                         null)
@@ -377,8 +370,7 @@ public final class SplashActivity extends Activity {
                         Crashlytics.log(Log.ERROR, "debug", "Response status was not ok");
                         return Boolean.FALSE;
                     }
-                }
-                catch (HTTPServices.ServerIsCheckingException | URISyntaxException | IOException e) {
+                } catch (HTTPServices.ServerIsCheckingException | URISyntaxException | IOException e) {
                     LOG_FRAGMENT.appendToSameLine(
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
                                     null)
@@ -438,8 +430,7 @@ public final class SplashActivity extends Activity {
                                                     bustImageName,
                                             new File(bustString + bustImageName)
                                     );
-                                }
-                                catch (IOException e) {
+                                } catch (IOException e) {
                                     Crashlytics.logException(e);
                                     return Boolean.FALSE;
                                 }
@@ -465,8 +456,7 @@ public final class SplashActivity extends Activity {
                                                     passiveImageName,
                                             new File(passiveString + passiveImageName)
                                     );
-                                }
-                                catch (IOException e) {
+                                } catch (IOException e) {
                                     Crashlytics.logException(e);
                                     return Boolean.FALSE;
                                 }
@@ -492,8 +482,7 @@ public final class SplashActivity extends Activity {
                                                                 null) + pathSeparator + spellName,
                                         new File(spellString + spellName)
                                 );
-                            }
-                            catch (IOException e) {
+                            } catch (IOException e) {
                                 Crashlytics.logException(e);
                                 return Boolean.FALSE;
                             }
@@ -528,8 +517,7 @@ public final class SplashActivity extends Activity {
                                                 .getString(getApplicationContext(),
                                                         "splash_image_extension", null))
                                 );
-                            }
-                            catch (IOException e) {
+                            } catch (IOException e) {
                                 Crashlytics.logException(e);
                                 return Boolean.FALSE;
                             }
@@ -548,8 +536,7 @@ public final class SplashActivity extends Activity {
             downloadExecutor.shutdown();
             try {
                 downloadExecutor.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
-            }
-            catch (InterruptedException e) {
+            } catch (InterruptedException e) {
                 Crashlytics.logException(e);
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
                         getApplicationContext(), "update_fatal_error", null));
@@ -581,15 +568,13 @@ public final class SplashActivity extends Activity {
             try {
                 newVersion = LoLin1Utils.inputStreamAsString(
                         HTTPServices.performVersionRequest(server, realm, "en_US"), "en_US");
-            }
-            catch (IOException | URISyntaxException e) {
+            } catch (IOException | URISyntaxException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_fatal_error",
                                 null));
                 Crashlytics.logException(e);
                 return;
-            }
-            catch (HTTPServices.ServerIsCheckingException e) {
+            } catch (HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_server_is_updating",
                                 null));
@@ -599,8 +584,7 @@ public final class SplashActivity extends Activity {
             try {
                 newVersionAsJSON = new JSONObject(newVersion);
                 newVersion = newVersionAsJSON.getString("version");
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 Log.e("debug", e.getClass().getName(), e);
             }
             if (Integer.parseInt(newVersion.replaceAll("[\\D]", "")) > Integer.parseInt(
@@ -615,8 +599,7 @@ public final class SplashActivity extends Activity {
                                         "language_to_simplified_suffix", null), null);
                 askIfOnMobileConnectionAndRunDownload(server, realm, localesInThisRealm,
                         newVersion);
-            }
-            else {
+            } else {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_no_new_version", null));
             }
@@ -625,8 +608,7 @@ public final class SplashActivity extends Activity {
 
         try {
             networkOperationsLatch.await();
-        }
-        catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             Crashlytics.logException(e);
         }
     }
@@ -654,11 +636,9 @@ public final class SplashActivity extends Activity {
                         )) {
                     upServerFound = Boolean.TRUE;
                 }
-            }
-            catch (IOException | URISyntaxException e) {
+            } catch (IOException | URISyntaxException e) {
                 Crashlytics.logException(e);
-            }
-            catch (HTTPServices.ServerIsCheckingException e) {
+            } catch (HTTPServices.ServerIsCheckingException e) {
                 //Server is busy checking for updates, so look for a new one
             }
             if (!upServerFound) {

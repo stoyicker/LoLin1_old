@@ -76,8 +76,7 @@ public class SurrFeedHandler implements IFeedHandler {
             row.put(SQLiteDAO.SURR_KEY_READ, !pendingRead);
             if (SQLiteDAO.getSingleton().insertSurrArticle(row) != -1) {
                 isRefreshRequired = Boolean.TRUE;
-            }
-            else if (SQLiteDAO.getSingleton().updateSurrArticleByLink(link, row) != 0) {
+            } else if (SQLiteDAO.getSingleton().updateSurrArticleByLink(link, row) != 0) {
                 isRefreshRequired = Boolean.TRUE;
             }
         }

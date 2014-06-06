@@ -75,8 +75,7 @@ public final class ChampionManager {
             champions = buildChampions(JsonManager
                     .getStringAttribute(FileManager.readFileAsString(targetFile), LoLin1Utils
                             .getString(context, "champion_list_key", null)));
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Crashlytics.logException(e);
             //It's fine, nothing will get shown
             champions = new ArrayList<>();
@@ -88,8 +87,7 @@ public final class ChampionManager {
         JSONArray rawChamps = null;
         try {
             rawChamps = new JSONArray(list);
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             Crashlytics.logException(e);
         }
 
@@ -100,8 +98,7 @@ public final class ChampionManager {
                 currentRawChamp = rawChamps.getJSONObject(i);
                 Champion currentChampion = new Champion(currentRawChamp);
                 ret.add(currentChampion);
-            }
-            catch (JSONException e) {
+            } catch (JSONException e) {
                 Crashlytics.logException(e);
             }
         }

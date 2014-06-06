@@ -72,8 +72,7 @@ public abstract class LoLin1DebugUtils {
                             context.openFileOutput("info.txt", Context.MODE_WORLD_READABLE));
             outputStreamWriter.write(data);
             outputStreamWriter.close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Crashlytics.logException(e);
         }
     }

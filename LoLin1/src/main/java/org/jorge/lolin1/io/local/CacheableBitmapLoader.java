@@ -44,8 +44,7 @@ public final class CacheableBitmapLoader {
                                  int delayBeforePurgeMillis) {
         try {
             Looper.prepare();
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             //Already prepared, do nothing
         }
         purgeHandler = new Handler();
@@ -63,8 +62,7 @@ public final class CacheableBitmapLoader {
                     sSoftBitmapCache
                             .put(eldest.getKey(), new SoftReference<>(eldest.getValue()));
                     return true;
-                }
-                else {
+                } else {
                     return false;
                 }
             }
@@ -100,8 +98,7 @@ public final class CacheableBitmapLoader {
             if (bitmap != null) {
                 // Bitmap found in soft cache
                 return bitmap;
-            }
-            else {
+            } else {
                 // Soft reference has been Garbage Collected
                 sSoftBitmapCache.remove(absolutePath + width + height);
             }
@@ -120,8 +117,7 @@ public final class CacheableBitmapLoader {
         retAux = BitmapFactory.decodeFile(absolutePath, options);
         if (width > 0 && height > 0) {
             return Bitmap.createScaledBitmap(retAux, width, height, Boolean.TRUE);
-        }
-        else {
+        } else {
             return retAux;
         }
     }

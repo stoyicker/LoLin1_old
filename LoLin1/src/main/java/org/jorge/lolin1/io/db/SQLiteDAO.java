@@ -111,8 +111,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                                     new URL(imageLinkCallbackURL).openConnection()
                                             .getInputStream()
                             );
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     ret = null;
                 }
                 ByteArrayOutputStream blobOS = new ByteArrayOutputStream();
@@ -123,8 +122,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                         .updateArticleBlob(bmpAsByteArray, imageLinkCallbackURL);
                 return ret;
             }
-        }
-        else {
+        } else {
             ret = BitmapFactory.decodeByteArray(blob, 0, blob.length);
         }
         return ret;
@@ -175,8 +173,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
             for (String x : fieldsAsList) {
                 if (!x.contentEquals(SURR_KEY_READ)) {
                     data.append(result.getString(result.getColumnIndex(x))).append(separator);
-                }
-                else {
+                } else {
                     read = result.getInt(result.getColumnIndex(x)) == 1;
                 }
             }
@@ -213,8 +210,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
             for (String x : fieldsAsList) {
                 if (!x.contentEquals(SURR_KEY_READ)) {
                     data.append(result.getString(result.getColumnIndex(x))).append(separator);
-                }
-                else {
+                } else {
                     read = result.getInt(result.getColumnIndex(x)) == 1;
                 }
             }
@@ -254,8 +250,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
         result.moveToFirst();
         try {
             ret = result.getBlob(0);
-        }
-        catch (IndexOutOfBoundsException ex) { //Meaning there's no blob stored yet
+        } catch (IndexOutOfBoundsException ex) { //Meaning there's no blob stored yet
             ret = null;
         }
         result.close();
@@ -294,8 +289,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                                         .replaceAll("httpxxx", "http://")
                         )
                                 .append(separator);
-                    }
-                    else {
+                    } else {
                         data.append(result.getString(result.getColumnIndex(x))).append(separator);
                     }
                 }

@@ -34,8 +34,7 @@ public class NoChatConnectionSupportFragment extends Fragment {
             public void onClick(View v) {
                 if (LoLin1Utils.isInternetReachable(context)) {
                     mActivity.requestProtocolReInit();
-                }
-                else {
+                } else {
                     Toast.makeText(context,
                             R.string.error_no_connection,
                             Toast.LENGTH_SHORT).show();

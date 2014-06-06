@@ -68,16 +68,13 @@ public abstract class JungleTimerFragment extends Fragment {
         if (this instanceof BlueJungleTimerFragment) {
             background_color = R.color.theme_light_blue;
             prefName = "buff";
-        }
-        else if (this instanceof RedJungleTimerFragment) {
+        } else if (this instanceof RedJungleTimerFragment) {
             background_color = R.color.theme_red;
             prefName = "buff";
-        }
-        else if (this instanceof BaronJungleTimerFragment) {
+        } else if (this instanceof BaronJungleTimerFragment) {
             background_color = R.color.theme_purple;
             prefName = "baron";
-        }
-        else if (this instanceof DrakeJungleTimerFragment) {
+        } else if (this instanceof DrakeJungleTimerFragment) {
             background_color = R.color.theme_strong_orange;
             prefName = "dragon";
         }
@@ -94,8 +91,7 @@ public abstract class JungleTimerFragment extends Fragment {
             initialValue =
                     new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("01-01-1970 01:" + prefName)
                             .getTime();
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             Crashlytics.logException(e);
         }
 
@@ -131,8 +127,7 @@ public abstract class JungleTimerFragment extends Fragment {
                 if (!isChronometerRunning) {
                     chronometer.start();
                     isChronometerRunning = Boolean.TRUE;
-                }
-                else {
+                } else {
                     chronometer.cancel();
                     chronometer = new InnerCountDownTimer(lastTimeTracked, 1000);
                     isChronometerRunning = Boolean.FALSE;
@@ -157,16 +152,13 @@ public abstract class JungleTimerFragment extends Fragment {
             if (this instanceof BlueJungleTimerFragment) {
                 background_color = R.color.theme_light_blue;
                 prefName = "buff";
-            }
-            else if (this instanceof RedJungleTimerFragment) {
+            } else if (this instanceof RedJungleTimerFragment) {
                 background_color = R.color.theme_red;
                 prefName = "buff";
-            }
-            else if (this instanceof BaronJungleTimerFragment) {
+            } else if (this instanceof BaronJungleTimerFragment) {
                 background_color = R.color.theme_purple;
                 prefName = "baron";
-            }
-            else if (this instanceof DrakeJungleTimerFragment) {
+            } else if (this instanceof DrakeJungleTimerFragment) {
                 background_color = R.color.theme_strong_orange;
                 prefName = "dragon";
             }

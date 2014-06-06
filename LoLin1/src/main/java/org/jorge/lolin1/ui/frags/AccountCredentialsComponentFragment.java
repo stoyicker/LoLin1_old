@@ -55,8 +55,7 @@ public class AccountCredentialsComponentFragment extends Fragment {
 
         try {
             mCallback = (AccountCredentialsComponentListener) activity;
-        }
-        catch (ClassCastException ex) {
+        } catch (ClassCastException ex) {
             throw new ClassCastException(activity.toString()
                     + " must implement LoLin1AccountCredentialsComponentListener");
         }
@@ -83,8 +82,7 @@ public class AccountCredentialsComponentFragment extends Fragment {
         if (getId() == R.id.username_fragment) {
             aux = "username";
             contentsView.setInputType(InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS);
-        }
-        else {
+        } else {
             aux = "password";
             contentsView.setInputType(InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             contentsView.setOnEditorActionListener(new TextView.OnEditorActionListener() {

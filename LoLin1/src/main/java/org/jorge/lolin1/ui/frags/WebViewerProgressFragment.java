@@ -45,9 +45,6 @@ public class WebViewerProgressFragment extends ProgressFragment {
         }
     }
 
-    /**
-     * Called to instantiate the view. Creates and returns the WebView.
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -94,7 +91,7 @@ public class WebViewerProgressFragment extends ProgressFragment {
         super.onStart();
         setContentShown(Boolean.TRUE);
     }
-    
+
     public void loadUrl(String url) {
         if (mIsWebViewAvailable) {
             getWebView().loadUrl(mUrl = url);
@@ -145,8 +142,7 @@ public class WebViewerProgressFragment extends ProgressFragment {
             super.onPageStarted(view, url, favicon);
             try {
                 WebViewerProgressFragment.this.setContentShown(Boolean.FALSE);
-            }
-            catch (IllegalStateException ex) {
+            } catch (IllegalStateException ex) {
                 //Content view not yet created (too quick user)!
             }
         }
@@ -162,8 +158,7 @@ public class WebViewerProgressFragment extends ProgressFragment {
             super.onPageFinished(view, url);
             try {
                 WebViewerProgressFragment.this.setContentShown(Boolean.TRUE);
-            }
-            catch (IllegalStateException ex) {
+            } catch (IllegalStateException ex) {
                 //Means that the webpage has been closed too quickly, and thus the host
                 // activity is already finished, so just ignore this new call to onPageFinished(...)
             }

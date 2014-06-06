@@ -102,8 +102,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
             //We don't want to perform an unnecessary Activity reload
             //noinspection UnnecessaryReturnStatement
             return;
-        }
-        else {
+        } else {
             navigatedItemsStack.add(0, position);
         }
 
@@ -178,8 +177,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         try {
             mTitle = LoLin1Utils
                     .getString(this, "title_section" + (getLastSelectedNavDrawerIndex() + 1), null);
-        }
-        catch (IndexOutOfBoundsException ex) {
+        } catch (IndexOutOfBoundsException ex) {
             mTitle = LoLin1Utils
                     .getString(this, "title_section1", null);
         }
@@ -190,8 +188,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     public void onBackPressed() {
         if (navigatedItemsStack.size() > 1) {
             finish();
-        }
-        else {
+        } else {
             navigatedItemsStack.pop();
         }
     }

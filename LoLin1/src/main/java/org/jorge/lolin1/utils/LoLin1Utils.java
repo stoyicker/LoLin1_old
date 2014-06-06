@@ -110,8 +110,7 @@ public abstract class LoLin1Utils {
         try {
             ret = PreferenceManager.getDefaultSharedPreferences(context)
                     .getString("pref_title_locale", null);
-        }
-        catch (NullPointerException ex) {
+        } catch (NullPointerException ex) {
             ret = null;
         }
 
@@ -126,8 +125,7 @@ public abstract class LoLin1Utils {
             Field resourceField = R.array.class.getDeclaredField(variableName);
             int resourceId = resourceField.getInt(resourceField);
             ret = context.getResources().getStringArray(resourceId);
-        }
-        catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             Crashlytics.logException(e);
         }
 
@@ -141,8 +139,7 @@ public abstract class LoLin1Utils {
             Field resourceField = R.string.class.getDeclaredField(variableName);
             int resourceId = resourceField.getInt(resourceField);
             ret = context.getString(resourceId);
-        }
-        catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             Crashlytics.logException(e);
         }
 
@@ -155,8 +152,7 @@ public abstract class LoLin1Utils {
         try {
             Field resourceField = R.drawable.class.getDeclaredField(variableName);
             ret = resourceField.getInt(resourceField);
-        }
-        catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             Crashlytics.logException(e);
         }
 
@@ -204,8 +200,7 @@ public abstract class LoLin1Utils {
             Field resourceField = R.integer.class.getDeclaredField(variableName);
             int resourceId = resourceField.getInt(resourceField);
             ret = context.getResources().getInteger(resourceId);
-        }
-        catch (NoSuchFieldException | IllegalAccessException e) {
+        } catch (NoSuchFieldException | IllegalAccessException e) {
             Crashlytics.logException(e);
         }
 

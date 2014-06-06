@@ -43,8 +43,7 @@ public class AcceptCredentialsFragment extends Fragment {
 
         try {
             mCallback = (AcceptCredentialsListener) activity;
-        }
-        catch (ClassCastException ex) {
+        } catch (ClassCastException ex) {
             throw new ClassCastException(activity.toString()
                     + " must implement AcceptCredentialsListener");
         }

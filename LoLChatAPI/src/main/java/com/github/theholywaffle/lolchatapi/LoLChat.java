@@ -32,9 +32,9 @@ import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.spark.util.DummySSLSocketFactory;
 
@@ -78,8 +78,7 @@ public class LoLChat {
         connection = new XMPPTCPConnection(config);
         try {
             connection.connect();
-        }
-        catch (XMPPException | SmackException e) {
+        } catch (XMPPException | SmackException e) {
             Log.wtf("debug", "Failed to connect to " + connection.getHost(), e);
 //            Crashlytics.log(Log.ERROR, "debug", "Failed to connect to " + connection.getHost());
 //            Crashlytics.logException(e);
@@ -92,8 +91,7 @@ public class LoLChat {
                 while (!stop) {
                     try {
                         Thread.sleep(500);
-                    }
-                    catch (InterruptedException ignored) {
+                    } catch (InterruptedException ignored) {
                     }
                 }
             }
@@ -146,13 +144,11 @@ public class LoLChat {
                                 if (p.getType() == Presence.Type.available &&
                                         previous != Presence.Type.available) {
                                     l.onFriendJoin(friend);
-                                }
-                                else if (p.getType() == Presence.Type.unavailable
+                                } else if (p.getType() == Presence.Type.unavailable
                                         && previous != Presence.Type.unavailable) {
                                     l.onFriendLeave(friend);
                                 }
-                            }
-                            else if (p.getType() == Presence.Type.available) {
+                            } else if (p.getType() == Presence.Type.available) {
                                 l.onFriendJoin(friend);
                             }
 
@@ -161,12 +157,10 @@ public class LoLChat {
                                 if (p.getMode() == Presence.Mode.chat &&
                                         previous != Presence.Mode.chat) {
                                     l.onFriendAvailable(friend);
-                                }
-                                else if (p.getMode() == Presence.Mode.away &&
+                                } else if (p.getMode() == Presence.Mode.away &&
                                         previous != Presence.Mode.away) {
                                     l.onFriendAway(friend);
-                                }
-                                else if (p.getMode() == Presence.Mode.dnd &&
+                                } else if (p.getMode() == Presence.Mode.dnd &&
                                         previous != Presence.Mode.dnd) {
                                     l.onFriendBusy(friend);
                                 }
@@ -205,8 +199,7 @@ public class LoLChat {
                             }
                         }
                     });
-                }
-                else {
+                } else {
                     Log.wtf("debug", "Friend is null in chat creation");
 //                    Crashlytics.log(Log.ERROR, "debug", "Friend is null in chat creation");
                 }
@@ -360,12 +353,10 @@ public class LoLChat {
         try {
             if (replaceLeague) {
                 connection.login(username, "AIR_" + password, "xiff");
-            }
-            else {
+            } else {
                 connection.login(username, "AIR_" + password);
             }
-        }
-        catch (XMPPException | SmackException e) {
+        } catch (XMPPException | SmackException e) {
             Log.wtf("debug", e);
 //            Crashlytics.logException(e);
         }
@@ -436,8 +427,7 @@ public class LoLChat {
         Presence newPresence = new Presence(type, status, 1, mode);
         try {
             connection.sendPacket(newPresence);
-        }
-        catch (SmackException.NotConnectedException e) {
+        } catch (SmackException.NotConnectedException e) {
             Log.wtf("debug", "e");
 //            Crashlytics.logException(e);
         }
@@ -446,8 +436,7 @@ public class LoLChat {
     public void reloadRoster() {
         try {
             connection.getRoster().reload();
-        }
-        catch (SmackException.NotLoggedInException | SmackException.NotConnectedException e) {
+        } catch (SmackException.NotLoggedInException | SmackException.NotConnectedException e) {
             Log.wtf("debug", e);
         }
     }

@@ -70,8 +70,7 @@ public final class ProfileCacheableBitmapLoader {
                                         int delayBeforePurgeMillis) {
         try {
             Looper.prepare();
-        }
-        catch (RuntimeException ex) {
+        } catch (RuntimeException ex) {
             //Already prepared, do nothing
         }
         purgeHandler = new Handler();
@@ -90,8 +89,7 @@ public final class ProfileCacheableBitmapLoader {
                             sSoftBitmapCache
                                     .put(eldest.getKey(), new SoftReference<>(eldest.getValue()));
                             return true;
-                        }
-                        else {
+                        } else {
                             return false;
                         }
                     }
@@ -139,8 +137,7 @@ public final class ProfileCacheableBitmapLoader {
                     }
                 });
                 return;
-            }
-            else {
+            } else {
                 // Soft reference has been Garbage Collected
                 sSoftBitmapCache.remove(id);
             }
@@ -182,8 +179,7 @@ public final class ProfileCacheableBitmapLoader {
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
             bitmap = BitmapFactory.decodeResource(activity.getResources(),
                     R.drawable.profile_icon_no_connection, options);
-        }
-        else {
+        } else {
             File root = activity.getExternalFilesDir(
                     LoLin1Utils.getString(activity, "profile_icons_folder_name", null));
             if (!root.exists()) {
@@ -204,8 +200,7 @@ public final class ProfileCacheableBitmapLoader {
                         )
                 );
                 bitmap = BitmapFactory.decodeFile(path.getAbsolutePath(), options);
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 bitmap = BitmapFactory.decodeResource(activity.getResources(),
                         R.drawable.profile_icon_no_connection, options);
             }

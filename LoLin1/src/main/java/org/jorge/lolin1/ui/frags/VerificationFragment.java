@@ -64,8 +64,7 @@ public class VerificationFragment extends Fragment {
         super.onAttach(activity);
         try {
             mCallback = (VerificationFragmentListener) activity;
-        }
-        catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException("Activity must implement VerificationFragmentListener.");
         }
     }

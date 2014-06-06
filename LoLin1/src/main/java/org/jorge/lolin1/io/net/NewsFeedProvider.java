@@ -63,12 +63,10 @@ public class NewsFeedProvider {
             if (LoLin1Utils.isInternetReachable(context)) {
                 ArrayList<String> retrievedFeed = retrieveFeed();
                 handler.onFeedUpdated(retrievedFeed);
-            }
-            else {
+            } else {
                 handler.onNoInternetConnection();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Crashlytics.logException(e);
             handler.onNoInternetConnection();
         }
@@ -100,8 +98,7 @@ public class NewsFeedProvider {
         urlConnection.connect();
         try {
             in = new BufferedInputStream(urlConnection.getInputStream());
-        }
-        catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             final String msg = LoLin1Utils.getString(context, "error_no_connection", null);
             ((Activity) context).runOnUiThread(new Runnable() {
                 @Override
@@ -117,8 +114,7 @@ public class NewsFeedProvider {
             parser.setInput(in, null);
             parser.nextTag();
             items = readFeed(parser);
-        }
-        catch (XmlPullParserException e) {
+        } catch (XmlPullParserException e) {
             Crashlytics.logException(e);
         }
 
@@ -146,8 +142,7 @@ public class NewsFeedProvider {
             if (name.equals("description")) {
                 if (channelDescIsRead) {
                     ret.add(buildNewsEntry(parser));
-                }
-                else {
+                } else {
                     channelDescIsRead = Boolean.TRUE;
                 }
             }

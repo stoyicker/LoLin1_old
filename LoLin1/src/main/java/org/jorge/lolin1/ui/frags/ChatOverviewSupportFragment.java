@@ -48,8 +48,7 @@ public class ChatOverviewSupportFragment extends android.support.v4.app.Fragment
 
         try {
             mCallback = (ChatRoomSelectionListener) activity;
-        }
-        catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement ChatRoomSelectionListener");
         }

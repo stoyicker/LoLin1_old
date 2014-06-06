@@ -118,8 +118,7 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
                             try {
                                 authToken =
                                         future.getResult().getString(AccountManager.KEY_AUTHTOKEN);
-                            }
-                            catch (OperationCanceledException | IOException | AuthenticatorException e) {
+                            } catch (OperationCanceledException | IOException | AuthenticatorException e) {
                                 Crashlytics.logException(e);
                             }
                             if (authToken != null) {

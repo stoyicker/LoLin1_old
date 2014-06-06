@@ -71,24 +71,20 @@ public abstract class HTTPServices {
                     while ((count = bufferedInputStream.read(data, 0, 1024)) != -1) {
                         fileOutputStream.write(data, 0, count);
                     }
-                }
-                catch (IOException e) {
+                } catch (IOException e) {
                     return e;
-                }
-                finally {
+                } finally {
                     if (bufferedInputStream != null) {
                         try {
                             bufferedInputStream.close();
-                        }
-                        catch (IOException e) {
+                        } catch (IOException e) {
                             return e;
                         }
                     }
                     if (fileOutputStream != null) {
                         try {
                             fileOutputStream.close();
-                        }
-                        catch (IOException e) {
+                        } catch (IOException e) {
                             return e;
                         }
                     }
@@ -100,8 +96,7 @@ public abstract class HTTPServices {
         Object returned = null;
         try {
             returned = imageDownloadAsyncTask.get();
-        }
-        catch (ExecutionException | InterruptedException e) {
+        } catch (ExecutionException | InterruptedException e) {
             Crashlytics.logException(e);
         }
         if (returned != null) {
@@ -121,8 +116,7 @@ public abstract class HTTPServices {
         response = client.execute(request);
         if (response.getStatusLine().getStatusCode() == 409) {
             throw new ServerIsCheckingException();
-        }
-        else {
+        } else {
             return response.getEntity().getContent();
         }
     }

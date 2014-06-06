@@ -114,8 +114,7 @@ public class RealmListFragment extends Fragment {
         super.onAttach(activity);
         try {
             mCallback = (RealmListFragmentListener) activity;
-        }
-        catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException("Activity must implement RealmListFragmentListener.");
         }
     }

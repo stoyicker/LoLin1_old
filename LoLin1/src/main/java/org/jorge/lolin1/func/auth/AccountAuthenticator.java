@@ -80,8 +80,7 @@ public class AccountAuthenticator extends AbstractAccountAuthenticator {
             bundle.putString(AccountManager.KEY_ACCOUNT_TYPE, authTokenType);
             bundle.putString(AccountManager.KEY_AUTH_TOKEN_LABEL,
                     username + TOKEN_GENERATION_JOINT + password);
-        }
-        else {
+        } else {
             //Account not found
             final Intent intent = new Intent(mContext, AccountAuthenticationActivity.class);
             intent.putExtra(AccountManager.KEY_ACCOUNT_AUTHENTICATOR_RESPONSE, response);

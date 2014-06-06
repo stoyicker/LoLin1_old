@@ -12,11 +12,11 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.custom.NewsAdapter;
+import org.jorge.lolin1.func.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.io.net.NewsFeedProvider;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
-import org.jorge.lolin1.func.custom.NewsAdapter;
-import org.jorge.lolin1.func.custom.TranslatableHeaderTransformer;
 
 import java.util.Arrays;
 
@@ -81,8 +81,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
 
         try {
             mCallback = (NewsListFragmentListener) activity;
-        }
-        catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement NewsListFragmentListener");
         }

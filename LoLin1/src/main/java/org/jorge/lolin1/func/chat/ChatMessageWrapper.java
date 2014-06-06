@@ -71,8 +71,7 @@ public class ChatMessageWrapper implements Parcelable {
         String friendName = in.readString();
         if (!TextUtils.isEmpty(friendName)) {
             sender = FriendManager.getInstance().findFriendByName(friendName);
-        }
-        else {
+        } else {
             sender = null;
         }
     }

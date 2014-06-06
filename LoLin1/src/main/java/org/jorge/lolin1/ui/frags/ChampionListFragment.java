@@ -50,8 +50,7 @@ public class ChampionListFragment extends Fragment {
 
         try {
             mCallback = (ChampionSelectionListener) activity;
-        }
-        catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement ChampionSelectionListener");
         }

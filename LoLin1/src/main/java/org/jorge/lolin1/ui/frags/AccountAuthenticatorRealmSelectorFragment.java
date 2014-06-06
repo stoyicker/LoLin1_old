@@ -52,8 +52,7 @@ public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
 
         try {
             mCallback = (AccountAuthenticatorRealmSelectorListener) activity;
-        }
-        catch (ClassCastException ex) {
+        } catch (ClassCastException ex) {
             throw new ClassCastException(activity.toString()
                     + " must implement AccountAuthenticatorRealmSelectorListener");
         }

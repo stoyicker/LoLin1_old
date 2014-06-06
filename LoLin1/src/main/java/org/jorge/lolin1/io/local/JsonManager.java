@@ -30,8 +30,7 @@ public abstract class JsonManager {
         try {
             responseAsObject = new JSONObject(response);
             return responseAsObject.getString(attributeName);
-        }
-        catch (JSONException e) {
+        } catch (JSONException e) {
             Crashlytics.logException(e);
             return null;
         }

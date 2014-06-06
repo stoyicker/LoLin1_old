@@ -61,12 +61,10 @@ public class SurrFeedProvider {
             if (LoLin1Utils.isInternetReachable(context)) {
                 ArrayList<String> retrievedFeed = retrieveFeed();
                 ret = handler.onFeedUpdated(retrievedFeed);
-            }
-            else {
+            } else {
                 handler.onNoInternetConnection();
             }
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Crashlytics.logException(e);
             handler.onNoInternetConnection();
         }
@@ -96,8 +94,7 @@ public class SurrFeedProvider {
             parser.setInput(in, null);
             parser.nextTag();
             items = readFeed(parser);
-        }
-        catch (XmlPullParserException e) {
+        } catch (XmlPullParserException e) {
             Crashlytics.logException(e);
         }
 

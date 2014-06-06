@@ -54,14 +54,12 @@ public class Friend extends Wrapper<RosterEntry> {
         try {
             try {
                 con.getRoster().removeEntry(get());
-            }
-            catch (SmackException.NotLoggedInException | SmackException.NotConnectedException | SmackException.NoResponseException e) {
+            } catch (SmackException.NotLoggedInException | SmackException.NotConnectedException | SmackException.NoResponseException e) {
                 Log.wtf("debug", e);
 //                Crashlytics.logException(e);
             }
             return true;
-        }
-        catch (XMPPException e) {
+        } catch (XMPPException e) {
             Log.wtf("debug", e);
 //            Crashlytics.logException(e);
         }
@@ -129,8 +127,7 @@ public class Friend extends Wrapper<RosterEntry> {
         if (status != null && !status.isEmpty()) {
             try {
                 return new LolStatus(status);
-            }
-            catch (JDOMException | IOException e) {
+            } catch (JDOMException | IOException e) {
                 Log.wtf("debug", e);
 //                Crashlytics.logException(e);
             }
@@ -160,8 +157,7 @@ public class Friend extends Wrapper<RosterEntry> {
     public void sendMessage(String message) {
         try {
             getChat().sendMessage(message);
-        }
-        catch (XMPPException | SmackException.NotConnectedException e) {
+        } catch (XMPPException | SmackException.NotConnectedException e) {
             Log.wtf("debug", e);
 //            Crashlytics.logException(e);
         }
@@ -181,8 +177,7 @@ public class Friend extends Wrapper<RosterEntry> {
         this.listener = listener;
         try {
             getChat().sendMessage(message);
-        }
-        catch (XMPPException | SmackException.NotConnectedException e) {
+        } catch (XMPPException | SmackException.NotConnectedException e) {
             Log.wtf("debug", e);
 //            Crashlytics.logException(e);
         }

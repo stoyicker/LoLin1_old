@@ -116,8 +116,7 @@ public class ExpandableSearchFragment extends Fragment {
 
         try {
             mCallback = (ExpandableSearchListener) getActivity();
-        }
-        catch (ClassCastException ex) {
+        } catch (ClassCastException ex) {
             throw new ClassCastException(activity.toString()
                     + " must implement ExpandableSearchListener");
         }
@@ -143,8 +142,7 @@ public class ExpandableSearchFragment extends Fragment {
                     .hideSoftInputFromWindow(queryField.getWindowToken(), 0);
             queryField.clearFocus();
             queryField.setEnabled(Boolean.FALSE);
-        }
-        else {
+        } else {
             setTimer();
             queryField.setEnabled(Boolean.TRUE);
             queryField.setVisibility(View.VISIBLE);
@@ -172,8 +170,7 @@ public class ExpandableSearchFragment extends Fragment {
                 if (getView() != null) {
                     getView().setVisibility(View.VISIBLE);
                 }
-            }
-            else {
+            } else {
                 setTimer();
                 queryField.setEnabled(Boolean.TRUE);
                 queryField.setVisibility(View.VISIBLE);

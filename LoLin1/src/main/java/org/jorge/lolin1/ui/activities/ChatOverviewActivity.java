@@ -97,8 +97,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 }
             });
 
-        }
-        else {
+        } else {
             mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
             if (mViewPager.getAdapter() == null) {
                 mViewPager.setAdapter(mPagerAdapter =
@@ -203,8 +202,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             if (action.contentEquals(LoLin1Utils
                     .getString(context.getApplicationContext(), "event_chat_overview", null))) {
                 requestListRefresh();
-            }
-            else {
+            } else {
                 final View thisView =
                         findViewById(android.R.id.content);
                 if (action.contentEquals("android.net.conn.CONNECTIVITY_CHANGE")) {
@@ -219,12 +217,10 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                                 getApplicationContext())) {
                             stopChatService();
                         }
-                    }
-                    else {
+                    } else {
                         ChatOverviewActivity.this.runChat();
                     }
-                }
-                else if (action.contentEquals(LoLin1Utils
+                } else if (action.contentEquals(LoLin1Utils
                         .getString(context.getApplicationContext(), "event_login_failed", null))) {
                     thisView.post(new Runnable() {
                         @Override
@@ -236,8 +232,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                             getApplicationContext())) {
                         stopChatService();
                     }
-                }
-                else if (action.contentEquals(LoLin1Utils
+                } else if (action.contentEquals(LoLin1Utils
                         .getString(context.getApplicationContext(), "event_login_successful",
                                 null))) {
                     thisView.post(new Runnable() {

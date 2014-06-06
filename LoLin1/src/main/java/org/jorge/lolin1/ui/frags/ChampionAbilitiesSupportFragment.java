@@ -54,8 +54,7 @@ public class ChampionAbilitiesSupportFragment extends ChampionDetailSupportFragm
                         ((TextView) view.findViewById(R.id.ability_detail));
                 if (abilityDetailTextView.isShown()) {
                     abilityDetailTextView.setVisibility(View.GONE);
-                }
-                else {
+                } else {
                     abilityDetailTextView.setVisibility(View.VISIBLE);
                 }
                 if (position == abilitiesListView.getAdapter().getCount() - 1) {

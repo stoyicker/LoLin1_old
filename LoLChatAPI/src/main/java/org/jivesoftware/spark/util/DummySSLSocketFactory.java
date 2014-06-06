@@ -59,11 +59,9 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                     new TrustManager[]{new DummyTrustManager()},
                     new java.security.SecureRandom());
             factory = sslcontent.getSocketFactory();
-        }
-        catch (NoSuchAlgorithmException e) {
+        } catch (NoSuchAlgorithmException e) {
             Log.wtf("debug", e);
-        }
-        catch (KeyManagementException e) {
+        } catch (KeyManagementException e) {
             Log.wtf("debug", e);
         }
     }
@@ -81,8 +79,7 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 try {
                     ret = factory.createSocket((Socket) params[0], (String) params[1],
                             (int) params[2], (boolean) params[3]);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.wtf("debug", e);
                     ret = e;
                 }
@@ -95,16 +92,14 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
         Object returned;
         try {
             returned = socketCreationTask.get();
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             Log.wtf("debug", e);
             throw new IOException();//Provoke a fail
         }
 
         if (returned instanceof Exception) {
             throw (IOException) returned;
-        }
-        else {
+        } else {
             return (Socket) returned;
         }
     }
@@ -118,8 +113,7 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 try {
                     ret = factory.createSocket((InetAddress) params[0], (int) params[1],
                             (InetAddress) params[2], (int) params[3]);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.wtf("debug", e);
                     ret = e;
                 }
@@ -132,16 +126,14 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
         Object returned;
         try {
             returned = socketCreationTask.get();
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             Log.wtf("debug", e);
             throw new IOException();//Provoke a fail
         }
 
         if (returned instanceof Exception) {
             throw (IOException) returned;
-        }
-        else {
+        } else {
             return (Socket) returned;
         }
     }
@@ -153,8 +145,7 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 Object ret;
                 try {
                     ret = factory.createSocket((InetAddress) params[0], (int) params[1]);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.wtf("debug", e);
                     ret = e;
                 }
@@ -167,16 +158,14 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
         Object returned;
         try {
             returned = socketCreationTask.get();
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             Log.wtf("debug", e);
             throw new IOException();//Provoke a fail
         }
 
         if (returned instanceof Exception) {
             throw (IOException) returned;
-        }
-        else {
+        } else {
             return (Socket) returned;
         }
     }
@@ -189,8 +178,7 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 try {
                     ret = factory.createSocket((String) params[0], (int) params[1],
                             (InetAddress) params[2], (int) params[3]);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.wtf("debug", e);
                     ret = e;
                 }
@@ -203,16 +191,14 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
         Object returned;
         try {
             returned = socketCreationTask.get();
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             Log.wtf("debug", e);
             throw new IOException();//Provoke a fail
         }
 
         if (returned instanceof Exception) {
             throw (IOException) returned;
-        }
-        else {
+        } else {
             return (Socket) returned;
         }
     }
@@ -224,8 +210,7 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
                 Object ret;
                 try {
                     ret = factory.createSocket((String) params[0], (int) params[1]);
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.wtf("debug", e);
                     ret = e;
                 }
@@ -238,16 +223,14 @@ public class DummySSLSocketFactory extends SSLSocketFactory {
         Object returned;
         try {
             returned = socketCreationTask.get();
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             Log.wtf("debug", e);
             throw new IOException();//Provoke a fail
         }
 
         if (returned instanceof Exception) {
             throw (IOException) returned;
-        }
-        else {
+        } else {
             return (Socket) returned;
         }
     }
@@ -275,11 +258,9 @@ class DummyTrustManager implements X509TrustManager {
         try {
             cert[0].checkValidity();
             return true;
-        }
-        catch (CertificateExpiredException e) {
+        } catch (CertificateExpiredException e) {
             return false;
-        }
-        catch (CertificateNotYetValidException e) {
+        } catch (CertificateNotYetValidException e) {
             return false;
         }
     }

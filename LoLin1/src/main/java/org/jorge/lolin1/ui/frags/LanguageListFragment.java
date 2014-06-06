@@ -150,8 +150,7 @@ public class LanguageListFragment extends Fragment {
         super.onAttach(activity);
         try {
             mCallback = (LanguageListFragmentListener) activity;
-        }
-        catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException(
                     "Activity must implement LanguageListFragmentListener.");
         }

@@ -128,8 +128,7 @@ public class ChatIntentService extends IntentService {
                     runChatOverviewBroadcastReceiver();
                     launchBroadcastLoginSuccessful();
                     setUpChatOverviewListener();
-                }
-                else {
+                } else {
                     launchBroadcastLoginUnsuccessful();
                 }
                 return null;
@@ -229,8 +228,7 @@ public class ChatIntentService extends IntentService {
         }
         try {
             api = new LoLChat(chatServer, Boolean.FALSE);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             launchBroadcastLostConnection();
         }
         final AccountManager accountManager = AccountManager.get(getApplicationContext());
@@ -257,8 +255,7 @@ public class ChatIntentService extends IntentService {
                                             .blockingGetAuthToken(params[0], "none", Boolean.TRUE)
                                             .split(
                                                     AccountAuthenticator.TOKEN_GENERATION_JOINT);
-                        }
-                        catch (OperationCanceledException | IOException | AuthenticatorException e) {
+                        } catch (OperationCanceledException | IOException | AuthenticatorException e) {
                             Crashlytics.logException(e);
                         }
                         return processedAuthToken;
@@ -270,22 +267,19 @@ public class ChatIntentService extends IntentService {
         String[] processedAuthToken = new String[0];
         try {
             processedAuthToken = credentialsTask.get();
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             Crashlytics.logException(e);
         }
         Boolean loginSuccess = Boolean.FALSE;
         try {
             loginSuccess = api.login(processedAuthToken[0], processedAuthToken[1]);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             Crashlytics.logException(e);
         }
         if (loginSuccess) {
             api.reloadRoster();
             return Boolean.TRUE;
-        }
-        else {
+        } else {
             return Boolean.FALSE;
         }
     }
@@ -293,14 +287,12 @@ public class ChatIntentService extends IntentService {
     private void disconnect() {
         try {
             loginTask.get(); // Disconnecting in the middle of a login may be troublesome
-        }
-        catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException e) {
             Crashlytics.logException(e);
         }
         try {
             api.disconnect();
-        }
-        catch (SmackException.NotConnectedException e) {
+        } catch (SmackException.NotConnectedException e) {
             Crashlytics.logException(e);
         }
         api = null;

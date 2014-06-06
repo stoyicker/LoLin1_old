@@ -58,8 +58,7 @@ public final class InitialActivity extends Activity {
             final Intent serverAndLanguageChooserIntent =
                     new Intent(getApplicationContext(), ServerAndLanguageChooserActivity.class);
             startActivity(serverAndLanguageChooserIntent);
-        }
-        else {
+        } else {
             final Intent splashIntent = new Intent(getApplicationContext(), SplashActivity.class);
             finish();
             startActivity(splashIntent);

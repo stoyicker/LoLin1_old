@@ -12,12 +12,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.custom.SurrsAdapter;
+import org.jorge.lolin1.func.custom.TranslatableHeaderTransformer;
 import org.jorge.lolin1.func.feeds.surr.SurrEntry;
 import org.jorge.lolin1.io.net.SurrFeedProvider;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
-import org.jorge.lolin1.func.custom.SurrsAdapter;
-import org.jorge.lolin1.func.custom.TranslatableHeaderTransformer;
 
 import java.util.Arrays;
 
@@ -69,8 +69,8 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
         super.onListItemClick(l, v, position, id);
 
 //        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
-            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                    .putInt("lastSelectedSurrIndex", position).commit();
+        PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+                .putInt("lastSelectedSurrIndex", position).commit();
 //        }
 
         getListView().setItemChecked(position, Boolean.TRUE);
@@ -152,8 +152,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
 
         try {
             mCallback = (SurrListFragmentListener) activity;
-        }
-        catch (ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement SurrListFragmentListener");
         }

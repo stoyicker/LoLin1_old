@@ -72,8 +72,7 @@ public class NewsFeedHandler implements IFeedHandler {
                 bmp = BitmapFactory
                         .decodeStream(new URL(img_url).openConnection()
                                 .getInputStream());
-            }
-            catch (IOException e) {
+            } catch (IOException e) {
                 Log.w("debug", e.getClass().getName(), e);
             }
 

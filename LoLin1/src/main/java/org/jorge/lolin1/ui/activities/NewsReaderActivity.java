@@ -62,8 +62,7 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
         int index;
         if (!wasSavedInstanceStateNull) {
             restoreState(savedInstanceState);
-        }
-        else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
+        } else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
                 .getInt("lastSelectedNewsIndex", 0)) != -1 && isDualPane) {
             onNewsArticleSelected(index);
         }
@@ -97,8 +96,7 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
             if (!(news = SQLiteDAO.getSingleton().getNews()).isEmpty() && index > -1) {
                 WEB_FRAGMENT.loadUrl(news.get(index).getLink());
             }
-        }
-        else {
+        } else {
             Intent singleViewIntent = new Intent(getApplicationContext(), WebViewerActivity.class);
             singleViewIntent.putExtra("index", index);
             startActivity(singleViewIntent);

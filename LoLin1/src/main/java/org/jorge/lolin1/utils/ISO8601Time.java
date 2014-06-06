@@ -33,8 +33,7 @@ public final class ISO8601Time {
     public ISO8601Time(String source) {
         try {
             value = PATTERN.parse(source);
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             Crashlytics.logException(e);
         }
     }
@@ -43,8 +42,7 @@ public final class ISO8601Time {
         Date target = null;
         try {
             target = PATTERN.parse(comparisonTarget);
-        }
-        catch (ParseException e) {
+        } catch (ParseException e) {
             Crashlytics.logException(e);
         }
 
