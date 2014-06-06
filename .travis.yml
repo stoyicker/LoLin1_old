@@ -10,8 +10,8 @@ before_install:
   # Module LoLChatAPI
   - mkdir LoLChatAPI/libs
   - cd LoLChatAPI/libs
-  # aSmack 4.0.0 RC1
-  - wget http://asmack.freakempire.de/4.0.0-rc1/asmack-android-8-4.0.0-rc1.jar
+  # aSmack 4.0.0 RC2
+  - wget http://asmack.freakempire.de/4.0.0-rc1/asmack-android-8-4.0.0-rc2.jar
   # Done
   # Done with the module
   - cd ..
