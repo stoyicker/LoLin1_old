@@ -1,7 +1,6 @@
 package org.jorge.lolin1.io.net;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
@@ -12,7 +11,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
-import org.jorge.lolin1.ui.activities.InitialActivity;
+import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.BufferedInputStream;
@@ -55,34 +54,29 @@ public abstract class HTTPServices {
 
     public static void downloadFile(final String whatToDownload, final File whereToSaveIt)
             throws IOException {
-        if (InitialActivity.DEBUG)
-            Log.d("debug", "Downloading url " + whatToDownload);
+        LoLin1DebugUtils.logString("debug", "Downloading url " + whatToDownload);
         AsyncTask<Void, Void, Object> imageDownloadAsyncTask = new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... params) {
                 BufferedInputStream bufferedInputStream = null;
                 FileOutputStream fileOutputStream = null;
                 try {
-                    if (InitialActivity.DEBUG)
-                        Log.d("debug", "Opening stream for " + whatToDownload);
+                    LoLin1DebugUtils.logString("debug", "Opening stream for " + whatToDownload);
                     bufferedInputStream = new BufferedInputStream(
                             new URL(URLDecoder.decode(whatToDownload, "UTF-8")
                                     .replaceAll(" ", "%20"))
                                     .openStream()
                     );
-                    if (InitialActivity.DEBUG)
-                        Log.d("debug", "Opened stream for " + whatToDownload);
+                    LoLin1DebugUtils.logString("debug", "Opened stream for " + whatToDownload);
                     fileOutputStream = new FileOutputStream(whereToSaveIt);
 
                     final byte data[] = new byte[1024];
                     int count;
-                    if (InitialActivity.DEBUG)
-                        Log.d("debug", "Loop-writing " + whatToDownload);
+                    LoLin1DebugUtils.logString("debug", "Loop-writing " + whatToDownload);
                     while ((count = bufferedInputStream.read(data, 0, 1024)) != -1) {
                         fileOutputStream.write(data, 0, count);
                     }
-                    if (InitialActivity.DEBUG)
-                        Log.d("debug", "Loop-written " + whatToDownload);
+                    LoLin1DebugUtils.logString("debug", "Loop-written " + whatToDownload);
                 } catch (IOException e) {
                     return e;
                 } finally {

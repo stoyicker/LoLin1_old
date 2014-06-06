@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.MenuItem;
@@ -15,6 +16,7 @@ import com.crashlytics.android.Crashlytics;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout;
 import org.jorge.lolin1.ui.frags.NavigationDrawerFragment;
+import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.Stack;
@@ -54,7 +56,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     public static void clearNavigation() {
         navigatedItemsStack.clear();
         navigatedItemsStack
-                .add(0, 0);//By default say that the first thing we did was staying at Home
+                .push(0);//By default say that the first thing done is staying at Home
     }
 
     public static int getLastSelectedNavDrawerIndex() {
@@ -92,13 +94,13 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        navigatedItemsStack.add(0, navigatedItemsStack.get(0));
+        navigatedItemsStack.push(navigatedItemsStack.peek());
         recreate();
     }
 
     @Override
     public void onNavigationDrawerItemSelected(int position) {
-        if (position == getLastSelectedNavDrawerIndex()) {
+        if (!navigatedItemsStack.isEmpty() && position == getLastSelectedNavDrawerIndex()) {
             //We don't want to perform an unnecessary Activity reload
             //noinspection UnnecessaryReturnStatement
             return;
@@ -174,28 +176,18 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     @Override
     protected void onResume() {
         super.onResume();
-        try {
-            mTitle = LoLin1Utils
-                    .getString(this, "title_section" + (getLastSelectedNavDrawerIndex() + 1), null);
-        } catch (IndexOutOfBoundsException ex) {
-            mTitle = LoLin1Utils
-                    .getString(this, "title_section1", null);
-        }
         restoreActionBar();
     }
 
     @Override
     public void onBackPressed() {
-        if (navigatedItemsStack.size() > 1) {
-            finish();
-        } else {
+        if (!navigatedItemsStack.isEmpty())
             navigatedItemsStack.pop();
-        }
+        finish();
     }
 
     @Override
     protected void onDestroy() {
-        navigatedItemsStack.pop();
         super.onDestroy();
     }
 
@@ -216,6 +208,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         mNavigationDrawerFragment.setHasOptionsMenu(Boolean.TRUE);
 
         mTitle = getTitle();
+        LoLin1DebugUtils.logString("debug", "onCreate: mTitle = " + mTitle);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -226,7 +219,8 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     public void onSectionAttached(int number) {
         int shiftedPos = number + 1;
         mTitle = LoLin1Utils.getString(this, "title_section" + shiftedPos, "");
-        if (mTitle.toString().isEmpty()) {
+        LoLin1DebugUtils.logString("debug", "onSectionAttached: mTitle = " + mTitle);
+        if (TextUtils.isEmpty(mTitle)) {
             mTitle = getString(R.string.title_section1);
         }
     }

@@ -36,11 +36,6 @@ import java.io.File;
  */
 public final class InitialActivity extends Activity {
 
-    public static final Boolean DEBUG = Boolean.TRUE;
-
-    /**
-     * Called when the activity is first created.
-     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

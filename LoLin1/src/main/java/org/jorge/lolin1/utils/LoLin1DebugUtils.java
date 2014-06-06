@@ -10,11 +10,8 @@ import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
-import java.io.BufferedInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
-import java.nio.charset.Charset;
 import java.util.Arrays;
 
 /**
@@ -38,7 +35,10 @@ import java.util.Arrays;
 @SuppressWarnings({"UnusedDeclaration", "deprecation"})
 public abstract class LoLin1DebugUtils {
 
+    private static final Boolean DEBUG = Boolean.TRUE;
+
     public static void showTrace(String tag, Exception source) {
+        if (!DEBUG) return;
         StackTraceElement[] trace = source.getStackTrace();
         String toPrint = "";
         for (StackTraceElement x : trace) {
@@ -49,23 +49,8 @@ public abstract class LoLin1DebugUtils {
         Log.d(tag, toPrint);
     }
 
-    public static String convertBufferedStreamToString(BufferedInputStream in)
-            throws IOException {
-        StringBuilder sb = new StringBuilder(Math.max(16, in.available()));
-        char[] tmp = new char[4096];
-
-        in.mark(Integer.MAX_VALUE);
-
-        InputStreamReader reader = new InputStreamReader(in, Charset.forName("utf-8"));
-        for (int cnt; (cnt = reader.read(tmp)) > 0; )
-            sb.append(tmp, 0, cnt);
-
-        in.reset();
-
-        return sb.toString();
-    }
-
     public static void writeToFile(String data, Context context) {
+        if (!DEBUG) return;
         try {
             @SuppressLint("WorldReadableFiles") OutputStreamWriter outputStreamWriter =
                     new OutputStreamWriter(
@@ -78,6 +63,7 @@ public abstract class LoLin1DebugUtils {
     }
 
     public static void debugSelectAllFromTable(String tag, String[] fields, String tableName) {
+        if (!DEBUG) return;
         SQLiteDatabase db = SQLiteDAO.getSingleton().getReadableDatabase();
 
         db.beginTransaction();
@@ -96,8 +82,14 @@ public abstract class LoLin1DebugUtils {
     }
 
     public static void logArray(String tag, String arrayName, Object[] array) {
+        if (!DEBUG) return;
         Log.d(tag, "Logging array " + arrayName);
         for (Object x : array)
             Log.d(tag, x + "\n");
+    }
+
+    public static void logString(String tag, String msg) {
+        if (!DEBUG) return;
+        Log.d(tag, msg);
     }
 }
