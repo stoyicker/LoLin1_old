@@ -16,13 +16,14 @@ import com.crashlytics.android.Crashlytics;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout;
 import org.jorge.lolin1.ui.frags.NavigationDrawerFragment;
-import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.Stack;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 /**
  * This file is part of LoLin1.
@@ -49,7 +50,6 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
             new Stack<>();
     public static final String ACTIVITY_LAYOUT = "LAYOUT";
     public static final String ACTION_BAR_MENU_LAYOUT = "ACTION_BAR_MENU_LAYOUT";
-    private static final long NEW_ACTIVITY_DELAY = 250;
     private FixedDrawerLayout drawerLayout;
     private CharSequence mTitle;
 
@@ -105,7 +105,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
             //noinspection UnnecessaryReturnStatement
             return;
         } else {
-            navigatedItemsStack.add(0, position);
+            navigatedItemsStack.push(position);
         }
 
         Runnable task;
@@ -132,10 +132,12 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                 task = new Runnable() {
                     @Override
                     public void run() {
+                        logString("debug", "Champions Activity starting");
                         startActivity(
                                 new Intent(getApplicationContext(),
                                         ChampionListActivity.class)
                         );
+                        logString("debug", "Champions Activity started");
                     }
                 };
                 break;
@@ -169,7 +171,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         if (task != null) {
             ScheduledExecutorService newActivityExecutor =
                     Executors.newSingleThreadScheduledExecutor();
-            newActivityExecutor.schedule(task, NEW_ACTIVITY_DELAY, TimeUnit.MILLISECONDS);
+            newActivityExecutor.schedule(task, 0, TimeUnit.MILLISECONDS);
         }
     }
 
@@ -181,8 +183,15 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
 
     @Override
     public void onBackPressed() {
-        if (!navigatedItemsStack.isEmpty())
+        if (!navigatedItemsStack.isEmpty()) {
             navigatedItemsStack.pop();
+            int r;
+            if (!navigatedItemsStack.isEmpty()) {
+                logString("debug", "Popped " + (r = navigatedItemsStack.pop()));
+                logString("debug", "Rest of the stack: " + navigatedItemsStack.toString());
+                onNavigationDrawerItemSelected(r);
+            }
+        }
         finish();
     }
 
@@ -208,7 +217,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         mNavigationDrawerFragment.setHasOptionsMenu(Boolean.TRUE);
 
         mTitle = getTitle();
-        LoLin1DebugUtils.logString("debug", "onCreate: mTitle = " + mTitle);
+        logString("debug", "onCreate: mTitle = " + mTitle);
 
         // Set up the drawer.
         mNavigationDrawerFragment.setUp(
@@ -219,7 +228,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
     public void onSectionAttached(int number) {
         int shiftedPos = number + 1;
         mTitle = LoLin1Utils.getString(this, "title_section" + shiftedPos, "");
-        LoLin1DebugUtils.logString("debug", "onSectionAttached: mTitle = " + mTitle);
+        logString("debug", "onSectionAttached: mTitle = " + mTitle);
         if (TextUtils.isEmpty(mTitle)) {
             mTitle = getString(R.string.title_section1);
         }
