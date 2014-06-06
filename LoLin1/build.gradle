@@ -26,9 +26,6 @@ android {
             targetSdkVersion 19
             versionCode 0
             versionName "Development"
-            crashlytics {
-                manifestPath = 'src/main/AndroidManifest.xml'
-            }
         }
     }
 
