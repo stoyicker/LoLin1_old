@@ -15,5 +15,4 @@ proguard-lolchatapi.txt
 .idea
 *.iml
 libs/
-libs-src/
 
