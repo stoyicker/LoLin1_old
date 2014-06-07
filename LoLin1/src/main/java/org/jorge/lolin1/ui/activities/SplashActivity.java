@@ -20,7 +20,6 @@ import org.jorge.lolin1.io.local.JsonManager;
 import org.jorge.lolin1.io.net.HTTPServices;
 import org.jorge.lolin1.ui.frags.SplashLogFragment;
 import org.jorge.lolin1.utils.BoxedBoolean;
-import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -38,6 +37,8 @@ import java.util.concurrent.TimeUnit;
 
 import fr.castorflex.android.smoothprogressbar.SmoothProgressBar;
 import fr.castorflex.android.smoothprogressbar.SmoothProgressDrawable;
+
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 public final class SplashActivity extends Activity {
 
@@ -102,6 +103,11 @@ public final class SplashActivity extends Activity {
                     return null;
                 }
             }.execute();
+        } else {
+            LOG_FRAGMENT.appendToNewLine(LoLin1Utils
+                    .getString(getApplicationContext(), "no_connection_on_splash",
+                            null));
+            launchNewsReader();
         }
     }
 
@@ -193,9 +199,9 @@ public final class SplashActivity extends Activity {
         }
         LOG_FRAGMENT.appendToSameLine(
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
-        LoLin1DebugUtils.logString("debug", "Pre-update operations finished");
+        logString("debug", "Pre-update operations finished");
         for (String locale : localesInThisRealm) {
-            LoLin1DebugUtils.logString("debug", "Updating locale " + locale);
+            logString("debug", "Updating locale " + locale);
             final String bustString =
                     root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
                             pathSeparator + locale + pathSeparator +
@@ -232,7 +238,7 @@ public final class SplashActivity extends Activity {
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 return Boolean.FALSE;
             }
-            LoLin1DebugUtils.logString("debug", "Directories allocated");
+            logString("debug", "Directories allocated");
             LOG_FRAGMENT.appendToNewLine(
                     LoLin1Utils.getString(getApplicationContext(), "list_download", null) + " " +
                             realm + "." + locale + LoLin1Utils
@@ -241,9 +247,9 @@ public final class SplashActivity extends Activity {
             InputStream dataStream;
             String dataStreamAsString;
             try {
-                LoLin1DebugUtils.logString("debug", "Request initialized");
+                logString("debug", "Request initialized");
                 dataStream = HTTPServices.performListRequest(server, realm, locale);
-                LoLin1DebugUtils.logString("debug", "Request finished");
+                logString("debug", "Request finished");
                 dataStreamAsString = LoLin1Utils.inputStreamAsString(dataStream, locale);
                 if (!JsonManager.getResponseStatus(dataStreamAsString)) {
                     LOG_FRAGMENT.appendToSameLine(
@@ -268,7 +274,7 @@ public final class SplashActivity extends Activity {
             try {
                 FileManager
                         .writeStringToFile(dataStreamAsString, dataFile, locale);
-                LoLin1DebugUtils.logString("debug", "Data file written");
+                logString("debug", "Data file written");
             } catch (IOException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
@@ -319,7 +325,7 @@ public final class SplashActivity extends Activity {
             Collection<Champion> champs = ChampionManager.getInstance().buildChampions(JsonManager
                     .getStringAttribute(dataStreamAsString, LoLin1Utils
                             .getString(getApplicationContext(), "champion_list_key", null)));
-            LoLin1DebugUtils.logString("debug", "CDN checks finished");
+            logString("debug", "CDN checks finished");
             if (champs.isEmpty()) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
@@ -552,9 +558,9 @@ public final class SplashActivity extends Activity {
         do {
             try {
                 target = dataProviders[index];
-                LoLin1DebugUtils.logString("debug", "Testing " + target);
+                logString("debug", "Testing " + target);
                 getContentInputStream = HTTPServices.performVersionRequest(target, "euw", "en_US");
-                LoLin1DebugUtils.logString("debug", "Tested " + target);
+                logString("debug", "Tested " + target);
                 String content = LoLin1Utils
                         .inputStreamAsString(getContentInputStream, "en_US");
                 if (!content.contains(LoLin1Utils.getString(getApplicationContext(),
@@ -590,7 +596,7 @@ public final class SplashActivity extends Activity {
         LOG_FRAGMENT.appendToSameLine(
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
 
-        LoLin1DebugUtils.logString("debug", "Provider found: " + target);
+        logString("debug", "Provider found: " + target);
 
         return target;
     }
