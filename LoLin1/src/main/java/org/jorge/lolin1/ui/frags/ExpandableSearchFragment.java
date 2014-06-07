@@ -11,6 +11,8 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.ui.activities.ChampionListActivity;
+import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.ui.activities.DrawerLayoutFragmentActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
@@ -39,22 +41,16 @@ import java.util.TimerTask;
  */
 public class ExpandableSearchFragment extends Fragment {
 
-    private static final String WAS_SHOWN = "wasShown";
     public static final String KEY_UPDATE_DELAY_MILLIS = "UPDATE_DELAY_MILLIS",
             KEY_UPDATE_INTERVAL_MILLIS = "UPDATE_INTERVAL_MILLIS";
-    private ExpandableSearchListener mCallback;
-
-    public EditText getQueryField() {
-        return queryField;
-    }
-
-    private EditText queryField;
-    private String lastQuery = "";
-    private Timer filterUpdateTimer;
+    private static final String WAS_SHOWN = "wasShown";
     private static final int DEFAULT_FILTER_UPDATE_DELAY_MILLIS = 0,
             DEFAULT_FILTER_UPDATE_INTERVAL_MILLIS = 1000;
     private final int FILTER_UPDATE_DELAY_MILLIS, FILTER_UPDATE_INTERVAL_MILLIS;
-
+    private ExpandableSearchListener mCallback;
+    private EditText queryField;
+    private String lastQuery = "";
+    private Timer filterUpdateTimer;
     @SuppressWarnings("unused")
     public ExpandableSearchFragment() {
         int delay = 0, interval = 0;
@@ -67,6 +63,10 @@ public class ExpandableSearchFragment extends Fragment {
         FILTER_UPDATE_INTERVAL_MILLIS =
                 interval > 0 ? interval :
                         DEFAULT_FILTER_UPDATE_INTERVAL_MILLIS;
+    }
+
+    public EditText getQueryField() {
+        return queryField;
     }
 
     @Override
@@ -121,6 +121,11 @@ public class ExpandableSearchFragment extends Fragment {
                     + " must implement ExpandableSearchListener");
         }
 
+        int index = -1;
+
+        if (activity instanceof ChatOverviewActivity) index = 5;
+        else if (activity instanceof ChampionListActivity) index = 3;
+
         ((DrawerLayoutFragmentActivity) activity).onSectionAttached(
                 new ArrayList<>(
                         Arrays.asList(
@@ -128,7 +133,7 @@ public class ExpandableSearchFragment extends Fragment {
                                         getActivity(),
                                         "navigation_drawer_items", new String[]{""})
                         )
-                ).indexOf(LoLin1Utils.getString(getActivity(), "title_section3",
+                ).indexOf(LoLin1Utils.getString(getActivity(), "title_section" + index,
                         "Champions"))
         );
     }

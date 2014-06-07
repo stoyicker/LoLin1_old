@@ -32,5 +32,6 @@ public final class JungleTimersActivity extends DrawerLayoutFragmentActivity {
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_jungle_timers);
         super.onCreate(savedInstanceState);
+        onSectionAttached(1);
     }
 }

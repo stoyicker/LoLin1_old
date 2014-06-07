@@ -216,7 +216,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
 
         mNavigationDrawerFragment.setHasOptionsMenu(Boolean.TRUE);
 
-        mTitle = getTitle();
+//        if (TextUtils.isEmpty(mTitle)) mTitle = getTitle();
         logString("debug", "onCreate: mTitle = " + mTitle);
 
         // Set up the drawer.
@@ -229,6 +229,7 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
         int shiftedPos = number + 1;
         mTitle = LoLin1Utils.getString(this, "title_section" + shiftedPos, "");
         logString("debug", "onSectionAttached: mTitle = " + mTitle);
+        logString("debug", "number: " + number);
         if (TextUtils.isEmpty(mTitle)) {
             mTitle = getString(R.string.title_section1);
         }
