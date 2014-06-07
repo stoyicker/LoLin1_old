@@ -90,25 +90,31 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         final View thisView =
                 findViewById(android.R.id.content);
         mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
+        if (mViewPager.getAdapter() == null) {
+            mViewPager.setAdapter(mPagerAdapter =
+                    new ChatStatesPagerAdapter(getSupportFragmentManager()));
+        }
+        Runnable viewRunnable;
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            thisView.post(new Runnable() {
+            viewRunnable=new Runnable() {
                 @Override
                 public void run() {
                     showViewNoConnection();
                 }
-            });
+            };
         } else {
-            if (mViewPager.getAdapter() == null) {
-                mViewPager.setAdapter(mPagerAdapter =
-                        new ChatStatesPagerAdapter(getSupportFragmentManager()));
-                showViewLoading();
-            }
-
+            viewRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    showViewLoading();
+                }
+            };
             if (!LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
                     getApplicationContext())) {
                 runChat();
             }
         }
+        thisView.post(viewRunnable);
         super.onResume();
     }
 

@@ -36,26 +36,28 @@ public class SplashLogFragment extends Fragment {
     private ScrollView logScrollView;
 
     public void appendToSameLine(final CharSequence text) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                logTextView.append(text);
-            }
-        });
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    logTextView.append(text);
+                }
+            });
     }
 
     public void appendToNewLine(final CharSequence text) {
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                appendToSameLine(new StringBuilder("\n").append(text));
-                logScrollView.post(new Runnable() {
-                    public void run() {
-                        logScrollView.smoothScrollTo(0, logTextView.getBottom());
-                    }
-                });
-            }
-        });
+        if (getActivity() != null)
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    appendToSameLine(new StringBuilder("\n").append(text));
+                    logScrollView.post(new Runnable() {
+                        public void run() {
+                            logScrollView.smoothScrollTo(0, logTextView.getBottom());
+                        }
+                    });
+                }
+            });
     }
 
     @Override
