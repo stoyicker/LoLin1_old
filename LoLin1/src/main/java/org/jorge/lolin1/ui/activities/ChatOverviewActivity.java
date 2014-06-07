@@ -89,6 +89,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     protected void onResume() {
         final View thisView =
                 findViewById(android.R.id.content);
+        mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
             thisView.post(new Runnable() {
                 @Override
@@ -96,9 +97,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     showViewNoConnection();
                 }
             });
-
         } else {
-            mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
             if (mViewPager.getAdapter() == null) {
                 mViewPager.setAdapter(mPagerAdapter =
                         new ChatStatesPagerAdapter(getSupportFragmentManager()));
