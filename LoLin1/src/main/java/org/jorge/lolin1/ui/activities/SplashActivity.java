@@ -129,12 +129,11 @@ public final class SplashActivity extends Activity {
         }
     }
 
-    private void askIfOnMobileConnectionAndRunDownload(final String server, final String realm,
-                                                       final String[] localesInThisRealm,
-                                                       final String newVersion) {
+    private boolean askIfOnMobileConnectionAndRunDownload() {
         final CountDownLatch alertDialogLatch = new CountDownLatch(1);
+        Boolean ret;
 
-        if (((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE))
+        if (ret = ((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE))
                 .getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
                 .isConnectedOrConnecting()) {
             LOG_FRAGMENT.appendToSameLine(
@@ -142,11 +141,9 @@ public final class SplashActivity extends Activity {
                             "update_delayed", null)
             );
             alertDialogLatch.countDown();
-        } else {
-            if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
-                performPostUpdateOperations(realm, newVersion);
-            }
         }
+
+        return ret;
     }
 
     private void performPostUpdateOperations(String realm, String newVersion) {
@@ -491,6 +488,9 @@ public final class SplashActivity extends Activity {
 
         String[] realms =
                 LoLin1Utils.getStringArray(getApplicationContext(), "servers", null);
+        if (!askIfOnMobileConnectionAndRunDownload()) {
+            launchNewsReader();
+        }
         for (String realm : realms) {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "update_pre_version_check", null) +
@@ -530,8 +530,9 @@ public final class SplashActivity extends Activity {
                                 null) + realm.toLowerCase() +
                                 LoLin1Utils.getString(getApplicationContext(),
                                         "language_to_simplified_suffix", null), null);
-                askIfOnMobileConnectionAndRunDownload(server, realm, localesInThisRealm,
-                        newVersion);
+                if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
+                    performPostUpdateOperations(realm, newVersion);
+                }
             } else {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils
                         .getString(getApplicationContext(), "update_no_new_version", null));
