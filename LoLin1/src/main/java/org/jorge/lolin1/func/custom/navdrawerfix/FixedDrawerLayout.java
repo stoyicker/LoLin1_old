@@ -721,7 +721,12 @@ public class FixedDrawerLayout extends ViewGroup {
     @Override
     public void requestLayout() {
         if (!mInLayout) {
-            super.requestLayout();
+            post(new Runnable() {
+                @Override
+                public void run() {
+                    FixedDrawerLayout.super.requestLayout();
+                }
+            });
         }
     }
 
