@@ -56,7 +56,10 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     private ViewPager mViewPager;
     private BroadcastReceiver mChatBroadcastReceiver;
     private ChatStatesPagerAdapter mPagerAdapter;
-    private static Boolean restartDueToRotation = Boolean.FALSE;
+    private static Boolean alreadyInited = Boolean.FALSE;
+
+    //FIXME The search dialog doesn't drop
+    //FIXME onCreate should be called only once
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,7 +80,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         }
         Runnable viewRunnable;
         registerLocalBroadcastReceiver();
-        if (restartDueToRotation) {
+        if (alreadyInited) {
             logString("debug", "Chat: rotation detected");
             if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
                 thisView.post(new Runnable() {
@@ -177,7 +180,6 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
-        restartDueToRotation = Boolean.TRUE;
         super.onConfigurationChanged(newConfig);
     }
 
@@ -203,6 +205,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 {
                     logString("debug", "Detected status: logged in");
                     SEARCH_FRAGMENT.toggleVisibility();
+                    logString("debug", "SEARCH_FRAGMENT visibility set to: " + SEARCH_FRAGMENT.isVisible());
                 }
                 break;
             default: //Up or Settings buttons
@@ -317,6 +320,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 } else if (action.contentEquals(LoLin1Utils
                         .getString(context.getApplicationContext(), "event_login_successful",
                                 null))) {
+                    alreadyInited = Boolean.TRUE;
                     thisView.post(new Runnable() {
                         @Override
                         public void run() {
@@ -335,6 +339,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         Intent chatDisconnectIntent = new Intent(getApplicationContext(), ChatIntentService.class);
         chatDisconnectIntent.setAction(ChatIntentService.ACTION_DISCONNECT);
         startService(chatDisconnectIntent);
+        alreadyInited = Boolean.FALSE;
         stopService(new Intent(getApplicationContext(), ChatIntentService.class));
     }
 
