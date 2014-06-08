@@ -19,56 +19,65 @@
 ~ Created by JorgeAntonio on 16/4/2014.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/theme_light_blue">
-	<RelativeLayout
-		android:id="@+id/profile_image_container"
-		android:gravity="center_vertical|start"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content">
-		<ImageView
-			android:id="@+id/friend_profile_icon"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			android:background="@drawable/image_border_white"
-			android:contentDescription="@string/profile_icon_content_description"/>
-		<TextView
-			android:id="@+id/friend_level"
-			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
-			style="@style/LevelTextStyle"
-			android:layout_alignRight="@+id/friend_profile_icon"
-			android:padding="@dimen/level_padding_in_profile_icon"
-			android:layout_alignBottom="@+id/friend_profile_icon"/>
-	</RelativeLayout>
-	<TextView
-		android:id="@+id/friend_name"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentTop="true"
-		android:layout_toRightOf="@+id/profile_image_container"/>
-	<TextView
-		android:id="@+id/friend_text_status"
-		android:layout_width="wrap_content"
-		android:layout_below="@+id/friend_name"
-		android:textStyle="bold"
-		android:textColor="@color/theme_white"
-		android:layout_alignLeft="@+id/friend_name"
-		android:layout_height="wrap_content"/>
-	<TextView
-		android:id="@+id/friend_ranked_division"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textColor="@color/theme_light_green"
-		android:layout_below="@+id/friend_text_status"
-		android:layout_alignLeft="@+id/friend_name"/>
-	<ImageView
-		android:id="@+id/friend_chat_status"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:textColor="@color/theme_strong_orange"
-		android:layout_alignParentRight="true"
-		android:layout_centerVertical="true"
-		android:contentDescription="@string/chat_status_content_description"/>
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/theme_light_blue"
+    android:padding="@dimen/padding_chat_friend">
+
+    <RelativeLayout
+        android:id="@+id/profile_image_container"
+        android:gravity="center_vertical|start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/padding_chat_friend">
+
+        <ImageView
+            android:id="@+id/friend_profile_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/image_border_white"
+            android:contentDescription="@string/profile_icon_content_description" />
+
+        <TextView
+            android:id="@+id/friend_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/LevelTextStyle"
+            android:layout_alignRight="@+id/friend_profile_icon"
+            android:padding="@dimen/level_padding_in_profile_icon"
+            android:layout_alignBottom="@+id/friend_profile_icon" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/friend_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/profile_image_container" />
+
+    <TextView
+        android:id="@+id/friend_text_status"
+        android:layout_width="wrap_content"
+        android:layout_below="@+id/friend_name"
+        android:textStyle="bold"
+        android:textColor="@color/theme_light_green"
+        android:layout_alignLeft="@+id/friend_name"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/friend_ranked_division"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/theme_white"
+        android:layout_below="@+id/friend_text_status"
+        android:layout_alignLeft="@+id/friend_name" />
+
+    <ImageView
+        android:id="@+id/friend_chat_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/theme_strong_orange"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:contentDescription="@string/chat_status_content_description" />
 </RelativeLayout>

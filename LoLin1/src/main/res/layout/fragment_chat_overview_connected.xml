@@ -19,22 +19,27 @@
 ~ Created by JorgeAntonio on 01/05/2014.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
-	<ListView
-		android:id="@id/android:list"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:paddingTop="@dimen/champion_grid_horizontal_spacing"
-		android:paddingBottom="@dimen/champion_grid_horizontal_spacing"
-		android:horizontalSpacing="@dimen/champion_grid_horizontal_spacing"
-		android:verticalSpacing="@dimen/champion_grid_vertical_spacing"/>
-	<ImageView
-		android:id="@id/android:empty"
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:contentDescription="@string/empty_content"
-		android:scaleType="centerInside"
-		android:src="@drawable/nothing_to_do_here"/>
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ListView
+        android:id="@id/android:list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/champion_grid_horizontal_spacing"
+        android:paddingBottom="@dimen/champion_grid_horizontal_spacing"
+        android:horizontalSpacing="@dimen/champion_grid_horizontal_spacing"
+        android:verticalSpacing="@dimen/champion_grid_vertical_spacing"
+        android:divider="@color/theme_black"
+        android:dividerHeight="@dimen/feed_divider"
+        android:requiresFadingEdge="vertical" />
+
+    <ImageView
+        android:id="@id/android:empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/empty_content"
+        android:scaleType="centerInside"
+        android:src="@drawable/nothing_to_do_here" />
 </LinearLayout>
