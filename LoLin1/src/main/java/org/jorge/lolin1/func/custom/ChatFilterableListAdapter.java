@@ -26,6 +26,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -114,6 +116,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
             protected Void doInBackground(Void[] params) {
                 Drawable drawable;
                 ChatMode mode = thisFriend.getChatMode();
+                logString("debug", "Chat mode for " + thisFriend.getName() + ": " + mode);
                 if (mode == ChatMode.AVAILABLE) {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_online);
                 } else if (mode == ChatMode.BUSY) {
@@ -126,8 +129,8 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                     viewHolder.getChatStatus().post(new Runnable() {
                         @Override
                         public void run() {
-                            if (viewHolder != null)
-                                viewHolder.getChatStatus().setImageDrawable(drawableAsFinal);
+                            viewHolder.getChatStatus().setImageDrawable(drawableAsFinal);
+                            viewHolder.getChatStatus().invalidate();
                         }
                     });
                 return null;
