@@ -209,5 +209,5 @@ Created by JorgeAntonio on 02/01/14.
 	<string name="event_login_successful">org.jorge.lolin1.CHAT_LOGIN_SUCCESSFUL_EVENT</string>
 	<string name="event_login_failed">org.jorge.lolin1.CHAT_LOGIN_FAILED_EVENT</string>
 	<string name="chat_overview_wrong_credentials">
-		<![CDATA[It seems that the credentials you are trying to use are not valid. You may fix them under Settings > Account Management.]]></string>
+		<![CDATA[It seems the credentials you are trying to use, if any, are not valid. You may fix them under Settings > Account Management.]]></string>
 </resources>
