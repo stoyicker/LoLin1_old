@@ -51,6 +51,7 @@ public class ExpandableSearchFragment extends Fragment {
     private EditText queryField;
     private String lastQuery = "";
     private Timer filterUpdateTimer;
+
     @SuppressWarnings("unused")
     public ExpandableSearchFragment() {
         int delay = 0, interval = 0;
@@ -134,7 +135,7 @@ public class ExpandableSearchFragment extends Fragment {
                                         "navigation_drawer_items", new String[]{""})
                         )
                 ).indexOf(LoLin1Utils.getString(getActivity(), "title_section" + index,
-                        "Champions"))
+                        null))
         );
     }
 
