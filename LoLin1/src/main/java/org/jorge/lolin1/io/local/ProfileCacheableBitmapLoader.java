@@ -19,6 +19,8 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.concurrent.ConcurrentHashMap;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -114,7 +116,7 @@ public final class ProfileCacheableBitmapLoader {
                 // Move element to first position, so that it is removed last
                 sHardBitmapCache.remove(id);
                 sHardBitmapCache.put(id, bitmap);
-                activity.runOnUiThread(new Runnable() {
+                imageView.post(new Runnable() {
                     @Override
                     public void run() {
                         imageView.setImageBitmap(bitmap);
@@ -130,7 +132,7 @@ public final class ProfileCacheableBitmapLoader {
             final Bitmap bitmap = bitmapReference.get();
             if (bitmap != null) {
                 // Bitmap found in soft cache
-                activity.runOnUiThread(new Runnable() {
+                imageView.post(new Runnable() {
                     @Override
                     public void run() {
                         imageView.setImageBitmap(bitmap);
@@ -152,28 +154,34 @@ public final class ProfileCacheableBitmapLoader {
                                         null) + id + ".png"
                 );
 
+
+        logString("debug", "Path for image with id " + id + ": " + path);
+
         if (path.exists()) {
             final Bitmap bitmap;
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            bitmap = BitmapFactory.decodeResource(activity.getResources(),
-                    R.drawable.profile_icon_no_connection, options);
-            activity.runOnUiThread(new Runnable() {
+            bitmap = BitmapFactory.decodeFile(path.getAbsolutePath(), options);
+            imageView.post(new Runnable() {
                 @Override
                 public void run() {
                     imageView.setImageBitmap(bitmap);
                 }
             });
             addBitmapToCache(id, bitmap);
+            logString("debug", "Exists");
             return;
         }
+        logString("debug", "Doesn't exist");
+
+        logString("debug", "Reached last cache level, downloading image with id " + id);
 
         Bitmap bitmap = loadBitmapFromNetwork(activity, id, imageView);
         addBitmapToCache(id, bitmap);
     }
 
     private Bitmap loadBitmapFromNetwork(Activity activity, int id, final ImageView imageView) {
-        Bitmap bitmap = null;
+        Bitmap bitmap;
         if (!LoLin1Utils.isInternetReachable(activity)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
