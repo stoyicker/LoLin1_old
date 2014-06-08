@@ -3,10 +3,12 @@ package org.jorge.lolin1.ui.activities;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.view.MenuItem;
@@ -51,12 +53,11 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             VIEW_INDEX_WRONG_CREDENTIALS = 2, VIEW_INDEX_LOADING = 3;
     private ExpandableSearchFragment SEARCH_FRAGMENT;
     private ViewPager mViewPager;
+    private BroadcastReceiver mChatBroadcastReceiver;
     private ChatStatesPagerAdapter mPagerAdapter;
-    private static ChatOverviewActivity instance;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        instance = this;
         getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
                 R.menu.menu_chat_overview);
         if (savedInstanceState == null) {
@@ -81,6 +82,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 }
             };
         } else {
+            registerLocalBroadcastReceiver();
             viewRunnable = new Runnable() {
                 @Override
                 public void run() {
@@ -220,8 +222,21 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         });
     }
 
-    public static BroadcastReceiver instantiateBroadcastReceiver() {
-        return instance.new ChatOverviewBroadcastReceiver();
+    private void registerLocalBroadcastReceiver() {
+        if (mChatBroadcastReceiver != null) {
+            return;
+        }
+        mChatBroadcastReceiver = new ChatOverviewBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        intentFilter.addAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_login_failed", null));
+        intentFilter.addAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_chat_overview", null));
+        intentFilter.addAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_login_successful", null));
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .registerReceiver(mChatBroadcastReceiver, intentFilter);
     }
 
     public class ChatOverviewBroadcastReceiver extends BroadcastReceiver {

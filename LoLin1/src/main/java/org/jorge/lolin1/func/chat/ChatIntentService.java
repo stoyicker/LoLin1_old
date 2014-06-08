@@ -5,9 +5,7 @@ import android.accounts.AccountManager;
 import android.accounts.AuthenticatorException;
 import android.accounts.OperationCanceledException;
 import android.app.IntentService;
-import android.content.BroadcastReceiver;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Binder;
 import android.os.IBinder;
@@ -23,7 +21,6 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
-import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
@@ -57,7 +54,6 @@ public class ChatIntentService extends IntentService {
     public static final String ACTION_CONNECT = "CONNECT", ACTION_DISCONNECT = "DISCONNECT", ACTION_MESSAGE = "MESSAGE";
     private final IBinder mBinder = new ChatBinder();
     private static LoLChat api;
-    private BroadcastReceiver mChatBroadcastReceiver;
     private SmackAndroid mSmackAndroid;
     private AsyncTask<Void, Void, Void> loginTask;
 
@@ -110,19 +106,6 @@ public class ChatIntentService extends IntentService {
         }
     }
 
-    private void runChatOverviewBroadcastReceiver() {
-        mChatBroadcastReceiver = ChatOverviewActivity.instantiateBroadcastReceiver();
-        IntentFilter intentFilter = new IntentFilter();
-        intentFilter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
-        intentFilter.addAction(LoLin1Utils
-                .getString(getApplicationContext(), "event_login_failed", null));
-        intentFilter.addAction(LoLin1Utils
-                .getString(getApplicationContext(), "event_chat_overview", null));
-        intentFilter.addAction(LoLin1Utils
-                .getString(getApplicationContext(), "event_login_successful", null));
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .registerReceiver(mChatBroadcastReceiver, intentFilter);
-    }
 
     private void connect() {
         mSmackAndroid = LoLChat.init(getApplicationContext());
@@ -134,7 +117,6 @@ public class ChatIntentService extends IntentService {
                         login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
                 if (loginSuccess) {
                     logString("debug", "Login successful");
-                    runChatOverviewBroadcastReceiver();
                     launchBroadcastLoginSuccessful();
                     setUpChatOverviewListener();
                 } else {
@@ -183,6 +165,7 @@ public class ChatIntentService extends IntentService {
     }
 
     private void sendLocalBroadcast(Intent intent) {
+        logString("debug", "Sending local broadcast - " + intent.getAction());
         LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
     }
 
@@ -309,11 +292,6 @@ public class ChatIntentService extends IntentService {
             }
         } catch (SmackException.NotConnectedException e) {
             Crashlytics.logException(e);
-        }
-        if (mChatBroadcastReceiver != null) {
-            LocalBroadcastManager.getInstance(getApplicationContext())
-                    .unregisterReceiver(mChatBroadcastReceiver);
-            mChatBroadcastReceiver = null;
         }
         if (mSmackAndroid != null)
             mSmackAndroid.onDestroy();
