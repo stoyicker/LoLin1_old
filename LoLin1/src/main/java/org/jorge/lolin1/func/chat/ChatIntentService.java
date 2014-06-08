@@ -55,6 +55,7 @@ public class ChatIntentService extends IntentService {
     private final IBinder mBinder = new ChatBinder();
     private static LoLChat api;
     private SmackAndroid mSmackAndroid;
+    private static Boolean isConnected = Boolean.FALSE;
     private AsyncTask<Void, Void, Void> loginTask;
 
     public ChatIntentService() {
@@ -63,6 +64,16 @@ public class ChatIntentService extends IntentService {
 
     static List<Friend> getOnlineFriends() {
         return api.getOnlineFriends();
+    }
+
+    public static Boolean isLoggedIn() {
+        return isConnected;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        isConnected = Boolean.FALSE;
     }
 
     @Override
@@ -271,8 +282,10 @@ public class ChatIntentService extends IntentService {
         }
         if (loginSuccess) {
             api.reloadRoster();
+            isConnected = Boolean.TRUE;
             return Boolean.TRUE;
         } else {
+            isConnected = Boolean.FALSE;
             return Boolean.FALSE;
         }
     }
@@ -295,5 +308,6 @@ public class ChatIntentService extends IntentService {
         }
         if (mSmackAndroid != null)
             mSmackAndroid.onDestroy();
+        isConnected = Boolean.FALSE;
     }
 }

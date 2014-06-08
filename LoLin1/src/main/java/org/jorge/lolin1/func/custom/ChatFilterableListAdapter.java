@@ -91,23 +91,24 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
             viewHolder.setRankedDivision(
                     (TextView) convertView.findViewById(R.id.friend_ranked_division));
             viewHolder.setTextStatus((TextView) convertView.findViewById(R.id.friend_text_status));
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
         final Friend thisFriend = (Friend) getItem(position);
 
-        profileImageLoader
-                .assignImageToProfileView(mActivity, thisFriend.getStatus().getProfileIconId(),
-                        viewHolder.getProfileIcon());
-        viewHolder.getName().setText(thisFriend.getName());
-        final LolStatus thisStatus = thisFriend.getStatus();
-        viewHolder.getLevel().setText(thisStatus.getLevel() + "");
-        LolStatus.Division thisDivision = thisStatus.getRankedLeagueDivision();
-        viewHolder.getRankedDivision()
-                .setText(thisStatus.getRankedLeagueTier().name() + " " + thisDivision.name());
-        viewHolder.getTextStatus().setText(thisStatus.getStatusMessage());
+        if (viewHolder != null) {
+            profileImageLoader
+                    .assignImageToProfileView(mActivity, thisFriend.getStatus().getProfileIconId(),
+                            viewHolder.getProfileIcon());
+            viewHolder.getName().setText(thisFriend.getName());
+            final LolStatus thisStatus = thisFriend.getStatus();
+            viewHolder.getLevel().setText(thisStatus.getLevel() + "");
+            LolStatus.Division thisDivision = thisStatus.getRankedLeagueDivision();
+            viewHolder.getRankedDivision()
+                    .setText(thisStatus.getRankedLeagueTier().name() + " " + thisDivision.name());
+            viewHolder.getTextStatus().setText(thisStatus.getStatusMessage());
+        }
         new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void[] params) {
@@ -115,14 +116,20 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                 ChatMode mode = thisFriend.getChatMode();
                 if (mode == ChatMode.AVAILABLE) {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_online);
-                }
-                else if (mode == ChatMode.BUSY) {
+                } else if (mode == ChatMode.BUSY) {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_busy);
-                }
-                else {
+                } else {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_unknown);
                 }
-                viewHolder.getChatStatus().setImageDrawable(drawable);
+                final Drawable drawableAsFinal = drawable;
+                if (viewHolder != null)
+                    viewHolder.getChatStatus().post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (viewHolder != null)
+                                viewHolder.getChatStatus().setImageDrawable(drawableAsFinal);
+                        }
+                    });
                 return null;
             }
         }.execute();
@@ -139,8 +146,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                 Collection<Friend> allFriends = FriendManager.getInstance().getOnlineFriends();
                 if (constraint == null || constraint.length() == 0) {
                     ret.values = allFriends;
-                }
-                else {
+                } else {
                     Collection<Friend> validFriends = new ArrayDeque<>();
                     for (Friend x : allFriends) {
                         if (x.matchesFilterQuery(constraint)) {

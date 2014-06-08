@@ -87,8 +87,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     }
                 });
             } else {
-                if (!LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
-                        getApplicationContext())) {
+                if (!ChatIntentService.isLoggedIn()) {
                     logString("debug", "Showing view loading");
                     thisView.post(new Runnable() {
                         @Override
@@ -123,8 +122,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     showViewLoading();
                 }
             };
-            if (!LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
-                    getApplicationContext())) {
+            if (!ChatIntentService.isLoggedIn()) {
                 runChat();
             }
         }
@@ -170,8 +168,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     showViewLoading();
                 }
             };
-            if (!LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
-                    getApplicationContext())) {
+            if (!ChatIntentService.isLoggedIn()) {
                 runChat();
             }
         }
@@ -186,8 +183,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 
     private void runChat() {
         Intent intent = new Intent(getApplicationContext(), ChatIntentService.class);
-        if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
-                getApplicationContext())) {
+        if (ChatIntentService.isLoggedIn()) {
             stopService(intent);
         }
         Intent chatConnectIntent = new Intent(getApplicationContext(), ChatIntentService.class);
@@ -199,11 +195,13 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Boolean ret = Boolean.TRUE;
+        logString("debug", "Options menu item selected");
         switch (item.getItemId()) {
             case R.id.action_champion_search:
-                if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
-                        getApplicationContext()))//If it's running it means that we are actually logged in
+                logString("debug", "Item selected: search button");
+                if (ChatIntentService.isLoggedIn())//If it's running it means that we are actually logged in
                 {
+                    logString("debug", "Detected status: logged in");
                     SEARCH_FRAGMENT.toggleVisibility();
                 }
                 break;
@@ -299,8 +297,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                                 showViewNoConnection();
                             }
                         });
-                        if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
-                                getApplicationContext())) {
+                        if (ChatIntentService.isLoggedIn()) {
                             stopChatService();
                         }
                     } else {
@@ -314,8 +311,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                             showViewWrongCredentials();
                         }
                     });
-                    if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
-                            getApplicationContext())) {
+                    if (ChatIntentService.isLoggedIn()) {
                         stopChatService();
                     }
                 } else if (action.contentEquals(LoLin1Utils
@@ -336,6 +332,9 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 
     private void stopChatService() {
         logString("debug", "Stopping chat service...");
+        Intent chatDisconnectIntent = new Intent(getApplicationContext(), ChatIntentService.class);
+        chatDisconnectIntent.setAction(ChatIntentService.ACTION_DISCONNECT);
+        startService(chatDisconnectIntent);
         stopService(new Intent(getApplicationContext(), ChatIntentService.class));
     }
 
