@@ -91,7 +91,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
     public static String getNewsTableName() {
         final String prefix =
                 LoLin1Utils
-                        .getString(mContext, "news_euw_en", "http://feed43.com/lolnews_euw_en.xml")
+                        .getString(mContext, "news_euw_en", null)
                         .replaceAll(SQLiteDAO.LOLNEWS_FEED_HOST, "")
                         .replaceAll(SQLiteDAO.LOLNEWS_FEED_EXTENSION, "")
                         .replaceAll("_(.*)", "") + "_";
