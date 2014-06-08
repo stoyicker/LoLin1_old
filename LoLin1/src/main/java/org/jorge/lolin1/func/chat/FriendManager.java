@@ -47,6 +47,7 @@ public class FriendManager {
     }
 
     public void updateOnlineFriends() {
+        ONLINE_FRIENDS.clear();
         ONLINE_FRIENDS.addAll(ChatIntentService.getOnlineFriends());
     }
 
