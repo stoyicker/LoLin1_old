@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.app.ListFragment;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,11 +66,11 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        getListView().setItemChecked(position, Boolean.TRUE);
-        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
-            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                    .putInt("lastSelectedNewsIndex", position).commit();
-        }
+//        getListView().setItemChecked(position, Boolean.TRUE);
+//        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
+//            PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
+//                    .putInt("lastSelectedNewsIndex", position).commit();
+//        }
         mCallback.onNewsArticleSelected(position);
     }
 

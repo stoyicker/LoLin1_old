@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
-import android.preference.PreferenceManager;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,8 +61,7 @@ public class NewsAdapter extends BaseAdapter {
             for (NewsEntry x : newNews) {
                 currTable.add(0, x);
             }
-        }
-        else {
+        } else {
             if (SQLiteDAO.tableExists(tableName)) {
                 ArrayList<NewsEntry> news =
                         SQLiteDAO.getSingleton().getNews();
@@ -90,8 +88,7 @@ public class NewsAdapter extends BaseAdapter {
 
         if (currTable != null) {
             return currTable.size();
-        }
-        else {
+        } else {
             return 0;
         }
     }
@@ -124,8 +121,7 @@ public class NewsAdapter extends BaseAdapter {
                     (TextView) convertView.findViewById(R.id.news_feed_item_desc));
             viewHolder.setImageView((ImageView) convertView.findViewById(R.id.feed_item_image));
             convertView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
@@ -136,14 +132,7 @@ public class NewsAdapter extends BaseAdapter {
         viewHolder.getTitleView().setText(Html.fromHtml(thisArticle.getTitle()));
         viewHolder.getDescriptionView().setText(Html.fromHtml(thisArticle.getDescription()));
 
-        if (position == PreferenceManager.getDefaultSharedPreferences(mContext)
-                .getInt("lastSelectedNewsIndex", -1) &&
-                mContext.getResources().getBoolean(R.bool.feed_has_two_panes)) {
-            convertView.setBackgroundResource(R.color.theme_light_blue);
-        }
-        else {
-            convertView.setBackgroundColor(Color.TRANSPARENT);
-        }
+        convertView.setBackgroundColor(Color.TRANSPARENT);
 
         new AsyncTask<Object, Void, Void>() {
 

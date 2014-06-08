@@ -64,8 +64,7 @@ public final class InitialActivity extends Activity {
 
     private void stopChatServiceIfAlreadyRunning() {
         Intent intent = new Intent(getApplicationContext(), ChatIntentService.class);
-        if (LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
-                getApplicationContext())) {
+        if (ChatIntentService.isLoggedIn()) {
             stopService(intent);
         }
     }

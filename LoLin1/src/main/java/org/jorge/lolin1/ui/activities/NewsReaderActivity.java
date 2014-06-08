@@ -1,8 +1,8 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
 import android.view.View;
 
 import org.jorge.lolin1.R;
@@ -39,8 +39,8 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Boolean wasSavedInstanceStateNull = savedInstanceState == null;
-        if (wasSavedInstanceStateNull) {
+//        Boolean wasSavedInstanceStateNull = savedInstanceState == null;
+        if (savedInstanceState == null) {
             savedInstanceState = new Bundle();
         }
         savedInstanceState
@@ -59,47 +59,54 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
 
         isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
                 WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;
-        int index;
-        if (!wasSavedInstanceStateNull) {
-            restoreState(savedInstanceState);
-        } else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
-                .getInt("lastSelectedNewsIndex", 0)) != -1 && isDualPane) {
-            onNewsArticleSelected(index);
-        }
+//        int index;
+//        if (!wasSavedInstanceStateNull) {
+//            restoreState(savedInstanceState);
+//        } else if ((index = PreferenceManager.getDefaultSharedPreferences(this)
+//                .getInt("lastSelectedNewsIndex", 0)) != -1 && isDualPane) {
+//            onNewsArticleSelected(index);
+//        }
     }
 
-    private void restoreState(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            int index = savedInstanceState.getInt("index", 0);
-            if (index != -1) {
-                NEWS_FRAGMENT.setSelection(index);
-                onNewsArticleSelected(index);
-            }
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt("index", PreferenceManager.getDefaultSharedPreferences(this).getInt(
-                "lastSelectedNewsIndex", 0));
-        super.onSaveInstanceState(outState);
-    }
+//    private void restoreState(Bundle savedInstanceState) {
+//        if (savedInstanceState != null) {
+//            int index = savedInstanceState.getInt("index", 0);
+//            if (index != -1) {
+//                NEWS_FRAGMENT.setSelection(index);
+//                onNewsArticleSelected(index);
+//            }
+//        }
+//    }
+//
+//    @Override
+//    protected void onSaveInstanceState(Bundle outState) {
+//        outState.putInt("index", PreferenceManager.getDefaultSharedPreferences(this).getInt(
+//                "lastSelectedNewsIndex", 0));
+//        super.onSaveInstanceState(outState);
+//    }
 
     @Override
     public void onNewsArticleSelected(int index) {
-        showUrlInWebViewerFragment(index);
+        showUrlInBrowser(index);
     }
 
-    private void showUrlInWebViewerFragment(int index) {
+//    private void showUrlInWebViewerFragment(int index) {
+//        ArrayList<NewsEntry> news;
+//        if (isDualPane) {
+//            if (!(news = SQLiteDAO.getSingleton().getNews()).isEmpty() && index > -1) {
+//                WEB_FRAGMENT.loadUrl(news.get(index).getLink());
+//            }
+//        } else {
+//            Intent singleViewIntent = new Intent(getApplicationContext(), WebViewerActivity.class);
+//            singleViewIntent.putExtra("index", index);
+//            startActivity(singleViewIntent);
+//        }
+//    }
+
+    private void showUrlInBrowser(int index) {
         ArrayList<NewsEntry> news;
-        if (isDualPane) {
-            if (!(news = SQLiteDAO.getSingleton().getNews()).isEmpty() && index > -1) {
-                WEB_FRAGMENT.loadUrl(news.get(index).getLink());
-            }
-        } else {
-            Intent singleViewIntent = new Intent(getApplicationContext(), WebViewerActivity.class);
-            singleViewIntent.putExtra("index", index);
-            startActivity(singleViewIntent);
-        }
+        news = SQLiteDAO.getSingleton().getNews();
+        if (!news.isEmpty() && index > -1)
+            startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(news.get(index).getLink())));
     }
 }
