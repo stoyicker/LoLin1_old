@@ -74,6 +74,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                     new ChatStatesPagerAdapter(getSupportFragmentManager()));
         }
         Runnable viewRunnable;
+        registerLocalBroadcastReceiver();
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
             viewRunnable = new Runnable() {
                 @Override
@@ -82,7 +83,6 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 }
             };
         } else {
-            registerLocalBroadcastReceiver();
             viewRunnable = new Runnable() {
                 @Override
                 public void run() {
