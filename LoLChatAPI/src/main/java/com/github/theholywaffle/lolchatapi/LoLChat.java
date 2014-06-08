@@ -32,10 +32,10 @@ import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.XMPPTCPConnection;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.sasl.SASLErrorException;
-import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.spark.util.DummySSLSocketFactory;
 
@@ -347,6 +347,7 @@ public class LoLChat {
      */
     public boolean login(String username, String password, boolean replaceLeague)
             throws IOException {
+        connection.setPacketReplyTimeout(60000);
         try {
             if (replaceLeague) {
                 connection.login(username, "AIR_" + password, "xiff");
