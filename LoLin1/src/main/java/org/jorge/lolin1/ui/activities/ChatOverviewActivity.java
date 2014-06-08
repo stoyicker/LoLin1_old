@@ -22,6 +22,8 @@ import org.jorge.lolin1.ui.frags.NoChatConnectionSupportFragment;
 import org.jorge.lolin1.ui.frags.WrongChatCredentialsSupportFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -63,6 +65,34 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_chat_overview);
         super.onCreate(savedInstanceState);
+        final View thisView =
+                findViewById(android.R.id.content);
+        mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
+        if (mViewPager.getAdapter() == null) {
+            mViewPager.setAdapter(mPagerAdapter =
+                    new ChatStatesPagerAdapter(getSupportFragmentManager()));
+        }
+        Runnable viewRunnable;
+        if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
+            viewRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    showViewNoConnection();
+                }
+            };
+        } else {
+            viewRunnable = new Runnable() {
+                @Override
+                public void run() {
+                    showViewLoading();
+                }
+            };
+            if (!LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
+                    getApplicationContext())) {
+                runChat();
+            }
+        }
+        thisView.post(viewRunnable);
     }
 
     @Override
@@ -82,11 +112,6 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     }
 
     public void requestProtocolReInit() {
-        onResume();
-    }
-
-    @Override
-    protected void onResume() {
         final View thisView =
                 findViewById(android.R.id.content);
         mViewPager = (ViewPager) findViewById(R.id.chat_overview_view_pager);
@@ -96,7 +121,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         }
         Runnable viewRunnable;
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
-            viewRunnable=new Runnable() {
+            viewRunnable = new Runnable() {
                 @Override
                 public void run() {
                     showViewNoConnection();
@@ -115,7 +140,6 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             }
         }
         thisView.post(viewRunnable);
-        super.onResume();
     }
 
     private void runChat() {
@@ -124,9 +148,10 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 getApplicationContext())) {
             stopService(intent);
         }
-        Intent chatDisconnectIntent = new Intent(getApplicationContext(), ChatIntentService.class);
-        chatDisconnectIntent.setAction(ChatIntentService.ACTION_CONNECT);
-        startService(chatDisconnectIntent);
+        Intent chatConnectIntent = new Intent(getApplicationContext(), ChatIntentService.class);
+        chatConnectIntent.setAction(ChatIntentService.ACTION_CONNECT);
+        logString("debug", "Chat run requested");
+        startService(chatConnectIntent);
     }
 
     @Override
@@ -204,6 +229,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
+            logString("debug", "Chat: received broadcast intent with action " + action);
             if (action.contentEquals(LoLin1Utils
                     .getString(context.getApplicationContext(), "event_chat_overview", null))) {
                 requestListRefresh();

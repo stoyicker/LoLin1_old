@@ -34,6 +34,7 @@ import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 import org.jivesoftware.smack.packet.Presence;
+import org.jivesoftware.smack.sasl.SASLErrorException;
 import org.jivesoftware.smack.tcp.XMPPTCPConnection;
 import org.jivesoftware.smack.util.StringUtils;
 import org.jivesoftware.spark.util.DummySSLSocketFactory;
@@ -100,8 +101,6 @@ public class LoLChat {
 
     /**
      * Adds a ChatListener that listens to messages from all your friends.
-     *
-     * @param chatListener
      */
     public void addChatListener(ChatListener chatListener) {
         chatListeners.add(chatListener);
@@ -110,8 +109,6 @@ public class LoLChat {
     /**
      * Adds a FriendListener that listens to changes from all your friends. Such
      * as logging in, starting games, ...
-     *
-     * @param friendListener
      */
     public void addFriendListener(FriendListener friendListener) {
         friendListeners.add(friendListener);
@@ -216,7 +213,7 @@ public class LoLChat {
         stop = true;
     }
 
-    public static final SmackAndroid init(Context context) {
+    public static SmackAndroid init(Context context) {
         return SmackAndroid.init(context);
     }
 
@@ -356,6 +353,8 @@ public class LoLChat {
             } else {
                 connection.login(username, "AIR_" + password);
             }
+        } catch (SASLErrorException e) {
+            return Boolean.FALSE; //Wrong credentials
         } catch (XMPPException | SmackException e) {
             Log.wtf("debug", e);
 //            Crashlytics.logException(e);
@@ -365,8 +364,6 @@ public class LoLChat {
 
     /**
      * Removes the ChatListener from the list and will no longer be called.
-     *
-     * @param chatListener
      */
     public void removeChatListener(ChatListener chatListener) {
         chatListeners.remove(chatListener);
@@ -374,8 +371,6 @@ public class LoLChat {
 
     /**
      * Removes the FriendListener from the list and will no longer be called.
-     *
-     * @param friendListener
      */
     public void removeFriendListener(FriendListener friendListener) {
         friendListeners.remove(friendListener);
@@ -384,7 +379,6 @@ public class LoLChat {
     /**
      * Changes your ChatMode (e.g. ingame, away, available)
      *
-     * @param chatMode
      * @see com.github.theholywaffle.lolchatapi.ChatMode
      */
     public void setChatMode(ChatMode chatMode) {

@@ -32,6 +32,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -52,8 +54,7 @@ import java.util.concurrent.Executors;
  */
 public class ChatIntentService extends IntentService {
 
-    private static final long LOG_IN_DELAY_MILLIS = 10000;
-    public static final String ACTION_CONNECT = "CONNECT", ACTION_DISCONNECT = "DISCONNECT";
+    public static final String ACTION_CONNECT = "CONNECT", ACTION_DISCONNECT = "DISCONNECT", ACTION_MESSAGE = "MESSAGE";
     private final IBinder mBinder = new ChatBinder();
     private static LoLChat api;
     private BroadcastReceiver mChatBroadcastReceiver;
@@ -83,14 +84,20 @@ public class ChatIntentService extends IntentService {
             throw new IllegalArgumentException(
                     "Empty action is not supported");
         }
+        logString("debug", "ChatIntentService receiving intent " + intent.getAction());
         switch (intent.getAction()) {
             case ACTION_CONNECT:
+                logString("debug", "Action requested: " + ACTION_CONNECT);
                 connect();
                 break;
             case ACTION_DISCONNECT:
+                logString("debug", "Action requested: " + ACTION_DISCONNECT);
                 disconnect();
                 break;
-            //TODO Send messages
+            case ACTION_MESSAGE:
+                logString("debug", "Action requested: " + ACTION_MESSAGE);
+                //TODO Send messages
+                break;
             default:
                 throw new IllegalArgumentException(
                         "Action " + intent.getAction() + " not yet supported");
@@ -122,13 +129,16 @@ public class ChatIntentService extends IntentService {
         loginTask = new AsyncTask<Void, Void, Void>() {
             @Override
             protected Void doInBackground(Void... params) {
+                logString("debug", "Commencing login");
                 Boolean loginSuccess =
                         login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
                 if (loginSuccess) {
+                    logString("debug", "Login successful");
                     runChatOverviewBroadcastReceiver();
                     launchBroadcastLoginSuccessful();
                     setUpChatOverviewListener();
                 } else {
+                    logString("debug", "Login unsuccessful");
                     launchBroadcastLoginUnsuccessful();
                 }
                 return null;
@@ -285,20 +295,27 @@ public class ChatIntentService extends IntentService {
     }
 
     private void disconnect() {
+        //All the null checks are necessary because this method is run when an account is added from out of the app as well
         try {
-            loginTask.get(); // Disconnecting in the middle of a login may be troublesome
+            if (loginTask != null)
+                loginTask.get(); // Disconnecting in the middle of a login may be troublesome
         } catch (InterruptedException | ExecutionException e) {
             Crashlytics.logException(e);
         }
         try {
-            api.disconnect();
+            if (api != null) {
+                api.disconnect();
+                api = null;
+            }
         } catch (SmackException.NotConnectedException e) {
             Crashlytics.logException(e);
         }
-        api = null;
-        LocalBroadcastManager.getInstance(getApplicationContext())
-                .unregisterReceiver(mChatBroadcastReceiver);
-        mChatBroadcastReceiver = null;
-        mSmackAndroid.onDestroy();
+        if (mChatBroadcastReceiver != null) {
+            LocalBroadcastManager.getInstance(getApplicationContext())
+                    .unregisterReceiver(mChatBroadcastReceiver);
+            mChatBroadcastReceiver = null;
+        }
+        if (mSmackAndroid != null)
+            mSmackAndroid.onDestroy();
     }
 }
