@@ -58,9 +58,6 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     private ChatStatesPagerAdapter mPagerAdapter;
     private static Boolean alreadyInited = Boolean.FALSE;
 
-    //FIXME The search dialog doesn't drop
-    //FIXME onCreate should be called only once
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         if (savedInstanceState == null) {
@@ -197,15 +194,11 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         Boolean ret = Boolean.TRUE;
-        logString("debug", "Options menu item selected");
         switch (item.getItemId()) {
             case R.id.action_champion_search:
-                logString("debug", "Item selected: search button");
                 if (ChatIntentService.isLoggedIn())//If it's running it means that we are actually logged in
                 {
-                    logString("debug", "Detected status: logged in");
                     SEARCH_FRAGMENT.toggleVisibility();
-                    logString("debug", "SEARCH_FRAGMENT visibility set to: " + SEARCH_FRAGMENT.isVisible());
                 }
                 break;
             default: //Up or Settings buttons
