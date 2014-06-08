@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -55,14 +56,15 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     private ViewPager mViewPager;
     private BroadcastReceiver mChatBroadcastReceiver;
     private ChatStatesPagerAdapter mPagerAdapter;
+    private static Boolean restartDueToRotation = Boolean.FALSE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
-                R.menu.menu_chat_overview);
         if (savedInstanceState == null) {
             savedInstanceState = new Bundle();
         }
+        getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
+                R.menu.menu_chat_overview);
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_chat_overview);
         super.onCreate(savedInstanceState);
@@ -75,6 +77,38 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         }
         Runnable viewRunnable;
         registerLocalBroadcastReceiver();
+        if (restartDueToRotation) {
+            logString("debug", "Chat: rotation detected");
+            if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
+                thisView.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        showViewNoConnection();
+                    }
+                });
+            } else {
+                if (!LoLin1Utils.isServiceAlreadyRunning(ChatIntentService.class,
+                        getApplicationContext())) {
+                    logString("debug", "Showing view loading");
+                    thisView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showViewLoading();
+                        }
+                    });
+                    runChat();
+                } else {
+                    logString("debug", "Showing view connected");
+                    thisView.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            showViewConnected();
+                        }
+                    });
+                }
+            }
+            return;
+        }
         if (!LoLin1Utils.isInternetReachable(getApplicationContext())) {
             viewRunnable = new Runnable() {
                 @Override
@@ -142,6 +176,12 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
             }
         }
         thisView.post(viewRunnable);
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        restartDueToRotation = Boolean.TRUE;
+        super.onConfigurationChanged(newConfig);
     }
 
     private void runChat() {
@@ -295,6 +335,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     }
 
     private void stopChatService() {
+        logString("debug", "Stopping chat service...");
         stopService(new Intent(getApplicationContext(), ChatIntentService.class));
     }
 
