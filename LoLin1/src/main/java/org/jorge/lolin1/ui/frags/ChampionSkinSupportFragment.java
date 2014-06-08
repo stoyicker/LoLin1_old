@@ -72,7 +72,6 @@ public class ChampionSkinSupportFragment extends Fragment {
                                 -1,
                                 getArguments().getInt(KEY_POSITION))
         ));
-        //TODO Update the name of the skin
 
         TextView skinNameView = (TextView) l.findViewById(R.id.skin_name);
         skinNameView.setText(((Champion) getArguments().getParcelable(KEY_CHAMPION))

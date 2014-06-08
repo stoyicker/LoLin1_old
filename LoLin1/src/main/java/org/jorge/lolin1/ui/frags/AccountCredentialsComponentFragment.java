@@ -114,8 +114,6 @@ public class AccountCredentialsComponentFragment extends Fragment {
         ((TextView) ret.findViewById(R.id.chat_credentials_component_title))
                 .setText(LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "chat_credentials_" + aux + "_component_title", null));
-
-        //TODO Set the username or the hint somehow
         return ret;
     }
 

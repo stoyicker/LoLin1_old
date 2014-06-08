@@ -241,12 +241,6 @@ public class FixedDrawerLayout extends ViewGroup {
      * @param gravity        Which drawer the shadow should apply to
      */
     public void setDrawerShadow(Drawable shadowDrawable, int gravity) {
-        /*
-         * TODO Someone someday might want to set more complex drawables here.
-         * They're probably nuts, but we might want to consider registering callbacks,
-         * setting states, etc. properly.
-         */
-
         final int absGravity = GravityCompat.getAbsoluteGravity(gravity,
                 ViewCompat.getLayoutDirection(this));
         if ((absGravity & Gravity.LEFT) == Gravity.LEFT) {
@@ -331,8 +325,7 @@ public class FixedDrawerLayout extends ViewGroup {
                 ViewCompat.getLayoutDirection(this));
         if (absGrav == Gravity.LEFT) {
             mLockModeLeft = lockMode;
-        }
-        else if (absGrav == Gravity.RIGHT) {
+        } else if (absGrav == Gravity.RIGHT) {
             mLockModeRight = lockMode;
         }
         if (lockMode != LOCK_MODE_UNLOCKED) {
@@ -394,8 +387,7 @@ public class FixedDrawerLayout extends ViewGroup {
                 ViewCompat.getLayoutDirection(this));
         if (absGrav == Gravity.LEFT) {
             return mLockModeLeft;
-        }
-        else if (absGrav == Gravity.RIGHT) {
+        } else if (absGrav == Gravity.RIGHT) {
             return mLockModeRight;
         }
         return LOCK_MODE_UNLOCKED;
@@ -412,8 +404,7 @@ public class FixedDrawerLayout extends ViewGroup {
         final int gravity = getDrawerViewGravity(drawerView);
         if (gravity == Gravity.LEFT) {
             return mLockModeLeft;
-        }
-        else if (gravity == Gravity.RIGHT) {
+        } else if (gravity == Gravity.RIGHT) {
             return mLockModeRight;
         }
 
@@ -431,11 +422,9 @@ public class FixedDrawerLayout extends ViewGroup {
         final int state;
         if (leftState == STATE_DRAGGING || rightState == STATE_DRAGGING) {
             state = STATE_DRAGGING;
-        }
-        else if (leftState == STATE_SETTLING || rightState == STATE_SETTLING) {
+        } else if (leftState == STATE_SETTLING || rightState == STATE_SETTLING) {
             state = STATE_SETTLING;
-        }
-        else {
+        } else {
             state = STATE_IDLE;
         }
 
@@ -443,8 +432,7 @@ public class FixedDrawerLayout extends ViewGroup {
             final LayoutParams lp = (LayoutParams) activeDrawer.getLayoutParams();
             if (lp.onScreen == 0) {
                 dispatchOnDrawerClosed(activeDrawer);
-            }
-            else if (lp.onScreen == 1) {
+            } else if (lp.onScreen == 1) {
                 dispatchOnDrawerOpened(activeDrawer);
             }
         }
@@ -584,24 +572,20 @@ public class FixedDrawerLayout extends ViewGroup {
             if (isInEditMode()) {
                 // Don't crash the layout editor. Consume all of the space if specified
                 // or pick a magic number from thin air otherwise.
-                // TODO Better communication with tools of this bogus state.
                 // It will crash on a real device.
                 if (widthMode == MeasureSpec.AT_MOST) {
                     widthMode = MeasureSpec.EXACTLY;
-                }
-                else if (widthMode == MeasureSpec.UNSPECIFIED) {
+                } else if (widthMode == MeasureSpec.UNSPECIFIED) {
                     widthMode = MeasureSpec.EXACTLY;
                     widthSize = 300;
                 }
                 if (heightMode == MeasureSpec.AT_MOST) {
                     heightMode = MeasureSpec.EXACTLY;
-                }
-                else if (heightMode == MeasureSpec.UNSPECIFIED) {
+                } else if (heightMode == MeasureSpec.UNSPECIFIED) {
                     heightMode = MeasureSpec.EXACTLY;
                     heightSize = 300;
                 }
-            }
-            else {
+            } else {
                 throw new IllegalArgumentException(
                         "DrawerLayout must be measured with MeasureSpec.EXACTLY.");
             }
@@ -628,8 +612,7 @@ public class FixedDrawerLayout extends ViewGroup {
                 final int contentHeightSpec = MeasureSpec.makeMeasureSpec(
                         heightSize - lp.topMargin - lp.bottomMargin, MeasureSpec.EXACTLY);
                 child.measure(contentWidthSpec, contentHeightSpec);
-            }
-            else if (isDrawerView(child)) {
+            } else if (isDrawerView(child)) {
                 final int childGravity =
                         getDrawerViewGravity(child) & Gravity.HORIZONTAL_GRAVITY_MASK;
                 if ((foundDrawers & childGravity) != 0) {
@@ -644,8 +627,7 @@ public class FixedDrawerLayout extends ViewGroup {
                         lp.topMargin + lp.bottomMargin,
                         lp.height);
                 child.measure(drawerWidthSpec, drawerHeightSpec);
-            }
-            else {
+            } else {
                 throw new IllegalStateException("Child " + child + " at index " + i +
                         " does not have a valid layout_gravity - must be Gravity.LEFT, " +
                         "Gravity.RIGHT or Gravity.NO_GRAVITY");
@@ -671,8 +653,7 @@ public class FixedDrawerLayout extends ViewGroup {
                 child.layout(lp.leftMargin, lp.topMargin,
                         lp.leftMargin + child.getMeasuredWidth(),
                         lp.topMargin + child.getMeasuredHeight());
-            }
-            else { // Drawer, if it wasn't onMeasure would have thrown an exception.
+            } else { // Drawer, if it wasn't onMeasure would have thrown an exception.
                 final int childWidth = child.getMeasuredWidth();
                 final int childHeight = child.getMeasuredHeight();
                 int childLeft;
@@ -681,8 +662,7 @@ public class FixedDrawerLayout extends ViewGroup {
                 if (checkDrawerViewGravity(child, Gravity.LEFT)) {
                     childLeft = -childWidth + (int) (childWidth * lp.onScreen);
                     newOffset = (float) (childWidth + childLeft) / childWidth;
-                }
-                else { // Right; onMeasure checked for us.
+                } else { // Right; onMeasure checked for us.
                     childLeft = width - (int) (childWidth * lp.onScreen);
                     newOffset = (float) (width - childLeft) / childWidth;
                 }
@@ -715,8 +695,7 @@ public class FixedDrawerLayout extends ViewGroup {
                         // bad measurement before, oh well.
                         if (childTop < lp.topMargin) {
                             childTop = lp.topMargin;
-                        }
-                        else if (childTop + childHeight > height - lp.bottomMargin) {
+                        } else if (childTop + childHeight > height - lp.bottomMargin) {
                             childTop = height - lp.bottomMargin - childHeight;
                         }
                         child.layout(childLeft, childTop, childLeft + childWidth,
@@ -792,8 +771,7 @@ public class FixedDrawerLayout extends ViewGroup {
                     if (vright > clipLeft) {
                         clipLeft = vright;
                     }
-                }
-                else {
+                } else {
                     final int vleft = v.getLeft();
                     if (vleft < clipRight) {
                         clipRight = vleft;
@@ -812,8 +790,7 @@ public class FixedDrawerLayout extends ViewGroup {
             mScrimPaint.setColor(color);
 
             canvas.drawRect(clipLeft, 0, clipRight, getHeight(), mScrimPaint);
-        }
-        else if (mShadowLeft != null && checkDrawerViewGravity(child, Gravity.LEFT)) {
+        } else if (mShadowLeft != null && checkDrawerViewGravity(child, Gravity.LEFT)) {
             final int shadowWidth = mShadowLeft.getIntrinsicWidth();
             final int childRight = child.getRight();
             final int drawerPeekDistance = mLeftDragger.getEdgeSize();
@@ -823,8 +800,7 @@ public class FixedDrawerLayout extends ViewGroup {
                     childRight + shadowWidth, child.getBottom());
             mShadowLeft.setAlpha((int) (0xff * alpha));
             mShadowLeft.draw(canvas);
-        }
-        else if (mShadowRight != null && checkDrawerViewGravity(child, Gravity.RIGHT)) {
+        } else if (mShadowRight != null && checkDrawerViewGravity(child, Gravity.RIGHT)) {
             final int shadowWidth = mShadowRight.getIntrinsicWidth();
             final int childLeft = child.getLeft();
             final int showing = getWidth() - childLeft;
@@ -986,8 +962,7 @@ public class FixedDrawerLayout extends ViewGroup {
             if (checkDrawerViewGravity(child, Gravity.LEFT)) {
                 needsInvalidate |= mLeftDragger.smoothSlideViewTo(child,
                         -childWidth, child.getTop());
-            }
-            else {
+            } else {
                 needsInvalidate |= mRightDragger.smoothSlideViewTo(child,
                         getWidth(), child.getTop());
             }
@@ -1017,12 +992,10 @@ public class FixedDrawerLayout extends ViewGroup {
             final LayoutParams lp = (LayoutParams) drawerView.getLayoutParams();
             lp.onScreen = 1.f;
             lp.knownOpen = true;
-        }
-        else {
+        } else {
             if (checkDrawerViewGravity(drawerView, Gravity.LEFT)) {
                 mLeftDragger.smoothSlideViewTo(drawerView, 0, drawerView.getTop());
-            }
-            else {
+            } else {
                 mRightDragger.smoothSlideViewTo(drawerView, getWidth() - drawerView.getWidth(),
                         drawerView.getTop());
             }
@@ -1062,13 +1035,11 @@ public class FixedDrawerLayout extends ViewGroup {
             final LayoutParams lp = (LayoutParams) drawerView.getLayoutParams();
             lp.onScreen = 0.f;
             lp.knownOpen = false;
-        }
-        else {
+        } else {
             if (checkDrawerViewGravity(drawerView, Gravity.LEFT)) {
                 mLeftDragger.smoothSlideViewTo(drawerView, -drawerView.getWidth(),
                         drawerView.getTop());
-            }
-            else {
+            } else {
                 mRightDragger.smoothSlideViewTo(drawerView, getWidth(), drawerView.getTop());
             }
         }
@@ -1368,8 +1339,7 @@ public class FixedDrawerLayout extends ViewGroup {
             // This reverses the positioning shown in onLayout.
             if (checkDrawerViewGravity(changedView, Gravity.LEFT)) {
                 offset = (float) (childWidth + left) / childWidth;
-            }
-            else {
+            } else {
                 final int width = getWidth();
                 offset = (float) (width - left) / childWidth;
             }
@@ -1404,8 +1374,7 @@ public class FixedDrawerLayout extends ViewGroup {
             int left;
             if (checkDrawerViewGravity(releasedChild, Gravity.LEFT)) {
                 left = xvel > 0 || xvel == 0 && offset > 0.5f ? 0 : -childWidth;
-            }
-            else {
+            } else {
                 final int width = getWidth();
                 left = xvel < 0 || xvel == 0 && offset < 0.5f ? width - childWidth : width;
             }
@@ -1427,8 +1396,7 @@ public class FixedDrawerLayout extends ViewGroup {
             if (leftEdge) {
                 toCapture = findDrawerWithGravity(Gravity.LEFT);
                 childLeft = (toCapture != null ? -toCapture.getWidth() : 0) + peekDistance;
-            }
-            else {
+            } else {
                 toCapture = findDrawerWithGravity(Gravity.RIGHT);
                 childLeft = getWidth() - peekDistance;
             }
@@ -1464,8 +1432,7 @@ public class FixedDrawerLayout extends ViewGroup {
             final View toCapture;
             if ((edgeFlags & ViewDragHelper.EDGE_LEFT) == ViewDragHelper.EDGE_LEFT) {
                 toCapture = findDrawerWithGravity(Gravity.LEFT);
-            }
-            else {
+            } else {
                 toCapture = findDrawerWithGravity(Gravity.RIGHT);
             }
 
@@ -1483,8 +1450,7 @@ public class FixedDrawerLayout extends ViewGroup {
         public int clampViewPositionHorizontal(View child, int left, int dx) {
             if (checkDrawerViewGravity(child, Gravity.LEFT)) {
                 return Math.max(-child.getWidth(), Math.min(left, 0));
-            }
-            else {
+            } else {
                 final int width = getWidth();
                 return Math.max(width - child.getWidth(), Math.min(left, width));
             }
