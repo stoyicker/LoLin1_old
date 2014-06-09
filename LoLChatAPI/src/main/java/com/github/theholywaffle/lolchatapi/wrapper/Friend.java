@@ -34,7 +34,7 @@ import java.io.IOException;
 /**
  * This and all the files in the module have been developed by Bert De Geyter (https://github.com/TheHolyWaffle) and are protected by the Apache GPLv3 license.
  */
-public class Friend extends Wrapper<RosterEntry> {
+public class Friend extends Wrapper<RosterEntry> implements Comparable {
 
     private Friend instance = null;
     private Chat chat = null;
@@ -197,5 +197,10 @@ public class Friend extends Wrapper<RosterEntry> {
 
     public boolean matchesFilterQuery(CharSequence constraint) {
         return getName().toLowerCase().contains((constraint + "").toLowerCase());
+    }
+
+    @Override
+    public int compareTo(Object another) {
+        return getName().compareTo(((Friend) another).getName());
     }
 }
