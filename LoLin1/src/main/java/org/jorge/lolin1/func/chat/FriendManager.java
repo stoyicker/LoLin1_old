@@ -2,8 +2,11 @@ package org.jorge.lolin1.func.chat;
 
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
-import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.TreeSet;
+
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 /**
  * This file is part of LoLin1.
@@ -26,7 +29,7 @@ import java.util.Collection;
 public class FriendManager {
 
     private static FriendManager instance;
-    private final Collection<Friend> ONLINE_FRIENDS = new ArrayDeque<>();
+    private final Collection<Friend> ONLINE_FRIENDS = Collections.synchronizedSortedSet(new TreeSet<Friend>());
 
     public static FriendManager getInstance() {
         if (instance == null) {
@@ -47,6 +50,10 @@ public class FriendManager {
     }
 
     public void updateOnlineFriends() {
+        Collection<Friend> onlineFriends = ChatIntentService.getOnlineFriends();
+        for (Friend f : onlineFriends) {
+            logString("debug", "Friend online: " + f.getName());
+        }
         ONLINE_FRIENDS.clear();
         ONLINE_FRIENDS.addAll(ChatIntentService.getOnlineFriends());
     }

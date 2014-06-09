@@ -119,7 +119,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                 logString("debug", "Chat mode for " + thisFriend.getName() + ": " + mode);
                 if (mode == ChatMode.AVAILABLE) {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_online);
-                } else if (mode == ChatMode.BUSY) {
+                } else if (mode == ChatMode.BUSY || mode == ChatMode.AWAY) {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_busy);
                 } else {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_unknown);
