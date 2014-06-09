@@ -137,7 +137,8 @@ public abstract class LoLin1Utils {
         try {
             Field resourceField = R.string.class.getDeclaredField(variableName);
             int resourceId = resourceField.getInt(resourceField);
-            ret = context.getString(resourceId);
+            if (context != null)
+                ret = context.getString(resourceId);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Crashlytics.logException(e);
         }
