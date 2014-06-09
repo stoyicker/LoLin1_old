@@ -202,5 +202,6 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
     @Override
     public int compareTo(Object another) {
         return getName().compareTo(((Friend) another).getName());
+
     }
 }
