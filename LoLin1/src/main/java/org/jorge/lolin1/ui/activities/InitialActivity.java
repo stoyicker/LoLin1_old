@@ -44,7 +44,7 @@ public final class InitialActivity extends Activity {
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
         LoLin1Utils.initCharsetMap();
         stopChatServiceIfAlreadyRunning();
-        SQLiteDAO.setup(getApplicationContext());
+        SQLiteDAO.setup(this);
         flushCacheIfNecessary();
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
