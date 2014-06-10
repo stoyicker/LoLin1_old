@@ -20,6 +20,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -59,7 +60,7 @@ public class SurrFeedProvider {
         Boolean ret = Boolean.FALSE;
         try {
             if (LoLin1Utils.isInternetReachable(context)) {
-                ArrayList<String> retrievedFeed = retrieveFeed();
+                Collection<String> retrievedFeed = retrieveFeed();
                 ret = handler.onFeedUpdated(retrievedFeed);
             } else {
                 handler.onNoInternetConnection();
@@ -77,7 +78,7 @@ public class SurrFeedProvider {
      * @return {@link java.util.ArrayList} The lastest three surrs. The most recent article is returned last
      * @throws java.io.IOException
      */
-    private ArrayList<String> retrieveFeed() throws IOException {
+    private Collection<String> retrieveFeed() throws IOException {
         ArrayList<SurrEntry> items = null;
         BufferedInputStream in;
         String SURRENDERAT20_URL = "http://feeds.feedburner.com/surrenderat20/CqWw?format=xml";
@@ -96,6 +97,7 @@ public class SurrFeedProvider {
             items = readFeed(parser);
         } catch (XmlPullParserException e) {
             Crashlytics.logException(e);
+            return Collections.emptyList();
         }
 
         ArrayList<String> ret = new ArrayList<>();
