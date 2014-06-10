@@ -1,6 +1,6 @@
 package org.jorge.lolin1.func.feeds;
 
-import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * This file is part of LoLin1.
@@ -24,5 +24,5 @@ public interface IFeedHandler {
 
     public void onNoInternetConnection();
 
-    public Boolean onFeedUpdated(ArrayList<String> items);
+    public Boolean onFeedUpdated(Collection<String> items);
 }

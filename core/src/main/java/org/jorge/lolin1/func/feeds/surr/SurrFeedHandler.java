@@ -10,7 +10,7 @@ import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.utils.ISO8601Time;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.StringTokenizer;
 
 /**
@@ -52,7 +52,7 @@ public class SurrFeedHandler implements IFeedHandler {
     }
 
     @Override
-    public Boolean onFeedUpdated(ArrayList<String> items) {
+    public Boolean onFeedUpdated(Collection<String> items) {
         ContentValues row;
         boolean isRefreshRequired = Boolean.FALSE;
         SurrEntry current;

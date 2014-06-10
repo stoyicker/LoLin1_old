@@ -15,7 +15,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.StringTokenizer;
 
 /**
@@ -57,7 +57,7 @@ public class NewsFeedHandler implements IFeedHandler {
     }
 
     @Override
-    public Boolean onFeedUpdated(ArrayList<String> items) {
+    public Boolean onFeedUpdated(Collection<String> items) {
         ContentValues row;
         String url, img_url, title, desc;
         boolean areThereNewNews = Boolean.FALSE;

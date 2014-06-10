@@ -23,7 +23,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 /**
  * This file is part of LoLin1.
@@ -61,7 +64,7 @@ public class NewsFeedProvider {
     public void requestFeedRefresh() {
         try {
             if (LoLin1Utils.isInternetReachable(context)) {
-                ArrayList<String> retrievedFeed = retrieveFeed();
+                Collection<String> retrievedFeed = retrieveFeed();
                 handler.onFeedUpdated(retrievedFeed);
             } else {
                 handler.onNoInternetConnection();
@@ -78,9 +81,9 @@ public class NewsFeedProvider {
      * @return {@link java.util.ArrayList} The last page of news. The most recent article is returned last
      * @throws IOException
      */
-    private ArrayList<String> retrieveFeed() throws IOException {
+    private Collection<String> retrieveFeed() throws IOException {
         ArrayList<NewsEntry> items = null;
-        BufferedInputStream in = null;
+        BufferedInputStream in;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String server = preferences
                 .getString(LoLin1Utils.getString(context, "pref_title_server", "pref_title_server"),
@@ -97,6 +100,7 @@ public class NewsFeedProvider {
         URLConnection urlConnection = source.openConnection();
         urlConnection.connect();
         try {
+            logString("debug", "Connecting to " + urlConnection);
             in = new BufferedInputStream(urlConnection.getInputStream());
         } catch (FileNotFoundException ex) {
             final String msg = LoLin1Utils.getString(context, "error_no_connection", null);
@@ -107,6 +111,7 @@ public class NewsFeedProvider {
                             Toast.LENGTH_SHORT).show();
                 }
             });
+            return Collections.emptyList();
         }
         XmlPullParser parser = Xml.newPullParser();
         try {
