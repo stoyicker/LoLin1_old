@@ -211,4 +211,5 @@ Created by JorgeAntonio on 02/01/14.
 		<![CDATA[It seems the credentials you are trying to use, if any, are not valid. You may fix them under Settings > Account Management.]]></string>
     <string name="welcome"><![CDATA[Welcome to LoLin1, the all-in-one tool for League of Legends]]></string>
     <string name="swipe_for_news">To begin, use your finger to swipe the screen and check for news, like in the Twitter app!</string>
+    <string name="showcase_button_text">Ok</string>
 </resources>

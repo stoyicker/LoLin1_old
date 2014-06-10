@@ -93,4 +93,6 @@ Created by JorgeAntonio on 02/01/14.
     <dimen name="wrong_credentials_text_padding">10dp</dimen>
     <dimen name="level_padding_in_profile_icon">4dp</dimen>
     <dimen name="padding_chat_friend">4dp</dimen>
+    <dimen name="showcase_title_text_size">16dp</dimen>
+    <dimen name="showcase_content_text_size">12dp</dimen>
 </resources>

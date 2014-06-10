@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 This file is part of LoLin1.
 <p/>
 LoLin1 is free software: you can redistribute it and/or modify
@@ -18,164 +17,217 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by JorgeAntonio on 02/01/14.
 -->
 <resources>
-	<style name="AppTheme" parent="android:Theme.Holo.Light">
-		<item name="android:actionBarStyle">@style/ActionBarStyle</item>
-	</style>
-	<style name="ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
-		<item name="android:textStyle">bold</item>
-		<item name="android:textSize">@dimen/action_bar_text_size</item>
-	</style>
-	<style name="NavigationDrawerStyle">
-		<!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
+
+    <style name="AppTheme" parent="android:Theme.Holo.Light">
+        <item name="android:actionBarStyle">@style/ActionBarStyle</item>
+    </style>
+
+    <style name="ActionBarStyle" parent="@android:style/Widget.Holo.Light.ActionBar.Solid.Inverse">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/action_bar_text_size</item>
+    </style>
+
+    <style name="NavigationDrawerStyle">
+        <!-- Per the design guidelines, navigation drawers should be between 240dp and 320dp:
  https://developer.android.com/design/patterns/navigation-drawer.html -->
-		<item name="android:width">@dimen/navigation_drawer_width</item>
-		<item name="android:background">@color/theme_dark_blue</item>
-	</style>
-	<style name="NewsFeedTextWithShadowStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textSize">@dimen/news_feed_title_size</item>
-		<item name="android:shadowColor">@color/theme_white</item>
-		<item name="android:shadowDx">1</item>
-		<item name="android:shadowDy">1</item>
-		<item name="android:shadowRadius">1</item>
-		<item name="android:textStyle">bold</item>
-	</style>
-	<style name="SurrFeedTextWithShadowStyle">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:textSize">@dimen/news_feed_title_size</item>
-		<item name="android:shadowColor">@color/theme_strong_orange</item>
-		<item name="android:shadowDx">1</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">1</item>
-		<item name="android:textStyle">bold</item>
-	</style>
-	<style name="NavigationDrawerTextWithShadowStyle">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:shadowColor">@color/theme_strong_orange</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">1</item>
-		<item name="android:textSize">@dimen/navigation_drawer_text_size</item>
-	</style>
-	<style name="LoadingTextStyle">
-		<item name="android:textStyle">bold</item>
-		<item name="android:textSize">@dimen/loading_text_size</item>
-	</style>
-	<style name="NewsFeedBodyText">
-		<item name="android:textSize">@dimen/news_feed_desc_size</item>
-	</style>
-	<style name="SplashDisclaimerTextStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textSize">@dimen/disclaimer_text_size</item>
-		<item name="android:shadowColor">@color/theme_strong_orange</item>
-		<item name="android:shadowDx">1</item>
-		<item name="android:shadowDy">1</item>
-		<item name="android:shadowRadius">1</item>
-	</style>
-	<style name="LogTextStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textStyle">bold</item>
-	</style>
-	<style name="ServerAndLanguageChooserUnselectedStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textStyle">bold</item>
-	</style>
-	<style name="ChampionListTitleStyle">
-		<item name="android:typeface">sans</item>
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:gravity">left</item>
-		<item name="android:textSize">@dimen/champion_list_title_text_size</item>
-		<item name="android:shadowColor">@color/theme_black</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">2</item>
-	</style>
-	<style name="ChampionListNameStyle">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:gravity">left</item>
-		<item name="android:textSize">@dimen/champion_list_name_text_size</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:shadowColor">@color/theme_black</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">2</item>
-	</style>
-	<style name="ChampionDetailNameStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textStyle">bold</item>
-		<item name="android:textSize">@dimen/champion_detail_name_text_size</item>
-		<item name="android:shadowColor">@color/theme_white</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">2</item>
-	</style>
-	<style name="ChampionDetailTitleStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textSize">@dimen/champion_detail_title_text_size</item>
-		<item name="android:shadowColor">@color/theme_white</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">2</item>
-	</style>
-	<style name="SkinNameStyle">
-		<item name="android:textColor">@color/theme_transparent_white</item>
-		<item name="android:textSize">@dimen/champion_skin_name_text_size</item>
-		<item name="android:shadowColor">@color/theme_black</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">2</item>
-	</style>
-	<style name="ChampionAbilityNameStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textSize">@dimen/champion_ability_name_text_size</item>
-		<item name="android:shadowColor">@color/theme_white</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">2</item>
-	</style>
-	<style name="ChampionAbilityContentsStyle" parent="ChampionAbilityNameStyle">
-		<item name="android:textSize">@dimen/champion_ability_contents_text_size</item>
-		<item name="android:shadowDx">1</item>
-		<item name="android:shadowDy">1</item>
-		<item name="android:shadowRadius">1</item>
-	</style>
-	<style name="ChampionAbilityTitleStyle" parent="ChampionAbilityContentsStyle">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:shadowColor">@color/theme_black</item>
-	</style>
-	<style name="JungleTimerTextStyle">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:textSize">@dimen/jungle_timer_text_size</item>
-		<item name="android:shadowColor">@color/theme_black</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">2</item>
-	</style>
-	<style name="CredentialsComponentTitleStyle">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:textSize">@dimen/chat_credentials_component_title_text_size</item>
-	</style>
-	<style name="CredentialsComponentContentStyle">
-		<item name="android:textColor">@color/theme_black</item>
-		<item name="android:textSize">@dimen/chat_credentials_component_content_text_size</item>
-	</style>
-	<style name="AuthenticatorTitleStyle">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:textSize">@dimen/chat_authenticator_title_text_size</item>
-	</style>
-	<style name="AuthenticatorRealmSelector">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:textSize">@dimen/chat_authenticator_realm_selector_text_size</item>
-	</style>
-	<style name="IndeterminateFancyProgressBarStyle" parent="SmoothProgressBar">
-		<item name="spb_color">@color/theme_light_blue</item>
-		<item name="spb_progressiveStart_activated">true</item>
-	</style>
-	<style name="LevelTextStyle">
-		<item name="android:textColor">@color/theme_white</item>
-		<item name="android:shadowColor">@color/theme_black</item>
-		<item name="android:shadowDx">2</item>
-		<item name="android:shadowDy">2</item>
-		<item name="android:shadowRadius">2</item>
-	</style>
+        <item name="android:width">@dimen/navigation_drawer_width</item>
+        <item name="android:background">@color/theme_dark_blue</item>
+    </style>
+
+    <style name="NewsFeedTextWithShadowStyle">
+        <item name="android:textColor">@color/theme_black</item>
+        <item name="android:textSize">@dimen/news_feed_title_size</item>
+        <item name="android:shadowColor">@color/theme_white</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="SurrFeedTextWithShadowStyle">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:textSize">@dimen/news_feed_title_size</item>
+        <item name="android:shadowColor">@color/theme_strong_orange</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NavigationDrawerTextWithShadowStyle">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:shadowColor">@color/theme_strong_orange</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">1</item>
+        <item name="android:textSize">@dimen/navigation_drawer_text_size</item>
+    </style>
+
+    <style name="LoadingTextStyle">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/loading_text_size</item>
+    </style>
+
+    <style name="NewsFeedBodyText">
+        <item name="android:textSize">@dimen/news_feed_desc_size</item>
+    </style>
+
+    <style name="SplashDisclaimerTextStyle">
+        <item name="android:textColor">@color/theme_black</item>
+        <item name="android:textSize">@dimen/disclaimer_text_size</item>
+        <item name="android:shadowColor">@color/theme_strong_orange</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="LogTextStyle">
+        <item name="android:textColor">@color/theme_black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ServerAndLanguageChooserUnselectedStyle">
+        <item name="android:textColor">@color/theme_black</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="ChampionListTitleStyle">
+        <item name="android:typeface">sans</item>
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">@dimen/champion_list_title_text_size</item>
+        <item name="android:shadowColor">@color/theme_black</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="ChampionListNameStyle">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:gravity">left</item>
+        <item name="android:textSize">@dimen/champion_list_name_text_size</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:shadowColor">@color/theme_black</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="ChampionDetailNameStyle">
+        <item name="android:textColor">@color/theme_black</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">@dimen/champion_detail_name_text_size</item>
+        <item name="android:shadowColor">@color/theme_white</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="ChampionDetailTitleStyle">
+        <item name="android:textColor">@color/theme_black</item>
+        <item name="android:textSize">@dimen/champion_detail_title_text_size</item>
+        <item name="android:shadowColor">@color/theme_white</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="SkinNameStyle">
+        <item name="android:textColor">@color/theme_transparent_white</item>
+        <item name="android:textSize">@dimen/champion_skin_name_text_size</item>
+        <item name="android:shadowColor">@color/theme_black</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="ChampionAbilityNameStyle">
+        <item name="android:textColor">@color/theme_black</item>
+        <item name="android:textSize">@dimen/champion_ability_name_text_size</item>
+        <item name="android:shadowColor">@color/theme_white</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="ChampionAbilityContentsStyle" parent="ChampionAbilityNameStyle">
+        <item name="android:textSize">@dimen/champion_ability_contents_text_size</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
+
+    <style name="ChampionAbilityTitleStyle" parent="ChampionAbilityContentsStyle">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:shadowColor">@color/theme_black</item>
+    </style>
+
+    <style name="JungleTimerTextStyle">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:textSize">@dimen/jungle_timer_text_size</item>
+        <item name="android:shadowColor">@color/theme_black</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="CredentialsComponentTitleStyle">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:textSize">@dimen/chat_credentials_component_title_text_size</item>
+    </style>
+
+    <style name="CredentialsComponentContentStyle">
+        <item name="android:textColor">@color/theme_black</item>
+        <item name="android:textSize">@dimen/chat_credentials_component_content_text_size</item>
+    </style>
+
+    <style name="AuthenticatorTitleStyle">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:textSize">@dimen/chat_authenticator_title_text_size</item>
+    </style>
+
+    <style name="AuthenticatorRealmSelector">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:textSize">@dimen/chat_authenticator_realm_selector_text_size</item>
+    </style>
+
+    <style name="IndeterminateFancyProgressBarStyle" parent="SmoothProgressBar">
+        <item name="spb_color">@color/theme_light_blue</item>
+        <item name="spb_progressiveStart_activated">true</item>
+    </style>
+
+    <style name="LevelTextStyle">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:shadowColor">@color/theme_black</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="CustomShowcaseTheme" parent="ShowcaseView.Light">
+        <item name="sv_backgroundColor">@color/showcase_background_color</item>
+        <item name="sv_showcaseColor">@color/theme_strong_orange</item>
+        <item name="sv_buttonText">@string/showcase_button_text</item>
+        <item name="sv_tintButtonColor">true</item>
+        <item name="sv_titleTextAppearance">@style/CustomShowcaseTitleText</item>
+        <item name="sv_detailTextAppearance">@style/CustomShowcaseContentText</item>
+    </style>
+
+    <style name="CustomShowcaseTitleText" parent="android:style/TextAppearance.Large">
+        <item name="android:textColor">@color/theme_light_blue</item>
+        <item name="android:shadowColor">@color/theme_black</item>
+        <item name="android:textSize">@dimen/showcase_title_text_size</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
+
+    <style name="CustomShowcaseContentText" parent="android:style/TextAppearance">
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:shadowColor">@color/theme_black</item>
+        <item name="android:textSize">@dimen/showcase_content_text_size</item>
+        <item name="android:shadowDx">2</item>
+        <item name="android:shadowDy">2</item>
+        <item name="android:shadowRadius">2</item>
+    </style>
 </resources>
