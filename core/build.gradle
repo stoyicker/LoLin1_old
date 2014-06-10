@@ -1,8 +1,8 @@
 buildscript {
     repositories {
+        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'http://download.crashlytics.com/maven' }
     }
-
     dependencies {
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
@@ -43,7 +43,7 @@ android {
 }
 
 dependencies {
-    compile project(':LoLChatAPI')
+    compile project(':chat')
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.github.johnkil.android-progressfragment:progressfragment-native:+'

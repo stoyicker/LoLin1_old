@@ -79,8 +79,7 @@ public class SurrsAdapter extends ArrayAdapter<SurrEntry> {
             viewHolder.setItemWithNewContentImageView(
                     (ImageView) convertView.findViewById(R.id.surr_feed_item_new_content_image));
             convertView.setTag(viewHolder);
-        }
-        else {
+        } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
@@ -93,12 +92,11 @@ public class SurrsAdapter extends ArrayAdapter<SurrEntry> {
 //        }
 
         if (!thisArticle.hasBeenRead()) {
-            convertView.setBackgroundResource(R.color.theme_black);
+            convertView.setBackgroundColor(mContext.getResources().getColor(R.color.theme_black));
             viewHolder.getItemWithNewContentImageView().setVisibility(View.VISIBLE);
             viewHolder.getItemWithNewContentImageView().startAnimation(unreadContentAnimation);
-        }
-        else {
-            convertView.setBackgroundResource(R.color.theme_surr_grey);
+        } else {
+            convertView.setBackgroundColor(mContext.getResources().getColor(R.color.theme_surr_grey));
             viewHolder.getItemWithNewContentImageView().setVisibility(View.INVISIBLE);
             unreadContentAnimation.cancel();
             unreadContentAnimation.reset();

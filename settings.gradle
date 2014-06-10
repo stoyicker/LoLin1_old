@@ -1,2 +1,1 @@
-include ':LoLChatAPI'
-include ':LoLin1'
+include 'chat', 'core'

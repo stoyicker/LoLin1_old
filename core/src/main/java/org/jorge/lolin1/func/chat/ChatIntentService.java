@@ -117,7 +117,6 @@ public class ChatIntentService extends IntentService {
         }
     }
 
-
     private void connect() {
         mSmackAndroid = LoLChat.init(getApplicationContext());
         loginTask = new AsyncTask<Void, Void, Void>() {
