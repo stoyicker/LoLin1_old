@@ -1,4 +1,2 @@
-<manifest package="com.github.theholywaffle.lolchatapi">
-	<application>
-	</application>
-</manifest>
+<?xml version="1.0" encoding="utf-8"?>
+<manifest package="com.github.theholywaffle.lolchatapi" />

@@ -1,6 +1,5 @@
 buildscript {
     repositories {
-        maven { url 'https://oss.sonatype.org/content/repositories/snapshots' }
         maven { url 'http://download.crashlytics.com/maven' }
     }
     dependencies {
@@ -44,6 +43,7 @@ android {
 
 dependencies {
     compile project(':chat')
+    compile project(':showcaseview')
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.github.johnkil.android-progressfragment:progressfragment-native:+'

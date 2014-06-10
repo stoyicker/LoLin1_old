@@ -1,1 +1,1 @@
-include 'chat', 'core'
+include 'chat', 'showcaseview', 'core'
