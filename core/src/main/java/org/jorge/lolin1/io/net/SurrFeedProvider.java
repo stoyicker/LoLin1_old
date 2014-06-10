@@ -73,7 +73,7 @@ public class SurrFeedProvider {
     }
 
     /**
-     * Returns the lastest three surrs.
+     * Returns the latest three surrs.
      *
      * @return {@link java.util.ArrayList} The lastest three surrs. The most recent article is returned last
      * @throws java.io.IOException
