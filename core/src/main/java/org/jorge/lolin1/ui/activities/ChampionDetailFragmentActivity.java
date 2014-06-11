@@ -16,6 +16,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 import com.viewpagerindicator.PageIndicator;
 
 import org.jorge.lolin1.R;
@@ -56,6 +58,7 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
     private Champion selectedChampion;
     private TransitionViewPager viewPager;
     private ViewPager skinsViewPager;
+    private ShowcaseView detailShowcase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +75,8 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
             ((TextView) findViewById(R.id.champion_name)).setText(selectedChampion.getName());
             ((TextView) findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
             initChampionInfoPager();
+            detailShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_detail_contents).setContentTitle(R.string.tutorial_detail_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_detail_pager, this)).build();
+
             new AsyncTask<Void, Void, Void>(
 
             ) {
@@ -117,6 +122,21 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
         viewPager.setAdapter(new ChampionDetailPageAdapter(getSupportFragmentManager(), fragments));
         ((PageIndicator) findViewById(R.id.champion_detail_pager_indicator))
                 .setViewPager(viewPager);
+        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                if (detailShowcase != null)
+                    detailShowcase.hide();
+            }
+        });
     }
 
     @Override

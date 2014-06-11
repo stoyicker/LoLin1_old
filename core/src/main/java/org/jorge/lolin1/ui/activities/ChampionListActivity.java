@@ -7,6 +7,9 @@ import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.ui.frags.ChampionListFragment;
@@ -37,6 +40,7 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
 
     private ExpandableSearchFragment SEARCH_FRAGMENT;
     private ChampionListFragment CHAMPION_LIST_FRAGMENT;
+    private ShowcaseView championsShowcase;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +52,7 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_champion_list);
         super.onCreate(savedInstanceState);
+        championsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_champions_contents).setContentTitle(R.string.tutorial_champions_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_list_grid, this)).build();
     }
 
     @Override
@@ -65,7 +70,6 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
             SEARCH_FRAGMENT.getQueryField().setHint(
                     LoLin1Utils.getString(getApplicationContext(), "champion_search_hint", null));
         }
-
         return ret;
     }
 
@@ -90,6 +94,9 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
 
     @Override
     public void onChampionSelected(Champion champion) {
+        if (championsShowcase != null) {
+            championsShowcase.hide();
+        }
         Intent championDetailIntent =
                 new Intent(getApplicationContext(), ChampionDetailFragmentActivity.class);
         championDetailIntent.putExtra(ChampionDetailFragmentActivity.SELECTED_CHAMPION, champion);

@@ -206,6 +206,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
             @Override
             protected void onPostExecute(Void aVoid) {
                 mPullToRefreshLayout.setRefreshComplete();
+                mCallback.onSurrRefreshed();
             }
 
             /**
@@ -230,5 +231,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
 
     public interface SurrListFragmentListener {
         public void onSurrArticleSelected(int index);
+
+        public void onSurrRefreshed();
     }
 }

@@ -12,7 +12,6 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatIntentService;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.io.local.FileManager;
-import org.jorge.lolin1.ui.ShowcaseManager;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.File;
@@ -41,7 +40,6 @@ public final class InitialActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Crashlytics.start(this);
-        ShowcaseManager.start(R.style.CustomShowcaseTheme);
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
         LoLin1Utils.initCharsetMap();
         stopChatServiceIfAlreadyRunning();

@@ -5,6 +5,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.feeds.surr.SurrEntry;
 import org.jorge.lolin1.io.db.SQLiteDAO;
@@ -33,6 +36,7 @@ import java.util.ArrayList;
 public final class SurrReaderActivity extends DrawerLayoutFragmentActivity implements
         SurrListFragment.SurrListFragmentListener {
     //    private static Boolean isDualPane = Boolean.FALSE;
+    private ShowcaseView surrShowCase;
     private SurrListFragment SURR_FRAGMENT;
 //    private WebViewerFragment WEB_FRAGMENT;
 
@@ -48,6 +52,7 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
                         R.layout.activity_surr_reader);
 
         super.onCreate(savedInstanceState);
+        surrShowCase = new ShowcaseView.Builder(this).setContentTitle(R.string.tutorial_surr_title).setContentText(R.string.tutorial_surr_content).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_surr_list, this)).build();
 
         SURR_FRAGMENT =
                 (SurrListFragment) getFragmentManager().findFragmentById(R.id.fragment_surr_list);
@@ -55,13 +60,13 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
 //                (WebViewerFragment) getSupportFragmentManager()
 //                        .findFragmentById(R.id.fragment_web_viewer);
 
-        getFragmentManager().executePendingTransactions();
-        getSupportFragmentManager().executePendingTransactions();
+//        getFragmentManager().executePendingTransactions();
+//        getSupportFragmentManager().executePendingTransactions();
 
 //        isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
 //                WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;
 
-        int index;
+//        int index;
         if (!wasSavedInstanceStateNull) {
             restoreState(savedInstanceState);
         }
@@ -91,6 +96,13 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
     @Override
     public void onSurrArticleSelected(int index) {
         showUrlInWebViewerFragment(index);
+    }
+
+    @Override
+    public void onSurrRefreshed() {
+        if (surrShowCase != null) {
+            surrShowCase.hide();
+        }
     }
 
 //    private void showUrlInWebViewerFragment(int index) {

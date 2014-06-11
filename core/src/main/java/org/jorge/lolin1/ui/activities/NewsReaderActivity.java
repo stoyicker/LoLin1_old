@@ -36,7 +36,7 @@ import java.util.ArrayList;
  */
 public final class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
         NewsListFragment.NewsListFragmentListener {
-    ShowcaseView newsShowcase, navigationShowcase;
+    private ShowcaseView newsShowcase, navigationShowcase;
     //    private static Boolean isDualPane = Boolean.FALSE;
 //    private NewsListFragment NEWS_FRAGMENT;
 //    private WebViewerProgressFragment WEB_FRAGMENT;
@@ -51,8 +51,9 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
                 .putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                         R.layout.activity_news_reader);
 
+        if (getApplicationContext() == null) return;
         super.onCreate(savedInstanceState);
-        newsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_news_content).setContentTitle(R.string.tutorial_news_title).setStyle(R.style.CustomShowcaseTheme).setTarget(new ViewTarget(R.id.fragment_news_list, this)).build();
+        newsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_news_content).setContentTitle(R.string.tutorial_news_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_news_list, this)).build();
 
 //  NEWS_FRAGMENT =
 //                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
@@ -101,7 +102,7 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
             newsShowcase.hide();
         }
 
-        navigationShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_navigation_contents).setContentTitle(R.string.tutorial_navigation_title).setStyle(R.style.CustomShowcaseTheme).setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE)).build();
+        navigationShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_navigation_contents).setContentTitle(R.string.tutorial_navigation_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE)).build();
     }
 
     @Override
