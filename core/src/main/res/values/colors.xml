@@ -33,4 +33,5 @@ Created by JorgeAntonio on 21/01/14.
 	<color name="theme_strong_red">#ED3029</color>
 	<color name="theme_light_green">#00FF55</color>
     <color name="showcase_background_color">#77000000</color>
+    <color name="theme_lighter_blue">#00AAFF</color>
 </resources>
