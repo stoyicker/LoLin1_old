@@ -63,8 +63,8 @@ public abstract class ShowcaseManager {
     /**
      * Blocks interactions by default.
      */
-    public static void createOverlay(Activity activity, int titleRes, int contentRes, View target, View.OnClickListener listener) {
-        createOverlay(activity, titleRes, contentRes, target, Boolean.TRUE, listener);
+    public static void createOverlay(Activity activity, int titleRes, int contentRes, View targetView, View.OnClickListener listener) {
+        createOverlay(activity, titleRes, contentRes, targetView, Boolean.TRUE, listener);
     }
 
     private static void createOverlayOnTarget(Activity activity, int titleRes, int contentRes, Target target, Boolean blockInteractions, View.OnClickListener listener) {
