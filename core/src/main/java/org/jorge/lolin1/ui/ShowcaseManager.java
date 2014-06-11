@@ -1,12 +1,18 @@
 package org.jorge.lolin1.ui;
 
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.view.View;
 
+import com.crashlytics.android.Crashlytics;
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
 import com.github.amlcurran.showcaseview.targets.Target;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.LinkedBlockingQueue;
 
 /**
  * This file is part of LoLin1.
@@ -29,12 +35,25 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
 public abstract class ShowcaseManager {
 
     private static int THEME = -1;
+    private static BlockingQueue<ShowcaseView.Builder> showcases = new LinkedBlockingQueue<>();
 
     /**
      * @param themeRes If -1, the default theme is used.
      */
-    public static void setTheme(int themeRes) {
+    public static void start(int themeRes) {
         THEME = themeRes;
+        new AsyncTask<BlockingQueue<ShowcaseView.Builder>, Void, Void>() {
+            @Override
+            protected Void doInBackground(BlockingQueue<ShowcaseView.Builder>... params) {
+                while (Boolean.TRUE)
+                    try {
+                        params[0].take().build();
+                    } catch (InterruptedException e) {
+                        Crashlytics.logException(e);
+                    }
+                return null;
+            }
+        }.executeOnExecutor(Executors.newSingleThreadExecutor(), showcases);
     }
 
     public static void createHomeOverlay(Activity activity, int titleRes, int contentRes, Boolean blockInteractions) {
@@ -75,7 +94,11 @@ public abstract class ShowcaseManager {
             builder.doNotBlockTouches();
         if (listener != null)
             builder.setOnClickListener(listener);
-        builder.build();
+        try {
+            showcases.put(builder);
+        } catch (InterruptedException e) {
+            Crashlytics.logException(e);
+        }
     }
 
 }
