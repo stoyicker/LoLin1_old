@@ -3,13 +3,11 @@ package org.jorge.lolin1.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.feeds.news.NewsEntry;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 import org.jorge.lolin1.ui.frags.NewsListFragment;
-import org.jorge.lolin1.ui.frags.WebViewerProgressFragment;
 
 import java.util.ArrayList;
 
@@ -33,9 +31,9 @@ import java.util.ArrayList;
  */
 public final class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
         NewsListFragment.NewsListFragmentListener {
-    private static Boolean isDualPane = Boolean.FALSE;
-    private NewsListFragment NEWS_FRAGMENT;
-    private WebViewerProgressFragment WEB_FRAGMENT;
+    //    private static Boolean isDualPane = Boolean.FALSE;
+//    private NewsListFragment NEWS_FRAGMENT;
+//    private WebViewerProgressFragment WEB_FRAGMENT;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,16 +47,16 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
 
         super.onCreate(savedInstanceState);
 
-        NEWS_FRAGMENT =
-                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
-        WEB_FRAGMENT =
-                (WebViewerProgressFragment) getFragmentManager()
-                        .findFragmentById(R.id.fragment_web_viewer);
+//        NEWS_FRAGMENT =
+//                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
+//        WEB_FRAGMENT =
+//                (WebViewerProgressFragment) getFragmentManager()
+//                        .findFragmentById(R.id.fragment_web_viewer);
 
-        getFragmentManager().executePendingTransactions();
+//        getFragmentManager().executePendingTransactions();
 
-        isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
-                WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;
+//        isDualPane = WEB_FRAGMENT != null && WEB_FRAGMENT.getView() != null &&
+//                WEB_FRAGMENT.getView().getVisibility() == View.VISIBLE;
 //        int index;
 //        if (!wasSavedInstanceStateNull) {
 //            restoreState(savedInstanceState);
