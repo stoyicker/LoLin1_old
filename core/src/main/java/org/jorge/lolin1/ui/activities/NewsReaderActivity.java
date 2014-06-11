@@ -3,6 +3,7 @@ package org.jorge.lolin1.ui.activities;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.MenuItem;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
@@ -103,7 +104,18 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
         navigationShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_navigation_contents).setContentTitle(R.string.tutorial_navigation_title).setStyle(R.style.CustomShowcaseTheme).setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE)).build();
     }
 
-//    private void showUrlInWebViewerFragment(int index) {
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                if (navigationShowcase != null)
+                    navigationShowcase.hide();
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    //    private void showUrlInWebViewerFragment(int index) {
 //        ArrayList<NewsEntry> news;
 //        if (isDualPane) {
 //            if (!(news = SQLiteDAO.getSingleton().getNews()).isEmpty() && index > -1) {
