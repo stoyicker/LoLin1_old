@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ActionViewTarget;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
+
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.feeds.news.NewsEntry;
 import org.jorge.lolin1.io.db.SQLiteDAO;
@@ -31,6 +35,7 @@ import java.util.ArrayList;
  */
 public final class NewsReaderActivity extends DrawerLayoutFragmentActivity implements
         NewsListFragment.NewsListFragmentListener {
+    ShowcaseView newsShowcase, navigationShowcase;
     //    private static Boolean isDualPane = Boolean.FALSE;
 //    private NewsListFragment NEWS_FRAGMENT;
 //    private WebViewerProgressFragment WEB_FRAGMENT;
@@ -46,8 +51,9 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
                         R.layout.activity_news_reader);
 
         super.onCreate(savedInstanceState);
+        newsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_news_content).setContentTitle(R.string.tutorial_news_title).setStyle(R.style.CustomShowcaseTheme).setTarget(new ViewTarget(R.id.fragment_news_list, this)).build();
 
-//        NEWS_FRAGMENT =
+//  NEWS_FRAGMENT =
 //                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
 //        WEB_FRAGMENT =
 //                (WebViewerProgressFragment) getFragmentManager()
@@ -86,6 +92,15 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
     @Override
     public void onNewsArticleSelected(int index) {
         showUrlInBrowser(index);
+    }
+
+    @Override
+    public void onNewsRefreshed() {
+        if (newsShowcase != null) {
+            newsShowcase.hide();
+        }
+
+        navigationShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_navigation_contents).setContentTitle(R.string.tutorial_navigation_title).setStyle(R.style.CustomShowcaseTheme).setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE)).build();
     }
 
 //    private void showUrlInWebViewerFragment(int index) {

@@ -41,7 +41,7 @@ public final class InitialActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Crashlytics.start(this);
-        ShowcaseManager.setTheme(R.style.CustomShowcaseTheme);
+        ShowcaseManager.start(R.style.CustomShowcaseTheme);
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
         LoLin1Utils.initCharsetMap();
         stopChatServiceIfAlreadyRunning();

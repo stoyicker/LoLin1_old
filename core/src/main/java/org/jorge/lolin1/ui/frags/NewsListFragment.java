@@ -157,6 +157,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
             @Override
             protected void onPostExecute(Void aVoid) {
                 mPullToRefreshLayout.setRefreshComplete();
+                mCallback.onNewsRefreshed();
             }
 
             @Override
@@ -169,5 +170,7 @@ public class NewsListFragment extends ListFragment implements OnRefreshListener 
 
     public interface NewsListFragmentListener {
         public void onNewsArticleSelected(int index);
+
+        public void onNewsRefreshed();
     }
 }
