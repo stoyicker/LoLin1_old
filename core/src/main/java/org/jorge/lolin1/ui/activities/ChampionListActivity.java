@@ -29,7 +29,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 14/04/2014.
+ * Created by Jorge Antonio Diaz-Benito Soriano on 14/04/2014.
  */
 public final class ChampionListActivity extends DrawerLayoutFragmentActivity implements
         ExpandableSearchFragment.ExpandableSearchListener,

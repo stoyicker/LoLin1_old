@@ -24,7 +24,7 @@ import com.github.amlcurran.showcaseview.targets.ViewTarget;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 11/06/14.
+ * Created by Jorge Antonio Diaz-Benito Soriano on 11/06/14.
  */
 public abstract class ShowcaseManager {
 

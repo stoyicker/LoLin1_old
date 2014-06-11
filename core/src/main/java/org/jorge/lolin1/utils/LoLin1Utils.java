@@ -41,7 +41,7 @@ import java.util.Map;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 03/01/14.
+ * Created by Jorge Antonio Diaz-Benito Soriano on 03/01/14.
  * <p/>
  * Accessing resources through reflection is said to be ten times faster than through getResources(), and thus it's done when possible.
  */

@@ -32,7 +32,7 @@ import java.util.Arrays;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 06/01/14.
+ * Created by Jorge Antonio Diaz-Benito Soriano on 06/01/14.
  */
 public class SettingsPreferenceFragment extends PreferenceFragment {
     @Override

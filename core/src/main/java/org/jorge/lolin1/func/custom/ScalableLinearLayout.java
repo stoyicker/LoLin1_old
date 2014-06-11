@@ -21,7 +21,7 @@ import android.widget.LinearLayout;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 21/04/2014.
+ * Created by Jorge Antonio Diaz-Benito Soriano on 21/04/2014.
  */
 public class ScalableLinearLayout extends LinearLayout {
     protected final static float BIG_SCALE = 1.0f, SMALL_SCALE = 0.7f, DIFF_SCALE =

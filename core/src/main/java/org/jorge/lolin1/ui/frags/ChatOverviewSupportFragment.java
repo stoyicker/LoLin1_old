@@ -34,7 +34,7 @@ import java.util.Arrays;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 01/05/2014.
+ * Created by Jorge Antonio Diaz-Benito Soriano on 01/05/2014.
  */
 public class ChatOverviewSupportFragment extends android.support.v4.app.Fragment {
 

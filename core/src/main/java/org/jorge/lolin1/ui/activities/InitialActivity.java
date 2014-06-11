@@ -33,7 +33,7 @@ import java.io.File;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 07/01/14.
+ * Created by Jorge Antonio Diaz-Benito Soriano on 07/01/14.
  */
 public final class InitialActivity extends Activity {
 

@@ -27,7 +27,7 @@ import org.jorge.lolin1.ui.frags.ChampionSkinSupportFragment;
  * You should have received a copy of the GNU General Public License
  * along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
  * <p/>
- * Created by JorgeAntonio on 21/04/2014.
+ * Created by Jorge Antonio Diaz-Benito Soriano on 21/04/2014.
  */
 public class SkinsViewPagerAdapter extends FragmentPagerAdapter
         implements ViewPager.OnPageChangeListener {
