@@ -204,7 +204,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
         <item name="android:shadowRadius">2</item>
     </style>
 
-    <style name="CustomShowcaseTheme" parent="ShowcaseView.Light">
+    <style name="CustomShowcaseThemePlusNoButton" parent="ShowcaseView.Light">
         <item name="sv_backgroundColor">@color/showcase_background_color</item>
         <item name="sv_showcaseColor">@color/theme_strong_orange</item>
         <item name="sv_buttonText">@android:string/ok</item>

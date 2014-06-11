@@ -213,4 +213,10 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="tutorial_news_content">To begin, use your finger to swipe the screen and check for news, like in the Twitter app!</string>
     <string name="tutorial_navigation_title">Navigation</string>
     <string name="tutorial_navigation_contents">Checkout the left-side menu, either by swiping it from the side or by pressing the top-left corner</string>
+    <string name="tutorial_surr_content">Rolling news from your favourite unofficial source!</string>
+    <string name="tutorial_surr_title">Surrender@20</string>
+    <string name="tutorial_champions_contents">Check out everything on the champions, even before they are enabled!</string>
+    <string name="tutorial_champions_title">Champions</string>
+    <string name="tutorial_detail_title">But we\'re not done yet…</string>
+    <string name="tutorial_detail_contents">Swipe right to see more info!</string>
 </resources>
