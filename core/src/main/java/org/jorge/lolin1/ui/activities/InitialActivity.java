@@ -36,6 +36,9 @@ import java.io.File;
  */
 public final class InitialActivity extends Activity {
 
+    //FIXME If the splash screen is not loading for some seconds, the champions are not properly loaded
+    //FIXME Why going back from the settings to the jungle timers shows the news reader?
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
