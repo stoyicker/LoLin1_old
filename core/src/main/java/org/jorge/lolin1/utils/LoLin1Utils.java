@@ -99,9 +99,10 @@ public abstract class LoLin1Utils {
     }
 
     public static String getRealm(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(
+
+        return context != null ? PreferenceManager.getDefaultSharedPreferences(context).getString(
                 LoLin1Utils.getString(context, "pref_title_server", "League of Legends server"),
-                "null").toLowerCase();
+                "null").toLowerCase() : "";
     }
 
     public static String getLocale(Context context) {
