@@ -72,5 +72,3 @@ public class ChampionAbilitiesSupportFragment extends ChampionDetailSupportFragm
         return view;
     }
 }
-
-//TODO (Could be anywhere) When implementing the showCaseView, use the Snipt that you saved to lock the position of the news reader as portrait until an article has been selected
