@@ -52,19 +52,19 @@ public abstract class ShowcaseManager {
         createHomeOverlay(activity, titleRes, contentRes, Boolean.TRUE, listener);
     }
 
-    public static void createOverlay(Activity activity, int titleRes, int contentRes, View targetView, Boolean blockInteractions) {
-        createOverlay(activity, titleRes, contentRes, targetView, blockInteractions, null);
+    public static void createOverlay(Activity activity, int titleRes, int contentRes, int targetViewId, Boolean blockInteractions) {
+        createOverlay(activity, titleRes, contentRes, targetViewId, blockInteractions, null);
     }
 
-    public static void createOverlay(Activity activity, int titleRes, int contentRes, View targetView, Boolean blockInteractions, View.OnClickListener listener) {
-        createOverlayOnTarget(activity, titleRes, contentRes, new ViewTarget(targetView.getId(), activity), blockInteractions, listener);
+    public static void createOverlay(Activity activity, int titleRes, int contentRes, int targetViewId, Boolean blockInteractions, View.OnClickListener listener) {
+        createOverlayOnTarget(activity, titleRes, contentRes, new ViewTarget(targetViewId, activity), blockInteractions, listener);
     }
 
     /**
      * Blocks interactions by default.
      */
-    public static void createOverlay(Activity activity, int titleRes, int contentRes, View targetView, View.OnClickListener listener) {
-        createOverlay(activity, titleRes, contentRes, targetView, Boolean.TRUE, listener);
+    public static void createOverlay(Activity activity, int titleRes, int contentRes, int targetViewId, View.OnClickListener listener) {
+        createOverlay(activity, titleRes, contentRes, targetViewId, Boolean.TRUE, listener);
     }
 
     private static void createOverlayOnTarget(Activity activity, int titleRes, int contentRes, Target target, Boolean blockInteractions, View.OnClickListener listener) {
