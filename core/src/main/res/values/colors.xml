@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 This file is part of LoLin1.
 <p/>
 LoLin1 is free software: you can redistribute it and/or modify
@@ -18,20 +17,20 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by Jorge Antonio Diaz-Benito Soriano on 21/01/14.
 -->
 <resources>
-	<color name="theme_light_blue">#0066FF</color>
-	<color name="theme_dark_blue">#0B031C</color>
-	<color name="theme_strong_orange">#FFBB33</color>
-	<color name="theme_black">#000000</color>
-	<color name="theme_white">#FFFFFF</color>
-	<color name="theme_transparent_white">#AAFFFFFF</color>
-	<color name="theme_surr_grey">#444444</color>
-	<color name="theme_champion_related_background">#DEDEDE</color>
-	<color name="theme_champion_ability_background">#848484</color>
-	<color name="theme_red">#F55151</color>
-	<color name="theme_purple">#881450</color>
-	<color name="theme_chat_login_background">#240F30</color>
-	<color name="theme_strong_red">#ED3029</color>
-	<color name="theme_light_green">#00FF55</color>
-    <color name="showcase_background_color">#77000000</color>
+    <color name="theme_light_blue">#0066FF</color>
+    <color name="theme_dark_blue">#0B031C</color>
+    <color name="theme_strong_orange">#FFBB33</color>
+    <color name="theme_black">#000000</color>
+    <color name="theme_white">#FFFFFF</color>
+    <color name="theme_transparent_white">#AAFFFFFF</color>
+    <color name="theme_surr_grey">#444444</color>
+    <color name="theme_champion_related_background">#DEDEDE</color>
+    <color name="theme_champion_ability_background">#848484</color>
+    <color name="theme_red">#F55151</color>
+    <color name="theme_purple">#881450</color>
+    <color name="theme_chat_login_background">#240F30</color>
+    <color name="theme_strong_red">#ED3029</color>
+    <color name="theme_light_green">#00FF55</color>
+    <color name="showcase_background_color">#AA000000</color>
     <color name="theme_lighter_blue">#00AAFF</color>
 </resources>
