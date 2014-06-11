@@ -209,7 +209,8 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="event_login_failed">org.jorge.lolin1.CHAT_LOGIN_FAILED_EVENT</string>
 	<string name="chat_overview_wrong_credentials">
 		<![CDATA[It seems the credentials you are trying to use, if any, are not valid. You may fix them under Settings > Account Management.]]></string>
-    <string name="welcome"><![CDATA[Welcome to LoLin1, the all-in-one tool for League of Legends]]></string>
-    <string name="swipe_for_news">To begin, use your finger to swipe the screen and check for news, like in the Twitter app!</string>
-    <string name="showcase_button_text">Ok</string>
+    <string name="tutorial_news_title"><![CDATA[Welcome to LoLin1, the all-in-one tool for League of Legends]]></string>
+    <string name="tutorial_news_content">To begin, use your finger to swipe the screen and check for news, like in the Twitter app!</string>
+    <string name="tutorial_navigation_title">Navigation</string>
+    <string name="tutorial_navigation_contents">Checkout the left-side menu, either by swiping it from the side or by pressing the top-left corner</string>
 </resources>
