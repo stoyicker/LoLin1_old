@@ -1,6 +1,7 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -52,7 +53,10 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
                         R.layout.activity_surr_reader);
 
         super.onCreate(savedInstanceState);
-        surrShowCase = new ShowcaseView.Builder(this).setContentTitle(R.string.tutorial_surr_title).setContentText(R.string.tutorial_surr_content).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_surr_list, this)).build();
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!preferences.getBoolean("showcase_surrs_done", Boolean.FALSE))
+            surrShowCase = new ShowcaseView.Builder(this).setContentTitle(R.string.tutorial_surr_title).setContentText(R.string.tutorial_surr_content).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_surr_list, this)).build();
 
         SURR_FRAGMENT =
                 (SurrListFragment) getFragmentManager().findFragmentById(R.id.fragment_surr_list);
@@ -100,7 +104,9 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
 
     @Override
     public void onSurrRefreshed() {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (surrShowCase != null) {
+            preferences.edit().putBoolean("showcase_surrs_done", Boolean.TRUE).commit();
             surrShowCase.hide();
         }
     }
