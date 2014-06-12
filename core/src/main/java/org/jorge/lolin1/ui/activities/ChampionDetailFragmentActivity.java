@@ -1,9 +1,11 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -75,7 +77,10 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
             ((TextView) findViewById(R.id.champion_name)).setText(selectedChampion.getName());
             ((TextView) findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
             initChampionInfoPager();
-            detailShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_detail_contents).setContentTitle(R.string.tutorial_detail_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_detail_pager, this)).build();
+            SharedPreferences preferences =
+                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            if (!preferences.getBoolean("showcase_champion_detail_done", Boolean.FALSE))
+                detailShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_detail_contents).setContentTitle(R.string.tutorial_detail_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_detail_pager, this)).build();
 
             new AsyncTask<Void, Void, Void>(
 
@@ -133,8 +138,12 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                if (detailShowcase != null)
+                if (detailShowcase != null) {
+                    SharedPreferences preferences =
+                            PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    preferences.edit().putBoolean("showcase_champion_detail_done", Boolean.TRUE).commit();
                     detailShowcase.hide();
+                }
             }
         });
     }
