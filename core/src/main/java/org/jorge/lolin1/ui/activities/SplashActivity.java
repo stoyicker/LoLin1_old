@@ -82,7 +82,7 @@ public final class SplashActivity extends Activity {
 
                 @Override
                 protected Void doInBackground(Void... params) {
-                    final CountDownLatch countDownLatch = new CountDownLatch(1);
+                    final CountDownLatch countDownLatch = new CountDownLatch(2);
 
                     Runnable workerThread = new Runnable() {
                         @Override
@@ -92,7 +92,20 @@ public final class SplashActivity extends Activity {
                         }
                     };
 
+                    Runnable delayThread = new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(5000);
+                            } catch (InterruptedException e) {
+                                Crashlytics.logException(e);
+                            }
+                            countDownLatch.countDown();
+                        }
+                    };
+
                     workerThread.run();
+                    delayThread.run();
 
                     try {
                         countDownLatch.await();
@@ -131,7 +144,7 @@ public final class SplashActivity extends Activity {
         }
     }
 
-    private boolean askIfOnMobileConnectionAndRunDownload() {
+    private boolean onMobileConnection() {
         final CountDownLatch alertDialogLatch = new CountDownLatch(1);
         Boolean ret;
 
@@ -201,6 +214,7 @@ public final class SplashActivity extends Activity {
         logString("debug", "Pre-update operations finished");
         for (String locale : localesInThisRealm) {
             logString("debug", "Updating locale " + locale);
+            assert root != null;
             final String bustString =
                     root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
                             pathSeparator + locale + pathSeparator +
@@ -490,8 +504,8 @@ public final class SplashActivity extends Activity {
 
         String[] realms =
                 LoLin1Utils.getStringArray(getApplicationContext(), "servers", null);
-        if (!askIfOnMobileConnectionAndRunDownload()) {
-            launchNewsReader();
+        if (onMobileConnection()) {
+            return;
         }
         for (String realm : realms) {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
