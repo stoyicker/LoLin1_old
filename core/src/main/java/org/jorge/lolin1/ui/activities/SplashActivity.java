@@ -42,6 +42,7 @@ import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 public final class SplashActivity extends Activity {
 
+    private static final long SPLASH_MIN_DURATION_MILLIS = 2500;
     private SplashLogFragment LOG_FRAGMENT;
 
     @Override
@@ -96,7 +97,7 @@ public final class SplashActivity extends Activity {
                         @Override
                         public void run() {
                             try {
-                                Thread.sleep(5000);
+                                Thread.sleep(SPLASH_MIN_DURATION_MILLIS);
                             } catch (InterruptedException e) {
                                 Crashlytics.logException(e);
                             }
