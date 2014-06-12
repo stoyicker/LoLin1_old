@@ -2,7 +2,9 @@ package org.jorge.lolin1.ui.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.AttributeSet;
 import android.view.MenuItem;
 import android.view.View;
@@ -52,7 +54,10 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_champion_list);
         super.onCreate(savedInstanceState);
-        championsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_champions_contents).setContentTitle(R.string.tutorial_champions_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_list_grid, this)).build();
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!preferences.getBoolean("showcase_champions_done", Boolean.FALSE))
+            championsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_champions_contents).setContentTitle(R.string.tutorial_champions_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_list_grid, this)).build();
     }
 
     @Override
@@ -95,6 +100,9 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
     @Override
     public void onChampionSelected(Champion champion) {
         if (championsShowcase != null) {
+            SharedPreferences preferences =
+                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            preferences.edit().putBoolean("showcase_champions_done", Boolean.TRUE).commit();
             championsShowcase.hide();
         }
         Intent championDetailIntent =
