@@ -42,7 +42,7 @@ import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 public final class SplashActivity extends Activity {
 
-    private static final long SPLASH_MIN_DURATION_MILLIS = 2500;
+    private static final long SPLASH_MIN_DURATION_CONNECTED_MILLIS = 2500, SPLASH_MIN_DURATION_DISCONNECTED_MILLIS = 2000;
     private SplashLogFragment LOG_FRAGMENT;
 
     @Override
@@ -97,7 +97,7 @@ public final class SplashActivity extends Activity {
                         @Override
                         public void run() {
                             try {
-                                Thread.sleep(SPLASH_MIN_DURATION_MILLIS);
+                                Thread.sleep(SPLASH_MIN_DURATION_CONNECTED_MILLIS);
                             } catch (InterruptedException e) {
                                 Crashlytics.logException(e);
                             }
@@ -123,7 +123,22 @@ public final class SplashActivity extends Activity {
                             null));
             ChampionManager.getInstance()
                     .setChampions(SplashActivity.this.getApplicationContext());
-            launchNewsReader();
+            new AsyncTask<Void, Void, Void>() {
+                @Override
+                protected Void doInBackground(Void... params) {
+                    try {
+                        Thread.sleep(SPLASH_MIN_DURATION_DISCONNECTED_MILLIS);
+                    } catch (InterruptedException e) {
+                        Crashlytics.logException(e);
+                    }
+                    return null;
+                }
+
+                @Override
+                protected void onPostExecute(Void aVoid) {
+                    launchNewsReader();
+                }
+            }.executeOnExecutor(Executors.newSingleThreadExecutor());
         }
     }
 
