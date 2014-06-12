@@ -36,8 +36,6 @@ import java.io.File;
  */
 public final class InitialActivity extends Activity {
 
-    //FIXME Why is the loading screen that fast?
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
