@@ -3,6 +3,7 @@ package org.jorge.lolin1.ui.activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
@@ -46,6 +47,11 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!preferences.getBoolean("showcase_champions_done", Boolean.FALSE))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
         getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
                 R.menu.menu_champion_list);
         if (savedInstanceState == null) {
@@ -54,8 +60,6 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_champion_list);
         super.onCreate(savedInstanceState);
-        SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (!preferences.getBoolean("showcase_champions_done", Boolean.FALSE))
             championsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_champions_contents).setContentTitle(R.string.tutorial_champions_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_list_grid, this)).build();
     }
@@ -104,6 +108,7 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
                     PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             preferences.edit().putBoolean("showcase_champions_done", Boolean.TRUE).commit();
             championsShowcase.hide();
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
         Intent championDetailIntent =
                 new Intent(getApplicationContext(), ChampionDetailFragmentActivity.class);

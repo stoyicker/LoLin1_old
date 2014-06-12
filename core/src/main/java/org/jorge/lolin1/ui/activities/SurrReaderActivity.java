@@ -2,6 +2,7 @@ package org.jorge.lolin1.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -43,6 +44,10 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!preferences.getBoolean("showcase_surrs_done", Boolean.FALSE))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         Boolean wasSavedInstanceStateNull = savedInstanceState == null;
         if (wasSavedInstanceStateNull) {
             savedInstanceState = new Bundle();
@@ -53,8 +58,6 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
                         R.layout.activity_surr_reader);
 
         super.onCreate(savedInstanceState);
-        SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (!preferences.getBoolean("showcase_surrs_done", Boolean.FALSE))
             surrShowCase = new ShowcaseView.Builder(this).setContentTitle(R.string.tutorial_surr_title).setContentText(R.string.tutorial_surr_content).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_surr_list, this)).build();
 
@@ -108,6 +111,7 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
         if (surrShowCase != null) {
             preferences.edit().putBoolean("showcase_surrs_done", Boolean.TRUE).commit();
             surrShowCase.hide();
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }
     }
 

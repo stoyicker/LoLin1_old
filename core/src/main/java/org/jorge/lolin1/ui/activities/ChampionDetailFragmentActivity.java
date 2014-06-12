@@ -2,6 +2,7 @@ package org.jorge.lolin1.ui.activities;
 
 import android.app.ActionBar;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -64,6 +65,10 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!preferences.getBoolean("showcase_champion_detail_done", Boolean.FALSE))
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         selectedChampion = getIntent().getParcelableExtra(SELECTED_CHAMPION);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_champion_detail);
@@ -77,8 +82,6 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
             ((TextView) findViewById(R.id.champion_name)).setText(selectedChampion.getName());
             ((TextView) findViewById(R.id.champion_title)).setText(selectedChampion.getTitle());
             initChampionInfoPager();
-            SharedPreferences preferences =
-                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             if (!preferences.getBoolean("showcase_champion_detail_done", Boolean.FALSE))
                 detailShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_detail_contents).setContentTitle(R.string.tutorial_detail_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_detail_pager, this)).build();
 
@@ -143,6 +146,7 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     preferences.edit().putBoolean("showcase_champion_detail_done", Boolean.TRUE).commit();
                     detailShowcase.hide();
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                 }
             }
         });

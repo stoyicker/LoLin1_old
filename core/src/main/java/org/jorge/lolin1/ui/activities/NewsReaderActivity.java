@@ -2,6 +2,7 @@ package org.jorge.lolin1.ui.activities;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -46,6 +47,11 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        Boolean wasSavedInstanceStateNull = savedInstanceState == null;
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!preferences.getBoolean("showcase_news_done", Boolean.FALSE)) {
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        }
         if (savedInstanceState == null) {
             savedInstanceState = new Bundle();
         }
@@ -55,11 +61,9 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
 
         if (getApplicationContext() == null) return;
         super.onCreate(savedInstanceState);
-        SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (!preferences.getBoolean("showcase_news_done", Boolean.FALSE))
+        if (!preferences.getBoolean("showcase_news_done", Boolean.FALSE)) {
             newsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_news_content).setContentTitle(R.string.tutorial_news_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_news_list, this)).build();
-
+        }
 //  NEWS_FRAGMENT =
 //                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
 //        WEB_FRAGMENT =
@@ -124,6 +128,7 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                     preferences.edit().putBoolean("showcase_navigation_done", Boolean.TRUE).commit();
                     navigationShowcase.hide();
+                    setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                 }
             default:
                 return super.onOptionsItemSelected(item);
