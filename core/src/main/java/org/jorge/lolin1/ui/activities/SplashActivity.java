@@ -107,6 +107,8 @@ public final class SplashActivity extends Activity {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "no_connection_on_splash",
                             null));
+            ChampionManager.getInstance()
+                    .setChampions(SplashActivity.this.getApplicationContext());
             launchNewsReader();
         }
     }

@@ -76,7 +76,6 @@ public final class ChampionManager {
                     .getStringAttribute(FileManager.readFileAsString(targetFile), LoLin1Utils
                             .getString(context, "champion_list_key", null)));
         } catch (IOException e) {
-            Crashlytics.logException(e);
             //It's fine, nothing will get shown
             champions = new ArrayList<>();
         }
