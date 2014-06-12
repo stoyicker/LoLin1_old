@@ -96,6 +96,8 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                         .replaceAll(SQLiteDAO.LOLNEWS_FEED_EXTENSION, "")
                         .replaceAll("_(.*)", "") + "_";
 
+        if (mContext == null) return "LOLNEWS_EUW_EN";
+
         return prefix.toUpperCase() + LoLin1Utils.getRealm(mContext).toUpperCase() + "_" +
                 LoLin1Utils.getLocale(mContext).toUpperCase();
     }
