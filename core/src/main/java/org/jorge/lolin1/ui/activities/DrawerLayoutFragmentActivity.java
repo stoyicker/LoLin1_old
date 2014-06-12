@@ -132,12 +132,10 @@ public abstract class DrawerLayoutFragmentActivity extends FragmentActivity impl
                 task = new Runnable() {
                     @Override
                     public void run() {
-                        logString("debug", "Champions Activity starting");
                         startActivity(
                                 new Intent(getApplicationContext(),
                                         ChampionListActivity.class)
                         );
-                        logString("debug", "Champions Activity started");
                     }
                 };
                 break;

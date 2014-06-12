@@ -36,7 +36,7 @@ import java.io.File;
  */
 public final class InitialActivity extends Activity {
 
-    //FIXME Why going back from the settings to the jungle timers shows the news reader?
+    //FIXME Why is the loading screen that fast?
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

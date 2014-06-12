@@ -1,11 +1,14 @@
 package org.jorge.lolin1.ui.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
 import org.jorge.lolin1.ui.frags.SettingsPreferenceFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
+
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 /**
  * This file is part of LoLin1.
@@ -42,8 +45,10 @@ public final class SettingsPreferenceActivity extends PreferenceActivity {
         switch (item.getItemId()) {
             case android.R.id.home:
                 // Respond to the action bar's Up button
+                if (DrawerLayoutFragmentActivity.getLastSelectedNavDrawerIndex() == 1)
+                    startActivity(
+                            new Intent(getApplicationContext(), JungleTimersActivity.class));
                 finish();
-                return Boolean.TRUE;
             default:
                 return super.onOptionsItemSelected(item);
         }
