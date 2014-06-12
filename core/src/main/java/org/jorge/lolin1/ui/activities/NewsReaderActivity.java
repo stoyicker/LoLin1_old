@@ -1,8 +1,10 @@
 package org.jorge.lolin1.ui.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.MenuItem;
 
 import com.github.amlcurran.showcaseview.ShowcaseView;
@@ -53,7 +55,10 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
 
         if (getApplicationContext() == null) return;
         super.onCreate(savedInstanceState);
-        newsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_news_content).setContentTitle(R.string.tutorial_news_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_news_list, this)).build();
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        if (!preferences.getBoolean("showcase_news_done", Boolean.FALSE))
+            newsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_news_content).setContentTitle(R.string.tutorial_news_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_news_list, this)).build();
 
 //  NEWS_FRAGMENT =
 //                (NewsListFragment) getFragmentManager().findFragmentById(R.id.fragment_news_list);
@@ -98,19 +103,28 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
 
     @Override
     public void onNewsRefreshed() {
+        SharedPreferences preferences =
+                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (newsShowcase != null) {
+            preferences.edit().putBoolean("showcase_news_done", Boolean.TRUE).commit();
             newsShowcase.hide();
         }
 
-        navigationShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_navigation_contents).setContentTitle(R.string.tutorial_navigation_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE)).build();
+        if (!preferences.getBoolean("showcase_navigation_done", Boolean.FALSE))
+            navigationShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_navigation_contents).setContentTitle(R.string.tutorial_navigation_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ActionViewTarget(this, ActionViewTarget.Type.TITLE)).build();
+
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case android.R.id.home:
-                if (navigationShowcase != null)
+                if (navigationShowcase != null) {
+                    SharedPreferences preferences =
+                            PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    preferences.edit().putBoolean("showcase_navigation_done", Boolean.TRUE).commit();
                     navigationShowcase.hide();
+                }
             default:
                 return super.onOptionsItemSelected(item);
         }
