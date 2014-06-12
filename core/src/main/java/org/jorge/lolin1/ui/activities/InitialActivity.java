@@ -36,8 +36,6 @@ import java.io.File;
  */
 public final class InitialActivity extends Activity {
 
-    //FIXME There's stuff to fix in the discussion
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
