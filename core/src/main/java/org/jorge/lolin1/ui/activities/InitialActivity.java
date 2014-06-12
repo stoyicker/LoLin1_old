@@ -36,7 +36,6 @@ import java.io.File;
  */
 public final class InitialActivity extends Activity {
 
-    //TODO Make a preference to show the showcases only once
     //TODO Make the showcases drive device orientation
     //FIXME If the splash screen is not loading for some seconds, the champions are not properly loaded
     //FIXME Why going back from the settings to the jungle timers shows the news reader?
