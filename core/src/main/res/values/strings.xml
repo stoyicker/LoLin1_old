@@ -133,7 +133,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="delay_update_dialog_positive_button">Yes, prompt me next time</string>
 	<string name="delay_update_dialog_negative_button">No (might impact your Internet quota)
 	</string>
-    <string name="update_delayed">update delayed.</string>
+    <string name="update_delayed">update delayed (download on mobile data not supported).</string>
     <string name="update_pre_version_check">Querying</string>
     <string name="progress_character">…</string>
 	<string name="update_server_is_updating">server is checking for contents, update aborted.
