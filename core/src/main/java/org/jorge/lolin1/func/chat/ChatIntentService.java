@@ -202,8 +202,7 @@ public class ChatIntentService extends IntentService {
 
     private void launchBroadcastLostConnection() {
         Intent intent = new Intent();
-        intent.setAction(LoLin1Utils
-                .getString(getApplicationContext(), "android.net.conn.CONNECTIVITY_CHANGE", null));
+        intent.setAction("android.net.conn.CONNECTIVITY_CHANGE");
         sendLocalBroadcast(intent);
     }
 
@@ -230,9 +229,12 @@ public class ChatIntentService extends IntentService {
                         "Region " + upperCaseRealm + " not yet implemented");
         }
         try {
+            logString("debug", "Assigning api...");
             api = new LoLChat(chatServer, Boolean.FALSE);
         } catch (IOException e) {
-            launchBroadcastLostConnection();
+            logString("debug", "Ops, exception!");
+            launchBroadcastLoginUnsuccessful();
+            return Boolean.FALSE;
         }
         final AccountManager accountManager = AccountManager.get(getApplicationContext());
         Account[] accounts = accountManager.getAccountsByType(
