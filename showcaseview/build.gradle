@@ -11,6 +11,13 @@ buildscript {
 apply plugin: 'android-library'
 
 android {
+    buildTypes {
+        release {
+            runProguard true
+            proguardFile getDefaultProguardFile('proguard-showcaseview.txt')
+        }
+    }
+
     compileSdkVersion 15
     buildToolsVersion '19.1.0'
 

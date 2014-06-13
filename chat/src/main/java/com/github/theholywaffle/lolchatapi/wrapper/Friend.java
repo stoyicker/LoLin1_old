@@ -30,6 +30,7 @@ import org.jivesoftware.smack.packet.Presence;
 import org.jivesoftware.smack.packet.Presence.Type;
 
 import java.io.IOException;
+import java.util.Locale;
 
 /**
  * This and all the files in the module have been developed by Bert De Geyter (https://github.com/TheHolyWaffle) and are protected by the Apache GPLv3 license.
@@ -196,7 +197,7 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
     }
 
     public boolean matchesFilterQuery(CharSequence constraint) {
-        return getName().toLowerCase().contains((constraint + "").toLowerCase());
+        return getName().toLowerCase(Locale.ENGLISH).contains((constraint + "").toLowerCase(Locale.ENGLISH));
     }
 
     @Override
