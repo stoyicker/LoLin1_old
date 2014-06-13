@@ -12,3 +12,4 @@ crashlytics.properties
 *.keystore
 *.pwd
 *.alias
+crashlytics-build.properties
