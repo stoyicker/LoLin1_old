@@ -8,7 +8,7 @@ android {
     buildTypes {
         release {
             runProguard true
-            proguardFile getDefaultProguardFile('proguard-chat.txt')
+            proguardFile 'proguard-chat.txt'
         }
     }
 
