@@ -36,6 +36,10 @@ import java.io.File;
  */
 public final class InitialActivity extends Activity {
 
+    //FIXME crash
+    //FIXME proguard
+    //FIXME zipalign
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
