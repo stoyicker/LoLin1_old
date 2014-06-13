@@ -19,7 +19,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
 import org.jorge.lolin1.func.chat.ChatIntentService;
 import org.jorge.lolin1.ui.frags.AcceptCredentialsFragment;
-import org.jorge.lolin1.ui.frags.AccountAuthenticatorRealmSelectorFragment;
+import org.jorge.lolin1.ui.frags.RealmSelectorFragment;
 import org.jorge.lolin1.ui.frags.AccountCredentialsComponentFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
@@ -48,7 +48,7 @@ import java.util.Collection;
 public class AccountAuthenticationActivity extends AccountAuthenticatorActivity implements
         AcceptCredentialsFragment.AcceptCredentialsListener,
         AccountCredentialsComponentFragment.AccountCredentialsComponentListener,
-        AccountAuthenticatorRealmSelectorFragment.AccountAuthenticatorRealmSelectorListener {
+        RealmSelectorFragment.RealmSelectionListener {
 
     public static final String KEY_ACCOUNT_TYPE = "ACCOUNT_TYPE";
     public static final String KEY_NEW_ACCOUNT = "NEW_ACCOUNT";
@@ -57,7 +57,7 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
     private AccountCredentialsComponentFragment USERNAME_COMPONENT_FRAGMENT,
             PASSWORD_COMPONENT_FRAGMENT;
     private AcceptCredentialsFragment ACCEPT_CREDENTIALS_FRAGMENT;
-    private AccountAuthenticatorRealmSelectorFragment REALM_SELECTION_FRAGMENT;
+    private RealmSelectorFragment REALM_SELECTION_FRAGMENT;
 
     @Override
     public void onFieldUpdated() {
@@ -92,7 +92,7 @@ public class AccountAuthenticationActivity extends AccountAuthenticatorActivity 
         ACCEPT_CREDENTIALS_FRAGMENT =
                 (AcceptCredentialsFragment) getFragmentManager()
                         .findFragmentById(R.id.accept_credentials);
-        REALM_SELECTION_FRAGMENT = (AccountAuthenticatorRealmSelectorFragment) getFragmentManager()
+        REALM_SELECTION_FRAGMENT = (RealmSelectorFragment) getFragmentManager()
                 .findFragmentById(R.id.realm_indicator);
 
         onNewRealmSelected();

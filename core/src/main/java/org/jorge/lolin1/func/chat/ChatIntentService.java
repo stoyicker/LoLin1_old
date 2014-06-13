@@ -21,6 +21,7 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
+import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
@@ -233,6 +234,7 @@ public class ChatIntentService extends IntentService {
             api = new LoLChat(chatServer, Boolean.FALSE);
         } catch (IOException e) {
             logString("debug", "Ops, exception!");
+            LoLin1DebugUtils.showTrace("debug", e);
             launchBroadcastLoginUnsuccessful();
             return Boolean.FALSE;
         }

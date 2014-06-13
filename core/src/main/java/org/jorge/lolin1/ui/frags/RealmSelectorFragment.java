@@ -17,6 +17,8 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.Arrays;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -35,11 +37,16 @@ import java.util.Arrays;
  * <p/>
  * Created by Jorge Antonio Diaz-Benito Soriano on 01/05/2014.
  */
-public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
+public class RealmSelectorFragment extends Fragment {
 
-    private AccountAuthenticatorRealmSelectorListener mCallback;
+    private RealmSelectionListener mCallback;
 
-    public interface AccountAuthenticatorRealmSelectorListener {
+    public void initialSetSelectedIndex(int i) {
+        spinner.setSelection(i);
+        mCallback.onNewRealmSelected();
+    }
+
+    public interface RealmSelectionListener {
         void onNewRealmSelected();
     }
 
@@ -51,7 +58,7 @@ public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
         super.onAttach(activity);
 
         try {
-            mCallback = (AccountAuthenticatorRealmSelectorListener) activity;
+            mCallback = (RealmSelectionListener) activity;
         } catch (ClassCastException ex) {
             throw new ClassCastException(activity.toString()
                     + " must implement AccountAuthenticatorRealmSelectorListener");
@@ -79,6 +86,7 @@ public class AccountAuthenticatorRealmSelectorFragment extends Fragment {
                 if (position != lastSelectedIndex) {
                     lastSelectedIndex = position;
                     mCallback.onNewRealmSelected();
+                    logString("debug", "oNRS");
                 }
             }
 

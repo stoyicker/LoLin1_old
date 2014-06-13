@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.frags.LanguageListFragment;
-import org.jorge.lolin1.ui.frags.RealmListFragment;
+import org.jorge.lolin1.ui.frags.RealmSelectorFragment;
 import org.jorge.lolin1.ui.frags.VerificationFragment;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
@@ -31,39 +31,15 @@ import org.jorge.lolin1.utils.LoLin1Utils;
  * Created by Jorge Antonio Diaz-Benito Soriano on 18/03/14.
  */
 public final class ServerAndLanguageChooserActivity extends Activity
-        implements RealmListFragment.RealmListFragmentListener,
+        implements RealmSelectorFragment.RealmSelectionListener,
         LanguageListFragment.LanguageListFragmentListener,
         VerificationFragment.VerificationFragmentListener {
 
     private LanguageListFragment LANGUAGE_LIST_FRAGMENT;
     private VerificationFragment VERIFICATION_FRAGMENT;
     private String currentlySelectedRealm, currentlySelectedLocale;
+    private RealmSelectorFragment REALM_SELECTOR_FRAGMENT;
 
-    /**
-     * Called when the activity is starting.  This is where most initialization
-     * should go: calling {@link #setContentView(int)} to inflate the
-     * activity's UI, using {@link #findViewById} to programmatically interact
-     * with widgets in the UI, calling
-     * {@link #managedQuery(android.net.Uri, String[], String, String[], String)} to retrieve
-     * cursors for data being displayed, etc.
-     * <p/>
-     * <p>You can call {@link #finish} from within this function, in
-     * which case onDestroy() will be immediately called without any of the rest
-     * of the activity lifecycle ({@link #onStart}, {@link #onResume},
-     * {@link #onPause}, etc) executing.
-     * <p/>
-     * <p><em>Derived classes must call through to the super class's
-     * implementation of this method. If they do not, an exception will be
-     * thrown.</em></p>
-     *
-     * @param savedInstanceState If the activity is being re-initialized after
-     *                           previously being shut down then this Bundle contains the data it most
-     *                           recently supplied in {@link #onSaveInstanceState}.  <b><i>Note: Otherwise it is null.</i></b>
-     * @see #onStart
-     * @see #onSaveInstanceState
-     * @see #onRestoreInstanceState
-     * @see #onPostCreate
-     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,6 +51,8 @@ public final class ServerAndLanguageChooserActivity extends Activity
                 (LanguageListFragment) fragmentManager
                         .findFragmentById(R.id.fragment_language_list);
 
+        REALM_SELECTOR_FRAGMENT = (RealmSelectorFragment) fragmentManager.findFragmentById(R.id.fragment_realm_list);
+
         fragmentManager.beginTransaction()
                 .setTransition(FragmentTransaction.TRANSIT_NONE)
                 .hide(LANGUAGE_LIST_FRAGMENT).addToBackStack(null).commit();
@@ -83,6 +61,8 @@ public final class ServerAndLanguageChooserActivity extends Activity
 
         VERIFICATION_FRAGMENT = (VerificationFragment) fragmentManager
                 .findFragmentById(R.id.fragment_verification);
+
+        REALM_SELECTOR_FRAGMENT.initialSetSelectedIndex(0);
     }
 
     @Override
@@ -115,18 +95,18 @@ public final class ServerAndLanguageChooserActivity extends Activity
     }
 
     @Override
-    public void onRealmSelected(String newSelectedRealm) {
-        currentlySelectedRealm = newSelectedRealm;
-        disableVerification();
-        LANGUAGE_LIST_FRAGMENT.notifyNewRealmHasBeenSelected(currentlySelectedRealm);
-    }
-
-    @Override
     public void onVerificationFired() {
         LoLin1Utils.setRealm(getBaseContext(), currentlySelectedRealm);
         LoLin1Utils.setLocale(getBaseContext(), currentlySelectedLocale);
         final Intent splashIntent = new Intent(getApplicationContext(), SplashActivity.class);
         finish();
         startActivity(splashIntent);
+    }
+
+    @Override
+    public void onNewRealmSelected() {
+        currentlySelectedRealm = REALM_SELECTOR_FRAGMENT.getSelectedRealm();
+        disableVerification();
+        LANGUAGE_LIST_FRAGMENT.notifyNewRealmHasBeenSelected(currentlySelectedRealm);
     }
 }

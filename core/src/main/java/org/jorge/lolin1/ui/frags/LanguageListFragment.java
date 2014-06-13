@@ -42,14 +42,6 @@ public class LanguageListFragment extends Fragment {
     public LanguageListFragment() {
     }
 
-    /**
-     * Called when the hidden state (as returned by {@link #isHidden()} of
-     * the fragment has changed.  Fragments start out not hidden; this will
-     * be called whenever the fragment changes state from that.
-     *
-     * @param hidden True if the fragment is now hidden, false if it is not
-     *               visible.
-     */
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
@@ -58,29 +50,76 @@ public class LanguageListFragment extends Fragment {
         }
     }
 
-    /**
-     * Called to have the fragment instantiate its user interface view.
-     * This is optional, and non-graphical fragments can return null (which
-     * is the default implementation).  This will be called between
-     * {@link #onCreate(android.os.Bundle)} and {@link #onActivityCreated(android.os.Bundle)}.
-     * <p/>
-     * <p>If you return a View from here, you will later be called in
-     * {@link #onDestroyView} when the view is being released.
-     *
-     * @param inflater           The LayoutInflater object that can be used to inflate
-     *                           any views in the fragment,
-     * @param container          If non-null, this is the parent view that the fragment's
-     *                           UI should be attached to.  The fragment should not add the view itself,
-     *                           but this can be used to generate the LayoutParams of the view.
-     * @param savedInstanceState If non-null, this fragment is being re-constructed
-     *                           from a previous saved state as given here.
-     * @return Return the View for the fragment's UI, or null.
-     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_language_list, container, Boolean.FALSE);
     }
+
+
+    private void reloadLanguages(View v, String newSelectedRealm) {
+        LinearLayout viewAsViewGroup =
+                (LinearLayout) v.findViewById(R.id.language_list_container);
+        viewAsViewGroup.removeAllViews();
+        views.clear();
+        String realm_composite =
+                LoLin1Utils.getString(getActivity().getApplicationContext(),
+                        "realm_to_language_list_prefix", "lang_") +
+                        newSelectedRealm.toLowerCase();
+        String[] languages =
+                LoLin1Utils
+                        .getStringArray(getActivity().getApplicationContext(), realm_composite,
+                                null), languages_simplified =
+                LoLin1Utils
+                        .getStringArray(getActivity().getApplicationContext(),
+                                realm_composite + LoLin1Utils
+                                        .getString(getActivity().getApplicationContext(),
+                                                "language_to_simplified_suffix", "_simplified"),
+                                null
+                        );
+        int languageCounter = 0;
+        for (String language : languages) {
+            final TextView textView =
+                    new TextView(getActivity().getApplicationContext()) {
+                        @Override
+                        public boolean onTouchEvent(MotionEvent event) {
+                            for (TextView x : views)
+                                if (x != this) {
+                                    x.setShadowLayer(0, 0, 0, R.color.theme_white);
+                                    x.setTypeface(null, Typeface.NORMAL);
+                                }
+                            this.setTypeface(null, Typeface.BOLD);
+                            this.setShadowLayer(3, 3, 3, R.color.theme_strong_orange);
+                            mCallback.onLocaleSelected((String) this.getTag());
+                            return Boolean.TRUE;
+                        }
+                    };
+            views.add(textView);
+            int verticalPadding = LoLin1Utils.getInt(getActivity().getApplicationContext(),
+                    "server_and_language_text_views_vertical_margin", 10), horizontalPadding =
+                    LoLin1Utils.getInt(getActivity().getApplicationContext(),
+                            "server_and_language_text_views_horizontal_margin", 15);
+            verticalPadding =
+                    LoLin1Utils.pixelsAsDp(getActivity().getApplicationContext(), verticalPadding);
+            horizontalPadding = LoLin1Utils
+                    .pixelsAsDp(getActivity().getApplicationContext(), horizontalPadding);
+            textView.setPadding(horizontalPadding, verticalPadding, horizontalPadding,
+                    verticalPadding);
+            textView.setText(language);
+            textView.setTextColor(getResources().getColor(R.color.theme_black));
+            textView.setTextSize(LoLin1Utils
+                    .getInt(getActivity().getApplicationContext(),
+                            "language_chooser_text_size",
+                            -1));
+            textView.setTag(languages_simplified[languageCounter]);
+            languageCounter++;
+            viewAsViewGroup.addView(textView,
+                    new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                            LinearLayout.LayoutParams.WRAP_CONTENT)
+            );
+        }
+    }
+
 
     private void reloadLanguages(String newSelectedRealm) {
         LinearLayout viewAsViewGroup =
