@@ -43,7 +43,7 @@ android {
         signingConfigs {
             release {
                 storeFile new File("core/lolin1gplaykey.keystore")
-                storePassword (new File("core/lolinstorage.pwd").text)
+                storePassword (new File("core/lolin1storage.pwd").text)
                 keyAlias (new File("core/lolin1.alias").text)
                 keyPassword (new File("core/lolin1key.pwd").text)
             }
