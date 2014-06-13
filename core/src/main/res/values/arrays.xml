@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 This file is part of LoLin1.
 <p/>
 LoLin1 is free software: you can redistribute it and/or modify
@@ -18,129 +17,182 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
 -->
 <resources>
-	<string-array name="effects">
-		<item>Standard</item>
-		<item>Tablet</item>
-		<item>CubeIn</item>
-		<item>CubeOut</item>
-		<item>FlipVertical</item>
-		<item>FlipHorizontal</item>
-		<item>Stack</item>
-		<item>ZoomIn</item>
-		<item>ZoomOut</item>
-		<item>RotateUp</item>
-		<item>RotateDown</item>
-		<item>Accordion</item>
-	</string-array>
-	<string-array name="navigation_drawer_items">
-		<item>@string/title_section1</item>
-		<item>@string/title_section2</item>
-		<item>@string/title_section3</item>
-		<item>@string/title_section4</item>
-		<item>@string/title_section5</item>
-	</string-array>
-	<string-array name="news_feed_urls">
-		<item>@string/news_euw_en</item>
-		<item>@string/news_euw_de</item>
-		<item>@string/news_euw_es</item>
-		<item>@string/news_euw_fr</item>
-		<item>@string/news_euw_it</item>
-		<item>@string/news_eune_en</item>
-		<item>@string/news_eune_el</item>
-		<item>@string/news_eune_pl</item>
-		<item>@string/news_eune_ro</item>
-		<item>@string/news_br_pt</item>
-		<item>@string/news_na_en</item>
-		<item>@string/news_tr_tr</item>
-	</string-array>
-	<string-array name="lang_euw">
-		<item>@string/lang_en</item>
-		<item>@string/lang_de</item>
-		<item>@string/lang_es</item>
-		<item>@string/lang_fr</item>
-		<item>@string/lang_it</item>
-	</string-array>
-	<string-array name="lang_eune">
-		<item>@string/lang_en</item>
-		<item>@string/lang_el</item>
-		<item>@string/lang_pl</item>
-		<item>@string/lang_ro</item>
-	</string-array>
-	<string-array name="lang_na">
-		<item>@string/lang_en</item>
-	</string-array>
-	<string-array name="lang_tr">
-		<item>@string/lang_tr</item>
-	</string-array>
-	<string-array name="lang_br">
-		<item>@string/lang_pt</item>
-	</string-array>
-	<string-array name="lang_euw_simplified">
-		<item>@string/lang_en_simplified</item>
-		<item>@string/lang_de_simplified</item>
-		<item>@string/lang_es_simplified</item>
-		<item>@string/lang_fr_simplified</item>
-		<item>@string/lang_it_simplified</item>
-	</string-array>
-	<string-array name="lang_eune_simplified">
-		<item>@string/lang_en_simplified</item>
-		<item>@string/lang_el_simplified</item>
-		<item>@string/lang_pl_simplified</item>
-		<item>@string/lang_ro_simplified</item>
-	</string-array>
-	<string-array name="lang_na_simplified">
-		<item>@string/lang_en_simplified</item>
-	</string-array>
-	<string-array name="lang_tr_simplified">
-		<item>@string/lang_tr_simplified</item>
-	</string-array>
-	<string-array name="lang_br_simplified">
-		<item>@string/lang_pt_simplified</item>
-	</string-array>
-	<string-array name="servers">
-		<item>@string/server_na</item>
-		<item>@string/server_br</item>
-		<item>@string/server_tr</item>
-		<item>@string/server_euw</item>
-		<item>@string/server_eune</item>
-	</string-array>
-	<string-array name="langs">
-		<item>@string/lang_pt</item>
-		<item>@string/lang_en</item>
-		<item>@string/lang_tr</item>
-		<item>@string/lang_el</item>
-		<item>@string/lang_pl</item>
-		<item>@string/lang_fr</item>
-		<item>@string/lang_es</item>
-		<item>@string/lang_de</item>
-		<item>@string/lang_ro</item>
-		<item>@string/lang_it</item>
-	</string-array>
-	<string-array name="langs_simplified">
-		<item>@string/lang_pt_simplified</item>
-		<item>@string/lang_en_simplified</item>
-		<item>@string/lang_tr_simplified</item>
-		<item>@string/lang_el_simplified</item>
-		<item>@string/lang_pl_simplified</item>
-		<item>@string/lang_fr_simplified</item>
-		<item>@string/lang_es_simplified</item>
-		<item>@string/lang_de_simplified</item>
-		<item>@string/lang_ro_simplified</item>
-		<item>@string/lang_it_simplified</item>
-	</string-array>
-	<string-array name="main_fragments_tags">
-		<item>@string/tag_fragment_news</item>
-	</string-array>
-	<string-array name="data_providers">
-		<item>http://lolin1-data-provider-eu1.herokuapp.com</item>
-		<item>http://lolin1-data-provider-eu2.herokuapp.com</item>
-		<item>http://lolin1-data-provider-eu3.herokuapp.com</item>
-		<item>http://lolin1-data-provider-eu4.herokuapp.com</item>
-		<item>http://lolin1-data-provider-eu5.herokuapp.com</item>
-		<item>http://lolin1-data-provider-eu6.herokuapp.com</item>
-		<item>http://lolin1-data-provider-eu7.herokuapp.com</item>
-		<item>http://lolin1-data-provider-eu8.herokuapp.com</item>
-		<item>http://lolin1-data-provider-eu9.herokuapp.com</item>
-		<item>http://lolin1-data-provider-usa1.herokuapp.com</item>
-	</string-array>
+    <string-array name="effects">
+        <item>Standard</item>
+        <item>Tablet</item>
+        <item>CubeIn</item>
+        <item>CubeOut</item>
+        <item>FlipVertical</item>
+        <item>FlipHorizontal</item>
+        <item>Stack</item>
+        <item>ZoomIn</item>
+        <item>ZoomOut</item>
+        <item>RotateUp</item>
+        <item>RotateDown</item>
+        <item>Accordion</item>
+    </string-array>
+    <string-array name="navigation_drawer_items">
+        <item>@string/title_section1</item>
+        <item>@string/title_section2</item>
+        <item>@string/title_section3</item>
+        <item>@string/title_section4</item>
+        <item>@string/title_section5</item>
+    </string-array>
+    <string-array name="news_feed_urls">
+        <item>@string/news_euw_en</item>
+        <item>@string/news_euw_de</item>
+        <item>@string/news_euw_es</item>
+        <item>@string/news_euw_fr</item>
+        <item>@string/news_euw_it</item>
+        <item>@string/news_eune_en</item>
+        <item>@string/news_eune_el</item>
+        <item>@string/news_eune_pl</item>
+        <item>@string/news_eune_ro</item>
+        <item>@string/news_eune_cs</item>
+        <item>@string/news_eune_hu</item>
+        <item>@string/news_na_en</item>
+        <item>@string/news_tr_tr</item>
+        <item>@string/news_ru_ru</item>
+        <item>@string/news_kr_ko</item>
+        <item>@string/news_lan_es</item>
+        <item>@string/news_las_es</item>
+        <item>@string/news_oce_en</item>
+    </string-array>
+    <string-array name="lang_euw">
+        <item>@string/lang_en</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_it</item>
+    </string-array>
+    <string-array name="lang_eune">
+        <item>@string/lang_en</item>
+        <item>@string/lang_el</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_ro</item>
+        <item>@string/lang_cs</item>
+        <item>@string/lang_hu</item>
+    </string-array>
+    <string-array name="lang_na">
+        <item>@string/lang_en</item>
+    </string-array>
+    <string-array name="lang_tr">
+        <item>@string/lang_tr</item>
+    </string-array>
+    <string-array name="lang_br">
+        <item>@string/lang_pt</item>
+    </string-array>
+    <string-array name="lang_ru">
+        <item>@string/lang_ru</item>
+    </string-array>
+    <string-array name="lang_kr">
+        <item>@string/lang_ko</item>
+    </string-array>
+    <string-array name="lang_lan">
+        <item>@string/lang_es</item>
+    </string-array>
+    <string-array name="lang_las">
+        <item>@string/lang_es</item>
+    </string-array>
+    <string-array name="lang_oce">
+        <item>@string/lang_en</item>
+    </string-array>
+    <string-array name="lang_euw_simplified">
+        <item>@string/lang_en_simplified</item>
+        <item>@string/lang_de_simplified</item>
+        <item>@string/lang_es_simplified</item>
+        <item>@string/lang_fr_simplified</item>
+        <item>@string/lang_it_simplified</item>
+    </string-array>
+    <string-array name="lang_eune_simplified">
+        <item>@string/lang_en_simplified</item>
+        <item>@string/lang_el_simplified</item>
+        <item>@string/lang_pl_simplified</item>
+        <item>@string/lang_ro_simplified</item>
+        <item>@string/lang_cs_simplified</item>
+        <item>@string/lang_hu_simplified</item>
+    </string-array>
+    <string-array name="lang_na_simplified">
+        <item>@string/lang_en_simplified</item>
+    </string-array>
+    <string-array name="lang_tr_simplified">
+        <item>@string/lang_tr_simplified</item>
+    </string-array>
+    <string-array name="lang_br_simplified">
+        <item>@string/lang_pt_simplified</item>
+    </string-array>
+    <string-array name="lang_ru_simplified">
+        <item>@string/lang_ru_simplified</item>
+    </string-array>
+    <string-array name="lang_kr_simplified">
+        <item>@string/lang_ko_simplified</item>
+    </string-array>
+    <string-array name="lang_lan_simplified">
+        <item>@string/lang_es_simplified</item>
+    </string-array>
+    <string-array name="lang_las_simplified">
+        <item>@string/lang_es_simplified</item>
+    </string-array>
+    <string-array name="lang_oce_simplified">
+        <item>@string/lang_en_simplified</item>
+    </string-array>
+    <string-array name="servers">
+        <item>@string/server_na</item>
+        <item>@string/server_br</item>
+        <item>@string/server_tr</item>
+        <item>@string/server_euw</item>
+        <item>@string/server_eune</item>
+        <item>@string/server_ru</item>
+        <item>@string/server_kr</item>
+        <item>@string/server_lan</item>
+        <item>@string/server_las</item>
+        <item>@string/server_oce</item>
+    </string-array>
+    <string-array name="langs">
+        <item>@string/lang_pt</item>
+        <item>@string/lang_en</item>
+        <item>@string/lang_tr</item>
+        <item>@string/lang_el</item>
+        <item>@string/lang_pl</item>
+        <item>@string/lang_fr</item>
+        <item>@string/lang_es</item>
+        <item>@string/lang_de</item>
+        <item>@string/lang_ro</item>
+        <item>@string/lang_cs</item>
+        <item>@string/lang_hu</item>
+        <item>@string/lang_it</item>
+        <item>@string/lang_ru</item>
+        <item>@string/lang_ko</item>
+    </string-array>
+    <string-array name="langs_simplified">
+        <item>@string/lang_pt_simplified</item>
+        <item>@string/lang_en_simplified</item>
+        <item>@string/lang_tr_simplified</item>
+        <item>@string/lang_el_simplified</item>
+        <item>@string/lang_pl_simplified</item>
+        <item>@string/lang_fr_simplified</item>
+        <item>@string/lang_es_simplified</item>
+        <item>@string/lang_de_simplified</item>
+        <item>@string/lang_ro_simplified</item>
+        <item>@string/lang_cs_simplified</item>
+        <item>@string/lang_hu_simplified</item>
+        <item>@string/lang_it_simplified</item>
+        <item>@string/lang_ru_simplified</item>
+        <item>@string/lang_ko_simplified</item>
+    </string-array>
+    <string-array name="main_fragments_tags">
+        <item>@string/tag_fragment_news</item>
+    </string-array>
+    <string-array name="data_providers">
+        <item>http://lolin1-data-provider-eu1.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu2.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu3.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu4.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu5.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu6.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu7.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu8.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu9.herokuapp.com</item>
+        <item>http://lolin1-data-provider-usa1.herokuapp.com</item>
+    </string-array>
 </resources>
