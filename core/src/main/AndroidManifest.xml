@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 This file is part of LoLin1.
 <p/>
 LoLin1 is free software: you can redistribute it and/or modify
@@ -17,166 +16,176 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
 -->
-<manifest android:name="@string/app_name"
-          package="org.jorge.lolin1"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest
+    android:name="@string/app_name"
+    package="org.jorge.lolin1"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.WAKE_LOCK"/>
-	<uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
-	<uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-	<uses-permission android:name="android.permission.USE_CREDENTIALS"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.USE_CREDENTIALS" />
 
-	<application
-		android:allowBackup="true"
-		android:icon="@drawable/icon_app"
-		android:logo="@drawable/icon_section1"
-		android:theme="@style/AppTheme"
-		android:largeHeap="true">
-		<activity
-			android:name=".ui.activities.InitialActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden"
-			android:label="@string/app_name"
-			android:launchMode="singleTop"
-			android:logo="@drawable/icon_app"
-			android:theme="@android:style/Theme.Translucent.NoTitleBar">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.SettingsPreferenceActivity"
-			android:configChanges="keyboardHidden"
-			android:label="@string/title_activity_settings"
-			android:launchMode="singleTop"
-			android:logo="@drawable/icon_settings">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.NewsReaderActivity"
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:label="@string/title_section1"
-			android:launchMode="singleTop"
-			android:logo="@drawable/icon_section1">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity android:name=".ui.activities.ChampionListActivity"
-		          android:label="@string/title_section3"
-		          android:configChanges="keyboardHidden|orientation|screenSize"
-		          android:launchMode="singleTop"
-		          android:logo="@drawable/icon_section3">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.SurrReaderActivity"
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:label="@string/title_section4"
-			android:launchMode="singleTop"
-			android:logo="@drawable/icon_section4">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.WebViewerActivity"
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:label="@string/title_activity_web_viewer"
-			android:launchMode="singleTop"
-			android:logo="@drawable/icon_section1">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.SplashActivity"
-			android:label="@string/title_activity_splash"
-			android:launchMode="singleTop"
-			android:logo="@drawable/icon_app"
-			android:screenOrientation="portrait"
-			android:theme="@android:style/Theme.NoTitleBar">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.ServerAndLanguageChooserActivity"
-			android:label="@string/title_activity_server_and_lang"
-			android:launchMode="singleTop"
-			android:logo="@drawable/icon_app"
-			android:screenOrientation="portrait"
-			android:theme="@android:style/Theme.NoTitleBar">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.ChampionDetailFragmentActivity"
-			android:label="@string/champion_detail_title"
-			android:launchMode="singleTop"
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:logo="@drawable/icon_section3">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.JungleTimersActivity"
-			android:label="@string/jungle_timers_activity"
-			android:launchMode="singleInstance"
-			android:configChanges="keyboardHidden|orientation|screenSize"
-			android:logo="@drawable/icon_section2">
-			<intent-filter>
-				<action android:name="android.intent.action.VIEW"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity
-			android:name=".ui.activities.AccountAuthenticationActivity"
-			android:configChanges="orientation|screenSize|keyboardHidden"
-			android:label="@string/app_name"
-			android:launchMode="singleTop"
-			android:logo="@drawable/icon_app"
-			android:windowSoftInputMode="stateVisible|adjustResize">
-			<intent-filter>
-				<action android:name="android.intent.action.INSERT_OR_EDIT"/>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<activity android:name=".ui.activities.ChatOverviewActivity"
-		          android:configChanges="orientation|screenSize|keyboardHidden"
-		          android:launchMode="singleTop"
-		          android:logo="@drawable/icon_section5">
-			<intent-filter>
-				<category android:name="android.intent.category.DEFAULT"/>
-			</intent-filter>
-		</activity>
-		<service android:name=".func.auth.AccountAuthenticatorService"
-		         android:permission="android.permission.GET_ACCOUNTS">
-			<intent-filter>
-				<action android:name="android.accounts.AccountAuthenticator"/>
-			</intent-filter>
-			<meta-data android:name="android.accounts.AccountAuthenticator"
-			           android:resource="@xml/authenticator"/>
-		</service>
-		<service android:name=".func.chat.ChatIntentService" android:exported="false"/>
-		<meta-data android:name="com.crashlytics.ApiKey"
-		           android:value="86e97245af3721940bc1f7a5fff3927950c2ac7c"/>
-	</application>
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/icon_app"
+        android:logo="@drawable/icon_section1"
+        android:theme="@style/AppTheme"
+        android:largeHeap="true">
+        <activity
+            android:name=".ui.activities.InitialActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_app"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.SettingsPreferenceActivity"
+            android:configChanges="keyboardHidden"
+            android:label="@string/title_activity_settings"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_settings">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.NewsReaderActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_section1"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_section1">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.ChampionListActivity"
+            android:label="@string/title_section3"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_section3">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.SurrReaderActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_section4"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_section4">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.WebViewerActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:label="@string/title_activity_web_viewer"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_section1">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_app"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.ServerAndLanguageChooserActivity"
+            android:label="@string/title_activity_server_and_lang"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_app"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.NoTitleBar">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.ChampionDetailFragmentActivity"
+            android:label="@string/champion_detail_title"
+            android:launchMode="singleTop"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:logo="@drawable/icon_section3">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.JungleTimersActivity"
+            android:label="@string/jungle_timers_activity"
+            android:launchMode="singleInstance"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:logo="@drawable/icon_section2">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.AccountAuthenticationActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_app"
+            android:windowSoftInputMode="stateVisible|adjustResize">
+            <intent-filter>
+                <action android:name="android.intent.action.INSERT_OR_EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.ChatOverviewActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:launchMode="singleTop"
+            android:logo="@drawable/icon_section5">
+            <intent-filter>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <service
+            android:name=".func.auth.AccountAuthenticatorService"
+            android:permission="android.permission.GET_ACCOUNTS">
+            <intent-filter>
+                <action android:name="android.accounts.AccountAuthenticator" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accounts.AccountAuthenticator"
+                android:resource="@xml/authenticator" />
+        </service>
+        <service
+            android:name=".func.chat.ChatIntentService"
+            android:exported="false" />
+
+        <meta-data
+            android:name="com.crashlytics.ApiKey"
+            android:value="86e97245af3721940bc1f7a5fff3927950c2ac7c" />
+    </application>
 </manifest>
