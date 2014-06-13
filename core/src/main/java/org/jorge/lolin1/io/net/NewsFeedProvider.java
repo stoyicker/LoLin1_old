@@ -25,6 +25,7 @@ import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Locale;
 
 import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
@@ -95,7 +96,7 @@ public class NewsFeedProvider {
         String srcString =
                 (LOLNEWS_PREFIX + "_" + server + "_" + langSimplified.substring(0, 2) +
                         LOLNEWS_SUFFIX)
-                        .toLowerCase();
+                        .toLowerCase(Locale.ENGLISH);
         URL source = new URL(URLDecoder.decode(srcString, "UTF-8").replaceAll(" ", "%20"));
         URLConnection urlConnection = source.openConnection();
         urlConnection.connect();

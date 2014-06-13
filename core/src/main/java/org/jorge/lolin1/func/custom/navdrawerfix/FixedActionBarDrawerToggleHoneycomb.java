@@ -16,7 +16,6 @@ package org.jorge.lolin1.func.custom.navdrawerfix;
  * limitations under the License.
  */
 
-import android.R;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.res.TypedArray;
@@ -39,7 +38,7 @@ class FixedActionBarDrawerToggleHoneycomb {
     private static final String TAG = "ActionBarDrawerToggleHoneycomb";
 
     private static final int[] THEME_ATTRS = new int[]{
-            R.attr.homeAsUpIndicator
+            android.R.attr.homeAsUpIndicator
     };
 
     public static Object setActionBarUpIndicator(Object info, Activity activity,
@@ -53,15 +52,12 @@ class FixedActionBarDrawerToggleHoneycomb {
                 final ActionBar actionBar = activity.getActionBar();
                 sii.setHomeAsUpIndicator.invoke(actionBar, drawable);
                 sii.setHomeActionContentDescription.invoke(actionBar, contentDescRes);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.w(TAG, "Couldn't set home-as-up indicator via JB-MR2 API", e);
             }
-        }
-        else if (sii.upIndicatorView != null) {
+        } else if (sii.upIndicatorView != null) {
             sii.upIndicatorView.setImageDrawable(drawable);
-        }
-        else {
+        } else {
             Log.w(TAG, "Couldn't set home-as-up indicator");
         }
         return info;
@@ -77,8 +73,7 @@ class FixedActionBarDrawerToggleHoneycomb {
             try {
                 final ActionBar actionBar = activity.getActionBar();
                 sii.setHomeActionContentDescription.invoke(actionBar, contentDescRes);
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 Log.w(TAG, "Couldn't set content description via JB-MR2 API", e);
             }
         }
@@ -106,8 +101,7 @@ class FixedActionBarDrawerToggleHoneycomb {
 
                 // If we got the method we won't need the stuff below.
                 return;
-            }
-            catch (NoSuchMethodException e) {
+            } catch (NoSuchMethodException e) {
                 // Oh well. We'll use the other mechanism below instead.
             }
 

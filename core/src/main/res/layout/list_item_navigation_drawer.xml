@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 This file is part of LoLin1.
 <p/>
 LoLin1 is free software: you can redistribute it and/or modify
@@ -17,21 +16,10 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 <p/>
 Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
 -->
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="horizontal">
-
-	<ImageView
-		android:id="@+id/navigation_drawer_section_image"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_marginRight="@dimen/navigation_drawer_item_image_right_margin"/>
-
-	<TextView
-		android:id="@+id/navigation_drawer_section_title"
-		style="@style/NavigationDrawerTextWithShadowStyle"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_vertical"/>
-</LinearLayout>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/navigation_drawer_section_title"
+    style="@style/NavigationDrawerTextWithShadowStyle"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:drawablePadding="@dimen/navigation_drawer_item_image_right_margin"
+    android:layout_gravity="center_vertical" />

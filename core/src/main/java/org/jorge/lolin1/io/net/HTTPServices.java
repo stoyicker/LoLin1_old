@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -130,13 +131,13 @@ public abstract class HTTPServices {
     public static InputStream performVersionRequest(String serverUri, String realm, String locale)
             throws IOException, URISyntaxException, ServerIsCheckingException {
         return performGetRequest(
-                serverUri + VERSION_SERVICE_LOCATION + "?realm=" + realm.toLowerCase(), locale);
+                serverUri + VERSION_SERVICE_LOCATION + "?realm=" + realm.toLowerCase(Locale.ENGLISH), locale);
     }
 
     public static InputStream performListRequest(String serverUri, String realm, String locale)
             throws ServerIsCheckingException, IOException, URISyntaxException {
         return performGetRequest(
-                serverUri + LIST_SERVICE_LOCATION + "?realm=" + realm.toLowerCase() + "&locale=" +
+                serverUri + LIST_SERVICE_LOCATION + "?realm=" + realm.toLowerCase(Locale.ENGLISH) + "&locale=" +
                         locale, locale
         );
     }
@@ -144,7 +145,7 @@ public abstract class HTTPServices {
     public static String performCdnRequest(String serverUri, String realm, String locale)
             throws ServerIsCheckingException, IOException, URISyntaxException {
         return LoLin1Utils.inputStreamAsString(performGetRequest(
-                        serverUri + CDN_SERVICE_LOCATION + "?realm=" + realm.toLowerCase(), locale),
+                        serverUri + CDN_SERVICE_LOCATION + "?realm=" + realm.toLowerCase(Locale.ENGLISH), locale),
                 locale
         );
     }

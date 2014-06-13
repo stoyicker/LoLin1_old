@@ -16,6 +16,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
@@ -75,7 +76,7 @@ public class RealmSelectorFragment extends Fragment {
         String[] servers =
                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(), "servers", null);
         for (int i = 0; i < servers.length; i++)
-            servers[i] = servers[i].toUpperCase();
+            servers[i] = servers[i].toUpperCase(Locale.ENGLISH);
         spinner.setAdapter(new RealmSpinnerAdapter(getActivity().getApplicationContext(), servers));
         spinner.setSelection(Arrays.asList(
                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(), "servers", null))
@@ -99,7 +100,7 @@ public class RealmSelectorFragment extends Fragment {
     }
 
     public String getSelectedRealm() {
-        return spinner.getSelectedItem().toString().toUpperCase();
+        return spinner.getSelectedItem().toString().toUpperCase(Locale.ENGLISH);
     }
 
     private class RealmSpinnerAdapter extends ArrayAdapter<String> {

@@ -15,6 +15,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Locale;
 
 /**
  * This file is part of LoLin1.
@@ -82,7 +83,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
         serverPreference.setValue(chosenServer);
         targetArray = LoLin1Utils
                 .getStringArray(getActivity().getApplicationContext(),
-                        "lang_" + chosenServer.toLowerCase(), null);
+                        "lang_" + chosenServer.toLowerCase(Locale.ENGLISH), null);
         final ListPreference langPreference = (ListPreference) findPreference(
                 LoLin1Utils.getString(getActivity(), "pref_title_lang",
                         null)
@@ -102,19 +103,19 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
                 String[] targetArray;
 
                 if (!PreferenceManager.getDefaultSharedPreferences(context)
-                        .getString("pref_title_server", "dummy_helper").toUpperCase()
-                        .contentEquals(chosenServer.toUpperCase())) {
-                    LoLin1Utils.setRealm(context, chosenServer.toLowerCase());
+                        .getString("pref_title_server", "dummy_helper").toUpperCase(Locale.ENGLISH)
+                        .contentEquals(chosenServer.toUpperCase(Locale.ENGLISH))) {
+                    LoLin1Utils.setRealm(context, chosenServer.toLowerCase(Locale.ENGLISH));
                     LoLin1Utils.setLocale(context, LoLin1Utils.getStringArray(context,
                             LoLin1Utils.getString(context,
                                     "realm_to_language_list_prefix", null) +
-                                    chosenServer.toLowerCase() +
+                                    chosenServer.toLowerCase(Locale.ENGLISH) +
                                     LoLin1Utils.getString(context,
                                             "language_to_simplified_suffix", null), null
                     )[0]);
 
                     targetArray = LoLin1Utils
-                            .getStringArray(context, "lang_" + chosenServer.toLowerCase(), null);
+                            .getStringArray(context, "lang_" + chosenServer.toLowerCase(Locale.ENGLISH), null);
 
                     langPreference.setEntries(targetArray);
                     langPreference.setEntryValues(targetArray);
@@ -145,11 +146,11 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
                                 LoLin1Utils.getStringArray(getActivity(), "langs", null)))
                                 .indexOf(chosenLang);
                 if (langIndex != -1 &&
-                        !currentLocale.toUpperCase().contentEquals((newAsLocale =
+                        !currentLocale.toUpperCase(Locale.ENGLISH).contentEquals((newAsLocale =
                                 LoLin1Utils.getStringArray(getActivity().getApplicationContext(),
                                         "langs_simplified",
                                         null)[langIndex]
-                        ).toUpperCase())) {
+                        ).toUpperCase(Locale.ENGLISH))) {
                     LoLin1Utils.setLocale(getActivity().getApplicationContext(), newAsLocale);
                     LoLin1Utils.restartApp(getActivity());
                 }

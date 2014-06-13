@@ -89,7 +89,7 @@ public abstract class JungleTimerFragment extends Fragment {
         try {
             initialValueAsDate = SDF.parse(prefName);
             initialValue =
-                    new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").parse("01-01-1970 01:" + prefName)
+                    new SimpleDateFormat("dd-MM-yyyy HH:mm:ss", Locale.ENGLISH).parse("01-01-1970 01:" + prefName)
                             .getTime();
         } catch (ParseException e) {
             Crashlytics.logException(e);

@@ -19,6 +19,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Locale;
 
 /**
  * This file is part of LoLin1.
@@ -98,8 +99,8 @@ public class SQLiteDAO extends SQLiteOpenHelper {
 
         if (mContext == null) return "LOLNEWS_EUW_EN";
 
-        return prefix.toUpperCase() + LoLin1Utils.getRealm(mContext).toUpperCase() + "_" +
-                LoLin1Utils.getLocale(mContext).toUpperCase();
+        return prefix.toUpperCase(Locale.ENGLISH) + LoLin1Utils.getRealm(mContext).toUpperCase(Locale.ENGLISH) + "_" +
+                LoLin1Utils.getLocale(mContext).toUpperCase(Locale.ENGLISH);
     }
 
     public static Bitmap getNewsArticleBitmap(Context context, byte[] blob,
@@ -365,9 +366,9 @@ public class SQLiteDAO extends SQLiteOpenHelper {
         for (String server : servers) {
             langsInThisServer = new ArrayList<>();
             for (String locale : LoLin1Utils
-                    .getStringArray(mContext, "lang_" + server.toLowerCase() + "_simplified",
+                    .getStringArray(mContext, "lang_" + server.toLowerCase(Locale.ENGLISH) + "_simplified",
                             new String[]{""})) {
-                langsInThisServer.add((prefix + server + "_" + locale).toUpperCase());
+                langsInThisServer.add((prefix + server + "_" + locale).toUpperCase(Locale.ENGLISH));
             }
             tableNames.addAll(langsInThisServer);
         }
@@ -381,7 +382,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                     NEWS_KEY_URL + " TEXT NOT NULL ON CONFLICT IGNORE UNIQUE ON CONFLICT IGNORE, " +
                     NEWS_KEY_DESC + " TEXT, " +
                     NEWS_KEY_IMG_URL + " TEXT NOT NULL ON CONFLICT IGNORE " +
-                    ")").toUpperCase());
+                    ")").toUpperCase(Locale.ENGLISH));
         }
 
         sqLiteDatabase.execSQL(("CREATE TABLE IF NOT EXISTS " + SURR_TABLE_NAME + " ( " +
@@ -392,7 +393,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
                 SURR_KEY_UPDATED + " TEXT, " +
                 SURR_KEY_LINK + " TEXT NOT NULL ON CONFLICT IGNORE UNIQUE ON CONFLICT IGNORE, " +
                 SURR_KEY_READ + " BOOLEAN NOT NULL " +
-                ")").toUpperCase());
+                ")").toUpperCase(Locale.ENGLISH));
 
         sqLiteDatabase.setTransactionSuccessful();
         sqLiteDatabase.endTransaction();

@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  * This file is part of LoLin1.
@@ -27,7 +28,7 @@ import java.util.Date;
  */
 public final class ISO8601Time {
 
-    private final DateFormat PATTERN = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    private final DateFormat PATTERN = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.ENGLISH);
     private Date value;
 
     public ISO8601Time(String source) {

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lint>
+    <!-- I know that I'm using different layouts in the champion detail section-->
+    <issue id="InconsistentLayout" severity="ignore" />
+
+    <issue id="InvalidPackage" severity="ignore" />
+    <issue id="SetJavaScriptEnabled" severity="ignore" />
+    <issue id="Overdraw" severity="ignore" />
+
+    <!-- As long as this only happens in the TransitionViewPager class, I better don't touch -->
+    <issue id="UseSparseArrays">
+        <ignore path="src/main/java/org/jorge/lolin1/func/custom/TransitionViewPager.java" />
+    </issue>
+
+    <!-- Crashlytics generates a wrong dash, who cares -->
+    <issue id="TypographyDashes">
+        <ignore path="src/main/res/values/com_crashlytics_export_strings.xml" />
+    </issue>
+
+    <!-- Nested weights are, some times, unavoidable -->
+    <issue id="NestedWeights" severity="ignore" />
+
+    <!-- I'll be so happy the day that lint checks for reflection... -->
+    <issue id="UnusedResources" severity="ignore" />
+
+    <!-- The remaining warning is wrong -->
+    <issue id="UseCompoundDrawables" severity="ignore" />
+
+    <!-- Lint doesn't recognize Gradle min API declaration -->
+    <issue id="InlinedApi" severity="ignore" />
+    <issue id="NewApi" severity="ignore" />
+    <issue id="UnusedAttribute" severity="ignore" />
+</lint>

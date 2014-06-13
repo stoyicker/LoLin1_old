@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
@@ -56,21 +55,38 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater =
-                (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        convertView = inflater.inflate(mResource, parent, false);
+        ViewHolder viewHolder;
+        if (convertView == null) {
+            convertView =
+                    ((LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE))
+                            .inflate(
+                                    mResource, null);
+
+            viewHolder = new ViewHolder();
+            viewHolder.setTitleView((TextView) convertView.findViewById(R.id.navigation_drawer_section_title));
+            convertView.setTag(viewHolder);
+        } else {
+            viewHolder = (ViewHolder) convertView.getTag();
+        }
 
 
         int temp = position + 1;
 
-        TextView textView =
-                (TextView) convertView.findViewById(R.id.navigation_drawer_section_title);
-        ImageView imageView =
-                (ImageView) convertView.findViewById(R.id.navigation_drawer_section_image);
-
-        textView.setText(LoLin1Utils.getString(mContext, "title_section" + +temp, ""));
-        imageView.setImageResource(LoLin1Utils.getDrawableAsId("icon_section" + temp, -1));
+        viewHolder.getTitleView().setText(LoLin1Utils.getString(mContext, "title_section" + +temp, ""));
+        viewHolder.getTitleView().setCompoundDrawables(mContext.getResources().getDrawable(LoLin1Utils.getDrawableAsId("icon_section" + temp, -1)), null, null, null);
 
         return convertView;
+    }
+
+    private final static class ViewHolder {
+        private TextView sectionTitle;
+
+        private void setTitleView(TextView textView) {
+            sectionTitle = textView;
+        }
+
+        private TextView getTitleView() {
+            return sectionTitle;
+        }
     }
 }

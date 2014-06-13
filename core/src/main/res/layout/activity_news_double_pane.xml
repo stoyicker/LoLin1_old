@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!-- Copyright (C) 2011 The Android Open Source Project
+<?xml version="1.0" encoding="utf-8"?><!-- Copyright (C) 2011 The Android Open Source Project
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -16,39 +15,44 @@
 
 <!-- BEGIN_INCLUDE(all) -->
 <org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout
-	android:id="@+id/drawer_layout"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:tools="http://schemas.android.com/tools"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent"
-	tools:context="org.jorge.lolin1.ui.activities.NewsReaderActivity">
-	<LinearLayout android:layout_width="match_parent"
-	              android:layout_height="match_parent"
-	              android:layout_marginBottom="@dimen/activity_vertical_margin"
-	              android:layout_marginLeft="@dimen/activity_horizontal_margin"
-	              android:layout_marginRight="@dimen/activity_horizontal_margin"
-	              android:layout_marginTop="@dimen/activity_vertical_margin">
-		<fragment
-			android:id="@+id/fragment_news_list"
-			android:name="org.jorge.lolin1.ui.frags.NewsListFragment"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_weight="4"/>
-		<fragment
-			android:id="@+id/fragment_web_viewer"
-			android:name="org.jorge.lolin1.ui.frags.WebViewerProgressFragment"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_marginLeft="@dimen/pane_separator"
-			android:layout_weight="1"
-			tools:layout="@layout/fragment_web_viewer"/>
-	</LinearLayout>
-	<fragment
-		android:id="@+id/navigation_drawer"
-		android:name="org.jorge.lolin1.ui.frags.NavigationDrawerFragment"
-		android:layout_width="@dimen/navigation_drawer_width"
-		android:layout_height="match_parent"
-		android:layout_gravity="left"
-		tools:layout="@layout/fragment_navigation_drawer"/>
-</org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout>
-	<!-- END_INCLUDE(all) -->
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="org.jorge.lolin1.ui.activities.NewsReaderActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:baselineAligned="false">
+
+        <fragment
+            android:id="@+id/fragment_news_list"
+            android:name="org.jorge.lolin1.ui.frags.NewsListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="4" />
+
+        <fragment
+            android:id="@+id/fragment_web_viewer"
+            android:name="org.jorge.lolin1.ui.frags.WebViewerProgressFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/pane_separator"
+            android:layout_weight="1"
+            tools:layout="@layout/fragment_web_viewer" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/navigation_drawer"
+        android:name="org.jorge.lolin1.ui.frags.NavigationDrawerFragment"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="left"
+        tools:layout="@layout/fragment_navigation_drawer" />
+</org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout>    <!-- END_INCLUDE(all) -->

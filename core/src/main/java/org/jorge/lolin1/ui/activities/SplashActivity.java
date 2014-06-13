@@ -29,6 +29,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -526,7 +527,7 @@ public final class SplashActivity extends Activity {
         for (String realm : realms) {
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "update_pre_version_check", null) +
-                    " " + realm.toLowerCase() +
+                    " " + realm.toLowerCase(Locale.ENGLISH) +
                     LoLin1Utils.getString(getApplicationContext(), "progress_character", null));
             String newVersion;
             JSONObject newVersionAsJSON;
@@ -559,7 +560,7 @@ public final class SplashActivity extends Activity {
                 String[] localesInThisRealm =
                         LoLin1Utils.getStringArray(getApplicationContext(), LoLin1Utils.getString(
                                 getApplicationContext(), "realm_to_language_list_prefix",
-                                null) + realm.toLowerCase() +
+                                null) + realm.toLowerCase(Locale.ENGLISH) +
                                 LoLin1Utils.getString(getApplicationContext(),
                                         "language_to_simplified_suffix", null), null);
                 if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {

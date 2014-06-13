@@ -15,6 +15,7 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.ArrayList;
+import java.util.Locale;
 
 /**
  * This file is part of LoLin1.
@@ -65,7 +66,7 @@ public class LanguageListFragment extends Fragment {
         String realm_composite =
                 LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "realm_to_language_list_prefix", "lang_") +
-                        newSelectedRealm.toLowerCase();
+                        newSelectedRealm.toLowerCase(Locale.ENGLISH);
         String[] languages =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(), realm_composite,
@@ -129,7 +130,7 @@ public class LanguageListFragment extends Fragment {
         String realm_composite =
                 LoLin1Utils.getString(getActivity().getApplicationContext(),
                         "realm_to_language_list_prefix", "lang_") +
-                        newSelectedRealm.toLowerCase();
+                        newSelectedRealm.toLowerCase(Locale.ENGLISH);
         String[] languages =
                 LoLin1Utils
                         .getStringArray(getActivity().getApplicationContext(), realm_composite,

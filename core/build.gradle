@@ -19,6 +19,13 @@ android {
     compileSdkVersion 15
     buildToolsVersion '19.1.0'
 
+    buildTypes {
+        release {
+            runProguard true
+            proguardFile 'proguard-core.txt'
+        }
+    }
+
     productFlavors {
         development {
             minSdkVersion 15
@@ -44,10 +51,6 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
-    }
-
-    lintOptions {
-        abortOnError false
     }
 }
 

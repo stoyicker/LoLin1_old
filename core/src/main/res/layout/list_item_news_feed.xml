@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 This file is part of LoLin1.
 <p/>
 LoLin1 is free software: you can redistribute it and/or modify
@@ -18,43 +17,43 @@ along with LoLin1. If not, see <http://www.gnu.org/licenses/>.
 Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:hapticFeedbackEnabled="true"
-              android:orientation="horizontal"
-              android:paddingBottom="@dimen/feed_item_vertical_margin"
-              android:paddingTop="@dimen/feed_item_vertical_margin">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:hapticFeedbackEnabled="true"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/feed_item_vertical_margin"
+    android:paddingTop="@dimen/feed_item_vertical_margin">
 
-	<ImageView
-		android:id="@+id/feed_item_image"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center"
-		android:layout_marginLeft="@dimen/feed_item_horizontal_margin"
-		android:layout_marginRight="@dimen/feed_img_right_margin"
-		android:background="@color/theme_black"
-		android:padding="1dp"/>
+    <ImageView
+        android:id="@+id/feed_item_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="@dimen/feed_item_horizontal_margin"
+        android:layout_marginRight="@dimen/feed_img_right_margin"
+        android:background="@color/theme_black"
+        android:padding="1dp"
+        tools:ignore="ContentDescription" />
 
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:paddingRight="@dimen/feed_item_horizontal_margin">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingRight="@dimen/feed_item_horizontal_margin">
 
-		<TextView
-			android:id="@+id/news_feed_item_title"
-			style="@style/NewsFeedTextWithShadowStyle"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content"
-			android:layout_gravity="center_vertical"
-			/>
+        <TextView
+            android:id="@+id/news_feed_item_title"
+            style="@style/NewsFeedTextWithShadowStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical" />
 
-		<TextView
-			android:id="@+id/news_feed_item_desc"
-			style="@style/NewsFeedBodyText"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"
-			android:layout_gravity="center_vertical"
-			/>
-	</LinearLayout>
+        <TextView
+            android:id="@+id/news_feed_item_desc"
+            style="@style/NewsFeedBodyText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical" />
+    </LinearLayout>
 </LinearLayout>

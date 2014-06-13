@@ -60,6 +60,10 @@ public abstract class LoLin1Utils {
         charsetMap.put("el_GR", Charset.forName("UTF-8"));
         charsetMap.put("pl_PL", Charset.forName("UTF-8"));
         charsetMap.put("ro_RO", Charset.forName("UTF-8"));
+        charsetMap.put("cs_CZ", Charset.forName("UTF-8"));
+        charsetMap.put("hu_HU", Charset.forName("UTF-8"));
+        charsetMap.put("ko_KR", Charset.forName("UTF-8"));
+        charsetMap.put("ru_RU", Charset.forName("UTF-8"));
     }
 
     public static Charset getLocaleCharset(String locale) {
@@ -102,7 +106,7 @@ public abstract class LoLin1Utils {
 
         return context != null ? PreferenceManager.getDefaultSharedPreferences(context).getString(
                 LoLin1Utils.getString(context, "pref_title_server", "League of Legends server"),
-                "null").toLowerCase() : "";
+                "null").toLowerCase(Locale.ENGLISH) : "";
     }
 
     public static String getLocale(Context context) {
@@ -197,7 +201,7 @@ public abstract class LoLin1Utils {
     }
 
     public static Boolean setRealm(Context baseContext, String newRealm) {
-        if (!isRealmSupported(baseContext, newRealm.toLowerCase())) {
+        if (!isRealmSupported(baseContext, newRealm.toLowerCase(Locale.ENGLISH))) {
             return Boolean.FALSE;
         }
 
@@ -207,7 +211,7 @@ public abstract class LoLin1Utils {
         editor.putString(
                 LoLin1Utils.getString(baseContext, "pref_title_server",
                         "League of Legends server"),
-                newRealm.toLowerCase()
+                newRealm.toLowerCase(Locale.ENGLISH)
         );
 
         editor.commit();

@@ -30,6 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
+import java.util.Locale;
 
 public final class Champion implements Parcelable {
 
@@ -66,23 +67,21 @@ public final class Champion implements Parcelable {
         final String MANA_STRING = "mana", ENERGY_STRING = "energy";
         int manaCounter = 0, energyCounter = 0;
         for (ActiveSpell x : spells) {
-            String lowerCaseCost = x.getCostBurn().toLowerCase();
-            if (lowerCaseCost.contains(MANA_STRING.toLowerCase())) {
+            String lowerCaseCost = x.getCostBurn().toLowerCase(Locale.ENGLISH);
+            if (lowerCaseCost.contains(MANA_STRING.toLowerCase(Locale.ENGLISH))) {
                 manaCounter++;
             }
-            if (lowerCaseCost.contains(ENERGY_STRING.toLowerCase())) {
+            if (lowerCaseCost.contains(ENERGY_STRING.toLowerCase(Locale.ENGLISH))) {
                 energyCounter++;
             }
         }
         if (manaCounter == 0) {
             if (energyCounter == 0) {
                 return ChampionResource.NONE;
-            }
-            else {
+            } else {
                 return ChampionResource.ENERGY;
             }
-        }
-        else {
+        } else {
             return energyCounter > manaCounter ? ChampionResource.ENERGY : ChampionResource.MANA;
         }
     }
@@ -154,8 +153,7 @@ public final class Champion implements Parcelable {
                     x.setAccessible(Boolean.FALSE);
                 }
             }
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             Crashlytics.logException(e);
         }
         tags = in.createStringArray();
@@ -175,8 +173,7 @@ public final class Champion implements Parcelable {
             if (x.getType() == String.class) {
                 try {
                     x.set(this, descriptor.getString(x.getName()));
-                }
-                catch (IllegalAccessException | JSONException e) {
+                } catch (IllegalAccessException | JSONException e) {
                     Crashlytics.logException(e);
                 }
             }
@@ -242,27 +239,27 @@ public final class Champion implements Parcelable {
     }
 
     public Boolean matchesFilterQuery(CharSequence filterText) {
-        String lowerCaseFilterText = filterText.toString().toLowerCase();
-        if (this.getName().toLowerCase().contains(lowerCaseFilterText)) {
+        String lowerCaseFilterText = filterText.toString().toLowerCase(Locale.ENGLISH);
+        if (this.getName().toLowerCase(Locale.ENGLISH).contains(lowerCaseFilterText)) {
             return Boolean.TRUE;
         }
-        if (this.getSimplifiedName().toLowerCase().contains(lowerCaseFilterText)) {
+        if (this.getSimplifiedName().toLowerCase(Locale.ENGLISH).contains(lowerCaseFilterText)) {
             return Boolean.TRUE;
         }
-        if (this.getTitle().toLowerCase().contains(lowerCaseFilterText)) {
+        if (this.getTitle().toLowerCase(Locale.ENGLISH).contains(lowerCaseFilterText)) {
             return Boolean.TRUE;
         }
         String[] tags = this.getTags();
         for (String tag : tags)
-            if (tag.toLowerCase().contains(lowerCaseFilterText)) {
+            if (tag.toLowerCase(Locale.ENGLISH).contains(lowerCaseFilterText)) {
                 return Boolean.TRUE;
             }
-        if (this.getPassive().getName().toLowerCase().contains(lowerCaseFilterText)) {
+        if (this.getPassive().getName().toLowerCase(Locale.ENGLISH).contains(lowerCaseFilterText)) {
             return Boolean.TRUE;
         }
         ActiveSpell[] spells = this.getSpells();
         for (ActiveSpell spell : spells) {
-            if (spell.getName().toLowerCase().contains(lowerCaseFilterText)) {
+            if (spell.getName().toLowerCase(Locale.ENGLISH).contains(lowerCaseFilterText)) {
                 return Boolean.TRUE;
             }
         }
@@ -294,8 +291,7 @@ public final class Champion implements Parcelable {
                     x.setAccessible(Boolean.FALSE);
                 }
             }
-        }
-        catch (IllegalAccessException e) {
+        } catch (IllegalAccessException e) {
             Crashlytics.logException(e);
         }
         dest.writeStringArray(tags);

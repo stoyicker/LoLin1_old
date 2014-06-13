@@ -26,6 +26,7 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -125,7 +126,7 @@ public class ChatIntentService extends IntentService {
             protected Void doInBackground(Void... params) {
                 logString("debug", "Commencing login");
                 Boolean loginSuccess =
-                        login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase());
+                        login(LoLin1Utils.getRealm(getApplicationContext()).toUpperCase(Locale.ENGLISH));
                 if (loginSuccess) {
                     logString("debug", "Login successful");
                     launchBroadcastLoginSuccessful();
