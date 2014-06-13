@@ -18,4 +18,4 @@ before_install:
   - cd ..
   # Done with the 3rd-party dependencies
 script:
-  - TERM=dumb gradle check
+  - TERM=dumb gradle assembleProductionRelease
