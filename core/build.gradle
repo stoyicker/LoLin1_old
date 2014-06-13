@@ -19,13 +19,6 @@ android {
     compileSdkVersion 15
     buildToolsVersion '19.1.0'
 
-    buildTypes {
-        release {
-            runProguard true
-            proguardFile 'proguard-core.txt'
-        }
-    }
-
     productFlavors {
         development {
             minSdkVersion 15
@@ -46,11 +39,28 @@ android {
                 manifestPath = 'src/main/AndroidManifest.xml'
             }
         }
+
+        signingConfigs {
+            release {
+                storeFile new File("core/lolin1gplaykey.keystore")
+                storePassword (new File("core/lolinstorage.pwd").text)
+                keyAlias (new File("core/lolin1.alias").text)
+                keyPassword (new File("core/lolin1key.pwd").text)
+            }
+        }
     }
 
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFile 'proguard-core.txt'
+            signingConfig signingConfigs.release
+        }
     }
 }
 
