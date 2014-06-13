@@ -26,4 +26,4 @@ before_install:
   # Done
   - cd ..
 script:
-  - TERM=dumb gradle check bin/gradle checkproductionDebug
+  - TERM=dumb gradle checkproductionDebug
