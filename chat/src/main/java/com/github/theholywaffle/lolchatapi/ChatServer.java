@@ -17,18 +17,20 @@ public enum ChatServer {
 
     //Chat suggestions taken from http://leagueoflegends.wikia.com/wiki/Talk:XMPP_Chat
 
-    EUW("chat.eu.lol.riotgames.com"),
-    NA("chat.na1.lol.riotgames.com"),
-    EUNE("chat.eun1.lol.riotgames.com"),
-    TR("chat.tr.lol.riotgames.com"),//TODO Doesn't seem to work
-    RU("chat.ru.lol.riotgames.com"),//TODO To be confirmed
-    BR("chat.br.lol.riotgames.com"),//TODO To be confirmed
-    LAN("chat.la1.lol.riotgames.com"),//TODO To be confirmed
-    LAS("chat.la2.lol.riotgames.com"),//TODO To be confirmed
-    TW("chattw.lol.garenanow.com"),
-    TH("chatth.lol.garenanow.com"),
-    PH("chatph.lol.garenanow.com"),
-    VN("chatvn.lol.garenanow.com");
+    EUW("chat.eu.lol.riotgames.com"), //Confirmed
+    NA("chat.na1.lol.riotgames.com"), //Confirmed through lookup
+    EUNE("chat.eun1.lol.riotgames.com"), //Confirmed through lookup
+    TR("chat.tr.lol.riotgames.com"),//Confirmed through lookup
+    RU("chat.ru.lol.riotgames.com"),//Confirmed through lookup
+    BR("chat.br.lol.riotgames.com"),//Confirmed through lookup
+    LAN("chat.la1.lol.riotgames.com"),//Confirmed through lookup
+    KR("chat.kr.lol.riotgames.com"),//Confirmed through lookup
+    OCE("chat.oc1.lol.riotgames.com"),//Confirmed through lookup
+    LAS("chat.la2.lol.riotgames.com");//Confirmed through lookup
+//    TW("chattw.lol.garenanow.com"),
+//    TH("chatth.lol.garenanow.com"),
+//    PH("chatph.lol.garenanow.com"),
+//    VN("chatvn.lol.garenanow.com");
 
     String host;
 

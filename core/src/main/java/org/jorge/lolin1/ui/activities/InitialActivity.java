@@ -37,6 +37,7 @@ import java.io.File;
 public final class InitialActivity extends Activity {
 
     //FIXME crash
+    //TODO Deploy 40/10
     //FIXME proguard
     //FIXME zipalign
 
