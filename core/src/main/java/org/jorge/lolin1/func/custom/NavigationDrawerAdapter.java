@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.jorge.lolin1.R;
@@ -64,6 +65,7 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
             viewHolder = new ViewHolder();
             viewHolder.setTitleView((TextView) convertView.findViewById(R.id.navigation_drawer_section_title));
+            viewHolder.setSectionIcon((ImageView) convertView.findViewById(R.id.navigation_drawer_section_image));
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -73,13 +75,14 @@ public class NavigationDrawerAdapter extends BaseAdapter {
         int temp = position + 1;
 
         viewHolder.getTitleView().setText(LoLin1Utils.getString(mContext, "title_section" + +temp, ""));
-        viewHolder.getTitleView().setCompoundDrawables(mContext.getResources().getDrawable(LoLin1Utils.getDrawableAsId("icon_section" + temp, -1)), null, null, null);
+        viewHolder.getSectionIcon().setBackgroundResource(LoLin1Utils.getDrawableAsId("icon_section" + temp, -1));
 
         return convertView;
     }
 
     private final static class ViewHolder {
         private TextView sectionTitle;
+        private ImageView sectionIcon;
 
         private void setTitleView(TextView textView) {
             sectionTitle = textView;
@@ -87,6 +90,14 @@ public class NavigationDrawerAdapter extends BaseAdapter {
 
         private TextView getTitleView() {
             return sectionTitle;
+        }
+
+        public ImageView getSectionIcon() {
+            return sectionIcon;
+        }
+
+        public void setSectionIcon(ImageView sectionIcon) {
+            this.sectionIcon = sectionIcon;
         }
     }
 }
