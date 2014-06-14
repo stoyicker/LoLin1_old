@@ -43,9 +43,9 @@ android {
         signingConfigs {
             release {
                 storeFile new File("core/lolin1gplaykey.keystore")
-                storePassword (new File("core/lolin1storage.pwd").text)
-                keyAlias (new File("core/lolin1.alias").text)
-                keyPassword (new File("core/lolin1key.pwd").text)
+                storePassword(new File("core/lolin1storage.pwd").text)
+                keyAlias(new File("core/lolin1.alias").text)
+                keyPassword(new File("core/lolin1key.pwd").text)
             }
         }
     }
@@ -58,8 +58,14 @@ android {
     buildTypes {
         release {
             runProguard true
+            zipAlign true
             proguardFile 'proguard-core.txt'
             signingConfig signingConfigs.release
+        }
+
+        debug {
+            runProguard false
+            zipAlign false
         }
     }
 }

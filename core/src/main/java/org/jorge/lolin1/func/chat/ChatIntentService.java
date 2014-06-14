@@ -21,7 +21,6 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
-import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
@@ -30,6 +29,8 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import javax.net.ssl.SSLException;
 
 import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
@@ -243,9 +244,11 @@ public class ChatIntentService extends IntentService {
             logString("debug", "Assigning api...");
             api = new LoLChat(chatServer, Boolean.FALSE);
         } catch (IOException e) {
-            logString("debug", "Ops, exception!");
-            LoLin1DebugUtils.showTrace("debug", e);
-            launchBroadcastLoginUnsuccessful();
+            logString("debug", "Exception when constructing the object!");
+            e.printStackTrace(System.err);
+            if (!(e instanceof SSLException)) {
+                launchBroadcastLoginUnsuccessful();
+            }
             return Boolean.FALSE;
         }
         final AccountManager accountManager = AccountManager.get(getApplicationContext());
@@ -301,6 +304,12 @@ public class ChatIntentService extends IntentService {
             isConnected = Boolean.FALSE;
             return Boolean.FALSE;
         }
+    }
+
+    private void launchBroadcastLostConnection() {
+        Intent intent = new Intent();
+        intent.setAction("android.net.conn.CONNECTIVITY_CHANGE");
+        sendLocalBroadcast(intent);
     }
 
     private void disconnect() {
