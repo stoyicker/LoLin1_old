@@ -3,6 +3,8 @@
 -verbose
 -dontoptimize
 -dontpreverify
+-dontwarn org.jaxen.*
+-ignorewarnings
 
 -keepattributes *Annotation*
 -keep public class com.google.vending.licensing.ILicensingService

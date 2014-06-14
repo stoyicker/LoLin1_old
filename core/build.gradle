@@ -57,7 +57,7 @@ android {
 
     buildTypes {
         release {
-            runProguard false
+            runProguard true
             proguardFile 'proguard-core.txt'
             signingConfig signingConfigs.release
         }
