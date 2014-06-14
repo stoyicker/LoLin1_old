@@ -39,6 +39,7 @@ public final class InitialActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LoLin1Utils.configureStrictMode();
         Crashlytics.start(this);
         PreferenceManager.setDefaultValues(getApplicationContext(), R.xml.settings, Boolean.TRUE);
         LoLin1Utils.initCharsetMap();

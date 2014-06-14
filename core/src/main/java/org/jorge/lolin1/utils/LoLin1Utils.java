@@ -8,6 +8,7 @@ import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.StrictMode;
 import android.preference.PreferenceManager;
 import android.util.TypedValue;
 
@@ -64,6 +65,14 @@ public abstract class LoLin1Utils {
         charsetMap.put("hu_HU", Charset.forName("UTF-8"));
         charsetMap.put("ko_KR", Charset.forName("UTF-8"));
         charsetMap.put("ru_RU", Charset.forName("UTF-8"));
+    }
+
+    /**
+     * This is bad, very bad, but the problems only show on some devices and my time window is gone.
+     */
+    public static void configureStrictMode() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
     }
 
     public static Charset getLocaleCharset(String locale) {
