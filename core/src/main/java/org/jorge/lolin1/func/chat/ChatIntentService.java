@@ -202,12 +202,6 @@ public class ChatIntentService extends IntentService {
         sendLocalBroadcast(intent);
     }
 
-    private void launchBroadcastLostConnection() {
-        Intent intent = new Intent();
-        intent.setAction("android.net.conn.CONNECTIVITY_CHANGE");
-        sendLocalBroadcast(intent);
-    }
-
     private Boolean login(String upperCaseRealm) {
         ChatServer chatServer;
         switch (upperCaseRealm) {
@@ -225,6 +219,21 @@ public class ChatIntentService extends IntentService {
                 break;
             case "BR":
                 chatServer = ChatServer.BR;
+                break;
+            case "OCE":
+                chatServer = ChatServer.OCE;
+                break;
+            case "LAN":
+                chatServer = ChatServer.LAN;
+                break;
+            case "LAS":
+                chatServer = ChatServer.LAS;
+                break;
+            case "KR":
+                chatServer = ChatServer.KR;
+                break;
+            case "RU":
+                chatServer = ChatServer.RU;
                 break;
             default:
                 throw new IllegalArgumentException(
