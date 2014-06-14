@@ -6,6 +6,7 @@
     <issue id="InvalidPackage" severity="ignore" />
     <issue id="SetJavaScriptEnabled" severity="ignore" />
     <issue id="Overdraw" severity="ignore" />
+    <issue id="MissingTranslation" severity="ignore" />
 
     <!-- As long as this only happens in the TransitionViewPager class, I better don't touch -->
     <issue id="UseSparseArrays">
