@@ -37,7 +37,7 @@ import java.io.File;
 public final class InitialActivity extends Activity {
 
     //FIXME crash
-    //FIXME zipalign
+    //FIXME Narrow down the exception
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
