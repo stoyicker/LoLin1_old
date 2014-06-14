@@ -11,7 +11,6 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpParams;
 import org.apache.http.params.HttpProtocolParams;
-import org.jorge.lolin1.utils.LoLin1DebugUtils;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.BufferedInputStream;
@@ -27,6 +26,8 @@ import java.util.Locale;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 /**
  * This file is part of LoLin1.
@@ -55,29 +56,30 @@ public abstract class HTTPServices {
 
     public static void downloadFile(final String whatToDownload, final File whereToSaveIt)
             throws IOException {
-        LoLin1DebugUtils.logString("debug", "Downloading url " + whatToDownload);
+        logString("debug", "Downloading url " + whatToDownload);
         AsyncTask<Void, Void, Object> imageDownloadAsyncTask = new AsyncTask<Void, Void, Object>() {
             @Override
             protected Object doInBackground(Void... params) {
+                Object ret = null;
                 BufferedInputStream bufferedInputStream = null;
                 FileOutputStream fileOutputStream = null;
                 try {
-                    LoLin1DebugUtils.logString("debug", "Opening stream for " + whatToDownload);
+                    logString("debug", "Opening stream for " + whatToDownload);
                     bufferedInputStream = new BufferedInputStream(
                             new URL(URLDecoder.decode(whatToDownload, "UTF-8")
                                     .replaceAll(" ", "%20"))
                                     .openStream()
                     );
-                    LoLin1DebugUtils.logString("debug", "Opened stream for " + whatToDownload);
+                    logString("debug", "Opened stream for " + whatToDownload);
                     fileOutputStream = new FileOutputStream(whereToSaveIt);
 
                     final byte data[] = new byte[1024];
                     int count;
-                    LoLin1DebugUtils.logString("debug", "Loop-writing " + whatToDownload);
+                    logString("debug", "Loop-writing " + whatToDownload);
                     while ((count = bufferedInputStream.read(data, 0, 1024)) != -1) {
                         fileOutputStream.write(data, 0, count);
                     }
-                    LoLin1DebugUtils.logString("debug", "Loop-written " + whatToDownload);
+                    logString("debug", "Loop-written " + whatToDownload);
                 } catch (IOException e) {
                     return e;
                 } finally {
@@ -85,18 +87,18 @@ public abstract class HTTPServices {
                         try {
                             bufferedInputStream.close();
                         } catch (IOException e) {
-                            return e;
+                            ret= e;
                         }
                     }
                     if (fileOutputStream != null) {
                         try {
                             fileOutputStream.close();
                         } catch (IOException e) {
-                            return e;
+                            ret= e;
                         }
                     }
                 }
-                return null;
+                return ret;
             }
         };
         imageDownloadAsyncTask.executeOnExecutor(fileDownloadExecutor);
