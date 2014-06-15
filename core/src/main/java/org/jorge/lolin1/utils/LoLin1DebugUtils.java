@@ -35,7 +35,7 @@ import java.util.Arrays;
 @SuppressWarnings({"UnusedDeclaration", "deprecation"})
 public abstract class LoLin1DebugUtils {
 
-    private static final Boolean DEBUG = Boolean.TRUE;
+    private static final Boolean DEBUG = Boolean.FALSE;
 
     public static void showTrace(String tag, Exception source) {
         if (!DEBUG) return;
