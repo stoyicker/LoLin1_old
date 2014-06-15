@@ -33,7 +33,7 @@ android {
         production {
             minSdkVersion 15
             targetSdkVersion 19
-            versionCode 2
+            versionCode 3
             versionName "Beta"
             crashlytics {
                 manifestPath = 'src/main/AndroidManifest.xml'
