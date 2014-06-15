@@ -36,7 +36,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
         <item>@string/title_section2</item>
         <item>@string/title_section3</item>
         <item>@string/title_section4</item>
-        <item>@string/title_section5</item>
+        <!--<item>@string/title_section5</item>-->
     </string-array>
     <string-array name="news_feed_urls">
         <item>@string/news_euw_en</item>
