@@ -17,7 +17,7 @@ public enum ChatServer {
 
     //Chat suggestions taken from http://leagueoflegends.wikia.com/wiki/Talk:XMPP_Chat
 
-    EUW("chat.eu.lol.riotgames.com"), //Confirmed
+    EUW("chat.eu.lol.riotgames.com"), //Confirmed (216.133.234.21, 216.133.234.22)
     NA("chat.na1.lol.riotgames.com"), //Confirmed through lookup
     EUNE("chat.eun1.lol.riotgames.com"), //Confirmed through lookup
     TR("chat.tr.lol.riotgames.com"),//Confirmed through lookup
