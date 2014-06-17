@@ -124,10 +124,14 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                 viewHolder.getTextStatus().setTextColor(Color.GREEN);
                 viewHolder.getTextStatus().setText(thisStatus.getStatusMessage());
             } else if (!TextUtils.isEmpty(spectatedGameId))
-                viewHolder.getTextStatus().setText(spectatedGameId);
+                viewHolder.getTextStatus().setText("Spectating");
             else {
                 viewHolder.getTextStatus().setTextColor(Color.BLACK);
-                viewHolder.getTextStatus().setText(thisStatus.getSkin() + " @ " + thisStatus.getGameQueueType());
+                final String skin = thisStatus.getSkin();
+                if (TextUtils.isEmpty(skin))
+                    viewHolder.getTextStatus().setText("In queue");
+                else
+                    viewHolder.getTextStatus().setText(skin + " @ " + thisStatus.getGameQueueType());
             }
         }
         new AsyncTask<Void, Void, Void>() {
@@ -151,7 +155,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                         @Override
                         public void run() {
                             viewHolder.getChatStatus().setImageDrawable(drawableAsFinal);
-                            viewHolder.getChatStatus().invalidate();
+//                            viewHolder.getChatStatus().invalidate();
                         }
                     });
                 return null;

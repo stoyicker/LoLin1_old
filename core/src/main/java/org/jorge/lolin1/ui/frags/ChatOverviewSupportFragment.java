@@ -103,10 +103,10 @@ public class ChatOverviewSupportFragment extends android.support.v4.app.Fragment
     public void notifyChatEvent() {
         if (listAdapter != null)
             listAdapter.notifyDataSetChanged();
-        if (getView() != null)
-            getView().invalidate();
-        if (mListView != null)
-            mListView.invalidate();
+//        if (getView() != null)
+//            getView().invalidate();
+//        if (mListView != null)
+//            mListView.invalidate();
     }
 
     public interface ChatRoomSelectionListener {
