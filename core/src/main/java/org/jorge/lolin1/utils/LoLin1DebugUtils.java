@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.crashlytics.android.Crashlytics;
 
+import org.jorge.lolin1.BuildConfig;
 import org.jorge.lolin1.io.db.SQLiteDAO;
 
 import java.io.IOException;
@@ -35,10 +36,8 @@ import java.util.Arrays;
 @SuppressWarnings({"UnusedDeclaration", "deprecation"})
 public abstract class LoLin1DebugUtils {
 
-    private static final Boolean DEBUG = Boolean.TRUE;
-
     public static void showTrace(String tag, Exception source) {
-        if (!DEBUG) return;
+        if (!BuildConfig.DEBUG) return;
         StackTraceElement[] trace = source.getStackTrace();
         String toPrint = "";
         for (StackTraceElement x : trace) {
@@ -50,7 +49,7 @@ public abstract class LoLin1DebugUtils {
     }
 
     public static void writeToFile(String data, Context context) {
-        if (!DEBUG) return;
+        if (!BuildConfig.DEBUG) return;
         try {
             @SuppressLint("WorldReadableFiles") OutputStreamWriter outputStreamWriter =
                     new OutputStreamWriter(
@@ -63,7 +62,7 @@ public abstract class LoLin1DebugUtils {
     }
 
     public static void debugSelectAllFromTable(String tag, String[] fields, String tableName) {
-        if (!DEBUG) return;
+        if (!BuildConfig.DEBUG) return;
         SQLiteDatabase db = SQLiteDAO.getSingleton().getReadableDatabase();
 
         db.beginTransaction();
@@ -82,14 +81,14 @@ public abstract class LoLin1DebugUtils {
     }
 
     public static void logArray(String tag, String arrayName, Object[] array) {
-        if (!DEBUG) return;
+        if (!BuildConfig.DEBUG) return;
         Log.d(tag, "Logging array " + arrayName);
         for (Object x : array)
             Log.d(tag, x + "\n");
     }
 
     public static void logString(String tag, String msg) {
-        if (!DEBUG) return;
+        if (!BuildConfig.DEBUG) return;
         Log.d(tag, msg);
     }
 }
