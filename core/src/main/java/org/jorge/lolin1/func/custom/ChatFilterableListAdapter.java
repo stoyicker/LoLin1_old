@@ -155,7 +155,6 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                         @Override
                         public void run() {
                             viewHolder.getChatStatus().setImageDrawable(drawableAsFinal);
-//                            viewHolder.getChatStatus().invalidate();
                         }
                     });
                 return null;
