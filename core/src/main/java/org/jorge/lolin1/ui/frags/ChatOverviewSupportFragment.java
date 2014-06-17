@@ -9,6 +9,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
+import com.twotoasters.jazzylistview.JazzyListView;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.custom.ChatFilterableListAdapter;
@@ -39,7 +40,7 @@ import java.util.Arrays;
 public class ChatOverviewSupportFragment extends android.support.v4.app.Fragment {
 
     private ChatRoomSelectionListener mCallback;
-    private ListView mListView;
+    private JazzyListView mListView;
     private ChatFilterableListAdapter listAdapter;
 
     @Override
@@ -71,7 +72,7 @@ public class ChatOverviewSupportFragment extends android.support.v4.app.Fragment
                              Bundle savedInstanceState) {
         View ret = inflater.inflate(R.layout.fragment_chat_overview_connected, container, false);
 
-        mListView = (ListView) ret.findViewById(android.R.id.list);
+        mListView = (JazzyListView) ret.findViewById(android.R.id.list);
 
         mListView.setChoiceMode(
                 ListView.CHOICE_MODE_SINGLE);

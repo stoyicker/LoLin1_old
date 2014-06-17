@@ -19,11 +19,12 @@
 ~ Created by Jorge Antonio Diaz-Benito Soriano on 01/05/2014.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ListView
+    <com.twotoasters.jazzylistview.JazzyListView
         android:id="@id/android:list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -33,6 +34,8 @@
         android:verticalSpacing="@dimen/champion_grid_vertical_spacing"
         android:divider="@color/theme_black"
         android:dividerHeight="@dimen/feed_divider"
+        app:effect="tilt"
+        app:only_animate_new_items="true"
         android:requiresFadingEdge="vertical" />
 
     <ImageView
