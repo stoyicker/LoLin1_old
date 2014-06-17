@@ -33,4 +33,5 @@ Created by Jorge Antonio Diaz-Benito Soriano on 21/01/14.
     <color name="theme_light_green">#00FF55</color>
     <color name="showcase_background_color">#AA000000</color>
     <color name="theme_lighter_blue">#00AAFF</color>
+    <color name="theme_yellow">#FFE100</color>
 </resources>

@@ -118,11 +118,13 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                 ChatMode mode = thisFriend.getChatMode();
                 logString("debug", "Chat mode for " + thisFriend.getName() + ": " + mode);
                 if (mode == ChatMode.AVAILABLE) {
-                    drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_online);
-                } else if (mode == ChatMode.BUSY || mode == ChatMode.AWAY) {
-                    drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_busy);
-                } else {
-                    drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_unknown);
+                    drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_green);
+                } else if ( mode == ChatMode.AWAY) {
+                    drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_yellow);
+                } else if (mode == ChatMode.BUSY){
+                    drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_red);
+                }else{
+                    drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_gray);
                 }
                 final Drawable drawableAsFinal = drawable;
                 if (viewHolder != null)
@@ -165,7 +167,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 ChatFilterableListAdapter.this.data.clear();
                 ChatFilterableListAdapter.this.data.addAll(
-                        (java.util.Collection<? extends Friend>) results.values);
+                        (Collection<? extends Friend>) results.values);
                 mActivity.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
