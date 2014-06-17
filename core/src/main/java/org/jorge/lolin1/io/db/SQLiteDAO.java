@@ -54,6 +54,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
 
     private SQLiteDAO(Context _context) {
         super(_context, LoLin1Utils.getString(_context, "db_name", "LoLin1_DB"), null, 1);
+        mContext = _context;
     }
 
     public static boolean tableExists(String tableName) {
@@ -83,8 +84,7 @@ public class SQLiteDAO extends SQLiteOpenHelper {
 
     public static SQLiteDAO getSingleton() {
         if (singleton == null) {
-            throw new RuntimeException(
-                    "Use method SQLiteDAO.setup(Context _context) at least once before calling this method.");
+            singleton = new SQLiteDAO(mContext);
         }
         return singleton;
     }
