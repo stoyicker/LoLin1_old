@@ -310,10 +310,10 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                         .getString(context.getApplicationContext(), "event_login_successful",
                                 null))) {
                     alreadyInited = Boolean.TRUE;
+                    FriendManager.getInstance().updateOnlineFriends();
                     thisView.post(new Runnable() {
                         @Override
                         public void run() {
-                            FriendManager.getInstance().updateOnlineFriends();
                             showViewConnected();
                         }
                     });

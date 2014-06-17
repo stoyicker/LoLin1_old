@@ -2,8 +2,10 @@ package org.jorge.lolin1.func.custom;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,6 +62,13 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
     }
 
     @Override
+    public void notifyDataSetChanged() {
+        data.clear();
+        data.addAll(FriendManager.getInstance().getOnlineFriends());
+        super.notifyDataSetChanged();
+    }
+
+    @Override
     public int getCount() {
         return data.size();
     }
@@ -101,7 +110,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
 
         if (viewHolder != null) {
             profileImageLoader
-                    .assignImageToProfileView(mActivity, thisFriend.getStatus().getProfileIconId(),
+                    .assignImageToProfileView(mActivity, Math.max(0, thisFriend.getStatus().getProfileIconId()),
                             viewHolder.getProfileIcon());
             viewHolder.getName().setText(thisFriend.getName());
             final LolStatus thisStatus = thisFriend.getStatus();
@@ -109,7 +118,17 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
             LolStatus.Division thisDivision = thisStatus.getRankedLeagueDivision();
             viewHolder.getRankedDivision()
                     .setText(thisStatus.getRankedLeagueTier().name() + " " + thisDivision.name());
-            viewHolder.getTextStatus().setText(thisStatus.getStatusMessage());
+            ChatMode mode = thisFriend.getChatMode();
+            String spectatedGameId = thisStatus.getSpectatedGameId();
+            if (mode == ChatMode.AVAILABLE) {
+                viewHolder.getTextStatus().setTextColor(Color.GREEN);
+                viewHolder.getTextStatus().setText(thisStatus.getStatusMessage());
+            } else if (!TextUtils.isEmpty(spectatedGameId))
+                viewHolder.getTextStatus().setText(spectatedGameId);
+            else {
+                viewHolder.getTextStatus().setTextColor(Color.BLACK);
+                viewHolder.getTextStatus().setText(thisStatus.getSkin() + " @ " + thisStatus.getGameQueueType());
+            }
         }
         new AsyncTask<Void, Void, Void>() {
             @Override

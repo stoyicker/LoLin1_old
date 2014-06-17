@@ -147,31 +147,37 @@ public class ChatIntentService extends IntentService {
 
             @Override
             public void onFriendLeave(Friend friend) {
+                logString("debug", "onFriendLeave " + friend.getName());
                 ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendJoin(Friend friend) {
+                logString("debug", "onFriendJoin " + friend.getName());
                 ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendAvailable(Friend friend) {
+                logString("debug", "onFriendAvailable " + friend.getName());
                 ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendAway(Friend friend) {
+                logString("debug", "onFriendAway " + friend.getName());
                 ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendBusy(Friend friend) {
+                logString("debug", "onFriendBusy " + friend.getName());
                 ChatIntentService.this.launchBroadcastFriendEvent();
             }
 
             @Override
             public void onFriendStatusChange(Friend friend) {
+                logString("debug", "onFriendStatusChange " + friend.getName());
                 ChatIntentService.this.launchBroadcastFriendEvent();
             }
         });

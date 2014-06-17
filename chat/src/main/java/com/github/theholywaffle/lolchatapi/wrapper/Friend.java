@@ -202,7 +202,26 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
 
     @Override
     public int compareTo(Object another) {
-        return getName().compareTo(((Friend) another).getName());
+        if (another == null)
+            return -1;
+        int thisValue, anotherValue;
+        ChatMode thisCM = getChatMode(), anotherCM = ((Friend) another).getChatMode();
 
+        if (thisCM == null)
+            thisValue = 0;
+        else if (thisCM == ChatMode.AWAY)
+            thisValue = 1;
+        else if (thisCM == ChatMode.BUSY)
+            thisValue = 2;
+        else thisValue = 3;
+        if (anotherCM == null)
+            anotherValue = 0;
+        else if (anotherCM == ChatMode.AWAY)
+            anotherValue = 1;
+        else if (anotherCM == ChatMode.BUSY)
+            anotherValue = 2;
+        else anotherValue = 3;
+
+        return thisValue == anotherValue ? getName().compareTo(((Friend) another).getName()) : anotherValue - thisValue;
     }
 }

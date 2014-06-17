@@ -49,13 +49,17 @@ public class FriendManager {
         return null;
     }
 
-    public void updateOnlineFriends() {
+    public synchronized void updateOnlineFriends() {
+        logString("debug", "Updating online friends");
         Collection<Friend> onlineFriends = ChatIntentService.getOnlineFriends();
-        for (Friend f : onlineFriends) {
-            logString("debug", "Friend online: " + f.getName());
-        }
         ONLINE_FRIENDS.clear();
-        ONLINE_FRIENDS.addAll(ChatIntentService.getOnlineFriends());
+        for (Friend f : onlineFriends) {
+            if (f.getChatMode() != null && f.isOnline()) { //Prevention check
+                logString("debug", "Adding friend online: " + f.getName());
+                ONLINE_FRIENDS.add(f);
+            }
+        }
+        logString("debug", "Adding friend online: -----------------------");
     }
 
     public Collection<Friend> getOnlineFriends() {
