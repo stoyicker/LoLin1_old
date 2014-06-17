@@ -245,15 +245,11 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     }
 
     private synchronized void requestListRefresh() {
-        final View thisView = findViewById(android.R.id.content);
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                if (thisView != null && thisView.isShown()) {
-                    thisView.invalidate();
-                }
-            }
-        });
+        logString("debug", "Refreshing friends");
+        FriendManager.getInstance().updateOnlineFriends();
+        logString("debug", "Friends refreshed");
+        if (mPagerAdapter != null)
+            ((ChatOverviewSupportFragment) mPagerAdapter.getItem(0)).notifyChatEvent();
     }
 
     private void registerLocalBroadcastReceiver() {

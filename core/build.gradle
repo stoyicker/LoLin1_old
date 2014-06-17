@@ -61,13 +61,11 @@ android {
             zipAlign true
             proguardFile 'proguard-core.txt'
             signingConfig signingConfigs.release
-            buildConfigField "Boolean", "DEBUG", "Boolean.FALSE"
         }
 
         debug {
             runProguard false
             zipAlign false
-            buildConfigField "Boolean", "DEBUG", "Boolean.TRUE"
         }
     }
 }

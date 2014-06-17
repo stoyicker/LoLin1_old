@@ -100,6 +100,10 @@ public class ChatOverviewSupportFragment extends android.support.v4.app.Fragment
         listAdapter.getFilter().filter(constraint);
     }
 
+    public void notifyChatEvent() {
+        listAdapter.notifyDataSetChanged();
+    }
+
     public interface ChatRoomSelectionListener {
         void onRoomSelected(String friendName);
     }

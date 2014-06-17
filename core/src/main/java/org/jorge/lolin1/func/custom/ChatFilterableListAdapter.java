@@ -22,9 +22,9 @@ import org.jorge.lolin1.func.chat.FriendManager;
 import org.jorge.lolin1.io.local.ProfileCacheableBitmapLoader;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
@@ -49,7 +49,7 @@ import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 public class ChatFilterableListAdapter extends BaseAdapter implements Filterable {
 
     private static final int LIST_ITEM_LAYOUT = R.layout.list_item_chat_overview;
-    private final List<Friend> data = new ArrayList<>();
+    private final Set<Friend> data = new LinkedHashSet<>();
     private final Activity mActivity;
     private final ProfileCacheableBitmapLoader profileImageLoader =
             new ProfileCacheableBitmapLoader();
@@ -66,7 +66,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
 
     @Override
     public Object getItem(int position) {
-        return data.get(position);
+        return data.toArray()[position];
     }
 
     @Override
@@ -78,7 +78,9 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
     public View getView(int position, View convertView, ViewGroup parent) {
         final ViewHolder viewHolder;
 
-        if (convertView == null) {
+        final Friend thisFriend = (Friend) getItem(position);
+
+        if (convertView == null || convertView.getTag() == null || !((ViewHolder) convertView.getTag()).getName().getText().equals(thisFriend.getName())) {
             convertView =
                     ((LayoutInflater) mActivity.getApplicationContext()
                             .getSystemService(Context.LAYOUT_INFLATER_SERVICE))
@@ -96,8 +98,6 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
-
-        final Friend thisFriend = (Friend) getItem(position);
 
         if (viewHolder != null) {
             profileImageLoader
@@ -119,11 +119,11 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                 logString("debug", "Chat mode for " + thisFriend.getName() + ": " + mode);
                 if (mode == ChatMode.AVAILABLE) {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_green);
-                } else if ( mode == ChatMode.AWAY) {
+                } else if (mode == ChatMode.BUSY) {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_yellow);
-                } else if (mode == ChatMode.BUSY){
+                } else if (mode == ChatMode.AWAY) {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_red);
-                }else{
+                } else {
                     drawable = mActivity.getResources().getDrawable(R.drawable.chat_status_gray);
                 }
                 final Drawable drawableAsFinal = drawable;
