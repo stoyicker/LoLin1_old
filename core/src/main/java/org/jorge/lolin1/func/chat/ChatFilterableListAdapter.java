@@ -103,6 +103,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
             viewHolder.setRankedDivision(
                     (TextView) convertView.findViewById(R.id.friend_ranked_division));
             viewHolder.setTextStatus((TextView) convertView.findViewById(R.id.friend_text_status));
+            convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }

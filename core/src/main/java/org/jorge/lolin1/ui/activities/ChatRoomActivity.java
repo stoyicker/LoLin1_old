@@ -5,11 +5,20 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.chat.ChatIntentService;
+import org.jorge.lolin1.func.chat.ChatMessageWrapper;
 import org.jorge.lolin1.func.chat.ChatRoomAdapter;
 import org.jorge.lolin1.func.chat.FriendManager;
 
@@ -33,8 +42,6 @@ import org.jorge.lolin1.func.chat.FriendManager;
  */
 public class ChatRoomActivity extends Activity {
 
-    private ListView conversationListView;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,10 +55,46 @@ public class ChatRoomActivity extends Activity {
         }
         setContentView(R.layout.activity_chat_room);
 
-        conversationListView = (ListView) findViewById(android.R.id.list);
+        final EditText messageContentsText = (EditText) findViewById(android.R.id.inputArea);
+        final ImageButton sendButton = (ImageButton) findViewById(android.R.id.button1);
+
+        messageContentsText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    sendButton.callOnClick();
+                }
+                return Boolean.FALSE; //I still want Android to run its thingies, if any
+            }
+        });
+
+        ListView conversationListView = (ListView) findViewById(android.R.id.list);
+        final ChatRoomAdapter adapter = new ChatRoomAdapter(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName));
 
         if (!TextUtils.isEmpty(friendName))
-            conversationListView.setAdapter(new ChatRoomAdapter(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName)));
+            conversationListView.setAdapter(adapter);
+
+        final String friendNameAsFinal = friendName;
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String contents = messageContentsText.getText().toString();
+                if (TextUtils.isEmpty(contents))
+                    return;
+                adapter.add(new ChatMessageWrapper(contents, System.currentTimeMillis()));
+                launchBroadcastSendMessage(contents, friendNameAsFinal);
+                messageContentsText.setText("");
+                messageContentsText.clearFocus();
+            }
+
+            private void launchBroadcastSendMessage(String contents, String friendName) {
+                Intent intent = new Intent();
+                intent.setAction(ChatIntentService.ACTION_MESSAGE);
+                intent.putExtra(ChatIntentService.KEY_MESSAGE_CONTENTS, contents);
+                intent.putExtra(ChatIntentService.KEY_MESSAGE_DESTINATION, friendName);
+                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            }
+        });
     }
 
     @Override

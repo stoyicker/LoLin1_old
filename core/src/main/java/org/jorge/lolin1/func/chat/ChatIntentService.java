@@ -55,6 +55,8 @@ import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 public class ChatIntentService extends IntentService {
 
     public static final String ACTION_CONNECT = "CONNECT", ACTION_DISCONNECT = "DISCONNECT", ACTION_MESSAGE = "MESSAGE";
+    public static final String KEY_MESSAGE_CONTENTS = "MESSAGE_CONTENTS";
+    public static final String KEY_MESSAGE_DESTINATION = "MESSAGE_DESTINATION";
     private final IBinder mBinder = new ChatBinder();
     private static LoLChat api;
     private SmackAndroid mSmackAndroid;
@@ -106,7 +108,7 @@ public class ChatIntentService extends IntentService {
                 break;
             case ACTION_MESSAGE:
                 logString("debug", "Action requested: " + ACTION_MESSAGE);
-                //TODO Send messages
+                sendMessage(intent.getStringExtra(KEY_MESSAGE_CONTENTS), intent.getStringExtra(KEY_MESSAGE_DESTINATION));
                 break;
             default:
                 throw new IllegalArgumentException(
@@ -114,7 +116,15 @@ public class ChatIntentService extends IntentService {
         }
     }
 
+    private void sendMessage(String stringExtra, String destination) {
+        Friend target;
+        ChatMessageWrapper messageWrapper = new ChatMessageWrapper(stringExtra, System.currentTimeMillis());
+        ChatBundleManager.addMessageToFriendChat(messageWrapper, target = FriendManager.getInstance().findFriendByName(destination));
+        target.sendMessage(stringExtra);
+    }
+
     public class ChatBinder extends Binder {
+        @SuppressWarnings("unused")
         public ChatIntentService getService() {
             return ChatIntentService.this;
         }
@@ -310,12 +320,6 @@ public class ChatIntentService extends IntentService {
             isConnected = Boolean.FALSE;
             return Boolean.FALSE;
         }
-    }
-
-    private void launchBroadcastLostConnection() {
-        Intent intent = new Intent();
-        intent.setAction("android.net.conn.CONNECTIVITY_CHANGE");
-        sendLocalBroadcast(intent);
     }
 
     private void disconnect() {

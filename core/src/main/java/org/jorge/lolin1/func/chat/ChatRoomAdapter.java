@@ -1,6 +1,7 @@
 package org.jorge.lolin1.func.chat;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,9 +13,6 @@ import android.widget.TextView;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 import org.jorge.lolin1.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This file is part of LoLin1.
@@ -36,27 +34,28 @@ import java.util.List;
  */
 public class ChatRoomAdapter extends ArrayAdapter<ChatMessageWrapper> {
 
-    private final List<ChatMessageWrapper> data = new ArrayList<>();
     private static final int RES_ID = R.layout.list_item_chat_message;
 
     public ChatRoomAdapter(Context context, Friend friend) {
         super(context, RES_ID);
+        Bundle previousMessages = ChatBundleManager.getBundleByFriend(friend);
+        if (!previousMessages.isEmpty())
+            super.addAll(previousMessages.<ChatMessageWrapper>getParcelableArrayList(ChatBundleManager.KEY_MESSAGE_ARRAY));
     }
 
     @Override
     public void add(ChatMessageWrapper object) {
-        data.add(object);
         super.add(object);
     }
 
     @Override
     public int getCount() {
-        return data.size();
+        return super.getCount();
     }
 
     @Override
     public ChatMessageWrapper getItem(int position) {
-        return data.get(position);
+        return super.getItem(position);
     }
 
     @Override
@@ -73,6 +72,7 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatMessageWrapper> {
             viewHolder = new ViewHolder();
             viewHolder.setContentsView((TextView) convertView.findViewById(R.id.contents_view));
             viewHolder.setWrapperLayout((LinearLayout) convertView.findViewById(R.id.wrapper));
+            convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }

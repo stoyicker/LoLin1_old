@@ -91,7 +91,7 @@ public class AccountCredentialsComponentFragment extends Fragment {
                     if (actionId == EditorInfo.IME_ACTION_DONE) {
                         mCallback.onDonePressed();
                     }
-                    return Boolean.FALSE; //I still want Android to run its thingies
+                    return Boolean.FALSE; //I still want Android to run its thingies, if any
                 }
             });
         }

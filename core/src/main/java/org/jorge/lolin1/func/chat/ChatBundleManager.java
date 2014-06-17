@@ -1,9 +1,11 @@
 package org.jorge.lolin1.func.chat;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,18 +30,23 @@ import java.util.Map;
 public abstract class ChatBundleManager {
 
     private static final Map<Friend, Bundle> BUNDLES = new HashMap<>();
-    private static final String KEY_MESSAGE = "LOL_CHAT_MESSAGE";
+    public static final String KEY_MESSAGE_ARRAY = "LOL_CHAT_MESSAGES";
 
     public static Bundle getBundleByFriend(Friend f) {
-        return BUNDLES.get(f);
+        return BUNDLES.containsKey(f) ? BUNDLES.get(f) : Bundle.EMPTY;
     }
 
     public static void addMessageToFriendChat(ChatMessageWrapper msg, Friend chatSubject) {
         Bundle currentBundle = getBundleByFriend(chatSubject);
+        ArrayList<Parcelable> messages;
         if (currentBundle == null) {
             currentBundle = new Bundle();
+            messages = new ArrayList<>();
+        } else {
+            messages = currentBundle.getParcelableArrayList(KEY_MESSAGE_ARRAY);
         }
-        currentBundle.putParcelable(KEY_MESSAGE, msg);
+        messages.add(msg);
+        currentBundle.putParcelableArrayList(KEY_MESSAGE_ARRAY, messages);
         BUNDLES.put(chatSubject, currentBundle);
     }
 }
