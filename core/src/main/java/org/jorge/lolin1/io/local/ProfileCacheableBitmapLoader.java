@@ -1,6 +1,7 @@
 package org.jorge.lolin1.io.local;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
@@ -105,6 +106,15 @@ public final class ProfileCacheableBitmapLoader {
         }
     }
 
+    public static File getPathByID(Context context, int id) {
+        return new File(
+                context.getExternalFilesDir(
+                        LoLin1Utils.getString(context, "profile_icons_folder_name", null)).getAbsolutePath() +
+                        LoLin1Utils.getString(context, "symbol_path_separator",
+                                null) + id + ".png"
+        );
+    }
+
     public void assignImageToProfileView(Activity activity, int id, final ImageView imageView) {
         resetPurgeTimer();
         // First try the hard reference cache
@@ -144,14 +154,7 @@ public final class ProfileCacheableBitmapLoader {
             }
         }
 
-        File root = activity.getExternalFilesDir(
-                LoLin1Utils.getString(activity, "profile_icons_folder_name", null)), path =
-                new File(
-                        root.getAbsolutePath() +
-                                LoLin1Utils.getString(activity, "symbol_path_separator",
-                                        null) + id + ".png"
-                );
-
+        File path = ProfileCacheableBitmapLoader.getPathByID(activity, id);
 
         logString("debug", "Path for image with id " + id + ": " + path);
 

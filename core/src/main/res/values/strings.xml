@@ -227,4 +227,6 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="tutorial_champions_title">Champions</string>
     <string name="tutorial_detail_title">But we\'re not done yet…</string>
     <string name="tutorial_detail_contents">Swipe horizontally to see more info!</string>
+    <string name="in_queue">In queue</string>
+    <string name="send">Send</string>
 </resources>

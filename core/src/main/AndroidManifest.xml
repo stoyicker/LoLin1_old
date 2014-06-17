@@ -48,6 +48,16 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.activities.ChatRoomActivity"
+            android:configChanges="keyboardHidden"
+            android:windowSoftInputMode="stateHidden"
+            android:launchMode="standard">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.APP_MESSAGING" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".ui.activities.SettingsPreferenceActivity"
             android:configChanges="keyboardHidden"
             android:label="@string/title_activity_settings"
@@ -166,7 +176,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
             android:launchMode="singleTop"
             android:logo="@drawable/icon_section5">
             <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.APP_MESSAGING" />
             </intent-filter>
         </activity>
 

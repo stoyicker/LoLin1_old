@@ -129,7 +129,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                 viewHolder.getTextStatus().setTextColor(Color.BLACK);
                 final String skin = thisStatus.getSkin();
                 if (TextUtils.isEmpty(skin))
-                    viewHolder.getTextStatus().setText("In queue");
+                    viewHolder.getTextStatus().setText(R.string.in_queue);
                 else
                     viewHolder.getTextStatus().setText(skin + " @ " + thisStatus.getGameQueueType());
             }

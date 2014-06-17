@@ -95,4 +95,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <dimen name="padding_chat_friend">4dp</dimen>
     <dimen name="showcase_title_text_size">16dp</dimen>
     <dimen name="showcase_content_text_size">12dp</dimen>
+    <dimen name="chat_room_input_area_height">65dp</dimen>
+    <dimen name="send_message_right_padding">15dp</dimen>
+    <dimen name="send_button_magic_margin_padding">10dp</dimen>
 </resources>
