@@ -239,9 +239,9 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
 
     @Override
     public void onRoomSelected(String friendName) {
-        //TODO Intent intent = new Intent(getApplicationContext(), ChatRoomActivity.class);
-        //intent.putExtra(KEY_FRIEND_NAME, friendName);
-        //startActivity(intent);
+        Intent intent = new Intent(getApplicationContext(), ChatRoomActivity.class);
+        intent.putExtra(KEY_FRIEND_NAME, friendName);
+        startActivity(intent);
     }
 
     private synchronized void requestListRefresh() {
