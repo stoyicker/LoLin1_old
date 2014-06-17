@@ -8,7 +8,6 @@ import android.os.Looper;
 import android.preference.PreferenceManager;
 import android.widget.ImageView;
 
-import org.jorge.lolin1.R;
 import org.jorge.lolin1.io.net.HTTPServices;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
@@ -145,7 +144,6 @@ public final class ProfileCacheableBitmapLoader {
             }
         }
 
-
         File root = activity.getExternalFilesDir(
                 LoLin1Utils.getString(activity, "profile_icons_folder_name", null)), path =
                 new File(
@@ -181,17 +179,17 @@ public final class ProfileCacheableBitmapLoader {
     }
 
     private Bitmap loadBitmapFromNetwork(Activity activity, int id, final ImageView imageView) {
-        Bitmap bitmap;
+        Bitmap bitmap = null;
         if (!LoLin1Utils.isInternetReachable(activity)) {
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            bitmap = BitmapFactory.decodeResource(activity.getResources(),
-                    R.drawable.profile_icon_no_connection, options);
         } else {
             File root = activity.getExternalFilesDir(
                     LoLin1Utils.getString(activity, "profile_icons_folder_name", null));
+            assert root != null;
             if (!root.exists()) {
-                root.mkdirs();
+                if (!root.mkdirs())
+                    throw new RuntimeException("Key mkdirs failed");
             }
             File path;
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -209,8 +207,7 @@ public final class ProfileCacheableBitmapLoader {
                 );
                 bitmap = BitmapFactory.decodeFile(path.getAbsolutePath(), options);
             } catch (IOException e) {
-                bitmap = BitmapFactory.decodeResource(activity.getResources(),
-                        R.drawable.profile_icon_no_connection, options);
+                bitmap = null;
             }
         }
         final Bitmap finalBitmap = bitmap;
