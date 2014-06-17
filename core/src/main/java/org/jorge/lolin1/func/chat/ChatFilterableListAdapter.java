@@ -1,4 +1,4 @@
-package org.jorge.lolin1.func.custom;
+package org.jorge.lolin1.func.chat;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,7 +20,6 @@ import com.github.theholywaffle.lolchatapi.LolStatus;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.chat.FriendManager;
 import org.jorge.lolin1.io.local.ProfileCacheableBitmapLoader;
 
 import java.util.ArrayDeque;

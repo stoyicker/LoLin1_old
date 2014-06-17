@@ -28,6 +28,10 @@ import java.util.Date;
  */
 public class ChatMessageWrapper implements Parcelable {
 
+    public String getText() {
+        return text;
+    }
+
     private final String text;
     private final Date time;
     private final Friend sender; //Null sender means it was me
@@ -74,5 +78,9 @@ public class ChatMessageWrapper implements Parcelable {
         } else {
             sender = null;
         }
+    }
+
+    public Friend getSender() {
+        return sender;
     }
 }

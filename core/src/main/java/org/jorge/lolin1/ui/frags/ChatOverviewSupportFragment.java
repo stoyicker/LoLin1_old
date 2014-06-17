@@ -12,7 +12,7 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 import com.twotoasters.jazzylistview.JazzyListView;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.func.custom.ChatFilterableListAdapter;
+import org.jorge.lolin1.func.chat.ChatFilterableListAdapter;
 import org.jorge.lolin1.ui.activities.ChatOverviewActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 

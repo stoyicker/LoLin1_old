@@ -5,9 +5,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
+import android.widget.ListView;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.chat.ChatRoomAdapter;
+import org.jorge.lolin1.func.chat.FriendManager;
 
 /**
  * This file is part of LoLin1.
@@ -29,17 +33,25 @@ import org.jorge.lolin1.R;
  */
 public class ChatRoomActivity extends Activity {
 
+    private ListView conversationListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
+        String friendName = null;
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
-            actionBar.setTitle(getIntent().getStringExtra(ChatOverviewActivity.KEY_FRIEND_NAME));
+            actionBar.setTitle(friendName = getIntent().getStringExtra(ChatOverviewActivity.KEY_FRIEND_NAME));
             actionBar.setLogo(Drawable.createFromPath(getIntent().getStringExtra(ChatOverviewActivity.KEY_PROFILE_ICON_PATH)));
             actionBar.setDisplayUseLogoEnabled(Boolean.TRUE);
         }
         setContentView(R.layout.activity_chat_room);
+
+        conversationListView = (ListView) findViewById(android.R.id.list);
+
+        if (!TextUtils.isEmpty(friendName))
+            conversationListView.setAdapter(new ChatRoomAdapter(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName)));
     }
 
     @Override
