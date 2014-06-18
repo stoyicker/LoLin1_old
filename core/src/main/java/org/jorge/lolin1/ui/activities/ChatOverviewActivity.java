@@ -347,7 +347,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         }
 
         private void applyChatFilter(String query) {
-            CHAT_OVERVIEW_FRAGMENT.applyFilter(query);
+            if (CHAT_OVERVIEW_FRAGMENT != null)
+                CHAT_OVERVIEW_FRAGMENT.applyFilter(query);
         }
 
         @Override

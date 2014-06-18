@@ -81,8 +81,6 @@ public class ChatIntentService extends IntentService {
     public void onDestroy() {
         super.onDestroy();
         isConnected = Boolean.FALSE;
-        ChatNotificationManager.dismissAll(getApplicationContext());
-        logString("debug", "Service destroyed");
     }
 
     @Override

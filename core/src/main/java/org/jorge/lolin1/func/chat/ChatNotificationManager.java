@@ -79,15 +79,9 @@ public abstract class ChatNotificationManager {
     public static synchronized void dismissNotifications(Context context, String friendName) {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(NOTIFICATION_ID_MAP.remove(friendName));
-        LAST_NOTIFICATION_CONTENTS.remove(friendName);
-    }
-
-    public static synchronized void dismissAll(Context context) {
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancelAll();
-        NOTIFICATION_ID_MAP.clear();
-        LAST_NOTIFICATION_CONTENTS.clear();
+        if (NOTIFICATION_ID_MAP.containsKey(friendName)) {
+            notificationManager.cancel(NOTIFICATION_ID_MAP.remove(friendName));
+            LAST_NOTIFICATION_CONTENTS.remove(friendName);
+        }
     }
 }

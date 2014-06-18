@@ -71,7 +71,13 @@ public class ChatRoomActivity extends Activity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
             actionBar.setTitle(friendName = getIntent().getStringExtra(ChatOverviewActivity.KEY_FRIEND_NAME));
-            actionBar.setLogo(Drawable.createFromPath(ProfileCacheableBitmapLoader.getPathByID(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName).getStatus().getProfileIconId()).getAbsolutePath()));
+            try {
+                actionBar.setLogo(Drawable.createFromPath(ProfileCacheableBitmapLoader.getPathByID(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName).getStatus().getProfileIconId()).getAbsolutePath()));
+            } catch (NullPointerException ex) {
+                startActivity(new Intent(getApplicationContext(), ChatOverviewActivity.class));//Clicking notification with app closed
+                finish();
+                return;
+            }
             actionBar.setDisplayUseLogoEnabled(Boolean.TRUE);
         }
         ChatNotificationManager.dismissNotifications(getApplicationContext(), friendName);
