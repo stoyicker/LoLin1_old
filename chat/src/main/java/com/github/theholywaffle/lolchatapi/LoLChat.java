@@ -147,7 +147,7 @@ public class LoLChat {
         friendListeners.add(friendListener);
     }
 
-    private void addListeners() {
+    private synchronized void addListeners() {
         connection.getRoster().addRosterListener(new RosterListener() {
 
             private HashMap<String, Presence.Type> typeUsers = new HashMap<>();
