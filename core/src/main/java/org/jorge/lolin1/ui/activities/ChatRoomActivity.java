@@ -74,7 +74,7 @@ public class ChatRoomActivity extends Activity {
             actionBar.setLogo(Drawable.createFromPath(ProfileCacheableBitmapLoader.getPathByID(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName).getStatus().getProfileIconId()).getAbsolutePath()));
             actionBar.setDisplayUseLogoEnabled(Boolean.TRUE);
         }
-        ChatNotificationManager.cancelNotification(getApplicationContext(), friendName);
+        ChatNotificationManager.dismissNotifications(getApplicationContext(), friendName);
         setContentView(R.layout.activity_chat_room);
 
         final EditText messageContentsText = (EditText) findViewById(android.R.id.inputArea);

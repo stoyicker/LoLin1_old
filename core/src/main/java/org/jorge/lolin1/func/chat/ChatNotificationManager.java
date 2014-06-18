@@ -38,20 +38,28 @@ import java.util.Map;
 public abstract class ChatNotificationManager {
 
     private static Map<String, Integer> NOTIFICATION_ID_MAP = Collections.synchronizedMap(new HashMap<String, Integer>());
+    private static Map<String, String> LAST_NOTIFICATION_CONTENTS = Collections.synchronizedMap(new HashMap<String, String>());
 
-    public static void createOrUpdateMessageReceivedNotification(Context context, String contents, Friend friend) {
-        String name;
+
+    public static synchronized void createOrUpdateMessageReceivedNotification(Context context, String contents, Friend friend) {
+        String name, previousNotificationContents, newContents;
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
         boolean notificationFound = NOTIFICATION_ID_MAP.containsKey(name = friend.getName());
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         int id;
         if (!notificationFound) {
             builder = new NotificationCompat.Builder(context);
             id = NOTIFICATION_ID_MAP.size();
-        } else
+            NOTIFICATION_ID_MAP.put(name, id);
+            previousNotificationContents = "";
+        } else {
             id = NOTIFICATION_ID_MAP.get(name);
+            previousNotificationContents = LAST_NOTIFICATION_CONTENTS.get(name);
+        }
         builder.setSmallIcon(R.drawable.icon_app);
         builder.setContentTitle(name);
-        builder.setContentText(contents);
+        builder.setContentText(newContents = previousNotificationContents + "\n" + contents);
         builder.setAutoCancel(Boolean.TRUE);
         Intent resultIntent = new Intent(context, ChatRoomActivity.class);
         resultIntent.putExtra(ChatOverviewActivity.KEY_FRIEND_NAME, name);
@@ -64,14 +72,22 @@ public abstract class ChatNotificationManager {
                         PendingIntent.FLAG_UPDATE_CURRENT
                 );
         builder.setContentIntent(resultPendingIntent);
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, builder.build());
+        LAST_NOTIFICATION_CONTENTS.put(name, newContents);
     }
 
-    public static void cancelNotification(Context context, String friendName) {
+    public static synchronized void dismissNotifications(Context context, String friendName) {
         NotificationManager notificationManager =
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(NOTIFICATION_ID_MAP.get(friendName));
+        notificationManager.cancel(NOTIFICATION_ID_MAP.remove(friendName));
+        LAST_NOTIFICATION_CONTENTS.remove(friendName);
+    }
+
+    public static synchronized void dismissAll(Context context) {
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+        NOTIFICATION_ID_MAP.clear();
+        LAST_NOTIFICATION_CONTENTS.clear();
     }
 }
