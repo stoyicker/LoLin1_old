@@ -19,6 +19,8 @@ import org.jorge.lolin1.utils.LoLin1Utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -98,6 +100,7 @@ public class ChatOverviewSupportFragment extends android.support.v4.app.Fragment
     }
 
     public void applyFilter(CharSequence constraint) {
+        logString("debug", "Applying filter");
         listAdapter.getFilter().filter(constraint);
     }
 

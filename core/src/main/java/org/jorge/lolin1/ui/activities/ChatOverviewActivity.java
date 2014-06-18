@@ -63,8 +63,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         if (savedInstanceState == null) {
             savedInstanceState = new Bundle();
         }
-        getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
-                R.menu.menu_chat_overview);
+//        getIntent().putExtra(DrawerLayoutFragmentActivity.ACTION_BAR_MENU_LAYOUT,
+//                R.menu.menu_chat_overview);
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_chat_overview);
         super.onCreate(savedInstanceState);
