@@ -98,4 +98,6 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <dimen name="chat_room_input_area_height">65dp</dimen>
     <dimen name="send_message_right_padding">15dp</dimen>
     <dimen name="send_button_magic_margin_padding">10dp</dimen>
+    <dimen name="chat_message_contents_margin">5dp</dimen>
+    <dimen name="chat_message_contents_left_padding">10dp</dimen>
 </resources>

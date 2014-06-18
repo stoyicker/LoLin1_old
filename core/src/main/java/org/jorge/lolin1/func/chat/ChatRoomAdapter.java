@@ -75,6 +75,7 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatMessageWrapper> {
             viewHolder = new ViewHolder();
             viewHolder.setContentsView((TextView) convertView.findViewById(R.id.contents_view));
             viewHolder.setWrapperLayout((LinearLayout) convertView.findViewById(R.id.wrapper));
+            viewHolder.setTimeView((TextView) convertView.findViewById(R.id.timestamp_view));
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
@@ -83,10 +84,19 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatMessageWrapper> {
         ChatMessageWrapper message = getItem(position);
 
         Boolean left = message.getSender() != null;
-        TextView contentsView = viewHolder.getContentsView();
+        TextView contentsView = viewHolder.getContentsView(), timeView = viewHolder.getTimeView();
         contentsView.setText(message.getText());
         viewHolder.getContentsView().setBackgroundResource(left ? R.drawable.bubble_white : R.drawable.bubble_blue);
-        viewHolder.getWrapperLayout().setGravity(left ? Gravity.LEFT : Gravity.RIGHT);
+
+        if (left) {
+            viewHolder.getWrapperLayout().setGravity(Gravity.LEFT);
+            timeView.setGravity(Gravity.LEFT);
+        } else {
+            viewHolder.getWrapperLayout().setGravity(Gravity.RIGHT);
+            timeView.setGravity(Gravity.RIGHT);
+        }
+
+        timeView.setText(message.getTime().toString()); //TODO Pon esto bonico hombre
 
         return convertView;
     }
@@ -101,6 +111,16 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatMessageWrapper> {
         }
 
         private TextView contentsView;
+
+        private TextView getTimeView() {
+            return timeView;
+        }
+
+        private void setTimeView(TextView timeView) {
+            this.timeView = timeView;
+        }
+
+        private TextView timeView;
 
         LinearLayout getWrapperLayout() {
             return wrapperLayout;

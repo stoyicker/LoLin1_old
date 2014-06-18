@@ -3,6 +3,7 @@ package org.jorge.lolin1.func.chat;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.view.LayoutInflater;
@@ -118,6 +119,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
             viewHolder.getRankedDivision()
                     .setText(thisStatus.getRankedLeagueTier().name() + " " + thisDivision.name());
             LolStatus.GameStatus gameStatus = thisStatus.getGameStatus();
+            viewHolder.getTextStatus().setTypeface(Typeface.create("", Typeface.ITALIC));
             viewHolder.getTextStatus().setTextColor(mActivity.getApplicationContext().getResources().getColor(R.color.theme_strong_orange));
             if (gameStatus == LolStatus.GameStatus.SPECTATING) {
                 viewHolder.getTextStatus().setText(R.string.status_spectating);
@@ -137,6 +139,7 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
                 viewHolder.getTextStatus().setText(R.string.status_hosting_ranked_game);
             } else {
                 viewHolder.getTextStatus().setTextColor(Color.GREEN);
+                viewHolder.getTextStatus().setTypeface(Typeface.create("", Typeface.BOLD));
                 viewHolder.getTextStatus().setText(thisStatus.getStatusMessage());
             }
         }

@@ -37,7 +37,6 @@ import java.util.Map;
  */
 public abstract class ChatNotificationManager {
 
-    //TODO Could be anywhere - Show the timestamp on the messages
     private static Map<String, Integer> NOTIFICATION_ID_MAP = Collections.synchronizedMap(new HashMap<String, Integer>());
 
     public static void createOrUpdateMessageReceivedNotification(Context context, String contents, Friend friend) {

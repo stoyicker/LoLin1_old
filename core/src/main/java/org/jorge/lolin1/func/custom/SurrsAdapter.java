@@ -96,7 +96,7 @@ public class SurrsAdapter extends ArrayAdapter<SurrEntry> {
             viewHolder.getItemWithNewContentImageView().setVisibility(View.VISIBLE);
             viewHolder.getItemWithNewContentImageView().startAnimation(unreadContentAnimation);
         } else {
-            convertView.setBackgroundColor(mContext.getResources().getColor(R.color.theme_surr_grey));
+            convertView.setBackgroundColor(mContext.getResources().getColor(R.color.theme_surr_gray));
             viewHolder.getItemWithNewContentImageView().setVisibility(View.INVISIBLE);
             unreadContentAnimation.cancel();
             unreadContentAnimation.reset();

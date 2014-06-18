@@ -20,7 +20,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 25/01/14.
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@color/theme_surr_grey"
+                android:background="@color/theme_surr_gray"
                 android:hapticFeedbackEnabled="true"
                 android:orientation="horizontal"
                 android:paddingBottom="@dimen/feed_item_vertical_margin"
