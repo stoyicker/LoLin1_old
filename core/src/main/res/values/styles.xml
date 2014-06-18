@@ -233,8 +233,8 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     </style>
 
     <style name="ChatTimestampTextStyle">
-        <item name="android:textColor">@color/theme_surr_gray</item>
-        <item name="android:shadowColor">@color/theme_black</item>
+        <item name="android:textColor">@color/theme_white</item>
+        <item name="android:shadowColor">@color/theme_surr_gray</item>
         <item name="android:textStyle">italic</item>
         <item name="android:shadowDx">1</item>
         <item name="android:shadowDy">1</item>

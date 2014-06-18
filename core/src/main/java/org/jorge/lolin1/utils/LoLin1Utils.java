@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -52,10 +54,11 @@ public abstract class LoLin1Utils {
 
     private static final Map<String, Charset> charsetMap = new HashMap<>();
 
-    public static Class getCurrentForegroundActivityClass(Context context) {
+    public static String getCurrentForegroundActivityClass(Context context) {
         ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
         List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
-        return taskInfo.get(0).topActivity.getClass();
+        logString("debug", "Class in top: " + taskInfo.get(0).topActivity.getClassName());
+        return taskInfo.get(0).topActivity.getClassName();
     }
 
     public static void initCharsetMap() {

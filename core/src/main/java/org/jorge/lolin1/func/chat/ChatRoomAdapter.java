@@ -14,6 +14,8 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 import org.jorge.lolin1.R;
 
+import java.text.SimpleDateFormat;
+
 import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 /**
@@ -74,7 +76,7 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatMessageWrapper> {
             convertView = inflater.inflate(RES_ID, parent, false);
             viewHolder = new ViewHolder();
             viewHolder.setContentsView((TextView) convertView.findViewById(R.id.contents_view));
-            viewHolder.setWrapperLayout((LinearLayout) convertView.findViewById(R.id.wrapper));
+            viewHolder.setWrapperLayout((LinearLayout) convertView.findViewById(R.id.wrapper_layout));
             viewHolder.setTimeView((TextView) convertView.findViewById(R.id.timestamp_view));
             convertView.setTag(viewHolder);
         } else {
@@ -86,18 +88,16 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatMessageWrapper> {
         Boolean left = message.getSender() != null;
         TextView contentsView = viewHolder.getContentsView(), timeView = viewHolder.getTimeView();
         contentsView.setText(message.getText());
-        viewHolder.getContentsView().setBackgroundResource(left ? R.drawable.bubble_white : R.drawable.bubble_blue);
-
         if (left) {
+            contentsView.setBackgroundResource(R.drawable.bubble_white);
             viewHolder.getWrapperLayout().setGravity(Gravity.LEFT);
-            timeView.setGravity(Gravity.LEFT);
         } else {
+            contentsView.setBackgroundResource(R.drawable.bubble_blue);
             viewHolder.getWrapperLayout().setGravity(Gravity.RIGHT);
-            timeView.setGravity(Gravity.RIGHT);
         }
 
-        timeView.setText(message.getTime().toString()); //TODO Pon esto bonico hombre
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        timeView.setText(simpleDateFormat.format(message.getTime()));
         return convertView;
     }
 

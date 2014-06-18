@@ -191,7 +191,8 @@ public class ChatIntentService extends IntentService {
                 ChatBundleManager.addMessageToFriendChat(messageWrapper, friend);
                 logString("debug", "Added external message received");
                 launchBroadcastMessageReceived(message, friend.getName());
-                if (LoLin1Utils.getCurrentForegroundActivityClass(getApplicationContext()) != ChatRoomActivity.class) {
+                logString("debug", "Class evaluating if it's on top: "+ChatRoomActivity.class.getName());
+                if (!LoLin1Utils.getCurrentForegroundActivityClass(getApplicationContext()).contentEquals((ChatRoomActivity.class.getName()))) {
                     ChatNotificationManager.createOrUpdateMessageReceivedNotification(getApplicationContext(), message, friend);
                 }
             }

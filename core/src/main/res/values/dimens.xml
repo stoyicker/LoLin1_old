@@ -100,4 +100,5 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <dimen name="send_button_magic_margin_padding">10dp</dimen>
     <dimen name="chat_message_contents_margin">5dp</dimen>
     <dimen name="chat_message_contents_left_padding">10dp</dimen>
+    <dimen name="chat_message_timestamp_margin">5dp</dimen>
 </resources>
