@@ -28,8 +28,10 @@ import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatBundleManager;
 import org.jorge.lolin1.func.chat.ChatIntentService;
 import org.jorge.lolin1.func.chat.ChatMessageWrapper;
+import org.jorge.lolin1.func.chat.ChatNotificationManager;
 import org.jorge.lolin1.func.chat.ChatRoomAdapter;
 import org.jorge.lolin1.func.chat.FriendManager;
+import org.jorge.lolin1.io.local.ProfileCacheableBitmapLoader;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.util.concurrent.Executors;
@@ -69,7 +71,7 @@ public class ChatRoomActivity extends Activity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
             actionBar.setTitle(friendName = getIntent().getStringExtra(ChatOverviewActivity.KEY_FRIEND_NAME));
-            actionBar.setLogo(Drawable.createFromPath(getIntent().getStringExtra(ChatOverviewActivity.KEY_PROFILE_ICON_PATH)));
+            actionBar.setLogo(Drawable.createFromPath(ProfileCacheableBitmapLoader.getPathByID(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName).getStatus().getProfileIconId()).getAbsolutePath()));
             actionBar.setDisplayUseLogoEnabled(Boolean.TRUE);
         }
         setContentView(R.layout.activity_chat_room);
@@ -163,7 +165,7 @@ public class ChatRoomActivity extends Activity {
                 .registerReceiver(mChatBroadcastReceiver, intentFilter);
     }
 
-    private void scrollListViewToBottom(){
+    private void scrollListViewToBottom() {
         conversationListView.post(new Runnable() {
             public void run() {
                 conversationListView.smoothScrollToPosition(adapter.getCount() - 1);
@@ -174,12 +176,13 @@ public class ChatRoomActivity extends Activity {
     private class ChatMessageBroadcastReceiver extends BroadcastReceiver {
         @Override
         public void onReceive(Context context, Intent intent) {
+            String src;
             logString("debug", "Received a message");
-            if (friendName.contentEquals(intent.getStringExtra(ChatIntentService.KEY_MESSAGE_SOURCE))) {
+            if (friendName.contentEquals(src = intent.getStringExtra(ChatIntentService.KEY_MESSAGE_SOURCE))) {
                 adapter.add(new ChatMessageWrapper(intent.getStringExtra(ChatIntentService.KEY_MESSAGE_CONTENTS), System.currentTimeMillis(), FriendManager.getInstance().findFriendByName(friendName)));
-            scrollListViewToBottom();
+                scrollListViewToBottom();
             } else {
-                //TODO Show ("STACKABLE") notification
+                ChatNotificationManager.createOrUpdateMessageReceivedNotification(getApplicationContext(), intent.getStringExtra(ChatIntentService.KEY_MESSAGE_CONTENTS), FriendManager.getInstance().findFriendByName(src));
             }
         }
     }

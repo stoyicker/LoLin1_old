@@ -192,7 +192,7 @@ public class ChatIntentService extends IntentService {
                 logString("debug", "Added external message received");
                 launchBroadcastMessageReceived(message, friend.getName());
                 if (LoLin1Utils.getCurrentForegroundActivityClass(getApplicationContext()) != ChatRoomActivity.class) {
-                    //TODO Show ("STACKABLE") notification
+                    ChatNotificationManager.createOrUpdateMessageReceivedNotification(getApplicationContext(), message, friend);
                 }
             }
         });

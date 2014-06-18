@@ -18,7 +18,6 @@ import android.view.View;
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.func.chat.ChatIntentService;
 import org.jorge.lolin1.func.chat.FriendManager;
-import org.jorge.lolin1.io.local.ProfileCacheableBitmapLoader;
 import org.jorge.lolin1.ui.frags.ChatOverviewSupportFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
 import org.jorge.lolin1.ui.frags.IndefiniteFancyProgressSupportFragment;
@@ -50,7 +49,7 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
         implements ExpandableSearchFragment.ExpandableSearchListener,
         ChatOverviewSupportFragment.ChatRoomSelectionListener {
 
-    static final String KEY_FRIEND_NAME = "FRIEND_NAME", KEY_PROFILE_ICON_PATH = "PROFILE_ICON_PATH";
+    public static final String KEY_FRIEND_NAME = "FRIEND_NAME";
     private static final int VIEW_INDEX_CONNECTED = 0, VIEW_INDEX_NOT_CONNECTED = 1,
             VIEW_INDEX_WRONG_CREDENTIALS = 2, VIEW_INDEX_LOADING = 3;
     private ExpandableSearchFragment SEARCH_FRAGMENT;
@@ -242,7 +241,6 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
     public void onRoomSelected(String friendName) {
         Intent intent = new Intent(getApplicationContext(), ChatRoomActivity.class);
         intent.putExtra(KEY_FRIEND_NAME, friendName);
-        intent.putExtra(KEY_PROFILE_ICON_PATH, ProfileCacheableBitmapLoader.getPathByID(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName).getStatus().getProfileIconId()).getAbsolutePath());
         startActivity(intent);
     }
 
