@@ -66,7 +66,6 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
 //        }
 //        return false;
 //    }
-
     private Chat getChat() {
         if (chat == null) {
             chat = ChatManager.getInstanceFor(con).createChat(getUserId(),
@@ -195,7 +194,6 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
 //        this.listener = listener;
 //        getChat();
 //    }
-
     public boolean matchesFilterQuery(CharSequence constraint) {
         return getName().toLowerCase(Locale.ENGLISH).contains((constraint + "").toLowerCase(Locale.ENGLISH));
     }
@@ -224,6 +222,6 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
             anotherValue = 2;
         else anotherValue = 3;
 
-        return thisValue == anotherValue ? getName().toLowerCase().compareTo(((Friend) another).getName().toLowerCase()) : anotherValue - thisValue;
+        return thisValue == anotherValue ? getName().toLowerCase(Locale.ENGLISH).compareTo(((Friend) another).getName().toLowerCase(Locale.ENGLISH)) : anotherValue - thisValue;
     }
 }
