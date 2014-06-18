@@ -553,22 +553,29 @@ public final class SplashActivity extends Activity {
             } catch (JSONException e) {
                 Log.e("debug", e.getClass().getName(), e);
             }
-            if (Integer.parseInt(newVersion.replaceAll("[\\D]", "")) > Integer.parseInt(
-                    preferences.getString("pref_version_" + realm, "0").replaceAll("[\\D]", ""))) {
-                LOG_FRAGMENT.appendToSameLine(LoLin1Utils
-                        .getString(getApplicationContext(), "update_new_version_found", null));
-                String[] localesInThisRealm =
-                        LoLin1Utils.getStringArray(getApplicationContext(), LoLin1Utils.getString(
-                                getApplicationContext(), "realm_to_language_list_prefix",
-                                null) + realm.toLowerCase(Locale.ENGLISH) +
-                                LoLin1Utils.getString(getApplicationContext(),
-                                        "language_to_simplified_suffix", null), null);
-                if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
-                    performPostUpdateOperations(realm, newVersion);
+            try {
+                if (Integer.parseInt(newVersion.replaceAll("[\\D]", "")) > Integer.parseInt(
+                        preferences.getString("pref_version_" + realm, "0").replaceAll("[\\D]", ""))) {
+                    LOG_FRAGMENT.appendToSameLine(LoLin1Utils
+                            .getString(getApplicationContext(), "update_new_version_found", null));
+                    String[] localesInThisRealm =
+                            LoLin1Utils.getStringArray(getApplicationContext(), LoLin1Utils.getString(
+                                    getApplicationContext(), "realm_to_language_list_prefix",
+                                    null) + realm.toLowerCase(Locale.ENGLISH) +
+                                    LoLin1Utils.getString(getApplicationContext(),
+                                            "language_to_simplified_suffix", null), null);
+                    if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
+                        performPostUpdateOperations(realm, newVersion);
+                    }
+                } else {
+                    LOG_FRAGMENT.appendToSameLine(LoLin1Utils
+                            .getString(getApplicationContext(), "update_no_new_version", null));
                 }
-            } else {
-                LOG_FRAGMENT.appendToSameLine(LoLin1Utils
-                        .getString(getApplicationContext(), "update_no_new_version", null));
+            } catch (NumberFormatException ex) {
+                Crashlytics.log(1, "newVersion was " + newVersion, "newVersion is not a number but it should");
+                Crashlytics.logException(ex);
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
             }
             networkOperationsLatch.countDown();
         }
