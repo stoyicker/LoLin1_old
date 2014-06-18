@@ -5,7 +5,6 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -118,20 +117,27 @@ public class ChatFilterableListAdapter extends BaseAdapter implements Filterable
             LolStatus.Division thisDivision = thisStatus.getRankedLeagueDivision();
             viewHolder.getRankedDivision()
                     .setText(thisStatus.getRankedLeagueTier().name() + " " + thisDivision.name());
-            ChatMode mode = thisFriend.getChatMode();
-            String spectatedGameId = thisStatus.getSpectatedGameId();
-            if (mode == ChatMode.AVAILABLE) {
+            LolStatus.GameStatus gameStatus = thisStatus.getGameStatus();
+            viewHolder.getTextStatus().setTextColor(mActivity.getApplicationContext().getResources().getColor(R.color.theme_strong_orange));
+            if (gameStatus == LolStatus.GameStatus.SPECTATING) {
+                viewHolder.getTextStatus().setText(R.string.status_spectating);
+            } else if (gameStatus == LolStatus.GameStatus.CHAMPION_SELECT) {
+                viewHolder.getTextStatus().setText(R.string.status_champion_select);
+            } else if (gameStatus == LolStatus.GameStatus.HOSTING_NORMAL_GAME) {
+                viewHolder.getTextStatus().setText(R.string.status_hosting_normal_game);
+            } else if (gameStatus == LolStatus.GameStatus.HOSTING_PRACTICE_GAME) {
+                viewHolder.getTextStatus().setText(R.string.status_hosting_practice_game);
+            } else if (gameStatus == LolStatus.GameStatus.IN_GAME) {
+                viewHolder.getTextStatus().setText(thisStatus.getSkin() + " @ " + thisStatus.getGameQueueType());
+            } else if (gameStatus == LolStatus.GameStatus.TEAM_SELECT) {
+                viewHolder.getTextStatus().setText(R.string.status_team_select);
+            } else if (gameStatus == LolStatus.GameStatus.IN_QUEUE) {
+                viewHolder.getTextStatus().setText(R.string.status_in_queue);
+            } else if (gameStatus == LolStatus.GameStatus.HOSTING_RANKED_GAME) {
+                viewHolder.getTextStatus().setText(R.string.status_hosting_ranked_game);
+            } else {
                 viewHolder.getTextStatus().setTextColor(Color.GREEN);
                 viewHolder.getTextStatus().setText(thisStatus.getStatusMessage());
-            } else if (!TextUtils.isEmpty(spectatedGameId))
-                viewHolder.getTextStatus().setText("Spectating");
-            else {
-                viewHolder.getTextStatus().setTextColor(Color.BLACK);
-                final String skin = thisStatus.getSkin();
-                if (TextUtils.isEmpty(skin))
-                    viewHolder.getTextStatus().setText(R.string.in_queue);
-                else
-                    viewHolder.getTextStatus().setText(skin + " @ " + thisStatus.getGameQueueType());
             }
         }
         new AsyncTask<Void, Void, Void>() {

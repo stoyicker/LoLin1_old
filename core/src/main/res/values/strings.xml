@@ -228,6 +228,12 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="tutorial_champions_title">Champions</string>
     <string name="tutorial_detail_title">But we\'re not done yet…</string>
     <string name="tutorial_detail_contents">Swipe horizontally to see more info!</string>
-    <string name="in_queue">In queue</string>
     <string name="send">Send</string>
+    <string name="status_in_queue">In queue</string>
+    <string name="status_hosting_ranked_game">Hosting ranked game</string>
+    <string name="status_team_select">Team select</string>
+    <string name="status_hosting_practice_game">Hosting practice game</string>
+    <string name="status_hosting_normal_game">Hosting normal game</string>
+    <string name="status_champion_select">Champion select</string>
+    <string name="status_spectating">Spectating</string>
 </resources>

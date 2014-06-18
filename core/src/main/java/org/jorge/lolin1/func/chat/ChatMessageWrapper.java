@@ -83,4 +83,8 @@ public class ChatMessageWrapper implements Parcelable {
     public Friend getSender() {
         return sender;
     }
+
+    public Date getTime() {
+        return time;
+    }
 }

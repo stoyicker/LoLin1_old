@@ -32,28 +32,39 @@ import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
  */
 public abstract class ChatBundleManager {
 
-    private static final Map<Friend, Bundle> BUNDLES = Collections.synchronizedMap(new HashMap<Friend, Bundle>());
+    private static final Map<String, Bundle> BUNDLES = Collections.synchronizedMap(new HashMap<String, Bundle>());
     public static final String KEY_MESSAGE_ARRAY = "LOL_CHAT_MESSAGES";
 
     public static Bundle getBundleByFriend(Friend f) {
-        return BUNDLES.containsKey(f) ? BUNDLES.get(f) : Bundle.EMPTY;
+        String name;
+        return BUNDLES.containsKey(name = f.getName()) ? BUNDLES.get(name) : Bundle.EMPTY;
     }
 
     public static synchronized void addMessageToFriendChat(ChatMessageWrapper msg, Friend chatSubject) {
         Bundle currentBundle = getBundleByFriend(chatSubject);
-        logString("debug", "addMessageToFriendChat, being friend " + chatSubject);
+        logString("bundles", "addMessageToFriendChat, being friend " + chatSubject + " (" + chatSubject.getName() + ")");
         ArrayList<Parcelable> messages;
         if (currentBundle.isEmpty()) {
             currentBundle = new Bundle();
             messages = new ArrayList<>();
-            logString("debug", "Current bundle found empty");
+            logString("bundles", "Current bundle found empty");
         } else {
             messages = currentBundle.getParcelableArrayList(KEY_MESSAGE_ARRAY);
-            logString("debug", "Current bundle found with " + messages.size() + " messages");
+            logString("bundles", "Current bundle found with " + messages.size() + " messages");
         }
         messages.add(msg);
+        logString("bundles", "After putting, bundle has " + messages.size() + " messages");
         currentBundle.putParcelableArrayList(KEY_MESSAGE_ARRAY, messages);
-        BUNDLES.put(chatSubject, currentBundle);
-        logString("debug", "Put message, now length is " + messages.size());
+        BUNDLES.put(chatSubject.getName(), currentBundle);
+        logString("bundles", "Put messages into BUNDLES, now BUNDLES has the content below: ");
+        for (String f : BUNDLES.keySet()) {
+            logString("bundles", "Friend  " + f);
+            ArrayList<ChatMessageWrapper> received = getBundleByFriend(FriendManager.getInstance().findFriendByName(f)).getParcelableArrayList(KEY_MESSAGE_ARRAY);
+            for (ChatMessageWrapper x : received) {
+                logString("bundles", "Contents: " + x.getText());
+                logString("bundles", "Sender: " + x.getSender());
+                logString("bundles", "Date: " + x.getTime());
+            }
+        }
     }
 }

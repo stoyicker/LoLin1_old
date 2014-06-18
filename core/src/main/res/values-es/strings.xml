@@ -125,6 +125,12 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="tutorial_champions_title">Campeones</string>
     <string name="tutorial_detail_title">Pero aún no hemos terminado&#8230;</string>
     <string name="tutorial_detail_contents">Desliza el dedo horizontalmente para ver mas información!</string>
-    <string name="in_queue">En cola</string>
     <string name="send">Enviar</string>
+    <string name="status_in_queue">En cola</string>
+    <string name="status_hosting_ranked_game">Hosteando clasificatoria</string>
+    <string name="status_team_select">Selección de equipos</string>
+    <string name="status_hosting_practice_game">Hosteando personalizada</string>
+    <string name="status_hosting_normal_game">Hosteando normal</string>
+    <string name="status_champion_select">Selección de campeones</string>
+    <string name="status_spectating">Modo espectador</string>
 </resources>
