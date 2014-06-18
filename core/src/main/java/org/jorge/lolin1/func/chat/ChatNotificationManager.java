@@ -68,4 +68,10 @@ public abstract class ChatNotificationManager {
                 (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(id, builder.build());
     }
+
+    public static void cancelNotification(Context context, String friendName) {
+        NotificationManager notificationManager =
+                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancel(NOTIFICATION_ID_MAP.get(friendName));
+    }
 }
