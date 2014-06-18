@@ -2,8 +2,13 @@ package org.jorge.lolin1.ui.activities;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
@@ -11,16 +16,25 @@ import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.github.theholywaffle.lolchatapi.wrapper.Friend;
+
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.chat.ChatBundleManager;
 import org.jorge.lolin1.func.chat.ChatIntentService;
 import org.jorge.lolin1.func.chat.ChatMessageWrapper;
 import org.jorge.lolin1.func.chat.ChatRoomAdapter;
 import org.jorge.lolin1.func.chat.FriendManager;
+import org.jorge.lolin1.utils.LoLin1Utils;
+
+import java.util.concurrent.Executors;
+
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 /**
  * This file is part of LoLin1.
@@ -42,11 +56,16 @@ import org.jorge.lolin1.func.chat.FriendManager;
  */
 public class ChatRoomActivity extends Activity {
 
+    private static BroadcastReceiver mChatBroadcastReceiver;
+    private String friendName;
+    private ChatRoomAdapter adapter;
+    private ListView conversationListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar actionBar = getActionBar();
-        String friendName = null;
+        friendName = null;
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(Boolean.TRUE);
             actionBar.setTitle(friendName = getIntent().getStringExtra(ChatOverviewActivity.KEY_FRIEND_NAME));
@@ -68,11 +87,16 @@ public class ChatRoomActivity extends Activity {
             }
         });
 
-        ListView conversationListView = (ListView) findViewById(android.R.id.list);
-        final ChatRoomAdapter adapter = new ChatRoomAdapter(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName));
+        conversationListView = (ListView) findViewById(android.R.id.list);
+        conversationListView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+
+        logString("debug", "Calling adapter constructor");
+        adapter = new ChatRoomAdapter(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName));
 
         if (!TextUtils.isEmpty(friendName))
             conversationListView.setAdapter(adapter);
+
+        scrollListViewToBottom();
 
         final String friendNameAsFinal = friendName;
         sendButton.setOnClickListener(new View.OnClickListener() {
@@ -82,19 +106,35 @@ public class ChatRoomActivity extends Activity {
                 if (TextUtils.isEmpty(contents))
                     return;
                 adapter.add(new ChatMessageWrapper(contents, System.currentTimeMillis()));
-                launchBroadcastSendMessage(contents, friendNameAsFinal);
+                sendMessage(contents, friendNameAsFinal);
                 messageContentsText.setText("");
                 messageContentsText.clearFocus();
             }
 
-            private void launchBroadcastSendMessage(String contents, String friendName) {
-                Intent intent = new Intent();
-                intent.setAction(ChatIntentService.ACTION_MESSAGE);
-                intent.putExtra(ChatIntentService.KEY_MESSAGE_CONTENTS, contents);
-                intent.putExtra(ChatIntentService.KEY_MESSAGE_DESTINATION, friendName);
-                LocalBroadcastManager.getInstance(getApplicationContext()).sendBroadcast(intent);
+            private void sendMessage(String contents, String friendName) {
+                new AsyncTask<String, Void, Void>() {
+                    @Override
+                    protected Void doInBackground(String... params) {
+                        Friend target;
+                        ChatMessageWrapper messageWrapper = new ChatMessageWrapper(params[0], System.currentTimeMillis());
+                        logString("debug", "Sending message " + params[0] + " to " + params[1]);
+                        ChatBundleManager.addMessageToFriendChat(messageWrapper, target = FriendManager.getInstance().findFriendByName(params[1]));
+                        scrollListViewToBottom();
+                        target.sendMessage(params[0]);
+                        return null;
+                    }
+                }.executeOnExecutor(Executors.newSingleThreadExecutor(), contents, friendName);
             }
         });
+
+        registerLocalBroadcastReceiver();
+    }
+
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        scrollListViewToBottom();
     }
 
     @Override
@@ -108,6 +148,39 @@ public class ChatRoomActivity extends Activity {
                 finish();
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void registerLocalBroadcastReceiver() {
+        if (mChatBroadcastReceiver != null) {
+            return;
+        }
+        mChatBroadcastReceiver = new ChatMessageBroadcastReceiver();
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_message_received", null));
+        LocalBroadcastManager.getInstance(getApplicationContext())
+                .registerReceiver(mChatBroadcastReceiver, intentFilter);
+    }
+
+    private void scrollListViewToBottom(){
+        conversationListView.post(new Runnable() {
+            public void run() {
+                conversationListView.smoothScrollToPosition(adapter.getCount() - 1);
+            }
+        });
+    }
+
+    private class ChatMessageBroadcastReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            logString("debug", "Received a message");
+            if (friendName.contentEquals(intent.getStringExtra(ChatIntentService.KEY_MESSAGE_SOURCE))) {
+                adapter.add(new ChatMessageWrapper(intent.getStringExtra(ChatIntentService.KEY_MESSAGE_CONTENTS), System.currentTimeMillis(), FriendManager.getInstance().findFriendByName(friendName)));
+            scrollListViewToBottom();
+            } else {
+                //TODO Show ("STACKABLE") notification
+            }
         }
     }
 }

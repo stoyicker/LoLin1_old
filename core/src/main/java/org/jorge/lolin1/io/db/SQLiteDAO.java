@@ -58,7 +58,12 @@ public class SQLiteDAO extends SQLiteOpenHelper {
     }
 
     public static boolean tableExists(String tableName) {
-        SQLiteDatabase db = SQLiteDAO.getSingleton().getReadableDatabase();
+        SQLiteDatabase db;
+        try {
+            db = SQLiteDAO.getSingleton().getReadableDatabase();
+        } catch (NullPointerException ignored) {
+            return Boolean.FALSE;
+        }
 
         Cursor cursor = db.rawQuery(
                 "select DISTINCT tbl_name from sqlite_master where tbl_name = '" + tableName +

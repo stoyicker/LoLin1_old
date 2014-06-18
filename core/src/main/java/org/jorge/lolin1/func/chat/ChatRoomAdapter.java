@@ -14,6 +14,8 @@ import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 import org.jorge.lolin1.R;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -39,6 +41,7 @@ public class ChatRoomAdapter extends ArrayAdapter<ChatMessageWrapper> {
     public ChatRoomAdapter(Context context, Friend friend) {
         super(context, RES_ID);
         Bundle previousMessages = ChatBundleManager.getBundleByFriend(friend);
+        logString("debug", "previousMessages is empty? " + previousMessages.isEmpty());
         if (!previousMessages.isEmpty())
             super.addAll(previousMessages.<ChatMessageWrapper>getParcelableArrayList(ChatBundleManager.KEY_MESSAGE_ARRAY));
     }

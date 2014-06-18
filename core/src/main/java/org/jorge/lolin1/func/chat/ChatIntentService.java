@@ -15,12 +15,14 @@ import android.text.TextUtils;
 import com.crashlytics.android.Crashlytics;
 import com.github.theholywaffle.lolchatapi.ChatServer;
 import com.github.theholywaffle.lolchatapi.LoLChat;
+import com.github.theholywaffle.lolchatapi.listeners.ChatListener;
 import com.github.theholywaffle.lolchatapi.listeners.FriendListener;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 import org.jivesoftware.smack.SmackAndroid;
 import org.jivesoftware.smack.SmackException;
 import org.jorge.lolin1.func.auth.AccountAuthenticator;
+import org.jorge.lolin1.ui.activities.ChatRoomActivity;
 import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.io.IOException;
@@ -54,9 +56,9 @@ import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
  */
 public class ChatIntentService extends IntentService {
 
-    public static final String ACTION_CONNECT = "CONNECT", ACTION_DISCONNECT = "DISCONNECT", ACTION_MESSAGE = "MESSAGE";
+    public static final String ACTION_CONNECT = "CONNECT", ACTION_DISCONNECT = "DISCONNECT";
     public static final String KEY_MESSAGE_CONTENTS = "MESSAGE_CONTENTS";
-    public static final String KEY_MESSAGE_DESTINATION = "MESSAGE_DESTINATION";
+    public static final String KEY_MESSAGE_SOURCE = "SOURCE_FRIEND";
     private final IBinder mBinder = new ChatBinder();
     private static LoLChat api;
     private SmackAndroid mSmackAndroid;
@@ -106,21 +108,10 @@ public class ChatIntentService extends IntentService {
                 logString("debug", "Action requested: " + ACTION_DISCONNECT);
                 disconnect();
                 break;
-            case ACTION_MESSAGE:
-                logString("debug", "Action requested: " + ACTION_MESSAGE);
-                sendMessage(intent.getStringExtra(KEY_MESSAGE_CONTENTS), intent.getStringExtra(KEY_MESSAGE_DESTINATION));
-                break;
             default:
                 throw new IllegalArgumentException(
                         "Action " + intent.getAction() + " not yet supported");
         }
-    }
-
-    private void sendMessage(String stringExtra, String destination) {
-        Friend target;
-        ChatMessageWrapper messageWrapper = new ChatMessageWrapper(stringExtra, System.currentTimeMillis());
-        ChatBundleManager.addMessageToFriendChat(messageWrapper, target = FriendManager.getInstance().findFriendByName(destination));
-        target.sendMessage(stringExtra);
     }
 
     public class ChatBinder extends Binder {
@@ -191,6 +182,29 @@ public class ChatIntentService extends IntentService {
                 ChatIntentService.this.launchBroadcastFriendEvent();
             }
         });
+
+        api.addChatListener(new ChatListener() {
+            @Override
+            public void onMessage(Friend friend, String message) {
+                ChatMessageWrapper messageWrapper = new ChatMessageWrapper(message, System.currentTimeMillis(), friend);
+                logString("debug", "Adding external message received");
+                ChatBundleManager.addMessageToFriendChat(messageWrapper, friend);
+                logString("debug", "Added external message received");
+                launchBroadcastMessageReceived(message, friend.getName());
+                if (LoLin1Utils.getCurrentForegroundActivityClass(getApplicationContext()) != ChatRoomActivity.class) {
+                    //TODO Show ("STACKABLE") notification
+                }
+            }
+        });
+    }
+
+    private void launchBroadcastMessageReceived(String message, String sourceFriendName) {
+        Intent intent = new Intent();
+        intent.setAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_message_received", null));
+        intent.putExtra(KEY_MESSAGE_CONTENTS, message);
+        intent.putExtra(KEY_MESSAGE_SOURCE, sourceFriendName);
+        sendLocalBroadcast(intent);
     }
 
     private void sendLocalBroadcast(Intent intent) {

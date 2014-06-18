@@ -51,21 +51,21 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
      *
      * @return true if succesful, otherwise false
      */
-    public boolean delete() {
-        try {
-            try {
-                con.getRoster().removeEntry(get());
-            } catch (SmackException.NotLoggedInException | SmackException.NotConnectedException | SmackException.NoResponseException e) {
-                Log.wtf("debug", e);
-//                Crashlytics.logException(e);
-            }
-            return true;
-        } catch (XMPPException e) {
-            Log.wtf("debug", e);
-//            Crashlytics.logException(e);
-        }
-        return false;
-    }
+//    public boolean delete() {
+//        try {
+//            try {
+//                con.getRoster().removeEntry(get());
+//            } catch (SmackException.NotLoggedInException | SmackException.NotConnectedException | SmackException.NoResponseException e) {
+//                Log.wtf("debug", e);
+////                Crashlytics.logException(e);
+//            }
+//            return true;
+//        } catch (XMPPException e) {
+//            Log.wtf("debug", e);
+////            Crashlytics.logException(e);
+//        }
+//        return false;
+//    }
 
     private Chat getChat() {
         if (chat == null) {
@@ -105,9 +105,9 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
     /**
      * @return the FriendGroup that currently contains this Friend
      */
-    public FriendGroup getGroup() {
-        return new FriendGroup(api, con, get().getGroups().iterator().next());
-    }
+//    public FriendGroup getGroup() {
+//        return new FriendGroup(api, con, get().getGroups().iterator().next());
+//    }
 
     /**
      * @return name of your Friend (e.g. Dyrus)
@@ -174,15 +174,15 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
      * @param message
      * @param listener Your new active ChatListener
      */
-    public void sendMessage(String message, ChatListener listener) {
-        this.listener = listener;
-        try {
-            getChat().sendMessage(message);
-        } catch (XMPPException | SmackException.NotConnectedException e) {
-            Log.wtf("debug", e);
-//            Crashlytics.logException(e);
-        }
-    }
+//    public void sendMessage(String message, ChatListener listener) {
+//        this.listener = listener;
+//        try {
+//            getChat().sendMessage(message);
+//        } catch (XMPPException | SmackException.NotConnectedException e) {
+//            Log.wtf("debug", e);
+////            Crashlytics.logException(e);
+//        }
+//    }
 
     /**
      * Sets the ChatListener for this friend only. Only 1 ChatListener can be
@@ -191,10 +191,10 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
      * <p/>
      * This ChatListener gets called when this Friend only sends you a message.
      */
-    public void setChatListener(ChatListener listener) {
-        this.listener = listener;
-        getChat();
-    }
+//    public void setChatListener(ChatListener listener) {
+//        this.listener = listener;
+//        getChat();
+//    }
 
     public boolean matchesFilterQuery(CharSequence constraint) {
         return getName().toLowerCase(Locale.ENGLISH).contains((constraint + "").toLowerCase(Locale.ENGLISH));
@@ -204,6 +204,8 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
     public int compareTo(Object another) {
         if (another == null)
             return -1;
+        if (!(another instanceof Friend))
+            throw new IllegalArgumentException("Non-comparable classes " + Friend.class + " and " + another.getClass());
         int thisValue, anotherValue;
         ChatMode thisCM = getChatMode(), anotherCM = ((Friend) another).getChatMode();
 
@@ -222,6 +224,6 @@ public class Friend extends Wrapper<RosterEntry> implements Comparable {
             anotherValue = 2;
         else anotherValue = 3;
 
-        return thisValue == anotherValue ? getName().compareTo(((Friend) another).getName()) : anotherValue - thisValue;
+        return thisValue == anotherValue ? getName().toLowerCase().compareTo(((Friend) another).getName().toLowerCase()) : anotherValue - thisValue;
     }
 }

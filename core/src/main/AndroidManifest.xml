@@ -49,8 +49,8 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
         </activity>
         <activity
             android:name=".ui.activities.ChatRoomActivity"
-            android:configChanges="keyboardHidden"
             android:windowSoftInputMode="stateHidden"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="standard">
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />

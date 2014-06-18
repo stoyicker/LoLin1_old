@@ -1,6 +1,7 @@
 package org.jorge.lolin1.utils;
 
 import android.app.Activity;
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,6 +24,7 @@ import java.lang.reflect.Field;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -49,6 +51,12 @@ import java.util.Map;
 public abstract class LoLin1Utils {
 
     private static final Map<String, Charset> charsetMap = new HashMap<>();
+
+    public static Class getCurrentForegroundActivityClass(Context context) {
+        ActivityManager am = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> taskInfo = am.getRunningTasks(1);
+        return taskInfo.get(0).topActivity.getClass();
+    }
 
     public static void initCharsetMap() {
         charsetMap.put("tr_TR", Charset.forName("UTF-8"));

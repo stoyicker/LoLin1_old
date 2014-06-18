@@ -215,6 +215,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="event_chat_overview">org.jorge.lolin1.CHAT_OVERVIEW_EVENT</string>
     <string name="event_login_successful">org.jorge.lolin1.CHAT_LOGIN_SUCCESSFUL_EVENT</string>
     <string name="event_login_failed">org.jorge.lolin1.CHAT_LOGIN_FAILED_EVENT</string>
+    <string name="event_message_received">org.jorge.lolin1.CHAT_MESSAGE_RECEIVED_EVENT</string>
 	<string name="chat_overview_wrong_credentials">
 		<![CDATA[It seems the credentials you are trying to use, if any, are not valid. You may fix them under Settings > Account Management.]]></string>
     <string name="tutorial_news_title"><![CDATA[Welcome to LoLin1, the all-in-one tool for League of Legends]]></string>

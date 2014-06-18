@@ -6,8 +6,11 @@ import android.os.Parcelable;
 import com.github.theholywaffle.lolchatapi.wrapper.Friend;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 
 /**
  * This file is part of LoLin1.
@@ -29,24 +32,28 @@ import java.util.Map;
  */
 public abstract class ChatBundleManager {
 
-    private static final Map<Friend, Bundle> BUNDLES = new HashMap<>();
+    private static final Map<Friend, Bundle> BUNDLES = Collections.synchronizedMap(new HashMap<Friend, Bundle>());
     public static final String KEY_MESSAGE_ARRAY = "LOL_CHAT_MESSAGES";
 
     public static Bundle getBundleByFriend(Friend f) {
         return BUNDLES.containsKey(f) ? BUNDLES.get(f) : Bundle.EMPTY;
     }
 
-    public static void addMessageToFriendChat(ChatMessageWrapper msg, Friend chatSubject) {
+    public static synchronized void addMessageToFriendChat(ChatMessageWrapper msg, Friend chatSubject) {
         Bundle currentBundle = getBundleByFriend(chatSubject);
+        logString("debug", "addMessageToFriendChat, being friend " + chatSubject);
         ArrayList<Parcelable> messages;
-        if (currentBundle == null) {
+        if (currentBundle.isEmpty()) {
             currentBundle = new Bundle();
             messages = new ArrayList<>();
+            logString("debug", "Current bundle found empty");
         } else {
             messages = currentBundle.getParcelableArrayList(KEY_MESSAGE_ARRAY);
+            logString("debug", "Current bundle found with " + messages.size() + " messages");
         }
         messages.add(msg);
         currentBundle.putParcelableArrayList(KEY_MESSAGE_ARRAY, messages);
         BUNDLES.put(chatSubject, currentBundle);
+        logString("debug", "Put message, now length is " + messages.size());
     }
 }

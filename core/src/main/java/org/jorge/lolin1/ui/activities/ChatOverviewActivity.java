@@ -267,6 +267,8 @@ public final class ChatOverviewActivity extends DrawerLayoutFragmentActivity
                 .getString(getApplicationContext(), "event_chat_overview", null));
         intentFilter.addAction(LoLin1Utils
                 .getString(getApplicationContext(), "event_login_successful", null));
+        intentFilter.addAction(LoLin1Utils
+                .getString(getApplicationContext(), "event_login_successful", null));
         LocalBroadcastManager.getInstance(getApplicationContext())
                 .registerReceiver(mChatBroadcastReceiver, intentFilter);
     }

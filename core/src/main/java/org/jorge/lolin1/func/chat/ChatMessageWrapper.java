@@ -48,7 +48,7 @@ public class ChatMessageWrapper implements Parcelable {
 
     @Override
     public int describeContents() {
-        return 0;
+        return ((Object) this).hashCode();
     }
 
     @Override
