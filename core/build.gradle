@@ -20,21 +20,11 @@ android {
     buildToolsVersion '19.1.0'
 
     productFlavors {
-        development {
-            minSdkVersion 15
-            targetSdkVersion 19
-            versionCode 0
-            versionName "Development"
-            crashlytics {
-                manifestPath = 'src/main/AndroidManifest.xml'
-            }
-        }
-
         production {
             minSdkVersion 15
             targetSdkVersion 19
-            versionCode 5
-            versionName "Initial"
+            versionCode 6
+            versionName "1.1"
             crashlytics {
                 manifestPath = 'src/main/AndroidManifest.xml'
             }
