@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -161,20 +162,31 @@ public final class SplashActivity extends Activity {
         }
     }
 
-    private boolean onMobileConnection() {
+    private boolean isOnMobileConnection() {
         final CountDownLatch alertDialogLatch = new CountDownLatch(1);
         Boolean ret;
 
-        if (ret = ((ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE))
-                .getNetworkInfo(ConnectivityManager.TYPE_MOBILE)
-                .isConnectedOrConnecting()) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(CONNECTIVITY_SERVICE);
+        NetworkInfo mobileNetworkInfo;
+        if (connectivityManager != null) {
+            mobileNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+            if (mobileNetworkInfo == null || mobileNetworkInfo.isConnectedOrConnecting()) {
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(getApplicationContext(),
+                                "update_delayed", null)
+                );
+                ret = Boolean.TRUE;
+            } else ret = Boolean.FALSE;
+        } else {
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(),
                             "update_delayed", null)
             );
-            alertDialogLatch.countDown();
+            ret = Boolean.TRUE;
         }
 
+
+        alertDialogLatch.countDown();
         return ret;
     }
 
@@ -521,7 +533,7 @@ public final class SplashActivity extends Activity {
 
         String[] realms =
                 LoLin1Utils.getStringArray(getApplicationContext(), "servers", null);
-        if (onMobileConnection()) {
+        if (isOnMobileConnection()) {
             return;
         }
         for (String realm : realms) {
