@@ -41,11 +41,6 @@ public final class WebViewerActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
-            finish();
-            return;
-        }
-
         getActionBar().setDisplayHomeAsUpEnabled(Boolean.TRUE);
 
         ArrayList<BaseEntry> elements = new ArrayList<>();
@@ -81,10 +76,8 @@ public final class WebViewerActivity extends FragmentActivity {
     @Override
     public void onBackPressed() {
         if (!webViewerProgressFragment.tryToGoBack()) {
-            if (!getResources().getBoolean(R.bool.feed_has_two_panes)) {
-                protectAgainstWindowLeaks();
-                finish();
-            }
+            protectAgainstWindowLeaks();
+            finish();
         }
     }
 
