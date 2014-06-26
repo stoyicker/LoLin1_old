@@ -17,16 +17,16 @@ public enum ChatServer {
 
     //Chat suggestions taken from http://leagueoflegends.wikia.com/wiki/Talk:XMPP_Chat
 
-    EUW("chat.eu.lol.riotgames.com"), //Confirmed (216.133.234.21, 216.133.234.22)
-    NA("chat.na1.lol.riotgames.com"), //Confirmed through lookup
-    EUNE("chat.eun1.lol.riotgames.com"), //Confirmed through lookup
-    TR("chat.tr.lol.riotgames.com"),//Confirmed through lookup
-    RU("chat.ru.lol.riotgames.com"),//Confirmed through lookup
-    BR("chat.br.lol.riotgames.com"),//Confirmed through lookup
-    LAN("chat.la1.lol.riotgames.com"),//Confirmed through lookup
-    KR("chat.kr.lol.riotgames.com"),//Confirmed through lookup
-    OCE("chat.oc1.lol.riotgames.com"),//Confirmed through lookup
-    LAS("chat.la2.lol.riotgames.com");//Confirmed through lookup
+    EUW("chat.euw1.lol.riotgames.com"),
+    NA("chat.na1.lol.riotgames.com"),
+    EUNE("chat.eun1.lol.riotgames.com"),
+    TR("chat.tr.lol.riotgames.com"),
+    RU("chat.ru.lol.riotgames.com"),
+    BR("chat.br.lol.riotgames.com"),
+    LAN("chat.la1.lol.riotgames.com"),
+    KR("chat.kr.lol.riotgames.com"),
+    OCE("chat.oc1.lol.riotgames.com"),
+    LAS("chat.la2.lol.riotgames.com");
 //    TW("chattw.lol.garenanow.com"),
 //    TH("chatth.lol.garenanow.com"),
 //    PH("chatph.lol.garenanow.com"),
