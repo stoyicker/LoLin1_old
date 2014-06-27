@@ -13,7 +13,7 @@ before_install:
   - mkdir chat/libs
   - cd chat/libs
   # aSmack 4.0.0
-  - wget http://asmack.freakempire.de/4.0.0/asmack-android-8-4.0.0.jar
+  - wget http://asmack.freakempire.de/SNAPSHOTS/0.9.0-SNAPSHOT-2014-04-15/asmack-android-8-0.9.0-SNAPSHOT-2014-04-15.jar
   # Done
   - cd ..
   # Done with the module
