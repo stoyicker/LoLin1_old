@@ -19,13 +19,7 @@ before_install:
   # Done with the module
   - cd ..
   # Done with the 3rd-party dependencies
-  # Fool CI system so that it thinks it has the files required to sign the APK, but they won't be used anyway
-  - cd core
-  - echo dumbAlias > lolin1.alias
-  - echo dumbKeystore > lolin1gplaykey.keystore
-  - echo dumbKeyPwd > lolin1key.pwd
-  - echo dumbStoPwd > lolin1storage.pwd
   # Done
   - cd ..
 script:
-  - TERM=dumb gradle assemble
+  - TERM=dumb gradle assembleStandardDebug

@@ -61,6 +61,7 @@ android {
             runProguard true
             proguardFile 'proguard-core.txt'
             zipAlign true
+            signingConfig signingConfigs.release
         }
 
         beta.initWith(buildTypes.release)
