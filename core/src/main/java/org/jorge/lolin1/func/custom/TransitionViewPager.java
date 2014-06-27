@@ -4,7 +4,6 @@ package org.jorge.lolin1.func.custom;
  * This file belongs to Abhinava and can be found in https://code.google.com/p/transitionviewpager/
  */
 
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Camera;
@@ -349,8 +348,7 @@ public class TransitionViewPager extends ViewPager {
                 mRot = 180.0f * positionOffset;
                 if (mRot > 90.0f) {
                     left.setVisibility(View.INVISIBLE);
-                }
-                else {
+                } else {
                     if (left.getVisibility() == View.INVISIBLE) {
                         left.setVisibility(View.VISIBLE);
                     }
@@ -366,8 +364,7 @@ public class TransitionViewPager extends ViewPager {
                 mRot = -180.0f * (1 - positionOffset);
                 if (mRot < -90.0f) {
                     right.setVisibility(View.INVISIBLE);
-                }
-                else {
+                } else {
                     if (right.getVisibility() == View.INVISIBLE) {
                         right.setVisibility(View.VISIBLE);
                     }
@@ -392,8 +389,7 @@ public class TransitionViewPager extends ViewPager {
                 mRot = 180.0f * positionOffset;
                 if (mRot > 90.0f) {
                     left.setVisibility(View.INVISIBLE);
-                }
-                else {
+                } else {
                     if (left.getVisibility() == View.INVISIBLE) {
                         left.setVisibility(View.VISIBLE);
                     }
@@ -409,8 +405,7 @@ public class TransitionViewPager extends ViewPager {
                 mRot = -180.0f * (1 - positionOffset);
                 if (mRot < -90.0f) {
                     right.setVisibility(View.INVISIBLE);
-                }
-                else {
+                } else {
                     if (right.getVisibility() == View.INVISIBLE) {
                         right.setVisibility(View.VISIBLE);
                     }
@@ -441,7 +436,6 @@ public class TransitionViewPager extends ViewPager {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void manageLayer(View v, boolean enableHardware) {
         if (!API_11) {
             return;
@@ -453,7 +447,6 @@ public class TransitionViewPager extends ViewPager {
         }
     }
 
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     private void disableHardwareLayer() {
         if (!API_11) {
             return;
@@ -514,8 +507,7 @@ public class TransitionViewPager extends ViewPager {
                 manageLayer(right, true);
                 ((OutlineContainer) right).setOutlineAlpha(1.0f);
             }
-        }
-        else {
+        } else {
             if (left != null) {
                 ((OutlineContainer) left).start();
             }
@@ -535,8 +527,7 @@ public class TransitionViewPager extends ViewPager {
         boolean goingRight = position == oldPage;
         if (mState == State.GOING_RIGHT && !goingRight) {
             mState = State.GOING_LEFT;
-        }
-        else if (mState == State.GOING_LEFT && goingRight) {
+        } else if (mState == State.GOING_LEFT && goingRight) {
             mState = State.GOING_RIGHT;
         }
 
@@ -616,8 +607,7 @@ public class TransitionViewPager extends ViewPager {
                 if (a.isViewFromObject(v, o)) {
                     return v;
                 }
-            }
-            else {
+            } else {
                 return (o != null ? ((Fragment) o).getView() : null);
             }
         }

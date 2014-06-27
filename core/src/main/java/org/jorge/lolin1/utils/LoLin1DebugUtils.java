@@ -1,6 +1,5 @@
 package org.jorge.lolin1.utils;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -51,7 +50,7 @@ public abstract class LoLin1DebugUtils {
     public static void writeToFile(String data, Context context) {
         if (!BuildConfig.DEBUG) return;
         try {
-            @SuppressLint("WorldReadableFiles") OutputStreamWriter outputStreamWriter =
+            OutputStreamWriter outputStreamWriter =
                     new OutputStreamWriter(
                             context.openFileOutput("info.txt", Context.MODE_WORLD_READABLE));
             outputStreamWriter.write(data);
