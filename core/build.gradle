@@ -57,10 +57,12 @@ android {
             zipAlign false
         }
 
-        debug {
+        beta.initWith(buildTypes.release)
+
+        beta {
             runProguard true
             proguardFile 'proguard-core.txt'
-            zipAlign false
+            zipAlign true
         }
     }
 }
