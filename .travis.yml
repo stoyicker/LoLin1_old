@@ -28,4 +28,4 @@ before_install:
   # Done
   - cd ..
 script:
-  - TERM=dumb gradle checkproductionDebug
+  - TERM=dumb gradle assemble
