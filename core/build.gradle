@@ -24,7 +24,7 @@ android {
             minSdkVersion 15
             targetSdkVersion 19
             versionCode 12
-            versionName "1.2B"
+            versionName "1.21"
             crashlytics {
                 manifestPath = 'src/main/AndroidManifest.xml'
             }
@@ -47,7 +47,7 @@ android {
 
     buildTypes {
         release {
-            runProguard false
+            runProguard true
             zipAlign true
             proguardFile 'proguard-core.txt'
             signingConfig signingConfigs.release
