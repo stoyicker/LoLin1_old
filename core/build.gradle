@@ -57,13 +57,13 @@ android {
             zipAlign false
         }
 
-        beta.initWith(buildTypes.release)
-
         beta {
             runProguard true
             proguardFile 'proguard-core.txt'
             zipAlign true
         }
+
+        beta.initWith(buildTypes.release)
     }
 }
 
@@ -73,7 +73,6 @@ dependencies {
     compile 'com.viewpagerindicator:library:2.4.1@aar'
     compile 'com.github.chrisbanes.actionbarpulltorefresh:library:+'
     compile 'com.github.johnkil.android-progressfragment:progressfragment-native:+'
-    compile 'com.android.support:support-v4:20.+'
     compile 'com.twotoasters.jazzylistview:library:+'
     compile 'com.github.castorflex.smoothprogressbar:library:+'
     compile 'com.github.johnkil.android-robototextview:robototextview:+'
