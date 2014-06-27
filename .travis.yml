@@ -21,3 +21,5 @@ before_install:
   # Done with the 3rd-party dependencies
   # Done
   - cd ..
+script:
+  - TERM=dumb gradle assemblestandarddebug
