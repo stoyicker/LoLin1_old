@@ -11,12 +11,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.StrictMode;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.util.TypedValue;
 
 import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.ui.activities.NewsReaderActivity;
+import org.jorge.lolin1.ui.activities.InitialActivity;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -97,7 +98,7 @@ public abstract class LoLin1Utils {
     }
 
     public static void restartApp(Activity activity) {
-        activity.startActivity(new Intent(activity, NewsReaderActivity.class));
+        activity.startActivity(new Intent(activity, InitialActivity.class));
         Intent i = activity.getBaseContext().getPackageManager()
                 .getLaunchIntentForPackage(activity.getBaseContext().getPackageName());
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -105,18 +106,18 @@ public abstract class LoLin1Utils {
     }
 
     public static Boolean setLocale(Context baseContext, String newLocale) {
-        if (!isLocaleSupported(baseContext, newLocale)) {
+        if (!isLocaleSupported(baseContext.getApplicationContext(), newLocale)) {
             return Boolean.FALSE;
         }
         Locale locale = new Locale(newLocale
-                .substring(0, LoLin1Utils.getInt(baseContext, "locale_length", 4)));
+                .substring(0, LoLin1Utils.getInt(baseContext.getApplicationContext(), "locale_length", 4)));
         Locale.setDefault(locale);
-        Configuration config = baseContext.getResources().getConfiguration();
+        Configuration config = baseContext.getApplicationContext().getResources().getConfiguration();
         config.locale = locale;
         baseContext.getResources().updateConfiguration(config,
                 baseContext.getResources().getDisplayMetrics());
         SharedPreferences.Editor editor =
-                PreferenceManager.getDefaultSharedPreferences(baseContext).edit();
+                PreferenceManager.getDefaultSharedPreferences(baseContext.getApplicationContext()).edit();
         editor.putString("pref_title_locale", newLocale);
         editor.apply();
         return Boolean.TRUE;
@@ -124,16 +125,16 @@ public abstract class LoLin1Utils {
 
     public static String getRealm(Context context) {
 
-        return context != null ? PreferenceManager.getDefaultSharedPreferences(context).getString(
+        return context != null ? PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(
                 LoLin1Utils.getString(context, "pref_title_server", "League of Legends server"),
-                "null").toLowerCase(Locale.ENGLISH) : "";
+                "euw").toLowerCase(Locale.ENGLISH) : "";
     }
 
     public static String getLocale(Context context) {
         String ret;
         try {
-            ret = PreferenceManager.getDefaultSharedPreferences(context)
-                    .getString("pref_title_locale", null);
+            ret = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext())
+                    .getString("pref_title_locale", "en_US");
         } catch (NullPointerException ex) {
             ret = null;
         }
@@ -221,12 +222,14 @@ public abstract class LoLin1Utils {
     }
 
     public static Boolean setRealm(Context baseContext, String newRealm) {
-        if (!isRealmSupported(baseContext, newRealm.toLowerCase(Locale.ENGLISH))) {
+        if (!isRealmSupported(baseContext.getApplicationContext(), newRealm.toLowerCase(Locale.ENGLISH))) {
             return Boolean.FALSE;
         }
 
+        Log.d("realmisnull", "Setting realm " + newRealm);
+
         SharedPreferences.Editor editor =
-                PreferenceManager.getDefaultSharedPreferences(baseContext).edit();
+                PreferenceManager.getDefaultSharedPreferences(baseContext.getApplicationContext()).edit();
 
         editor.putString(
                 LoLin1Utils.getString(baseContext, "pref_title_server",
