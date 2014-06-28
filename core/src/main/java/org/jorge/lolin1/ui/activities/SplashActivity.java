@@ -8,6 +8,7 @@ import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -190,10 +191,10 @@ public final class SplashActivity extends Activity {
         return ret;
     }
 
-    private void performPostUpdateOperations(String realm, String newVersion) {
+    private void performPostUpdateOperations(String realm, String locale, String newVersion) {
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        String currentVersion = preferences.getString("pref_version_" + realm, "0");
+        String currentVersion = preferences.getString("pref_version_" + realm + "_" + locale, "0");
         File root = getApplicationContext().getExternalFilesDir(
                 LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
         File lastVersionFolder =
@@ -208,7 +209,7 @@ public final class SplashActivity extends Activity {
         PreferenceManager
                 .getDefaultSharedPreferences(
                         getApplicationContext()).edit()
-                .putString("pref_version_" + realm, newVersion)
+                .putString("pref_version_" + realm + "_" + locale, newVersion)
                 .apply();
     }
 
@@ -216,35 +217,50 @@ public final class SplashActivity extends Activity {
     public void onBackPressed() {
     }
 
-    private Boolean runInitProcedure(String server, String realm, String[] localesInThisRealm,
-                                     final String newVersion) {
-        final String symbol_hyphen = LoLin1Utils.getString(getApplicationContext(), "symbol_hyphen",
-                null), pathSeparator =
-                LoLin1Utils.getString(getApplicationContext(), "symbol_path_separator",
-                        null);
-        String cdn = null;
-        LOG_FRAGMENT.appendToNewLine(LoLin1Utils
-                        .getString(getApplicationContext(), "update_allocating_file_structure",
-                                null) + " " + realm +
-                        LoLin1Utils.getString(getApplicationContext(), "progress_character", null)
-        );
-        File root = getApplicationContext().getExternalFilesDir(
-                LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
-        File previouslyAttemptedUpdateFolder =
-                new File(root + pathSeparator + realm + "-" + newVersion);
-        if (previouslyAttemptedUpdateFolder.exists() &&
-                !FileManager.recursiveDelete(previouslyAttemptedUpdateFolder)) {
-            LOG_FRAGMENT.appendToSameLine(
-                    LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
-            return Boolean.FALSE;
-        }
-        LOG_FRAGMENT.appendToSameLine(
-                LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
+    private String runInitProcedure(String server, String realm, String[] localesInThisRealm,
+                                    final String newVersion) {
         logString("debug", "Pre-update operations finished");
+        String ret = null;
         for (String locale : localesInThisRealm) {
             Log.d("init", "Locale issued: " + locale + " - Locale selected: " + LoLin1Utils.getLocale(getApplicationContext()));
             if (!locale.toLowerCase().contentEquals(LoLin1Utils.getLocale(getApplicationContext()).toLowerCase()))
                 continue;
+            SharedPreferences preferences =
+                    PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            if (Integer.parseInt(newVersion.replaceAll("[\\D]", "")) <= Integer.parseInt(
+                    preferences.getString("pref_version_" + realm + "_" + locale, "0").replaceAll("[\\D]", ""))) {
+                LOG_FRAGMENT.appendToSameLine(LoLin1Utils
+                        .getString(getApplicationContext(), "update_no_new_version", null));
+                ret = "NO_UPDATES";
+                break;
+            }
+            LOG_FRAGMENT.appendToSameLine(LoLin1Utils
+                    .getString(getApplicationContext(), "update_new_version_found", null));
+            LOG_FRAGMENT.appendToNewLine(LoLin1Utils
+                            .getString(getApplicationContext(), "update_allocating_file_structure",
+                                    null) + " " + realm +
+                            LoLin1Utils.getString(getApplicationContext(), "progress_character", null)
+            );
+
+            final String symbol_hyphen = LoLin1Utils.getString(getApplicationContext(), "symbol_hyphen",
+                    null), pathSeparator =
+                    LoLin1Utils.getString(getApplicationContext(), "symbol_path_separator",
+                            null);
+            String cdn = null;
+            File root = getApplicationContext().getExternalFilesDir(
+                    LoLin1Utils.getString(getApplicationContext(), "content_folder_name", null));
+            File previouslyAttemptedUpdateFolder =
+                    new File(root + pathSeparator + realm + "-" + newVersion);
+            if (previouslyAttemptedUpdateFolder.exists() &&
+                    !FileManager.recursiveDelete(previouslyAttemptedUpdateFolder)) {
+                LOG_FRAGMENT.appendToSameLine(
+                        LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
+                return null;
+            }
+
+            LOG_FRAGMENT.appendToSameLine(
+                    LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
+            ret = locale;
             logString("debug", "Updating locale " + locale);
             assert root != null;
             final String bustString =
@@ -281,7 +297,7 @@ public final class SplashActivity extends Activity {
             if (!bust.mkdirs() || !splash.mkdirs() || !spell.mkdirs() || !passive.mkdirs()) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
-                return Boolean.FALSE;
+                return null;
             }
             logString("debug", "Directories allocated");
             LOG_FRAGMENT.appendToNewLine(
@@ -302,13 +318,13 @@ public final class SplashActivity extends Activity {
                                     null)
                     );
                     Crashlytics.log(Log.ERROR, "debug", "Response status was not ok");
-                    return Boolean.FALSE;
+                    return null;
                 }
             } catch (IOException | URISyntaxException | HTTPServices.ServerIsCheckingException e) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 Crashlytics.logException(e);
-                return Boolean.FALSE;
+                return null;
             }
             File dataFile = new File(
                     root.getPath() + pathSeparator + realm + symbol_hyphen + newVersion +
@@ -324,7 +340,7 @@ public final class SplashActivity extends Activity {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 Crashlytics.logException(e);
-                return Boolean.FALSE;
+                return null;
             }
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
@@ -345,7 +361,7 @@ public final class SplashActivity extends Activity {
                                         null)
                         );
                         Crashlytics.log(Log.ERROR, "debug", "Response status was not ok");
-                        return Boolean.FALSE;
+                        return null;
                     }
                 } catch (HTTPServices.ServerIsCheckingException | URISyntaxException | IOException e) {
                     LOG_FRAGMENT.appendToSameLine(
@@ -353,7 +369,7 @@ public final class SplashActivity extends Activity {
                                     null)
                     );
                     Crashlytics.logException(e);
-                    return Boolean.FALSE;
+                    return null;
                 }
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(
@@ -375,7 +391,7 @@ public final class SplashActivity extends Activity {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));
                 Crashlytics.log(Log.ERROR, "debug", "No champions found");
-                return Boolean.FALSE;
+                return null;
             }
             final String finalCdn = cdn;
             final BoxedBoolean currentStatus = new BoxedBoolean(Boolean.TRUE);
@@ -386,7 +402,7 @@ public final class SplashActivity extends Activity {
                             getApplicationContext(), "update_fatal_error", null));
                     Crashlytics.log(Log.ERROR, "debug",
                             "An error happened on a content download AsyncTask");
-                    return Boolean.FALSE;
+                    return null;
                 }
                 final String bustImageName = champion.getBustImageName(), passiveImageName =
                         champion.getPassive().getImageName(), simplifiedName =
@@ -519,20 +535,17 @@ public final class SplashActivity extends Activity {
                 LOG_FRAGMENT.appendToSameLine(LoLin1Utils.getString(
                         getApplicationContext(), "update_fatal_error", null));
                 Crashlytics.logException(e);
-                return Boolean.FALSE;
+                return null;
             }
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         }
 
-        return Boolean.TRUE;
+        return ret;
     }
 
     private void proceedWithUpdate(String server) {
         final CountDownLatch networkOperationsLatch = new CountDownLatch(1);
-
-        SharedPreferences preferences =
-                PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         String[] realms =
                 LoLin1Utils.getStringArray(getApplicationContext(), "servers", null);
@@ -573,22 +586,15 @@ public final class SplashActivity extends Activity {
                 Log.e("debug", e.getClass().getName(), e);
             }
             try {
-                if (Integer.parseInt(newVersion.replaceAll("[\\D]", "")) > Integer.parseInt(
-                        preferences.getString("pref_version_" + realm, "0").replaceAll("[\\D]", ""))) {
-                    LOG_FRAGMENT.appendToSameLine(LoLin1Utils
-                            .getString(getApplicationContext(), "update_new_version_found", null));
-                    String[] localesInThisRealm =
-                            LoLin1Utils.getStringArray(getApplicationContext(), LoLin1Utils.getString(
-                                    getApplicationContext(), "realm_to_language_list_prefix",
-                                    null) + realm.toLowerCase(Locale.ENGLISH) +
-                                    LoLin1Utils.getString(getApplicationContext(),
-                                            "language_to_simplified_suffix", null), null);
-                    if (runInitProcedure(server, realm, localesInThisRealm, newVersion)) {
-                        performPostUpdateOperations(realm, newVersion);
-                    }
-                } else {
-                    LOG_FRAGMENT.appendToSameLine(LoLin1Utils
-                            .getString(getApplicationContext(), "update_no_new_version", null));
+                String[] localesInThisRealm =
+                        LoLin1Utils.getStringArray(getApplicationContext(), LoLin1Utils.getString(
+                                getApplicationContext(), "realm_to_language_list_prefix",
+                                null) + realm.toLowerCase(Locale.ENGLISH) +
+                                LoLin1Utils.getString(getApplicationContext(),
+                                        "language_to_simplified_suffix", null), null);
+                String locale;
+                if (!TextUtils.isEmpty(locale = runInitProcedure(server, realm, localesInThisRealm, newVersion))) {
+                    performPostUpdateOperations(realm, locale, newVersion);
                 }
             } catch (NumberFormatException ex) {
                 Crashlytics.log(1, "newVersion was " + newVersion, "newVersion is not a number but it should");
