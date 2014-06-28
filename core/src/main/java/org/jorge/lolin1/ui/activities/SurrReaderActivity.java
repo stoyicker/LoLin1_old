@@ -109,7 +109,7 @@ public final class SurrReaderActivity extends DrawerLayoutFragmentActivity imple
     public void onSurrRefreshed() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (surrShowCase != null) {
-            preferences.edit().putBoolean("showcase_surrs_done", Boolean.TRUE).commit();
+            preferences.edit().putBoolean("showcase_surrs_done", Boolean.TRUE).apply();
             surrShowCase.hide();
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }

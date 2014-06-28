@@ -46,7 +46,7 @@ public class VerificationFragment extends Fragment {
             public void onClick(View v) {
                 mCallback.onVerificationFired();
                 PreferenceManager.getDefaultSharedPreferences(getActivity().getApplicationContext())
-                        .edit().putBoolean("initial_setup_done", Boolean.TRUE).commit();
+                        .edit().putBoolean("initial_setup_done", Boolean.TRUE).apply();
             }
         });
 

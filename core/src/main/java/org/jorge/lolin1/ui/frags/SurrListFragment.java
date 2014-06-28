@@ -70,7 +70,7 @@ public class SurrListFragment extends ListFragment implements OnRefreshListener 
 
 //        if (getResources().getBoolean(R.bool.feed_has_two_panes)) {
         PreferenceManager.getDefaultSharedPreferences(getActivity()).edit()
-                .putInt("lastSelectedSurrIndex", position).commit();
+                .putInt("lastSelectedSurrIndex", position).apply();
 //        }
 
         getListView().setItemChecked(position, Boolean.TRUE);

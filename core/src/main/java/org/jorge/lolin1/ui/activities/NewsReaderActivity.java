@@ -110,7 +110,7 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         if (newsShowcase != null) {
-            preferences.edit().putBoolean("showcase_news_done", Boolean.TRUE).commit();
+            preferences.edit().putBoolean("showcase_news_done", Boolean.TRUE).apply();
             newsShowcase.hide();
         }
 
@@ -126,7 +126,7 @@ public final class NewsReaderActivity extends DrawerLayoutFragmentActivity imple
                 if (navigationShowcase != null) {
                     SharedPreferences preferences =
                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    preferences.edit().putBoolean("showcase_navigation_done", Boolean.TRUE).commit();
+                    preferences.edit().putBoolean("showcase_navigation_done", Boolean.TRUE).apply();
                     navigationShowcase.hide();
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                 }

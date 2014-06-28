@@ -73,6 +73,7 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_champion_detail);
         ActionBar actionBar;
+        assert getActionBar() != null;
         if (findViewById(R.id.champion_title) != null) {
             //Portrait layout
             if (!(actionBar = getActionBar()).isShowing()) {
@@ -144,7 +145,7 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
                 if (detailShowcase != null) {
                     SharedPreferences preferences =
                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                    preferences.edit().putBoolean("showcase_champion_detail_done", Boolean.TRUE).commit();
+                    preferences.edit().putBoolean("showcase_champion_detail_done", Boolean.TRUE).apply();
                     detailShowcase.hide();
                     setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
                 }

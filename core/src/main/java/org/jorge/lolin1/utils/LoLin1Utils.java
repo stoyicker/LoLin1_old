@@ -118,7 +118,7 @@ public abstract class LoLin1Utils {
         SharedPreferences.Editor editor =
                 PreferenceManager.getDefaultSharedPreferences(baseContext).edit();
         editor.putString("pref_title_locale", newLocale);
-        editor.commit();
+        editor.apply();
         return Boolean.TRUE;
     }
 
@@ -234,7 +234,7 @@ public abstract class LoLin1Utils {
                 newRealm.toLowerCase(Locale.ENGLISH)
         );
 
-        editor.commit();
+        editor.apply();
 
         return Boolean.TRUE;
     }

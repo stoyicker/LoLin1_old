@@ -106,7 +106,7 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
         if (championsShowcase != null) {
             SharedPreferences preferences =
                     PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-            preferences.edit().putBoolean("showcase_champions_done", Boolean.TRUE).commit();
+            preferences.edit().putBoolean("showcase_champions_done", Boolean.TRUE).apply();
             championsShowcase.hide();
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED);
         }

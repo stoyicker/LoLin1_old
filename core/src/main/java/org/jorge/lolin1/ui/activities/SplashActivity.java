@@ -209,7 +209,7 @@ public final class SplashActivity extends Activity {
                 .getDefaultSharedPreferences(
                         getApplicationContext()).edit()
                 .putString("pref_version_" + realm, newVersion)
-                .commit();
+                .apply();
     }
 
     @Override
@@ -243,7 +243,7 @@ public final class SplashActivity extends Activity {
         logString("debug", "Pre-update operations finished");
         for (String locale : localesInThisRealm) {
             Log.d("init", "Locale issued: " + locale + " - Locale selected: " + LoLin1Utils.getLocale(getApplicationContext()));
-            if (!locale.toLowerCase().contentEquals(LoLin1Utils.getLocale(getApplicationContext())))
+            if (!locale.toLowerCase().contentEquals(LoLin1Utils.getLocale(getApplicationContext()).toLowerCase()))
                 continue;
             logString("debug", "Updating locale " + locale);
             assert root != null;
