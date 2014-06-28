@@ -76,12 +76,12 @@ public final class ServerAndLanguageChooserActivity extends Activity
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event) {
+    public boolean dispatchTouchEvent(MotionEvent ev) {
         if (realmShowcase != null) {
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("showcase_realm_done", Boolean.TRUE).commit();
             realmShowcase.hide();
         }
-        return Boolean.FALSE;
+        return super.dispatchTouchEvent(ev);
     }
 
     @Override
