@@ -5,6 +5,11 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.view.MotionEvent;
+
+import com.github.amlcurran.showcaseview.ShowcaseView;
+import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import org.jorge.lolin1.R;
 import org.jorge.lolin1.ui.frags.LanguageListFragment;
@@ -35,6 +40,7 @@ public final class ServerAndLanguageChooserActivity extends Activity
         LanguageListFragment.LanguageListFragmentListener,
         VerificationFragment.VerificationFragmentListener {
 
+    private ShowcaseView realmShowcase;
     private LanguageListFragment LANGUAGE_LIST_FRAGMENT;
     private VerificationFragment VERIFICATION_FRAGMENT;
     private String currentlySelectedRealm, currentlySelectedLocale;
@@ -63,6 +69,19 @@ public final class ServerAndLanguageChooserActivity extends Activity
                 .findFragmentById(R.id.fragment_verification);
 
         REALM_SELECTOR_FRAGMENT.initialSetSelectedIndex(0);
+
+        if (!PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getBoolean("showcase_realm_done", Boolean.FALSE)) {
+            realmShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_realm_selection_content).setContentTitle(R.string.tutorial_realm_selection_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.fragment_realm_list, this)).doNotBlockTouches().build();
+        }
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        if (realmShowcase != null) {
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit().putBoolean("showcase_realm_done", Boolean.TRUE).commit();
+            realmShowcase.hide();
+        }
+        return Boolean.FALSE;
     }
 
     @Override

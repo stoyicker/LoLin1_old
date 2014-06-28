@@ -236,4 +236,6 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="status_hosting_normal_game">Hosting normal game</string>
     <string name="status_champion_select">Champion select</string>
     <string name="status_spectating">Spectating</string>
+    <string name="tutorial_realm_selection_content">Choose your region and language (can be changed later)</string>
+    <string name="tutorial_realm_selection_title">Set up your experience!</string>
 </resources>

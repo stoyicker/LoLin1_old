@@ -242,6 +242,9 @@ public final class SplashActivity extends Activity {
                 LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
         logString("debug", "Pre-update operations finished");
         for (String locale : localesInThisRealm) {
+            Log.d("init", "Locale issued: " + locale + " - Locale selected: " + LoLin1Utils.getLocale(getApplicationContext()));
+            if (!locale.toLowerCase().contentEquals(LoLin1Utils.getLocale(getApplicationContext())))
+                continue;
             logString("debug", "Updating locale " + locale);
             assert root != null;
             final String bustString =
@@ -537,6 +540,10 @@ public final class SplashActivity extends Activity {
             return;
         }
         for (String realm : realms) {
+            Log.d("init", "Realm issued: " + realm + " - Realm selected: " + LoLin1Utils.getRealm(getApplicationContext()));
+            if (!LoLin1Utils.getRealm(getApplicationContext()).toLowerCase().contentEquals(realm.toLowerCase())) {
+                continue;
+            }
             LOG_FRAGMENT.appendToNewLine(LoLin1Utils
                     .getString(getApplicationContext(), "update_pre_version_check", null) +
                     " " + realm.toLowerCase(Locale.ENGLISH) +

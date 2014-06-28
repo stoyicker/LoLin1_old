@@ -133,4 +133,6 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="status_hosting_normal_game">Hosteando normal</string>
     <string name="status_champion_select">Selección de campeones</string>
     <string name="status_spectating">Modo espectador</string>
+    <string name="tutorial_realm_selection_content">Escoge tu región e idioma (puedes cambiarlos más tarde)</string>
+    <string name="tutorial_realm_selection_title">¡Configura tu experiencia!</string>
 </resources>
