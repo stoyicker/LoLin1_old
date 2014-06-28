@@ -68,7 +68,7 @@ public final class ChampionManager {
                 LoLin1Utils.getString(context, "symbol_hyphen",
                         null) +
                 PreferenceManager.getDefaultSharedPreferences(context)
-                        .getString("pref_version_" + realm, "0") + pathSeparator + locale +
+                        .getString("pref_version_" + realm + "-" + LoLin1Utils.getLocale(context.getApplicationContext()), "0") + pathSeparator + locale +
                 pathSeparator +
                 LoLin1Utils.getString(context, "list_file_name", null));
         try {
