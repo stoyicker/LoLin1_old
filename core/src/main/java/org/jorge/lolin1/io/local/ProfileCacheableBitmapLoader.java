@@ -201,7 +201,7 @@ public final class ProfileCacheableBitmapLoader {
                 HTTPServices.downloadFile(
                         BASE_URL.replace(ID_PLACEHOLDER, id + "").replace(VERSION_PLACEHOLDER,
                                 PreferenceManager.getDefaultSharedPreferences(activity)
-                                        .getString("pref_version_na", "0")
+                                        .getString("pref_version_" + LoLin1Utils.getRealm(activity.getApplicationContext()).toLowerCase() + "_" + LoLin1Utils.getLocale(activity.getApplicationContext()), "0")
                         ), path = new File(
                                 root.getAbsolutePath() +
                                         LoLin1Utils.getString(activity, "symbol_path_separator",
@@ -213,6 +213,7 @@ public final class ProfileCacheableBitmapLoader {
                 bitmap = null;
             }
         }
+        logString("debug", "About to assign");
         final Bitmap finalBitmap = bitmap;
         activity.runOnUiThread(new Runnable() {
             @Override
