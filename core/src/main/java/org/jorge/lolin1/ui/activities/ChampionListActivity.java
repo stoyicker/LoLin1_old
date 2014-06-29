@@ -14,6 +14,7 @@ import com.github.amlcurran.showcaseview.ShowcaseView;
 import com.github.amlcurran.showcaseview.targets.ViewTarget;
 
 import org.jorge.lolin1.R;
+import org.jorge.lolin1.func.champs.ChampionManager;
 import org.jorge.lolin1.func.champs.models.Champion;
 import org.jorge.lolin1.ui.frags.ChampionListFragment;
 import org.jorge.lolin1.ui.frags.ExpandableSearchFragment;
@@ -60,7 +61,7 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_champion_list);
         super.onCreate(savedInstanceState);
-        if (!preferences.getBoolean("showcase_champions_done", Boolean.FALSE))
+        if (!preferences.getBoolean("showcase_champions_done", Boolean.FALSE) && !ChampionManager.getInstance().getChampions().isEmpty())
             championsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_champions_contents).setContentTitle(R.string.tutorial_champions_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_list_grid, this)).build();
     }
 
