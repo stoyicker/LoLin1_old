@@ -192,6 +192,8 @@ public final class SplashActivity extends Activity {
     }
 
     private void performPostUpdateOperations(String realm, String locale, String newVersion) {
+        if (newVersion.contentEquals("NO_UPDATES"))
+            return;
         SharedPreferences preferences =
                 PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         String currentVersion = preferences.getString("pref_version_" + realm + "_" + locale, "0");
@@ -222,7 +224,7 @@ public final class SplashActivity extends Activity {
         logString("debug", "Pre-update operations finished");
         String ret = null;
         for (String locale : localesInThisRealm) {
-            Log.d("init", "Locale issued: " + locale + " - Locale selected: " + LoLin1Utils.getLocale(getApplicationContext()));
+            logString("init", "Locale issued: " + locale + " - Locale selected: " + LoLin1Utils.getLocale(getApplicationContext()));
             if (!locale.toLowerCase().contentEquals(LoLin1Utils.getLocale(getApplicationContext()).toLowerCase()))
                 continue;
             SharedPreferences preferences =
@@ -553,7 +555,7 @@ public final class SplashActivity extends Activity {
             return;
         }
         for (String realm : realms) {
-            Log.d("init", "Realm issued: " + realm + " - Realm selected: " + LoLin1Utils.getRealm(getApplicationContext()));
+            logString("init", "Realm issued: " + realm + " - Realm selected: " + LoLin1Utils.getRealm(getApplicationContext()));
             if (!LoLin1Utils.getRealm(getApplicationContext()).toLowerCase().contentEquals(realm.toLowerCase())) {
                 continue;
             }

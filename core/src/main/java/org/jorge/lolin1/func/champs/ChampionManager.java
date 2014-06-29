@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -62,16 +64,19 @@ public final class ChampionManager {
         final String realm = LoLin1Utils.getRealm(context), locale = LoLin1Utils.getLocale(context),
                 pathSeparator = LoLin1Utils.getString(context, "symbol_path_separator",
                         null);
+        String prefName = "pref_version_" + realm + "_" + LoLin1Utils.getLocale(context);
+        logString("debug", "Preference name: " + prefName);
         File targetFile = new File(context.getExternalFilesDir(
                 LoLin1Utils.getString(context, "content_folder_name", null)) + pathSeparator +
                 realm +
                 LoLin1Utils.getString(context, "symbol_hyphen",
                         null) +
                 PreferenceManager.getDefaultSharedPreferences(context)
-                        .getString("pref_version_" + realm + "-" + LoLin1Utils.getLocale(context.getApplicationContext()), "0") + pathSeparator + locale +
+                        .getString(prefName, "0") + pathSeparator + locale +
                 pathSeparator +
                 LoLin1Utils.getString(context, "list_file_name", null));
         try {
+            logString("targetFile", targetFile.getAbsolutePath());
             champions = buildChampions(JsonManager
                     .getStringAttribute(FileManager.readFileAsString(targetFile), LoLin1Utils
                             .getString(context, "champion_list_key", null)));
@@ -116,7 +121,7 @@ public final class ChampionManager {
                         .append(LoLin1Utils.getString(context, "symbol_hyphen",
                                 null))
                         .append(PreferenceManager.getDefaultSharedPreferences(context).getString(
-                                "pref_version_" + realm, "0")).append(pathSeparator)
+                                "pref_version_" + realm + "_" + LoLin1Utils.getLocale(context), "0")).append(pathSeparator)
                         .append(LoLin1Utils.getLocale(context)).append(pathSeparator)
                         .append(LoLin1Utils.getString(context, "champion_image_folder",
                                 null)).append(pathSeparator);
@@ -143,7 +148,7 @@ public final class ChampionManager {
                         .append(LoLin1Utils.getString(context, "symbol_hyphen",
                                 null))
                         .append(PreferenceManager.getDefaultSharedPreferences(context).getString(
-                                "pref_version_" + realm, "0")).append(pathSeparator)
+                                "pref_version_" + realm + "_" + LoLin1Utils.getLocale(context), "0")).append(pathSeparator)
                         .append(LoLin1Utils.getLocale(context)).append(pathSeparator)
                         .append(LoLin1Utils.getString(context, "champion_image_folder",
                                 null)).append(pathSeparator);
@@ -170,7 +175,7 @@ public final class ChampionManager {
                         .append(LoLin1Utils.getString(context, "symbol_hyphen",
                                 null))
                         .append(PreferenceManager.getDefaultSharedPreferences(context).getString(
-                                "pref_version_" + realm, "0")).append(pathSeparator)
+                                "pref_version_" + realm + "_" + LoLin1Utils.getLocale(context), "0")).append(pathSeparator)
                         .append(LoLin1Utils.getLocale(context)).append(pathSeparator)
                         .append(LoLin1Utils.getString(context, "champion_image_folder",
                                 null)).append(pathSeparator);
@@ -197,7 +202,7 @@ public final class ChampionManager {
                         .append(LoLin1Utils.getString(context, "symbol_hyphen",
                                 null))
                         .append(PreferenceManager.getDefaultSharedPreferences(context).getString(
-                                "pref_version_" + realm, "0")).append(pathSeparator)
+                                "pref_version_" + realm + "_" + LoLin1Utils.getLocale(context), "0")).append(pathSeparator)
                         .append(LoLin1Utils.getLocale(context)).append(pathSeparator)
                         .append(LoLin1Utils.getString(context, "champion_image_folder",
                                 null)).append(pathSeparator);
