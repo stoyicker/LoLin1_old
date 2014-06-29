@@ -6,7 +6,7 @@ buildscript {
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
 
 repositories {
@@ -32,10 +32,10 @@ android {
 
         signingConfigs {
             release {
-                storeFile new File("core/lolin1gplaykey.keystore")
-                storePassword(new File("core/lolin1storage.pwd").text)
-                keyAlias(new File("core/lolin1.alias").text)
-                keyPassword(new File("core/lolin1key.pwd").text)
+                storeFile new File("/home/stoyicker/Desktop/LoLin1/core/lolin1gplaykey.keystore")
+                storePassword(new File("/home/stoyicker/Desktop/LoLin1/core/lolin1storage.pwd").text)
+                keyAlias(new File("/home/stoyicker/Desktop/LoLin1/core/lolin1.alias").text)
+                keyPassword(new File("/home/stoyicker/Desktop/LoLin1/core/lolin1key.pwd").text)
             }
         }
     }
@@ -64,7 +64,14 @@ android {
             signingConfig signingConfigs.release
         }
 
+        travis {
+            runProguard true
+            proguardFile 'proguard-core.txt'
+            zipAlign true
+        }
+
         beta.initWith(buildTypes.release)
+        travis.initWith(buildTypes.debug)
     }
 }
 
