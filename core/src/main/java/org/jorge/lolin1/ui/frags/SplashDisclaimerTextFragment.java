@@ -49,12 +49,6 @@ public class SplashDisclaimerTextFragment extends Fragment {
         super.onCreate(savedInstanceState);
     }
 
-    /**
-     * Called when a fragment is first attached to its activity.
-     * {@link #onCreate(android.os.Bundle)} will be called after this.
-     *
-     * @param activity
-     */
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -69,9 +63,8 @@ public class SplashDisclaimerTextFragment extends Fragment {
         TextView tv = ((TextView) ret.findViewById(R.id.fragment_splash_disclaimer_text_view));
         tv.setText(
                 new StringBuilder(LoLin1Utils
-                        .getString(getActivity().getApplicationContext(), "app_name", null))
-                        .append(LoLin1Utils.getString(getActivity().getApplicationContext(),
-                                "legal_jibber_jabber", null)) + " "
+                        .getString(getActivity().getApplicationContext(), "app_name", null)).append(" ").append(LoLin1Utils.getString(getActivity().getApplicationContext(),
+                        "legal_jibber_jabber", null)) + " "
         );
 
         return ret;
