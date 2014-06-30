@@ -365,6 +365,9 @@ public final class SplashActivity extends Activity {
                         Crashlytics.log(Log.ERROR, "debug", "Response status was not ok");
                         return null;
                     }
+                    if (cdn == null) {
+                        cdn = LoLin1Utils.getString(getApplicationContext(), "http://ddragon.leagueoflegends.com/cdn", null);
+                    }
                 } catch (HTTPServices.ServerIsCheckingException | URISyntaxException | IOException e) {
                     LOG_FRAGMENT.appendToSameLine(
                             LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
