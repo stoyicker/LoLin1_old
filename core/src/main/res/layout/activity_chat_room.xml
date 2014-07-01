@@ -30,6 +30,7 @@
         android:layout_height="match_parent"
         android:layout_weight="2"
         app:effect="fade"
+        android:divider="@null"
         android:background="@color/theme_dark_blue"
         app:only_animate_new_items="true" />
 
