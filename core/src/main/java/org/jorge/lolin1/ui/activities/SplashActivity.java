@@ -205,7 +205,7 @@ public final class SplashActivity extends Activity {
                                 null) + realm +
                         LoLin1Utils.getString(getApplicationContext(), "symbol_hyphen",
                                 null) + currentVersion);
-        if (lastVersionFolder.exists()) {
+        if (lastVersionFolder.exists() && !newVersion.contentEquals(currentVersion)) {
             FileManager.recursiveDelete(lastVersionFolder);
         }
         PreferenceManager

@@ -72,7 +72,6 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="update_fatal_error">se ha producido un error, actualización abortada.</string>
     <string name="update_new_version_found">nueva versión encontrada!</string>
     <string name="update_no_new_version">no se ha encontrado una nueva versión.</string>
-    <string name="content_folder_name">contenido</string>
     <string name="update_allocating_file_structure">Preparando estructura de archivos para</string>
     <string name="update_task_finished">hecho.</string>
     <string name="list_download">Descargando información de campeón para</string>

@@ -43,6 +43,7 @@ import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
 public final class ChampionManager {
 
     public List<Champion> getChampions() {
+        logString("debug", "Champions list size on getChampions(): " + champions.size());
         return champions;
     }
 
@@ -87,6 +88,7 @@ public final class ChampionManager {
     }
 
     public ArrayList<Champion> buildChampions(String list) {
+        logString("debug", "Build champions");
         ArrayList<Champion> ret = new ArrayList<>();
         JSONArray rawChamps = null;
         try {
@@ -106,6 +108,8 @@ public final class ChampionManager {
                 Crashlytics.logException(e);
             }
         }
+
+        logString("debug", "Built the champions list with " + ret.size() + " champions");
         return ret;
     }
 
