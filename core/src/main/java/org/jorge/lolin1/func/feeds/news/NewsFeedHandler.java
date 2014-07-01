@@ -77,6 +77,8 @@ public class NewsFeedHandler implements IFeedHandler {
             }
 
             ByteArrayOutputStream blob = new ByteArrayOutputStream();
+            if (bmp == null)
+                continue;
             bmp.compress(Bitmap.CompressFormat.PNG, 0, blob);
             byte[] bmpAsByteArray = blob.toByteArray();
             row = new ContentValues();
