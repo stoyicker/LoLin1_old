@@ -83,10 +83,10 @@ public class ChatRoomActivity extends Activity {
         ChatNotificationManager.dismissNotifications(getApplicationContext(), friendName);
         setContentView(R.layout.activity_chat_room);
 
-        final EditText messageContentsText = (EditText) findViewById(android.R.id.inputArea);
+        final EditText messageContentsTextField = (EditText) findViewById(android.R.id.inputArea);
         final ImageButton sendButton = (ImageButton) findViewById(android.R.id.button1);
 
-        messageContentsText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        messageContentsTextField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_DONE) {
@@ -108,16 +108,24 @@ public class ChatRoomActivity extends Activity {
         scrollListViewToBottom();
 
         final String friendNameAsFinal = friendName;
+        messageContentsTextField.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (event.getAction() == KeyEvent.ACTION_DOWN)
+                    sendButton.callOnClick();
+                return false;
+            }
+        });
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String contents = messageContentsText.getText().toString();
+                String contents = messageContentsTextField.getText().toString();
                 if (TextUtils.isEmpty(contents))
                     return;
                 adapter.add(new ChatMessageWrapper(contents, System.currentTimeMillis()));
                 sendMessage(contents, friendNameAsFinal);
-                messageContentsText.setText("");
-                messageContentsText.clearFocus();
+                messageContentsTextField.setText("");
+                messageContentsTextField.requestFocus();
             }
 
             private void sendMessage(String contents, String friendName) {
