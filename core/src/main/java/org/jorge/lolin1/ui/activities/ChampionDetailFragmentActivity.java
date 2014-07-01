@@ -4,7 +4,6 @@ import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.BitmapDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
@@ -85,21 +84,17 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
             initChampionInfoPager();
             if (!preferences.getBoolean("showcase_champion_detail_done", Boolean.FALSE))
                 detailShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_detail_contents).setContentTitle(R.string.tutorial_detail_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_detail_pager, this)).build();
-
-            new AsyncTask<Void, Void, Void>(
-
-            ) {
+            ChampionDetailFragmentActivity.this.runOnUiThread(new Runnable() {
                 @Override
-                protected Void doInBackground(Void... params) {
+                public void run() {
                     ((ImageView) findViewById(R.id.champion_bust))
                             .setImageDrawable(
                                     new BitmapDrawable(getResources(), ChampionManager.getInstance()
                                             .getBustImageByChampion(200, 200, selectedChampion,
                                                     getApplicationContext()))
                             );
-                    return null;
                 }
-            }.execute();
+            });
         } else {
             //Landscape layout
             if ((actionBar = getActionBar()).isShowing()) {
