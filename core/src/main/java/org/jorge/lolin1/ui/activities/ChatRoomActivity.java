@@ -14,11 +14,9 @@ import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
-import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.AbsListView;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -84,48 +82,20 @@ public class ChatRoomActivity extends Activity {
         setContentView(R.layout.activity_chat_room);
 
         final EditText messageContentsTextField = (EditText) findViewById(android.R.id.inputArea);
-        final ImageButton sendButton = (ImageButton) findViewById(android.R.id.button1);
 
         messageContentsTextField.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId == EditorInfo.IME_ACTION_DONE) {
-                    sendButton.callOnClick();
-                }
-                return Boolean.FALSE; //I still want Android to run its thingies, if any
-            }
-        });
-
-        conversationListView = (ListView) findViewById(android.R.id.list);
-        conversationListView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
-
-        logString("debug", "Calling adapter constructor");
-        adapter = new ChatRoomAdapter(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName));
-
-        if (!TextUtils.isEmpty(friendName))
-            conversationListView.setAdapter(adapter);
-
-        scrollListViewToBottom();
-
-        final String friendNameAsFinal = friendName;
-        messageContentsTextField.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (event.getAction() == KeyEvent.ACTION_DOWN)
-                    sendButton.callOnClick();
-                return false;
-            }
-        });
-        sendButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                if (actionId != EditorInfo.IME_ACTION_DONE)
+                    return Boolean.FALSE;
                 String contents = messageContentsTextField.getText().toString();
                 if (TextUtils.isEmpty(contents))
-                    return;
+                    return Boolean.TRUE;
                 adapter.add(new ChatMessageWrapper(contents, System.currentTimeMillis()));
-                sendMessage(contents, friendNameAsFinal);
+                sendMessage(contents, friendName);
                 messageContentsTextField.setText("");
                 messageContentsTextField.requestFocus();
+                return Boolean.TRUE;
             }
 
             private void sendMessage(String contents, String friendName) {
@@ -143,6 +113,17 @@ public class ChatRoomActivity extends Activity {
                 }.executeOnExecutor(Executors.newSingleThreadExecutor(), contents, friendName);
             }
         });
+
+        conversationListView = (ListView) findViewById(android.R.id.list);
+        conversationListView.setChoiceMode(AbsListView.CHOICE_MODE_NONE);
+
+        logString("debug", "Calling adapter constructor");
+        adapter = new ChatRoomAdapter(getApplicationContext(), FriendManager.getInstance().findFriendByName(friendName));
+
+        if (!TextUtils.isEmpty(friendName))
+            conversationListView.setAdapter(adapter);
+
+        scrollListViewToBottom();
 
         registerLocalBroadcastReceiver();
         scrollListViewToBottom();

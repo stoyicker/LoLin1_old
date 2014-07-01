@@ -50,7 +50,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
         </activity>
         <activity
             android:name=".ui.activities.ChatRoomActivity"
-            android:windowSoftInputMode="adjustPan|stateHidden"
+            android:windowSoftInputMode="adjustResize|stateVisible"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:launchMode="standard">
             <intent-filter>

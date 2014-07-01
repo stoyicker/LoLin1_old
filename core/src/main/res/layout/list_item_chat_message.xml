@@ -29,6 +29,7 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
         android:layout_gravity="center"
         android:layout_marginLeft="@dimen/chat_message_timestamp_margin"
         android:layout_marginRight="@dimen/chat_message_timestamp_margin"
+        android:paddingRight="@dimen/chat_message_timestamp_margin"
         style="@style/ChatTimestampTextStyle" />
 
     <LinearLayout

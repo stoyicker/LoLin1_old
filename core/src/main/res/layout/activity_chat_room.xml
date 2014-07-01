@@ -34,32 +34,10 @@
         android:background="@color/theme_dark_blue"
         app:only_animate_new_items="true" />
 
-    <LinearLayout
+    <EditText
+        android:id="@android:id/inputArea"
         android:layout_width="match_parent"
         android:layout_height="@dimen/chat_room_input_area_height"
-        android:orientation="horizontal"
-        android:layout_weight="1">
-
-        <EditText
-            android:id="@android:id/inputArea"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="textNoSuggestions"
-            android:layout_weight="2" />
-
-        <ImageButton
-            android:id="@android:id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@null"
-            android:padding="@dimen/send_button_magic_margin_padding"
-            android:layout_marginLeft="@dimen/send_button_magic_margin_padding"
-            android:layout_marginRight="@dimen/send_button_magic_margin_padding"
-            android:src="@drawable/icon_button_ahead_selector"
-            android:layout_weight="1"
-            android:contentDescription="@string/send"
-            android:focusableInTouchMode="true"
-            android:focusable="true" />
-    </LinearLayout>
+        android:inputType="textNoSuggestions"
+        android:layout_weight="1" />
 </LinearLayout>
