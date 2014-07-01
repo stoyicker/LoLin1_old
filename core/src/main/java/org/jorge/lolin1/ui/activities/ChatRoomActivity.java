@@ -137,6 +137,7 @@ public class ChatRoomActivity extends Activity {
         });
 
         registerLocalBroadcastReceiver();
+        scrollListViewToBottom();
     }
 
 
