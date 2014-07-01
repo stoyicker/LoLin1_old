@@ -346,6 +346,7 @@ public final class SplashActivity extends Activity {
             }
             LOG_FRAGMENT.appendToSameLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_task_finished", null));
+            logString("debug", "CDN1: " + cdn);
             if (cdn == null) {
                 LOG_FRAGMENT.appendToNewLine(
                         LoLin1Utils.getString(getApplicationContext(), "cdn_download", null) + " " +
@@ -355,8 +356,10 @@ public final class SplashActivity extends Activity {
                 try {
                     String cdnResponse = HTTPServices.performCdnRequest(server, realm, locale);
                     if (JsonManager.getResponseStatus(cdnResponse)) {
+                        logString("debug", "Response is " + cdnResponse);
                         cdn = JsonManager.getStringAttribute(cdnResponse,
                                 LoLin1Utils.getString(getApplicationContext(), "cdn_key", null));
+                        logString("debug", "CDN2: " + cdn);
                     } else {
                         LOG_FRAGMENT.appendToSameLine(
                                 LoLin1Utils.getString(getApplicationContext(), "update_fatal_error",
@@ -375,6 +378,7 @@ public final class SplashActivity extends Activity {
                                 getApplicationContext(), "update_task_finished", null)
                 );
             }
+            logString("debug", "CDN3: " + cdn);
             LOG_FRAGMENT.appendToNewLine(
                     LoLin1Utils.getString(getApplicationContext(), "update_realm_data_download",
                             null) +
@@ -385,7 +389,7 @@ public final class SplashActivity extends Activity {
             Collection<Champion> champs = ChampionManager.getInstance().buildChampions(JsonManager
                     .getStringAttribute(dataStreamAsString, LoLin1Utils
                             .getString(getApplicationContext(), "champion_list_key", null)));
-            logString("debug", "CDN checks finished");
+            logString("debug", "CDN checks finished, CDN is " + cdn);
             if (champs.isEmpty()) {
                 LOG_FRAGMENT.appendToSameLine(
                         LoLin1Utils.getString(getApplicationContext(), "update_fatal_error", null));

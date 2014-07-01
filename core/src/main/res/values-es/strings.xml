@@ -77,7 +77,6 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
     <string name="update_task_finished">hecho.</string>
     <string name="list_download">Descargando información de campeón para</string>
     <string name="cdn_download">Obteniendo CDN para</string>
-    <string name="cdn_key">versión</string>
     <string name="update_realm_data_download">Descargando datos para</string>
     <string name="action_champion_list_search">Buscar</string>
     <string name="champion_search_hint">Buscar un campeón&#8230;</string>

@@ -146,6 +146,8 @@ public abstract class HTTPServices {
 
     public static String performCdnRequest(String serverUri, String realm, String locale)
             throws ServerIsCheckingException, IOException, URISyntaxException {
+        logString("debug", "Requesting CDN to "+
+                serverUri + CDN_SERVICE_LOCATION + "?realm=" + realm.toLowerCase(Locale.ENGLISH));
         return LoLin1Utils.inputStreamAsString(performGetRequest(
                         serverUri + CDN_SERVICE_LOCATION + "?realm=" + realm.toLowerCase(Locale.ENGLISH), locale),
                 locale
