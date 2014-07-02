@@ -23,8 +23,8 @@ android {
         standard {
             minSdkVersion 15
             targetSdkVersion 19
-            versionCode 31
-            versionName "1.55"
+            versionCode 32
+            versionName "1.56"
             crashlytics {
                 manifestPath = 'src/main/AndroidManifest.xml'
             }
