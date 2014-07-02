@@ -87,7 +87,7 @@ public class NewsFeedProvider {
         BufferedInputStream in;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String server = preferences
-                .getString(LoLin1Utils.getString(context, "pref_title_server", "pref_title_server"),
+                .getString("pref_title_server",
                         "euw");
 
         String langSimplified = LoLin1Utils.getLocale(context), LOLNEWS_PREFIX =

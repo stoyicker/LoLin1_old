@@ -82,9 +82,7 @@ public abstract class JungleTimerFragment extends Fragment {
         SharedPreferences preferences = PreferenceManager
                 .getDefaultSharedPreferences(activity.getApplicationContext());
 
-        String key = LoLin1Utils
-                .getString(getActivity().getApplicationContext(),
-                        "pref_title_" + prefName + "_respawn", null);
+        String key = "pref_title_" + prefName + "_respawn";
         prefName = preferences.getString(key, "00:30");
         try {
             initialValueAsDate = SDF.parse(prefName);
@@ -164,8 +162,7 @@ public abstract class JungleTimerFragment extends Fragment {
             }
             jungleTimeView.setText(PreferenceManager
                     .getDefaultSharedPreferences(getActivity().getApplicationContext())
-                    .getString(LoLin1Utils.getString(getActivity().getApplicationContext(),
-                            "pref_title_" + prefName + "_respawn", null), "00:30"));
+                    .getString("pref_title_" + prefName + "_respawn", "00:30"));
         }
         return ret;
     }

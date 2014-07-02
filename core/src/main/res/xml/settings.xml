@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
  This file is part of LoLin1.
  <p/>
  LoLin1 is free software: you can redistribute it and/or modify
@@ -18,56 +17,49 @@
  Created by Jorge Antonio Diaz-Benito Soriano on 06/01/14.
  -->
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory android:title="@string/pref_cat_general">
-		<SwitchPreference
-			android:defaultValue="true"
-			android:key="@string/pref_title_data"
-			android:summaryOff="@string/pref_summary_data_off"
-			android:summaryOn="@string/pref_summary_data_on"
-			android:title="@string/pref_title_data"
-			/>
-		<ListPreference
-			android:entries="@array/servers"
-			android:entryValues="@array/servers"
-			android:key="@string/pref_title_server"
-			android:title="@string/pref_title_server"
-			/>
-		<ListPreference
-			android:key="@string/pref_title_lang"
-			android:title="@string/pref_title_lang"
-			/>
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_jun">
-		<CheckBoxPreference
-			android:defaultValue="false"
-			android:key="@string/pref_title_display"
-			android:summary="@string/pref_summary_display"
-			android:title="@string/pref_title_display"
-			/>
-		<org.jorge.lolin1.func.custom.TimePickerPreference
-			android:defaultValue="@string/pref_default_baron_respawn"
-			android:key="@string/pref_title_baron_respawn"
-			android:title="@string/pref_title_baron_respawn"
-			/>
-		<org.jorge.lolin1.func.custom.TimePickerPreference
-			android:defaultValue="@string/pref_default_dragon_respawn"
-			android:key="@string/pref_title_dragon_respawn"
-			android:title="@string/pref_title_dragon_respawn"
-			/>
-		<org.jorge.lolin1.func.custom.TimePickerPreference
-			android:defaultValue="@string/pref_default_buff_respawn"
-			android:key="@string/pref_title_buff_respawn"
-			android:title="@string/pref_title_buff_respawn"
-			/>
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_chat">
-		<Preference android:title="@string/chat_authenticator_login_title"
-		            android:key="@string/chat_authenticator_login_title">
-		</Preference>
-	</PreferenceCategory>
-	<PreferenceCategory android:title="@string/pref_cat_about">
-		<Preference android:title="@string/pref_title_developer"
-		            android:key="@string/pref_title_developer">
-		</Preference>
-	</PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_general">
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_title_data"
+            android:summaryOff="@string/pref_summary_data_off"
+            android:summaryOn="@string/pref_summary_data_on"
+            android:title="@string/pref_title_data" />
+        <ListPreference
+            android:entries="@array/servers"
+            android:entryValues="@array/servers"
+            android:key="pref_title_server"
+            android:title="@string/pref_title_server" />
+        <ListPreference
+            android:key="pref_title_lang"
+            android:title="@string/pref_title_lang" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_jun">
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="pref_title_display"
+            android:summary="@string/pref_summary_display"
+            android:title="@string/pref_title_display" />
+        <org.jorge.lolin1.func.custom.TimePickerPreference
+            android:defaultValue="@string/pref_default_baron_respawn"
+            android:key="pref_title_baron_respawn"
+            android:title="@string/pref_title_baron_respawn" />
+        <org.jorge.lolin1.func.custom.TimePickerPreference
+            android:defaultValue="@string/pref_default_dragon_respawn"
+            android:key="pref_title_dragon_respawn"
+            android:title="@string/pref_title_dragon_respawn" />
+        <org.jorge.lolin1.func.custom.TimePickerPreference
+            android:defaultValue="@string/pref_default_buff_respawn"
+            android:key="pref_title_buff_respawn"
+            android:title="@string/pref_title_buff_respawn" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_chat">
+        <Preference
+            android:title="@string/chat_authenticator_login_title"
+            android:key="chat_authenticator_login_title" />
+    </PreferenceCategory>
+    <PreferenceCategory android:title="@string/pref_cat_about">
+        <Preference
+            android:title="@string/pref_title_developer"
+            android:key="pref_title_developer" />
+    </PreferenceCategory>
 </PreferenceScreen>

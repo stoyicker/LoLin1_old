@@ -59,8 +59,7 @@ public class TimePickerPreference extends DialogPreference
                         "Unsupported timer type - TYPE_COUNTER: " + TYPE_COUNTER);
                 instanceType = "ERROR";
         }
-        value = LoLin1Utils.getString(context, "pref_default_" + instanceType + "_respawn",
-                null);
+        value = "pref_default_" + instanceType + "_respawn";
         TYPE_COUNTER++;
     }
 

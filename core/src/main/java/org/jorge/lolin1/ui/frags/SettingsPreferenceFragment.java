@@ -43,12 +43,8 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
         // Load the preferences from an XML resource
         addPreferencesFromResource(R.xml.settings);
 
-        final Preference developerProfilePreference = findPreference(
-                LoLin1Utils.getString(getActivity().getApplicationContext(), "pref_title_developer",
-                        null)
-        ), chatCredentialsPreference = findPreference(LoLin1Utils
-                .getString(getActivity().getApplicationContext(), "chat_authenticator_login_title",
-                        null));
+        final Preference developerProfilePreference = findPreference("pref_title_developer"
+        ), chatCredentialsPreference = findPreference("chat_authenticator_login_title");
 
         developerProfilePreference
                 .setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -73,8 +69,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
                 });
 
         final ListPreference serverPreference = (ListPreference) findPreference(
-                LoLin1Utils.getString(getActivity().getApplicationContext(), "pref_title_server",
-                        null)
+                "pref_title_server"
         );
 
         String[] targetArray;
@@ -85,8 +80,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
                 .getStringArray(getActivity().getApplicationContext(),
                         "lang_" + chosenServer.toLowerCase(Locale.ENGLISH), null);
         final ListPreference langPreference = (ListPreference) findPreference(
-                LoLin1Utils.getString(getActivity(), "pref_title_lang",
-                        null)
+                "pref_title_lang"
         );
         langPreference.setEntries(targetArray);
         langPreference.setEntryValues(targetArray);
@@ -95,8 +89,7 @@ public class SettingsPreferenceFragment extends PreferenceFragment {
             @Override
             public boolean onPreferenceChange(Preference preference, Object newValue) {
                 final ListPreference langPreference = (ListPreference) findPreference(
-                        LoLin1Utils.getString(getActivity(), "pref_title_lang",
-                                null)
+                        "pref_title_lang"
                 );
                 final Context context = getActivity();
                 final String chosenServer = (String) newValue;

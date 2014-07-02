@@ -126,7 +126,7 @@ public abstract class LoLin1Utils {
     public static String getRealm(Context context) {
 
         return context != null ? PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext()).getString(
-                LoLin1Utils.getString(context, "pref_title_server", "League of Legends server"),
+                "pref_title_server",
                 "euw").toLowerCase(Locale.ENGLISH) : "";
     }
 
@@ -201,7 +201,7 @@ public abstract class LoLin1Utils {
                         (dataNetworkInfo == null) ? Boolean.FALSE :
                                 dataNetworkInfo.isConnected();
         ret = isWifiConnected || (preferences
-                .getBoolean(getString(context, "pref_title_data", "pref_title_data"),
+                .getBoolean("pref_title_data",
                         Boolean.FALSE) && isDataConnected);
 
         return ret;
@@ -232,8 +232,7 @@ public abstract class LoLin1Utils {
                 PreferenceManager.getDefaultSharedPreferences(baseContext.getApplicationContext()).edit();
 
         editor.putString(
-                LoLin1Utils.getString(baseContext, "pref_title_server",
-                        "League of Legends server"),
+                "pref_title_server",
                 newRealm.toLowerCase(Locale.ENGLISH)
         );
 
