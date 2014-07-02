@@ -34,6 +34,8 @@ import org.jorge.lolin1.ui.frags.ChampionStatsSupportFragment;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.jorge.lolin1.utils.LoLin1DebugUtils.logString;
+
 /**
  * This file is part of LoLin1.
  * <p/>
@@ -58,7 +60,7 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
     private static final TransitionViewPager.TransitionEffect TRANSITION_EFFECT =
             TransitionViewPager.TransitionEffect.CubeOut;
     private Champion selectedChampion;
-    private TransitionViewPager viewPager;
+    private TransitionViewPager championDetailPager;
     private ViewPager skinsViewPager;
     private ShowcaseView detailShowcase;
 
@@ -117,26 +119,30 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
     }
 
     private void initChampionInfoPager() {
+        final PageIndicator championDetailPageIndicator;
         List<Fragment> fragments = new ArrayList<>();
         fragments.add(new ChampionStatsSupportFragment());
         fragments.add(new ChampionAbilitiesSupportFragment());
         fragments.add(new ChampionLoreSupportFragment());
-        viewPager = (TransitionViewPager) findViewById(R.id.champion_detail_pager);
-        viewPager.setTransitionEffect(TRANSITION_EFFECT);
-        viewPager.setAdapter(new ChampionDetailPageAdapter(getSupportFragmentManager(), fragments));
-        ((PageIndicator) findViewById(R.id.champion_detail_pager_indicator))
-                .setViewPager(viewPager);
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+        championDetailPager = (TransitionViewPager) findViewById(R.id.champion_detail_pager);
+        championDetailPager.setTransitionEffect(TRANSITION_EFFECT);
+        championDetailPager.setAdapter(new ChampionDetailPageAdapter(getSupportFragmentManager(), fragments));
+        championDetailPageIndicator = ((PageIndicator) findViewById(R.id.champion_detail_pager_indicator));
+        championDetailPageIndicator.setViewPager(championDetailPager);
+        championDetailPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
             }
 
             @Override
             public void onPageSelected(int position) {
+                logString("debug", "Page selected: " + position);
+                championDetailPageIndicator.setCurrentItem(position);
             }
 
             @Override
             public void onPageScrollStateChanged(int state) {
+                logString("debug", "State changed: " + state);
                 if (detailShowcase != null) {
                     SharedPreferences preferences =
                             PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -170,6 +176,7 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
 
     private final class ChampionDetailPageAdapter extends FragmentPagerAdapter {
 
+
         private final List<Fragment> items;
 
         public ChampionDetailPageAdapter(FragmentManager fm, List<Fragment> _items) {
@@ -180,7 +187,7 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
         @Override
         public Object instantiateItem(ViewGroup container, final int position) {
             Object obj = super.instantiateItem(container, position);
-            viewPager.setObjectForPosition(obj, position);
+            championDetailPager.setObjectForPosition(obj, position);
             return obj;
         }
 

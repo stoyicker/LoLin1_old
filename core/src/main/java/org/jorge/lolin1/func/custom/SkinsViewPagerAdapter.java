@@ -62,8 +62,7 @@ public class SkinsViewPagerAdapter extends FragmentPagerAdapter
 
         if (position == 0) {
             scale = ScalableLinearLayout.BIG_SCALE;
-        }
-        else {
+        } else {
             scale = ScalableLinearLayout.SMALL_SCALE;
         }
 
