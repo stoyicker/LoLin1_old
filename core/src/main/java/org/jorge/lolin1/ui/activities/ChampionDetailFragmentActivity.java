@@ -3,6 +3,7 @@ package org.jorge.lolin1.ui.activities;
 import android.app.ActionBar;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -63,6 +64,14 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
     private TransitionViewPager championDetailPager;
     private ViewPager skinsViewPager;
     private ShowcaseView detailShowcase;
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        ImageView x;
+        x = ((ImageView) findViewById(R.id.background));
+        x.setImageResource(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT ? R.drawable.champion_background_portrait : R.drawable.champion_background_landscape);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

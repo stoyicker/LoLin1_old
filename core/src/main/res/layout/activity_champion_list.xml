@@ -19,30 +19,33 @@
 ~ Created by Jorge Antonio Diaz-Benito Soriano on 14/4/2014.
 -->
 <org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout
-	android:id="@+id/drawer_layout"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:layout_width="match_parent"
-	android:layout_height="match_parent">
-	<LinearLayout android:layout_width="match_parent"
-	              android:layout_height="match_parent"
-	              android:background="@color/theme_champion_related_background"
-	              android:orientation="vertical">
-		<fragment
-			android:id="@+id/champion_list_search"
-			android:name="org.jorge.lolin1.ui.frags.ExpandableSearchFragment"
-			android:layout_height="wrap_content"
-			android:layout_width="match_parent"
-			/>
-		<fragment
-			android:id="@+id/champion_list_grid"
-			android:name="org.jorge.lolin1.ui.frags.ChampionListFragment"
-			android:layout_width="match_parent"
-			android:layout_height="match_parent"/>
-	</LinearLayout>
-	<fragment
-		android:id="@+id/navigation_drawer"
-		android:name="org.jorge.lolin1.ui.frags.NavigationDrawerFragment"
-		android:layout_width="@dimen/navigation_drawer_width"
-		android:layout_height="match_parent"
-		android:layout_gravity="left"/>
+    android:id="@+id/drawer_layout"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <fragment
+            android:id="@+id/champion_list_search"
+            android:name="org.jorge.lolin1.ui.frags.ExpandableSearchFragment"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent" />
+
+        <fragment
+            android:id="@+id/champion_list_grid"
+            android:name="org.jorge.lolin1.ui.frags.ChampionListFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
+    <fragment
+        android:id="@+id/navigation_drawer"
+        android:name="org.jorge.lolin1.ui.frags.NavigationDrawerFragment"
+        android:layout_width="@dimen/navigation_drawer_width"
+        android:layout_height="match_parent"
+        android:layout_gravity="left" />
 </org.jorge.lolin1.func.custom.navdrawerfix.FixedDrawerLayout>

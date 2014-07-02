@@ -18,52 +18,73 @@
 ~ <p/>
 ~ Created by Jorge Antonio Diaz-Benito Soriano on 19/4/2014.
 -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <ImageView
+        android:id="@+id/background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"
+        android:src="@drawable/champion_background_portrait"
+        android:alpha=".45" />
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/champion_detail_padding">
+
+        <RelativeLayout
+            android:id="@+id/header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/champion_detail_header_bottom_padding">
+
+            <ImageView
+                android:id="@+id/champion_bust"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:contentDescription="@string/champion_bust_content_description" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:padding="@dimen/champion_detail_padding"
-                android:background="@color/theme_champion_related_background">
-	<RelativeLayout
-		android:id="@+id/header"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:paddingBottom="@dimen/champion_detail_header_bottom_padding">
-		<ImageView android:id="@+id/champion_bust"
-		           android:layout_width="wrap_content"
-		           android:layout_height="wrap_content"
-		           android:layout_alignParentRight="true"
-		           android:contentDescription="@string/champion_bust_content_description"/>
-		<LinearLayout android:layout_width="wrap_content"
-		              android:layout_height="wrap_content"
-		              android:orientation="vertical"
-		              android:layout_alignBottom="@id/champion_bust"
-		              android:layout_alignParentLeft="true">
-			<TextView
-				android:id="@+id/champion_name"
-				android:layout_width="wrap_content"
-				style="@style/ChampionDetailNameStyle"
-				android:layout_height="wrap_content"/>
-			<TextView
-				android:id="@+id/champion_title"
-				android:layout_width="wrap_content"
-				style="@style/ChampionDetailTitleStyle"
-				android:layout_height="wrap_content"/>
-		</LinearLayout>
-	</RelativeLayout>
-	<com.viewpagerindicator.LinePageIndicator
-		android:id="@+id/champion_detail_pager_indicator"
-		android:layout_alignParentBottom="true"
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		app:lineWidth="@dimen/view_pager_line_width"
-		app:selectedColor="@color/theme_light_blue"/>
-	<org.jorge.lolin1.func.custom.TransitionViewPager
-		android:id="@+id/champion_detail_pager"
-		android:layout_below="@id/header"
-		android:layout_width="match_parent"
-		android:paddingBottom="@dimen/view_pager_top_padding"
-		android:layout_height="wrap_content">
-	</org.jorge.lolin1.func.custom.TransitionViewPager>
-</RelativeLayout>
+                android:layout_alignBottom="@id/champion_bust"
+                android:layout_alignParentLeft="true">
+
+                <TextView
+                    android:id="@+id/champion_name"
+                    android:layout_width="wrap_content"
+                    style="@style/ChampionDetailNameStyle"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/champion_title"
+                    android:layout_width="wrap_content"
+                    style="@style/ChampionDetailTitleStyle"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <com.viewpagerindicator.LinePageIndicator
+            android:id="@+id/champion_detail_pager_indicator"
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:lineWidth="@dimen/view_pager_line_width"
+            app:strokeWidth="@dimen/view_pager_line_height"
+            app:selectedColor="@color/theme_strong_orange" />
+
+        <org.jorge.lolin1.func.custom.TransitionViewPager
+            android:id="@+id/champion_detail_pager"
+            android:layout_below="@id/header"
+            android:layout_width="match_parent"
+            android:paddingBottom="@dimen/view_pager_top_padding"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+</FrameLayout>

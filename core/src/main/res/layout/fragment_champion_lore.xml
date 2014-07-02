@@ -19,9 +19,13 @@
 ~ Created by Jorge Antonio Diaz-Benito Soriano on 19/4/2014.
 -->
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
-	<TextView android:id="@+id/lore_contents"
-	          android:layout_width="wrap_content"
-	          android:layout_height="wrap_content"/>
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/lore_contents"
+        android:textColor="@color/theme_black"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 </ScrollView>

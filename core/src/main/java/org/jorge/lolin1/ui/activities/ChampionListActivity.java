@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.AttributeSet;
@@ -61,6 +62,7 @@ public final class ChampionListActivity extends DrawerLayoutFragmentActivity imp
         savedInstanceState.putInt(DrawerLayoutFragmentActivity.ACTIVITY_LAYOUT,
                 R.layout.activity_champion_list);
         super.onCreate(savedInstanceState);
+        (findViewById(android.R.id.content)).setBackgroundResource(getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT ? R.drawable.champion_background_portrait : R.drawable.champion_background_landscape);
         if (!preferences.getBoolean("showcase_champions_done", Boolean.FALSE) && !ChampionManager.getInstance().getChampions().isEmpty())
             championsShowcase = new ShowcaseView.Builder(this).setContentText(R.string.tutorial_champions_contents).setContentTitle(R.string.tutorial_champions_title).setStyle(R.style.CustomShowcaseThemePlusNoButton).setTarget(new ViewTarget(R.id.champion_list_grid, this)).build();
     }
