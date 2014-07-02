@@ -70,7 +70,8 @@ public final class ChampionDetailFragmentActivity extends FragmentActivity {
         super.onConfigurationChanged(newConfig);
         ImageView x;
         x = ((ImageView) findViewById(R.id.background));
-        x.setImageResource(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT ? R.drawable.champion_background_portrait : R.drawable.champion_background_landscape);
+        if (x != null)
+            x.setImageResource(newConfig.orientation == Configuration.ORIENTATION_PORTRAIT ? R.drawable.champion_background_portrait : R.drawable.champion_background_landscape);
     }
 
     @Override
