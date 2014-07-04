@@ -184,8 +184,9 @@ Created by Jorge Antonio Diaz-Benito Soriano on 02/01/14.
         <item>@string/tag_fragment_news</item>
     </string-array>
     <string-array name="data_providers">
-        <item>http://lolin1-data-provider-eu1.herokuapp.com</item>
-        <!--<item>http://lolin1-data-provider-eu2.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu.herokuapp.com</item>
+        <!--<item>http://lolin1-data-provider-eu1.herokuapp.com</item>
+        <item>http://lolin1-data-provider-eu2.herokuapp.com</item>
         <item>http://lolin1-data-provider-eu3.herokuapp.com</item>
         <item>http://lolin1-data-provider-eu4.herokuapp.com</item>
         <item>http://lolin1-data-provider-eu5.herokuapp.com</item>
