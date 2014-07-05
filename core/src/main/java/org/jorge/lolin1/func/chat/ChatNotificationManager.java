@@ -59,7 +59,7 @@ public abstract class ChatNotificationManager {
         }
         builder.setSmallIcon(R.drawable.icon_app);
         builder.setContentTitle(name);
-        builder.setContentText(newContents = previousNotificationContents + "\n" + contents);
+        builder.setStyle(new NotificationCompat.BigTextStyle().bigText(newContents = previousNotificationContents + "\n" + contents));
         builder.setAutoCancel(Boolean.TRUE);
         Intent resultIntent = new Intent(context, ChatRoomActivity.class);
         resultIntent.putExtra(ChatOverviewActivity.KEY_FRIEND_NAME, name);
