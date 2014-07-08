@@ -16,7 +16,6 @@ import android.widget.TextView;
 import com.crashlytics.android.Crashlytics;
 
 import org.jorge.lolin1.R;
-import org.jorge.lolin1.utils.LoLin1Utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -177,8 +176,8 @@ public abstract class JungleTimerFragment extends Fragment {
         @Override
         public void onTick(final long millisUntilFinished) {
             lastTimeTracked = millisUntilFinished;
-            if (jungleTimeView != null) {
-                getActivity().runOnUiThread(new Runnable() {
+            if (jungleTimeView != null && JungleTimerFragment.this.getActivity() != null) {
+                JungleTimerFragment.this.getActivity().runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         jungleTimeView
@@ -191,14 +190,14 @@ public abstract class JungleTimerFragment extends Fragment {
 
         @Override
         public void onFinish() {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (jungleTimeView != null) {
+            if (jungleTimeView != null && JungleTimerFragment.this.getActivity() != null) {
+                JungleTimerFragment.this.getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
                         jungleTimeView.setText(SDF.format(initialValueAsDate));
                     }
-                }
-            });
+                });
+            }
             isChronometerRunning = Boolean.FALSE;
         }
     }
