@@ -172,14 +172,14 @@ public final class SplashActivity extends Activity {
         if (connectivityManager != null) {
             mobileNetworkInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (mobileNetworkInfo == null || mobileNetworkInfo.isConnectedOrConnecting()) {
-                LOG_FRAGMENT.appendToSameLine(
+                LOG_FRAGMENT.appendToNewLine(
                         LoLin1Utils.getString(getApplicationContext(),
                                 "update_delayed", null)
                 );
                 ret = Boolean.TRUE;
             } else ret = Boolean.FALSE;
         } else {
-            LOG_FRAGMENT.appendToSameLine(
+            LOG_FRAGMENT.appendToNewLine(
                     LoLin1Utils.getString(getApplicationContext(),
                             "update_delayed", null)
             );
