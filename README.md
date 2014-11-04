@@ -1,4 +1,4 @@
-DEPRECATED. See [the new repository!](https://github.com/Stoyicker/LoLin1)
+DEPRECATED. See [the new repository](https://github.com/Stoyicker/LoLin1)!
 =======
 
 League of Legends LoLin1 app for Android.
